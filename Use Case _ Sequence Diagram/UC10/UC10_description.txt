@@ -1,0 +1,25 @@
+UC10 — Bình luận bài viết (Comment on Post)
+
+Actor: User
+
+Mục tiêu: Gửi bình luận để trao đổi.
+
+Precondition: User đang xem post.html.
+
+Postcondition: Comment lưu DB status=pending.
+
+Luồng chính:
+
+User nhập name (optional), content → submit.
+
+Frontend POST POST /api/comments {post_id, name, content}.
+
+API validate → lưu comment với status=pending.
+
+Frontend show “Đã gửi, chờ duyệt”.
+
+Luồng phụ: Empty content → client-side validation error.
+
+Acceptance: Comment stored as pending; Admin có thể duyệt.
+
+Endpoint: POST /api/comments

@@ -1,0 +1,27 @@
+UC05 — Lên lịch xuất bản (Schedule Post)
+
+Actor: Admin
+
+Mục tiêu: Đặt thời gian tự động publish.
+
+Precondition: Admin tạo post hoặc edit và cung cấp publish_at.
+
+Postcondition: Khi đến publish_at, status chuyển thành published.
+
+Luồng chính:
+
+Admin nhập publish_at trong create/edit.
+
+API lưu post với status=scheduled.
+
+Scheduler (cron/queue) kiểm tra các post scheduled ⇒ nếu publish_at <= now, cập nhật status=published và ghi log.
+
+Cache/Front-end hoặc clients nhận update (nếu push).
+
+Luồng phụ: Nếu thời gian sai (trong quá khứ) → trả lỗi validate.
+
+Acceptance: Bài được public đúng giờ theo DB.
+
+Endpoint: POST/PUT /api/posts (with publish_at)
+
+Components: scheduler (node-cron / bull queue)

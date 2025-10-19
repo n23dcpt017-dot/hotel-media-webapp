@@ -1,0 +1,27 @@
+UC06 — Phê duyệt bình luận (Moderate Comments)
+
+Actor: Admin
+
+Mục tiêu: Duyệt comment trước khi public.
+
+Precondition: Có comment status=pending trong DB.
+
+Postcondition: Comment status chuyển approved/rejected.
+
+Luồng chính:
+
+Admin mở admin.html -> Comments.
+
+Frontend GET GET /api/comments?status=pending.
+
+Admin chọn 1 comment → click Approve/Reject.
+
+Frontend PUT PUT /api/comments/:id {status}.
+
+API update DB → trả OK.
+
+Luồng phụ: Nếu comment đã bị xóa → báo lỗi.
+
+Acceptance: Approved comment hiển thị trên post.html.
+
+Endpoint: GET /api/comments, PUT /api/comments/:id

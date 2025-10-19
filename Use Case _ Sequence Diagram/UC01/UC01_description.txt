@@ -1,0 +1,37 @@
+UC01 — Đăng nhập hệ thống (Login)
+
+Actor: Admin
+
+Mục tiêu: Xác thực admin để truy cập CMS.
+
+Precondition: Tài khoản admin tồn tại (username/password hoặc social).
+
+Postcondition: Admin được cấp token/session, chuyển vào dashboard.
+
+Luồng chính:
+
+Admin mở login.html.
+
+Nhập email/password → click “Đăng nhập”.
+
+Frontend gửi POST /api/login {email, password}.
+
+API kiểm tra DB (users) → nếu hợp lệ trả {token, user}.
+
+Frontend lưu token (localStorage/cookie) → chuyển hướng admin.html.
+
+Luồng phụ:
+
+Sai mật khẩu → API trả 401 → hiển thị lỗi.
+
+Server lỗi/timeout → hiển thị thông báo kết nối.
+
+Acceptance criteria:
+
+Đăng nhập thành công trả token; trang admin hiển thị.
+
+Endpoint: POST /api/login
+
+UI page: login.html
+
+DB fields: users {id, email, password_hash, role}

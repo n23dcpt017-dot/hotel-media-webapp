@@ -1,0 +1,37 @@
+UC02 — Tạo bài viết mới (Create Post)
+
+Actor: Admin
+
+Mục tiêu: Thêm bài viết (title, content, media, status).
+
+Precondition: Admin đã login.
+
+Postcondition: Bài viết lưu vào posts (status theo lựa chọn).
+
+Luồng chính:
+
+Admin mở admin.html → chọn “Tạo bài mới”.
+
+Điền title, summary, content, upload media, chọn status (draft/published/scheduled), optional publish_at.
+
+Frontend gửi POST /api/posts (multipart nếu upload).
+
+API lưu media (local/S3) → lấy media_url, tạo post record.
+
+API trả 201 với post object. Frontend thông báo thành công.
+
+Luồng phụ:
+
+Thiếu title → frontend chặn và hiển thị lỗi.
+
+Upload fail → báo lỗi upload.
+
+Acceptance criteria:
+
+Post tạo thành công, hiển thị khi status=published.
+
+Endpoint: POST /api/posts
+
+UI: admin.html (Create form)
+
+DB fields: posts {id, title, slug, summary, content, featured_media, status, publish_at, created_by, created_at}

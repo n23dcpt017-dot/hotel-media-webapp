@@ -1,0 +1,27 @@
+UC11 — Chia sẻ bài viết (Share Post)
+
+Actor: User
+
+Mục tiêu: Đẩy link bài lên mạng xã hội.
+
+Precondition: Post có public URL.
+
+Postcondition: Hành động mở cửa sổ share với URL post.
+
+Luồng chính:
+
+User click nút “Share” → select platform.
+
+Frontend tạo share URL:
+
+Facebook: https://www.facebook.com/sharer/sharer.php?u={postURL}
+
+Zalo: https://zalo.me/share?url={postURL} (hoặc SDK).
+
+Mở cửa sổ mới với share URL.
+
+Acceptance: Cửa sổ share mở; user có thể post.
+
+Endpoint: N/A (client-only)
+
+UI: post.html share buttons

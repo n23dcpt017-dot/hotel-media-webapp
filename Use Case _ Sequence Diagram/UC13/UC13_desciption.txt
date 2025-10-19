@@ -1,0 +1,23 @@
+UC13 — Tối ưu SEO & Analytics
+
+Actor: System
+
+Mục tiêu: Thu thập analytics & cung cấp meta cho SEO.
+
+Precondition: Site live (public).
+
+Postcondition: GA thu thập data; pages có meta OG tags.
+
+Luồng chính:
+
+Frontend chèn meta tags động (title, description, og:image) khi render post.
+
+Frontend load GA script with tracking ID.
+
+On page load & events, gửi events lên GA.
+
+Acceptance: GA hiển thị traffic; pages có basic OG/SEO tags.
+
+Endpoint: N/A (3rd-party Google Analytics)
+
+Implementation note: Use server-side rendering for best SEO (Next.js) OR prerender meta for GitHub Pages.

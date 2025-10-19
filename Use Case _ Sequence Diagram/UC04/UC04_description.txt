@@ -1,0 +1,27 @@
+UC04 — Xóa bài viết (Delete Post)
+
+Actor: Admin
+
+Mục tiêu: Xóa post không cần nữa.
+
+Precondition: Admin login, post tồn tại.
+
+Postcondition: Bài bị xóa hoặc flagged deleted.
+
+Luồng chính:
+
+Admin nhấn nút “Xóa” → confirm dialog.
+
+Nếu confirm → frontend call DELETE /api/posts/:id.
+
+API xóa record hoặc đánh dấu deleted=true.
+
+Frontend refresh list.
+
+Luồng phụ: Hủy xóa → không thực hiện.
+
+Acceptance: Post không còn hiển thị trên list public.
+
+Endpoint: DELETE /api/posts/:id
+
+UI: admin.html list
