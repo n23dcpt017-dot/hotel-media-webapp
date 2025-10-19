@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotel Media WebApp</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #d4e1f2, #ffffff);
-      text-align: center;
-      padding-top: 120px;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    p {
-      color: #34495e;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hotel Media WebApp - Demo</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <h1>🌴 Dự án Web App Truyền thông Khách sạn 🌴</h1>
-  <p>Thực hiện bởi Vương Thị Hương Giang – 3D Artist & Multimedia Developer</p>
+  <header class="site-header">
+    <h1>Hotel Media WebApp</h1>
+    <p>Demo hệ thống truyền thông khách sạn</p>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Chào mừng tới khách sạn Sunshine</h2>
+      <p>Trang demo giới thiệu, tin tức và livestream sự kiện</p>
+    </section>
+
+    <section id="latest" class="posts">
+      <h3>Tin mới nhất</h3>
+      <div id="post-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hotel Media WebApp</p>
+  </footer>
+
+  <script>
+    fetch('data/posts.json')
+      .then(r => r.json())
+      .then(posts => {
+        const list = document.getElementById('post-list');
+        posts.slice(0,3).forEach(p => {
+          const el = document.createElement('article');
+          el.className = 'post';
+          el.innerHTML = `
+            <h4><a href="post.html?slug=${p.slug}">${p.title}</a></h4>
+            <p>${p.summary}</p>
+          `;
+          list.appendChild(el);
+        });
+      })
+      .catch(err => console.error(err));
+  </script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Danh sách bài viết - Hotel Media</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Danh sách bài viết</h1>
+    <p><a href="index.html">Về trang chủ</a></p>
+  </header>
+  <main>
+    <div id="all-posts"></div>
+  </main>
+
+  <script>
+    fetch('data/posts.json').then(r=>r.json()).then(posts=>{
+      const container = document.getElementById('all-posts');
+      posts.forEach(p=>{
+        const item = document.createElement('div');
+        item.innerHTML = `<h3><a href="post.html?slug=${p.slug}">${p.title}</a></h3>
+                          <p>${p.summary}</p>`;
+        container.appendChild(item);
+      });
+    })
+  </script>
+</body>
+</html>

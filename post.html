@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chi tiết bài - Hotel Media</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <main class="container">
+    <div id="post"></div>
+  </main>
+  <script>
+    function getQuery(name) {
+      const params = new URLSearchParams(location.search);
+      return params.get(name);
+    }
+    const slug = getQuery('slug');
+    fetch('data/posts.json').then(r=>r.json()).then(posts=>{
+      const post = posts.find(p=>p.slug === slug);
+      const el = document.getElementById('post');
+      if (!post) {
+        el.innerHTML = '<p>Bài viết không tìm thấy</p>';
+        return;
+      }
+      el.innerHTML = `
+        <h1>${post.title}</h1>
+        <p>${post.content}</p>
+        ${post.youtube ? `<div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/${post.youtube}" frameborder="0" allowfullscreen></iframe></div>` : ''}
+        <section id="comments"><h3>Bình luận</h3><p>Demo: bình luận sẽ được gửi đến admin (không có backend ở bản demo)</p></section>
+      `;
+    })
+  </script>
+</body>
+</html>
