@@ -4,19 +4,19 @@
     "title": "Sự kiện đêm hội ánh sáng tại Sunshine Hotel",
     "slug": "dem-hoi-anh-sang",
     "summary": "Sự kiện âm nhạc và ánh sáng đặc biệt được tổ chức tại Sunshine Hotel.",
-    "content": "Chi tiết sự kiện ...",
+    "content": "Chi tiết sự kiện: đêm nhạc, DJ, ánh sáng và chương trình khuyến mãi phòng.",
     "youtube": "dQw4w9WgXcQ",
     "status": "published",
-    "featured_media": ""
+    "created_by": 1
   },
   {
     "id": 2,
     "title": "Ưu đãi nghỉ dưỡng mùa hè 2025",
     "slug": "uu-dai-mua-he-2025",
     "summary": "Gói nghỉ dưỡng giảm đến 30% cho khách đặt trước.",
-    "content": "Chi tiết khuyến mãi...",
+    "content": "Chi tiết khuyến mãi: áp dụng cho phòng Deluxe và Suite.",
     "youtube": "",
     "status": "published",
-    "featured_media": ""
+    "created_by": 1
   }
 ]

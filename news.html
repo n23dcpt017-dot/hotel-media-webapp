@@ -7,24 +7,37 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Danh sách bài viết</h1>
-    <p><a href="index.html">Về trang chủ</a></p>
+  <header class="site-header">
+    <div class="wrap"><h1>Danh sách bài viết</h1></div>
   </header>
-  <main>
-    <div id="all-posts"></div>
+  <main class="wrap container">
+    <p><a href="index.html">← Về trang chủ</a></p>
+    <div id="all-posts" class="list"></div>
   </main>
+  <footer><div class="wrap"><p>&copy; 2025</p></div></footer>
 
   <script>
-    fetch('data/posts.json').then(r=>r.json()).then(posts=>{
+    const useBackend = false;
+    const API_BASE = "https://YOUR_BACKEND_URL/api";
+    function renderAll(posts) {
       const container = document.getElementById('all-posts');
+      container.innerHTML = '';
       posts.forEach(p=>{
-        const item = document.createElement('div');
-        item.innerHTML = `<h3><a href="post.html?slug=${p.slug}">${p.title}</a></h3>
-                          <p>${p.summary}</p>`;
-        container.appendChild(item);
+        const el = document.createElement('article');
+        el.className = 'post';
+        el.innerHTML = `<h3><a href="post.html?slug=${p.slug}">${p.title}</a></h3>
+                        <p class="summary">${p.summary}</p>`;
+        container.appendChild(el);
       });
-    })
+    }
+
+    if (useBackend) {
+      fetch(API_BASE + '/posts').then(r=>r.json()).then(renderAll).catch(e=>{
+        fetch('data/posts.json').then(r=>r.json()).then(renderAll);
+      });
+    } else {
+      fetch('data/posts.json').then(r=>r.json()).then(renderAll);
+    }
   </script>
 </body>
 </html>

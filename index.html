@@ -8,42 +8,63 @@
 </head>
 <body>
   <header class="site-header">
-    <h1>Hotel Media WebApp</h1>
-    <p>Demo hệ thống truyền thông khách sạn</p>
+    <div class="wrap">
+      <h1>Hotel Media WebApp</h1>
+      <p class="subtitle">Demo hệ thống truyền thông khách sạn — Nhóm 3</p>
+    </div>
   </header>
 
-  <main class="container">
+  <main class="container wrap">
     <section class="hero">
-      <h2>Chào mừng tới khách sạn Sunshine</h2>
+      <h2>Chào mừng tới Sunshine Hotel</h2>
       <p>Trang demo giới thiệu, tin tức và livestream sự kiện</p>
     </section>
 
     <section id="latest" class="posts">
       <h3>Tin mới nhất</h3>
-      <div id="post-list"></div>
+      <div id="post-list" class="grid"></div>
+      <p><a href="news.html">Xem tất cả bài viết →</a></p>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Hotel Media WebApp</p>
+    <div class="wrap">
+      <p>&copy; 2025 Hotel Media WebApp</p>
+      <p><a href="admin.html">Admin (demo)</a></p>
+    </div>
   </footer>
 
   <script>
-    fetch('data/posts.json')
-      .then(r => r.json())
-      .then(posts => {
-        const list = document.getElementById('post-list');
-        posts.slice(0,3).forEach(p => {
-          const el = document.createElement('article');
-          el.className = 'post';
-          el.innerHTML = `
-            <h4><a href="post.html?slug=${p.slug}">${p.title}</a></h4>
-            <p>${p.summary}</p>
-          `;
-          list.appendChild(el);
+    const API_BASE = "https://YOUR_BACKEND_URL/api"; // replace nếu deploy backend
+    const useBackend = false; // nếu true sẽ fetch từ backend, false sẽ dùng data/posts.json
+    function renderPosts(posts) {
+      const list = document.getElementById('post-list');
+      list.innerHTML = '';
+      posts.slice(0,6).forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4><a href="post.html?slug=${p.slug}">${p.title}</a></h4>
+          <p class="summary">${p.summary}</p>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    if (useBackend) {
+      fetch(API_BASE + '/posts')
+        .then(r => r.json())
+        .then(renderPosts)
+        .catch(err => {
+          console.error(err);
+          fetch('data/posts.json').then(r=>r.json()).then(renderPosts);
         });
-      })
-      .catch(err => console.error(err));
+    } else {
+      fetch('data/posts.json')
+        .then(r => r.json())
+        .then(renderPosts)
+        .catch(err => console.error(err));
+    }
   </script>
 </body>
 </html>

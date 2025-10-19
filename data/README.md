@@ -1,10 +1,17 @@
-# Hotel Media WebApp (Demo)
+# Hotel Media WebApp (Demo) - Group 3
 
-Demo trang web truyền thông khách sạn cho đồ án.
+Demo Web App truyền thông khách sạn. Frontend hosted on GitHub Pages. Optional backend (Node.js) for CRUD API.
 
-## Chạy local (dev)
-Bạn có thể dùng Live Server extension của VS Code, hoặc dùng Python HTTP server:
+## Cấu trúc
+- index.html, news.html, post.html, admin.html
+- assets/css/style.css
+- data/posts.json (tĩnh)
+- server/ (optional backend)
+
+## Chạy frontend local
+Cách nhanh:
+- Cài VS Code -> mở folder -> dùng extension Live Server hoặc:
 ```bash
-# từ folder repo
+# từ root của repo
 python -m http.server 8000
-# rồi mở http://localhost:8000/index.html
+# mở http://localhost:8000/index.html
