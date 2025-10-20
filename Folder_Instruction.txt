@@ -1,0 +1,59 @@
+hotel-media-webapp/
+│
+├── 📁 assets/
+│   ├── css/
+│   │   └── style.css                # Giao diện chính của website
+│   ├── js/
+│   │   └── main.js                  # Script xử lý tương tác (menu, hiệu ứng, ajax…)
+│   └── images/                      # Hình ảnh banner, bài viết, logo
+│
+├── 📁 data/
+│   ├── posts.json                   # Dữ liệu bài viết mẫu
+│   └── users.json                   # Dữ liệu người dùng (demo)
+│
+├── 📁 pages/
+│   ├── index.html                   # Trang chủ
+│   ├── news.html                    # Trang tin tức (hiển thị danh sách bài viết)
+│   ├── post.html                    # Trang chi tiết bài viết
+│   ├── livestream.html               # Trang phát livestream / clip ngắn
+│   ├── login.html                    # Trang đăng nhập cho Admin
+│   └── admin.html                    # Trang quản trị CMS
+│
+├── 📁 diagrams/
+│   ├── UseCase_Tong.puml            # File PlantUML sơ đồ Use Case tổng thể
+│   ├── UseCase_Tong.png             # Ảnh render sơ đồ Use Case
+│   ├── UseCase_Specification.txt    # Mô tả chi tiết 14 Use Case
+│   │
+│   ├── 📁 Sequence/
+│   │   ├── UC01_Sequence.puml       # Sequence Diagram cho Đăng nhập
+│   │   ├── UC02_Sequence.puml       # Sequence Diagram cho Tạo bài viết
+│   │   ├── UC05_Sequence.puml       # Sequence Diagram cho Lên lịch xuất bản
+│   │   ├── UC09_Sequence.puml       # Sequence Diagram cho Xem bài viết chi tiết
+│   │   ├── UC10_Sequence.puml       # Sequence Diagram cho Bình luận bài viết
+│   │   └── UC14_Sequence.puml       # Sequence Diagram cho Xuất bản tự động
+│   │
+│   ├── ClassDiagram.puml            # (Tùy chọn) Sơ đồ lớp
+│   ├── ERD.puml                     # (Tùy chọn) Sơ đồ thực thể – quan hệ
+│   └── ActivityDiagram.puml         # (Tùy chọn) Sơ đồ hoạt động
+│
+├── 📁 docs/
+│   ├── Report.md                    # Báo cáo tóm tắt
+│   ├── Report.pdf                   # Báo cáo nộp chính thức
+│   └── References.txt               # Nguồn tham khảo
+│
+├── 📁 src/
+│   ├── backend/
+│   │   ├── server.js                # File Node.js chạy backend (nếu có)
+│   │   ├── api/
+│   │   │   ├── posts.js             # API bài viết
+│   │   │   ├── comments.js          # API bình luận
+│   │   │   └── analytics.js         # API thống kê
+│   │   └── db.json                  # Database mẫu (nếu dùng JSON-server)
+│   │
+│   ├── frontend/
+│   │   ├── components/              # Các thành phần giao diện tái sử dụng
+│   │   └── utils/                   # Hàm JS hỗ trợ
+│
+├── .gitignore                       # Bỏ qua các file không cần commit
+├── README.md                        # Giới thiệu dự án, hướng dẫn chạy demo
+└── package.json                     # Nếu có dùng Node/npm

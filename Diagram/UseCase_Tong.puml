@@ -1,0 +1,45 @@
+@startuml
+title Sơ đồ Use Case Tổng thể - Hệ thống Web App Truyền thông Khách sạn
+left to right direction
+
+actor Admin as "Admin (Quản trị viên)"
+actor User as "User (Khách truy cập)"
+actor System as "System (Hệ thống nền)"
+
+rectangle "Hotel Media WebApp" {
+
+  usecase UC01 as "Đăng nhập hệ thống"
+  usecase UC02 as "Tạo bài viết mới"
+  usecase UC03 as "Chỉnh sửa bài viết"
+  usecase UC04 as "Xóa bài viết"
+  usecase UC05 as "Lên lịch xuất bản"
+  usecase UC06 as "Phê duyệt bình luận"
+  usecase UC07 as "Nhúng / Bắt đầu livestream"
+
+  usecase UC08 as "Xem danh sách bài viết"
+  usecase UC09 as "Xem chi tiết bài viết"
+  usecase UC10 as "Bình luận bài viết"
+  usecase UC11 as "Chia sẻ bài viết"
+  usecase UC12 as "Xem livestream / clip ngắn"
+
+  usecase UC13 as "Tối ưu SEO & Analytics"
+  usecase UC14 as "Tự động xuất bản bài viết"
+}
+
+Admin --> UC01
+Admin --> UC02
+Admin --> UC03
+Admin --> UC04
+Admin --> UC05
+Admin --> UC06
+Admin --> UC07
+
+User --> UC08
+User --> UC09
+User --> UC10
+User --> UC11
+User --> UC12
+
+System --> UC13
+System --> UC14
+@enduml

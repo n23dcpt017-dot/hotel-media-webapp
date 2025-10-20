@@ -1,0 +1,169 @@
+USE CASE SPECIFICATION
+HỆ THỐNG WEB APP TRUYỀN THÔNG KHÁCH SẠN
+
+------------------------------------------------------------
+UC01 - ĐĂNG NHẬP HỆ THỐNG
+Actor chính: Admin
+Mục tiêu: Cho phép quản trị viên truy cập vào hệ thống CMS.
+Tiền điều kiện: Admin đã được tạo tài khoản.
+Hậu điều kiện: Hệ thống xác thực thành công và chuyển đến giao diện quản trị.
+Luồng chính:
+1. Admin truy cập trang đăng nhập.
+2. Nhập tên đăng nhập và mật khẩu.
+3. Hệ thống kiểm tra thông tin trong cơ sở dữ liệu.
+4. Nếu hợp lệ, chuyển đến trang Dashboard.
+Luồng phụ:
+- 3a. Nếu sai thông tin, hệ thống báo lỗi “Đăng nhập thất bại”.
+
+------------------------------------------------------------
+UC02 - TẠO BÀI VIẾT MỚI
+Actor chính: Admin
+Mục tiêu: Tạo mới một bài viết truyền thông.
+Tiền điều kiện: Admin đã đăng nhập hệ thống.
+Hậu điều kiện: Bài viết được lưu vào cơ sở dữ liệu và hiển thị khi được xuất bản.
+Luồng chính:
+1. Admin chọn chức năng “Tạo bài viết mới”.
+2. Nhập tiêu đề, nội dung, thêm ảnh hoặc video minh họa.
+3. Nhấn “Lưu” hoặc “Lên lịch xuất bản”.
+4. Hệ thống lưu thông tin bài viết.
+Luồng phụ:
+- 2a. Nếu nhập thiếu thông tin bắt buộc, hệ thống cảnh báo.
+
+------------------------------------------------------------
+UC03 - CHỈNH SỬA BÀI VIẾT
+Actor chính: Admin
+Mục tiêu: Cập nhật nội dung bài viết đã tạo.
+Tiền điều kiện: Đã có ít nhất một bài viết trong hệ thống.
+Hậu điều kiện: Cơ sở dữ liệu được cập nhật nội dung mới.
+Luồng chính:
+1. Admin chọn bài viết cần chỉnh sửa.
+2. Thay đổi nội dung, tiêu đề, hình ảnh hoặc video.
+3. Nhấn “Cập nhật”.
+4. Hệ thống lưu thay đổi vào cơ sở dữ liệu.
+
+------------------------------------------------------------
+UC04 - XÓA BÀI VIẾT
+Actor chính: Admin
+Mục tiêu: Xóa bài viết không còn phù hợp.
+Tiền điều kiện: Bài viết đã tồn tại trong hệ thống.
+Hậu điều kiện: Bài viết bị xóa khỏi cơ sở dữ liệu.
+Luồng chính:
+1. Admin mở danh sách bài viết.
+2. Chọn “Xóa”.
+3. Hệ thống yêu cầu xác nhận.
+4. Nếu đồng ý, bài viết bị xóa.
+
+------------------------------------------------------------
+UC05 - LÊN LỊCH XUẤT BẢN
+Actor chính: Admin
+Mục tiêu: Đặt thời điểm đăng bài viết tự động.
+Tiền điều kiện: Bài viết ở trạng thái nháp.
+Hậu điều kiện: Bài viết được đặt lịch đăng.
+Luồng chính:
+1. Admin chọn bài viết cần lên lịch.
+2. Nhập thời gian và ngày xuất bản.
+3. Nhấn “Lưu”.
+4. Hệ thống lưu trạng thái bài viết là “Scheduled”.
+Ngoại lệ:
+- 2a. Nếu thời gian đặt lịch < thời gian hiện tại → hệ thống báo lỗi.
+
+------------------------------------------------------------
+UC06 - PHÊ DUYỆT BÌNH LUẬN
+Actor chính: Admin
+Mục tiêu: Kiểm duyệt bình luận của người dùng trước khi hiển thị.
+Tiền điều kiện: Hệ thống đã có bình luận mới từ người dùng.
+Hậu điều kiện: Bình luận được duyệt hoặc bị từ chối.
+Luồng chính:
+1. Admin mở danh sách bình luận.
+2. Chọn bình luận cần duyệt.
+3. Nhấn “Phê duyệt” hoặc “Từ chối”.
+4. Hệ thống cập nhật trạng thái bình luận.
+
+------------------------------------------------------------
+UC07 - BẮT ĐẦU / NHÚNG LIVESTREAM
+Actor chính: Admin
+Mục tiêu: Nhúng video livestream hoặc clip quảng bá.
+Tiền điều kiện: Admin đã đăng nhập.
+Hậu điều kiện: Livestream hiển thị trên trang Media cho người dùng.
+Luồng chính:
+1. Admin mở chức năng “Livestream”.
+2. Nhập đường dẫn video (YouTube / TikTok).
+3. Hệ thống lưu và hiển thị lên giao diện người dùng.
+
+------------------------------------------------------------
+UC08 - XEM DANH SÁCH BÀI VIẾT
+Actor chính: User
+Mục tiêu: Xem các bài viết truyền thông được xuất bản.
+Tiền điều kiện: Có ít nhất một bài viết ở trạng thái “Published”.
+Hậu điều kiện: Danh sách bài được hiển thị.
+Luồng chính:
+1. Người dùng mở trang chủ.
+2. Hệ thống hiển thị danh sách bài viết.
+
+------------------------------------------------------------
+UC09 - XEM CHI TIẾT BÀI VIẾT
+Actor chính: User
+Mục tiêu: Xem chi tiết một bài cụ thể.
+Tiền điều kiện: Bài viết ở trạng thái “Published”.
+Hậu điều kiện: Nội dung bài viết hiển thị đầy đủ.
+Luồng chính:
+1. Người dùng chọn một bài viết trong danh sách.
+2. Hệ thống tải và hiển thị toàn bộ nội dung, hình ảnh, video.
+
+------------------------------------------------------------
+UC10 - BÌNH LUẬN BÀI VIẾT
+Actor chính: User
+Mục tiêu: Gửi bình luận dưới bài viết.
+Tiền điều kiện: Người dùng đang xem chi tiết bài viết.
+Hậu điều kiện: Bình luận được lưu với trạng thái “Chờ duyệt”.
+Luồng chính:
+1. Người dùng nhập nội dung bình luận.
+2. Nhấn “Gửi”.
+3. Hệ thống lưu bình luận và gửi thông báo đến Admin.
+Luồng phụ:
+- 1a. Nếu nội dung rỗng → hệ thống cảnh báo.
+
+------------------------------------------------------------
+UC11 - CHIA SẺ BÀI VIẾT LÊN MẠNG XÃ HỘI
+Actor chính: User
+Mục tiêu: Chia sẻ bài viết lên Facebook, Zalo, TikTok...
+Tiền điều kiện: Bài viết đã được xuất bản.
+Hậu điều kiện: Liên kết bài được đăng lên mạng xã hội.
+Luồng chính:
+1. Người dùng nhấn “Chia sẻ”.
+2. Hệ thống tạo link bài viết.
+3. Mở cửa sổ mạng xã hội tương ứng.
+
+------------------------------------------------------------
+UC12 - XEM LIVESTREAM / CLIP NGẮN
+Actor chính: User
+Mục tiêu: Xem video hoặc livestream từ trang Media.
+Tiền điều kiện: Đã có video hoặc livestream được Admin đăng.
+Hậu điều kiện: Video hiển thị trên trình phát web.
+Luồng chính:
+1. Người dùng vào trang Media.
+2. Hệ thống hiển thị danh sách clip.
+3. Người dùng chọn video để xem.
+
+------------------------------------------------------------
+UC13 - TỐI ƯU SEO & ANALYTICS
+Actor chính: System
+Mục tiêu: Theo dõi lượt truy cập và tối ưu công cụ tìm kiếm.
+Tiền điều kiện: Hệ thống hoạt động bình thường.
+Hậu điều kiện: Dữ liệu truy cập được lưu và thống kê hiển thị cho Admin.
+Luồng chính:
+1. Khi người dùng truy cập, script Analytics ghi nhận dữ liệu.
+2. Dữ liệu được gửi về server và lưu vào cơ sở dữ liệu.
+3. Dashboard hiển thị thống kê lượt xem.
+
+------------------------------------------------------------
+UC14 - TỰ ĐỘNG XUẤT BẢN BÀI VIẾT
+Actor chính: System
+Mục tiêu: Đăng bài viết đúng thời điểm được lên lịch.
+Tiền điều kiện: Có bài viết ở trạng thái “Scheduled”.
+Hậu điều kiện: Bài được chuyển sang trạng thái “Published”.
+Luồng chính:
+1. Hệ thống quét danh sách bài viết đã hẹn giờ.
+2. Khi đến thời gian chỉ định, tự động thay đổi trạng thái.
+3. Bài hiển thị công khai cho người dùng.
+------------------------------------------------------------
