@@ -1,0 +1,161 @@
+
+
+## 📘 **ERD_Tables.txt – Hotel Media WebApp (CMS & Multi-channel)**
+
+---
+
+### 🧱 **Thực thể chính (10)**
+
+| STT | Thực thể      | Vai trò / mô tả                                     |
+| --- | ------------- | --------------------------------------------------- |
+| 1   | **User**      | Lưu thông tin người dùng (Admin / Khách truy cập).  |
+| 2   | **Role**      | Xác định quyền hạn: Admin, Editor, Viewer.          |
+| 3   | **Post**      | Bài viết truyền thông (tin tức, video, sự kiện,...) |
+| 4   | **Category**  | Nhóm phân loại bài viết.                            |
+| 5   | **Comment**   | Bình luận do người dùng gửi.                        |
+| 6   | **Reaction**  | Tương tác của người dùng (Like / Share / Love).     |
+| 7   | **Media**     | Tệp ảnh hoặc video được nhúng trong bài viết.       |
+| 8   | **Schedule**  | Lịch đăng bài viết (xuất bản tự động).              |
+| 9   | **Analytics** | Dữ liệu thống kê lượt xem và tương tác.             |
+| 10  | **SEO_Tag**   | Gắn thẻ từ khóa phục vụ tối ưu SEO.                 |
+
+---
+
+### 🔑 **Cấu trúc bảng chi tiết**
+
+#### 1️⃣ **User**
+
+```
+UserID        INT        PK, AUTO_INCREMENT
+Username      VARCHAR(100)
+Email         VARCHAR(150), UNIQUE
+Password      VARCHAR(255)
+RoleID        INT, FK → Role(RoleID)
+Status        VARCHAR(50)
+CreatedAt     DATETIME
+```
+
+#### 2️⃣ **Role**
+
+```
+RoleID        INT        PK, AUTO_INCREMENT
+Name          VARCHAR(50)
+Description   TEXT
+```
+
+#### 3️⃣ **Post**
+
+```
+PostID        INT        PK, AUTO_INCREMENT
+Title         VARCHAR(200)
+Content       TEXT
+Thumbnail     VARCHAR(255)
+AuthorID      INT, FK → User(UserID)
+CategoryID    INT, FK → Category(CategoryID)
+PublishDate   DATETIME
+Status        VARCHAR(50)
+```
+
+#### 4️⃣ **Category**
+
+```
+CategoryID    INT        PK, AUTO_INCREMENT
+Name          VARCHAR(100)
+Description   TEXT
+```
+
+#### 5️⃣ **Comment**
+
+```
+CommentID     INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+UserID        INT, FK → User(UserID)
+Text          TEXT
+Date          DATETIME
+Status        VARCHAR(50)
+```
+
+#### 6️⃣ **Reaction**
+
+```
+ReactionID    INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+UserID        INT, FK → User(UserID)
+Type          ENUM('Like','Love','Share')
+Date          DATETIME
+```
+
+#### 7️⃣ **Media**
+
+```
+MediaID       INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+MediaType     ENUM('Image','Video','Livestream')
+URL           VARCHAR(255)
+Caption       VARCHAR(255)
+```
+
+#### 8️⃣ **Schedule**
+
+```
+ScheduleID    INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+PublishTime   DATETIME
+IsPublished   BOOLEAN
+```
+
+#### 9️⃣ **Analytics**
+
+```
+AnalyticsID   INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+Views         INT
+Shares        INT
+AvgReadTime   INT
+```
+
+#### 🔟 **SEO_Tag**
+
+```
+TagID         INT        PK, AUTO_INCREMENT
+PostID        INT, FK → Post(PostID)
+Keyword       VARCHAR(100)
+```
+
+---
+
+### ⚙️ **Ràng buộc & Chỉ mục chính**
+
+* **UNIQUE(User.Email)** → Email không trùng lặp.
+* **FK ON DELETE CASCADE** → Khi xóa bài viết, bình luận và lịch hẹn cũng bị xóa.
+* **CHECK(Reaction.Type)** → Chỉ chấp nhận các loại tương tác hợp lệ.
+* **INDEX(Post.PublishDate)** → Tối ưu truy vấn khi lọc bài đăng theo ngày.
+* **COMPOSITE KEY(PostID, UserID)** trong bảng Reaction để một người chỉ có thể tương tác một lần cho mỗi bài viết.
+
+---
+
+### 🔗 **Quan hệ chính**
+
+| Quan hệ                | Mô tả                                          |
+| ---------------------- | ---------------------------------------------- |
+| **Role 1–N User**      | Một quyền có nhiều người dùng.                 |
+| **User 1–N Post**      | Một người có thể tạo nhiều bài viết.           |
+| **Category 1–N Post**  | Một danh mục chứa nhiều bài viết.              |
+| **Post 1–N Comment**   | Một bài viết có nhiều bình luận.               |
+| **User 1–N Comment**   | Một người có thể viết nhiều bình luận.         |
+| **Post 1–N Reaction**  | Mỗi bài có thể có nhiều tương tác.             |
+| **User 1–N Reaction**  | Một người có thể tương tác với nhiều bài viết. |
+| **Post 1–N Media**     | Mỗi bài viết có thể chứa nhiều ảnh hoặc video. |
+| **Post 1–1 Schedule**  | Mỗi bài có một lịch xuất bản.                  |
+| **Post 1–1 Analytics** | Mỗi bài có một bản thống kê lượt xem.          |
+| **Post 1–N SEO_Tag**   | Một bài viết có thể có nhiều thẻ SEO.          |
+
+---
+
+### 📘 **Tổng kết**
+
+* Tổng số bảng: **10**
+* Tổng số quan hệ: **11**
+* Cấu trúc này tương thích **MySQL / PostgreSQL**
+* Có thể sinh ra SQL schema bằng PlantUML hoặc SQL Workbench.
+
