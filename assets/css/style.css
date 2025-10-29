@@ -32,6 +32,22 @@ body {
   opacity: 0.9;
   margin-top: 6px;
 }
+.signup-btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.signup-btn:hover {
+  opacity: 0.85;
+}
+
 
 .container {
   padding: 18px 0;
