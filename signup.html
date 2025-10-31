@@ -1,211 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="3CE Room Search - Create an account">
-  <title>3CE Room Search - Sign Up</title>
+  <title>HOTEL MEDIA - 3CE Room Search</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: 'Jaldi', sans-serif;
-      background-color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #333;
     }
 
-    .container {
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      padding: 20px;
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo {
-      font-weight: bold;
-      font-size: 24px;
-      color: #000;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      color: #000;
-    }
-
-    h2 {
       font-size: 20px;
-      margin-bottom: 4px;
-      color: #000;
+      font-weight: bold;
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 24px;
-      line-height: 1.4;
-    }
-
-    form {
-      margin-bottom: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-      text-align: left;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: #333;
-      font-weight: 500;
-    }
-
-    form input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Jaldi', sans-serif;
-      transition: border-color 0.3s ease;
-    }
-
-    form input:focus {
-      outline: none;
-      border-color: #000;
-    }
-
-    form button {
-      width: 100%;
-      padding: 14px;
-      background-color: #000;
+    nav a {
+      margin: 0 10px;
       color: #fff;
+      text-decoration: none;
+    }
+
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icons input {
+      padding: 6px;
+      border-radius: 4px;
       border: none;
+    }
+
+    .hero {
+      position: relative;
+    }
+
+    .hero img {
+      width: 100%;
+      height: auto;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+    }
+
+    .overlay h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .overlay p {
+      font-size: 20px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+      gap: 20px;
+    }
+
+    .card {
+      width: 220px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
       border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Jaldi', sans-serif;
-      transition: background-color 0.3s ease;
     }
 
-    form button:hover {
-      background-color: #333;
+    .card h3 {
+      color: green;
+      margin-top: 10px;
     }
 
-    .home-link {
-      display: block;
-      margin-top: 16px;
-      color: #666;
-      text-decoration: none;
+    .card p {
       font-size: 14px;
-      transition: color 0.3s ease;
     }
 
-    .home-link:hover {
-      color: #000;
+    footer {
+      background-color: #eee;
+      padding: 30px 20px;
     }
 
-    .disclaimer {
+    .footer-columns {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    footer li {
+      margin-bottom: 6px;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: space-between;
       margin-top: 20px;
-      font-size: 12px;
-      color: #888;
-      line-height: 1.5;
-    }
-
-    .disclaimer a {
-      font-weight: 600;
-      color: #555;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .disclaimer a:hover {
-      color: #000;
-      text-decoration: underline;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 480px) {
-      .container {
-        padding: 16px;
-      }
-      
-      h1 {
-        font-size: 22px;
-      }
-      
-      h2 {
-        font-size: 18px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1><span class="logo">3CE</span> Room Search</h1>
-    <h2>Create an account</h2>
-    <p class="subtitle">Enter your email to sign up for this website</p>
+  <header>
+    <div class="logo">3CE Room Search</div>
+    <nav>
+      <a href="#">Trang Chủ</a>
+      <a href="#">Tin Tức</a>
+      <a href="#">Giới Thiệu</a>
+      <a href="#">Liên Hệ</a>
+    </nav>
+    <div class="icons">
+      <input type="text" placeholder="Tìm kiếm..." />
+      <a href="#"><span>🔔</span></a>
+      <a href="signup.html"><span>👤</span></a>
+    </div>
+  </header>
 
-    <form id="signupForm">
-      <div class="form-group">
-        <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" placeholder="Enter your full name" required />
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="email@domain.com" required />
-      </div>
-      
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Create a password" required minlength="6" />
-      </div>
-      
-      <button type="submit">Sign up</button>
-    </form>
+  <section class="hero">
+    <img src="images/background.jpg" alt="Hotel Background" />
+    <div class="overlay">
+      <h1>HOTEL MEDIA</h1>
+      <p>Hotel & Room Search</p>
+    </div>
+  </section>
 
-    <!-- ĐÃ SỬA: Liên kết về trang chủ -->
-    <a href="index.html" class="home-link">← Go to Home Page</a>
-    
-    <p class="disclaimer">
-      By clicking Sign up, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.
-    </p>
-  </div>
+  <section class="cards">
+    <div class="card">
+      <img src="images/halong.jpg" alt="Hạ Long" />
+      <h3>Khách sạn giá rẻ ở Hạ Long</h3>
+      <p>Các khách sạn giá rẻ, tiện nghi, phù hợp với túi tiền của bạn.</p>
+    </div>
+    <div class="card">
+      <img src="images/danang.jpg" alt="Đà Nẵng" />
+      <h3>Cảnh hội dịch vụ ở Đà Nẵng</h3>
+      <p>Các dịch vụ tiện ích, đa dạng, đáp ứng mọi nhu cầu của bạn.</p>
+    </div>
+    <div class="card">
+      <img src="images/hoian.jpg" alt="Hội An" />
+      <h3>Homestay giá tốt ở Hội An</h3>
+      <p>Các homestay giá tốt, tiện nghi, phù hợp với mọi đối tượng khách hàng.</p>
+    </div>
+    <div class="card">
+      <img src="images/yenbai.jpg" alt="Yên Bái" />
+      <h3>Điểm du lịch nổi ở gần khu du lịch Yên Bái</h3>
+      <p>Các điểm du lịch nổi bật, hấp dẫn, phù hợp cho các chuyến đi ngắn ngày.</p>
+    </div>
+    <div class="card">
+      <img src="images/ninhbinh.jpg" alt="Ninh Bình" />
+      <h3>Resort chất lượng cao ở Ninh Bình</h3>
+      <p>Các resort chất lượng cao, tiện nghi, phù hợp cho các kỳ nghỉ dưỡng.</p>
+    </div>
+  </section>
 
-  <script>
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const fullname = document.getElementById('fullname').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      
-      // Basic validation
-      if (fullname && email && password.length >= 6) {
-        // Here you would typically send data to your backend
-        console.log('Sign up attempt:', { fullname, email, password });
-        alert('Thank you for signing up! Please check your email to verify your account.');
-        
-        // Reset form
-        this.reset();
-      } else {
-        alert('Please fill in all fields correctly. Password must be at least 6 characters.');
-      }
-    });
-  </script>
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h4>Trợ giúp</h4>
+        <ul>
+          <li>Trung tâm trợ giúp</li>
+          <li>Câu hỏi thường gặp</li>
+          <li>Chính sách bảo mật</li>
+          <li>Chính sách về cookie</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Công ty</h4>
+        <ul>
+          <li>Điều khoản sử dụng</li>
+          <li>Quản lý thiết lập cookie</li>
+          <li>Đạo luật Dịch vụ số EU</li>
+          <li>Nguyên tắc về bảo cao nội dung</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Đối tác của chúng tôi</h4>
+        <ul>
+          <li>Cổng thông tin đối tác</li>
+          <li>Partner Hub</li>
+          <li>Quảng cáo!</li>
+          <li>Đối tác liên kết</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-icons">
+      <span style="color: red;">📢</span>
+      <span style="color: green;">📞</span>
+      <span style="color: green;">💬</span>
+    </div>
+  </footer>
 </body>
 </html>
