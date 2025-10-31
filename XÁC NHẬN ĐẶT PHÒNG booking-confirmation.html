@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xác nhận đặt phòng - 3CE Room Search</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      font-weight: normal;
+    }
+
+    nav a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search input {
+      padding: 6px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 30px 0;
+      gap: 40px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+    }
+
+    .step.completed::before {
+      content: "✔";
+      color: green;
+    }
+
+    .step.active {
+      color: #2e7d32;
+    }
+
+    .confirmation {
+      text-align: center;
+      margin: 60px 0;
+    }
+
+    .confirmation .checkmark {
+      font-size: 60px;
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+
+    .confirmation h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .confirmation a {
+      color: #2e7d32;
+      text-decoration: underline;
+      font-size: 16px;
+    }
+
+    footer {
+      background-color: #eee;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-columns {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    footer li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo">3CE <span>Room Search</span></div>
+      <nav>
+        <a href="#">Trang Chủ</a>
+        <a href="#">Tin Tức</a>
+        <a href="#">Giới Thiệu</a>
+        <a href="#">Liên Hệ</a>
+      </nav>
+      <div class="search">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <span class="icon">🔔</span>
+        <span class="icon">👤</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="steps">
+      <div class="step completed">1. Bạn chọn</div>
+      <div class="step completed">2. Chi tiết</div>
+      <div class="step active">3. Hoàn tất đặt phòng</div>
+    </div>
+
+    <div class="confirmation">
+      <div class="checkmark">✅</div>
+      <h2>Đã hoàn tất đặt phòng</h2>
+      <a href="#">Quay về trang chủ</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h4>Trợ giúp</h4>
+        <ul>
+          <li>Trung tâm trợ giúp</li>
+          <li>Câu hỏi thường gặp</li>
+          <li>Chính sách bảo mật</li>
+          <li>Chính sách về cookie</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Công ty</h4>
+        <ul>
+          <li>Điều khoản sử dụng</li>
+          <li>Thiết lập cookie</li>
+          <li>Đạo luật Dịch vụ số EU</li>
+          <li>Nguyên tắc nội dung</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Đối tác của chúng tôi</h4>
+        <ul>
+          <li>Thông tin đối tác</li>
+          <li>Tuyển dụng</li>
+          <li>Đăng ký quảng cáo</li>
+          <li>Liên kết hợp tác</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
