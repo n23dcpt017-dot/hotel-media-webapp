@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hỗ trợ & Tư vấn - 3CE Room Search</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      font-weight: normal;
+    }
+
+    nav a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search input {
+      padding: 6px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #fff;
+      min-width: 280px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content p {
+      margin: 0;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .dropdown-content p:hover {
+      background-color: #f1f1f1;
+    }
+
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 40px;
+    }
+
+    .contact-icons div {
+      text-align: center;
+    }
+
+    .contact-icons img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 10px;
+    }
+
+    .contact-info {
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+
+    footer {
+      background-color: #eee;
+      padding: 30px 20px;
+    }
+
+    .footer-columns {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    footer li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo">3CE <span>Room Search</span></div>
+      <nav>
+        <a href="#">Trang Chủ</a>
+        <a href="#">Tin Tức</a>
+        <a href="#">Giới Thiệu</a>
+        <a href="#">Liên Hệ</a>
+      </nav>
+      <div class="search">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <div class="dropdown">
+          <span class="icon">🔔</span>
+          <div class="dropdown-content">
+            <p>Chị Bình đã trả lời một bình luận</p>
+            <p>Chị Linh đã đánh giá 1 địa điểm</p>
+            <p>Video: Khám phá một bữa ăn buffet tại Sunrise Hotel</p>
+            <p>Livestream Tour điểm đến số 1</p>
+          </div>
+        </div>
+        <span class="icon">👤</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>TỔNG ĐÀI TƯ VẤN VÀ HỖ TRỢ TRỰC TUYẾN</h1>
+    <div class="contact-icons">
+      <div>
+        <img src="email-icon.png" alt="Email" />
+        <p>EMAIL</p>
+      </div>
+      <div>
+        <img src="phone-icon.png" alt="Tổng đài" />
+        <p>TỔNG ĐÀI TƯ VẤN</p>
+      </div>
+      <div>
+        <img src="web-icon.png" alt="Website" />
+        <p>WEBSITE</p>
+      </div>
+    </div>
+
+    <div class="contact-info">
+      <strong>Liên hệ</strong><br />
+      Công ty cổ phần công nghệ 3CE (Technology JSC)<br />
+      Trụ sở: Tầng 6, khu phố 6 Tân Đông 4, phường Bình Phú, Quận 6, TP. HCM<br />
+      Chi nhánh: Tầng 6, tòa nhà The Sun Avenue, TP. HCM<br />
+      Số 11 Xô Viết Nghệ Tĩnh, phường Lê Quyến, TP Đà Nẵng
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h4>Trợ giúp</h4>
+        <ul>
+          <li>Trung tâm trợ giúp</li>
+          <li>Chính sách bảo mật</li>
+          <li>Chính sách về cookie</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Công ty</h4>
+        <ul>
+          <li>Điều khoản sử dụng</li>
+          <li>Hướng dẫn quảng cáo</li>
+          <li>Tuyển dụng</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Đối tác của chúng tôi</h4>
+        <ul>
+          <li>Chương trình hợp tác</li>
+          <li>Quyền lợi đối tác</li>
+          <li>Liên kết hợp tác</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
