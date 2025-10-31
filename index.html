@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="3CE Room Search - Find the perfect hotel room">
+  <title>3CE Room Search - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .topbar {
+      background-color: #444;
+      color: #fff;
+      padding: 6px 20px;
+      font-size: 12px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      font-weight: normal;
+      margin-left: 4px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ccc;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .actions input {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: none;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #333;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-size: cover;
+      background-position: center;
+      height: 400px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+
+    .search-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .search-form input, .search-form select {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .search-btn {
+      background: #000;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-btn:hover {
+      background: #333;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 280px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      color: #2e7d32;
+      margin: 15px 0 8px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      font-size: 14px;
+      padding: 0 15px 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #000;
+      margin: 10px 0;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 50px 20px 30px;
+      border-top: 1px solid #eee;
+    }
+
+    .footer-columns {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    footer h4 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    footer li {
+      margin-bottom: 10px;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #000;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-columns {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    Best prices guaranteed • Free cancellation • 24/7 customer support
+  </div>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <div class="logo">3CE<span>Room Search</span></div>
+    <nav>
+      <a href="#">Hotels</a>
+      <a href="#">Deals</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="actions">
+      <input type="text" placeholder="Search...">
+      <button class="btn" onclick="window.location.href='signup.html'">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay">
+      <h1>Find Your Perfect Stay</h1>
+      <p>Discover amazing hotels at unbeatable prices with 3CE Room Search</p>
+      <div class="search-box">
+        <div class="search-form">
+          <input type="text" placeholder="Destination">
+          <input type="date" placeholder="Check-in">
+          <input type="date" placeholder="Check-out">
+          <select>
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4+ Guests</option>
+          </select>
+          <button class="search-btn">Search Rooms</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Hotels -->
+  <section class="cards">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80" alt="Luxury Suite">
+      <h3>Luxury Suite</h3>
+      <div class="price">$299/night</div>
+      <p>Spacious suite with ocean view, king bed, and premium amenities</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80" alt="Business Class">
+      <h3>Business Class</h3>
+      <div class="price">$189/night</div>
+      <p>Perfect for business travelers with workspace and high-speed internet</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80" alt="Family Room">
+      <h3>Family Room</h3>
+      <div class="price">$229/night</div>
+      <p>Comfortable family accommodation with extra beds and kid-friendly amenities</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80" alt="Budget Friendly">
+      <h3>Budget Friendly</h3>
+      <div class="price">$99/night</div>
+      <p>Affordable comfort with all essential amenities for the budget-conscious traveler</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h4>3CE Room Search</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="#">New York</a></li>
+          <li><a href="#">London</a></li>
+          <li><a href="#">Tokyo</a></li>
+          <li><a href="#">Paris</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Partner With Us</h4>
+        <ul>
+          <li><a href="#">List Your Property</a></li>
+          <li><a href="#">Partnerships</a></li>
+          <li><a href="#">Affiliate Program</a></li>
+          <li><a href="#">Travel Agents</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="copyright">
+      &copy; 2024 3CE Room Search. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Set minimum date for check-in to today
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('input[type="date"]').min = today;
+    
+    // Simple search functionality
+    document.querySelector('.search-btn').addEventListener('click', function() {
+      const destination = document.querySelector('input[placeholder="Destination"]').value;
+      if (destination) {
+        alert(`Searching for hotels in ${destination}...`);
+      } else {
+        alert('Please enter a destination');
+      }
+    });
+  </script>
+</body>
+</html>
