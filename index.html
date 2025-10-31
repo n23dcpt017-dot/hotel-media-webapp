@@ -3,394 +3,220 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="3CE Room Search - Tìm kiếm khách sạn tốt nhất">
-  <title>3CE Room Search - Trang Chủ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>HOTEL MEDIA - 3CE Room Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #1C1F21;
+      background-color: #fff;
       color: #333;
-      line-height: 1.6;
     }
 
-    .header {
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .navbar {
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 40px;
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: 700;
-      color: #000;
+      font-size: 20px;
+      font-weight: bold;
     }
 
-    .logo span {
-      color: #666;
-      font-weight: 400;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-    }
-
-    .nav-links a {
+    nav a {
+      margin: 0 10px;
+      color: #fff;
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      font-size: 16px;
-      transition: color 0.3s ease;
     }
 
-    .nav-links a:hover {
-      color: #007bff;
-    }
-
-    .search-bar {
+    .icons {
       display: flex;
       align-items: center;
-      background: #f8f9fa;
-      border-radius: 25px;
-      padding: 8px 20px;
       gap: 10px;
     }
 
-    .search-bar input {
+    .icons input {
+      padding: 6px;
+      border-radius: 4px;
       border: none;
-      background: none;
-      outline: none;
-      font-size: 14px;
-      width: 200px;
-    }
-
-    .search-bar i {
-      color: #666;
     }
 
     .hero {
-      margin-top: 80px;
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      position: relative;
+    }
+
+    .hero img {
+      width: 100%;
+      height: auto;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
       color: white;
-      padding: 80px 40px;
+    }
+
+    .overlay h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .overlay p {
+      font-size: 20px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+      gap: 20px;
+    }
+
+    .card {
+      width: 220px;
       text-align: center;
     }
 
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .hero h2 {
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 40px;
-      opacity: 0.9;
-    }
-
-    .hotel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      padding: 60px 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .hotel-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .hotel-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-
-    .hotel-image {
+    .card img {
       width: 100%;
-      height: 200px;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      color: green;
+      margin-top: 10px;
+    }
+
+    .card p {
       font-size: 14px;
     }
 
-    .hotel-content {
-      padding: 20px;
-    }
-
-    .hotel-content h3 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #2c5aa0;
-    }
-
-    .hotel-content p {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .footer {
-      background: #f8f9fa;
-      padding: 60px 40px 30px;
-      margin-top: 40px;
+    footer {
+      background-color: #eee;
+      padding: 30px 20px;
     }
 
     .footer-columns {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
-    .footer-column h4 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #333;
+    footer h4 {
+      margin-bottom: 10px;
     }
 
-    .footer-column ul {
+    footer ul {
       list-style: none;
+      padding: 0;
     }
 
-    .footer-column li {
-      margin-bottom: 12px;
+    footer li {
+      margin-bottom: 6px;
     }
 
-    .footer-column a {
-      text-decoration: none;
-      color: #666;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
-
-    .footer-column a:hover {
-      color: #007bff;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
-      color: #888;
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
-      }
-
-      .nav-links {
-        gap: 20px;
-      }
-
-      .search-bar {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .hero {
-        padding: 60px 20px;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero h2 {
-        font-size: 1.2rem;
-      }
-
-      .hotel-grid {
-        padding: 40px 20px;
-        grid-template-columns: 1fr;
-      }
+    .footer-icons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="navbar">
-      <div class="logo">3CE<span> Room Search</span></div>
-      <nav class="nav-links">
-        <a href="#">Trang Chủ</a>
-        <a href="#">Giới Thiệu</a>
-        <a href="#">Liên Hệ</a>
-      </nav>
-      <div class="search-bar">
-        <input type="text" placeholder="Tìm kiếm...">
-        <i>🔍</i>
-      </div>
+  <header>
+    <div class="logo">3CE Room Search</div>
+    <nav>
+      <a href="#">Trang Chủ</a>
+      <a href="#">Tin Tức</a>
+      <a href="#">Giới Thiệu</a>
+      <a href="#">Liên Hệ</a>
+    </nav>
+    <div class="icons">
+      <input type="text" placeholder="Tìm kiếm..." />
+      <a href="#"><span>🔔</span></a>
+      <a href="signup.html"><span>👤</span></a>
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-content">
+    <img src="images/background.jpg" alt="Hotel Background" />
+    <div class="overlay">
       <h1>HOTEL MEDIA</h1>
-      <h2>Hotel & Room Search</h2>
+      <p>Hotel & Room Search</p>
     </div>
   </section>
 
-  <!-- Hotel Listings -->
-  <section class="hotel-grid">
-    <div class="hotel-card">
-      <div class="hotel-image">
-        [Ảnh Khách sạn Hạ Long]
-      </div>
-      <div class="hotel-content">
-        <h3>Khách sạn giá rẻ ở Hạ Long</h3>
-        <p>Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm...</p>
-      </div>
+  <section class="cards">
+    <div class="card">
+      <img src="images/halong.jpg" alt="Hạ Long" />
+      <h3>Khách sạn giá rẻ ở Hạ Long</h3>
+      <p>Các khách sạn giá rẻ, tiện nghi, phù hợp với túi tiền của bạn.</p>
     </div>
-
-    <div class="hotel-card">
-      <div class="hotel-image">
-        [Ảnh Căn hộ Đà Nẵng]
-      </div>
-      <div class="hotel-content">
-        <h3>Căn hộ dịch vụ ở Đà Nẵng</h3>
-        <p>Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</p>
-      </div>
+    <div class="card">
+      <img src="images/danang.jpg" alt="Đà Nẵng" />
+      <h3>Cảnh hội dịch vụ ở Đà Nẵng</h3>
+      <p>Các dịch vụ tiện ích, đa dạng, đáp ứng mọi nhu cầu của bạn.</p>
     </div>
-
-    <div class="hotel-card">
-      <div class="hotel-image">
-        [Ảnh Homestay Hội An]
-      </div>
-      <div class="hotel-content">
-        <h3>Homestay giá tốt ở Hội An</h3>
-        <p>Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</p>
-      </div>
+    <div class="card">
+      <img src="images/hoian.jpg" alt="Hội An" />
+      <h3>Homestay giá tốt ở Hội An</h3>
+      <p>Các homestay giá tốt, tiện nghi, phù hợp với mọi đối tượng khách hàng.</p>
     </div>
-
-    <div class="hotel-card">
-      <div class="hotel-image">
-        [Ảnh Dịch vụ Yên Bái]
-      </div>
-      <div class="hotel-content">
-        <h3>Dịch vụ nơi ở gần khu du lịch Yên Bái</h3>
-        <p>Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí, bếp chung, cùng dịch vụ phòng.</p>
-      </div>
+    <div class="card">
+      <img src="images/yenbai.jpg" alt="Yên Bái" />
+      <h3>Điểm du lịch nổi ở gần khu du lịch Yên Bái</h3>
+      <p>Các điểm du lịch nổi bật, hấp dẫn, phù hợp cho các chuyến đi ngắn ngày.</p>
     </div>
-
-    <div class="hotel-card">
-      <div class="hotel-image">
-        [Ảnh Resort Ninh Bình]
-      </div>
-      <div class="hotel-content">
-        <h3>Resort chất lượng tại Ninh Bình</h3>
-        <p>Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí và phòng chờ chung</p>
-      </div>
+    <div class="card">
+      <img src="images/ninhbinh.jpg" alt="Ninh Bình" />
+      <h3>Resort chất lượng cao ở Ninh Bình</h3>
+      <p>Các resort chất lượng cao, tiện nghi, phù hợp cho các kỳ nghỉ dưỡng.</p>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
+  <footer>
     <div class="footer-columns">
-      <div class="footer-column">
+      <div>
         <h4>Trợ giúp</h4>
         <ul>
-          <li><a href="#">Trung tâm trợ giúp</a></li>
-          <li><a href="#">Câu hỏi thường gặp</a></li>
-          <li><a href="#">Chính sách bảo mật</a></li>
-          <li><a href="#">Chính sách về cookie</a></li>
+          <li>Trung tâm trợ giúp</li>
+          <li>Câu hỏi thường gặp</li>
+          <li>Chính sách bảo mật</li>
+          <li>Chính sách về cookie</li>
         </ul>
       </div>
-
-      <div class="footer-column">
-        <h4>Điều khoản</h4>
-        <ul>
-          <li><a href="#">Điều khoản sử dụng</a></li>
-          <li><a href="#">Quản lý thiết lập cookie</a></li>
-          <li><a href="#">Đạo luật Dịch vụ số (EU)</a></li>
-          <li><a href="#">Nguyên tắc và báo cáo nội dung</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
+      <div>
         <h4>Công ty</h4>
         <ul>
-          <li><a href="#">Về chúng tôi</a></li>
-          <li><a href="#">Tuyển dụng</a></li>
-          <li><a href="#">Báo chí</a></li>
-          <li><a href="#">Nhật ký nâng cấp</a></li>
+          <li>Điều khoản sử dụng</li>
+          <li>Quản lý thiết lập cookie</li>
+          <li>Đạo luật Dịch vụ số EU</li>
+          <li>Nguyên tắc về bảo cao nội dung</li>
         </ul>
       </div>
-
-      <div class="footer-column">
+      <div>
         <h4>Đối tác của chúng tôi</h4>
         <ul>
-          <li><a href="#">Cổng thông tin đối tác</a></li>
-          <li><a href="#">Partner Hub</a></li>
-          <li><a href="#">Quảng cáo</a></li>
-          <li><a href="#">Đối tác liên kết</a></li>
+          <li>Cổng thông tin đối tác</li>
+          <li>Partner Hub</li>
+          <li>Quảng cáo!</li>
+          <li>Đối tác liên kết</li>
         </ul>
       </div>
     </div>
-
-    <div class="copyright">
-      &copy; 2024 3CE Room Search. Tất cả quyền được bảo lưu.
+    <div class="footer-icons">
+      <span style="color: red;">📢</span>
+      <span style="color: green;">📞</span>
+      <span style="color: green;">💬</span>
     </div>
   </footer>
-
-  <script>
-    // Thêm ảnh thực tế từ Unsplash
-    document.addEventListener('DOMContentLoaded', function() {
-      const hotelImages = [
-        'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80',
-        'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80',
-        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80',
-        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80',
-        'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80'
-      ];
-
-      const imageContainers = document.querySelectorAll('.hotel-image');
-      imageContainers.forEach((container, index) => {
-        container.innerHTML = `<img src="${hotelImages[index]}" alt="Hotel Image" style="width:100%;height:100%;object-fit:cover;">`;
-      });
-    });
-  </script>
 </body>
 </html>
