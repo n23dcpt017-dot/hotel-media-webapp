@@ -47,29 +47,24 @@
 
     .hero {
       position: relative;
-    }
-
-    .hero img {
-      width: 100%;
-      height: auto;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      height: 400px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       color: white;
     }
 
-    .overlay h1 {
+    .hero h1 {
       font-size: 48px;
       font-weight: bold;
+      margin: 0;
     }
 
-    .overlay p {
+    .hero p {
       font-size: 20px;
+      margin: 10px 0 0 0;
     }
 
     .cards {
@@ -85,18 +80,28 @@
       text-align: center;
     }
 
-    .card img {
+    .card-image {
       width: 100%;
+      height: 150px;
+      background: #f0f0f0;
       border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
 
     .card h3 {
-      color: green;
+      color: #2e7d32;
       margin-top: 10px;
+      font-size: 16px;
     }
 
     .card p {
       font-size: 14px;
+      color: #666;
     }
 
     footer {
@@ -108,25 +113,52 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     footer h4 {
       margin-bottom: 10px;
+      font-size: 16px;
     }
 
     footer ul {
       list-style: none;
       padding: 0;
+      font-size: 14px;
     }
 
     footer li {
       margin-bottom: 6px;
+      color: #666;
     }
 
     .footer-icons {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       margin-top: 20px;
+      gap: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+      }
+      
+      .footer-columns {
+        flex-direction: column;
+        gap: 20px;
+      }
     }
   </style>
 </head>
@@ -147,8 +179,7 @@
   </header>
 
   <section class="hero">
-    <img src="images/background.jpg" alt="Hotel Background" />
-    <div class="overlay">
+    <div>
       <h1>HOTEL MEDIA</h1>
       <p>Hotel & Room Search</p>
     </div>
@@ -156,29 +187,29 @@
 
   <section class="cards">
     <div class="card">
-      <img src="images/halong.jpg" alt="Hạ Long" />
+      <div class="card-image">[Ảnh Hạ Long]</div>
       <h3>Khách sạn giá rẻ ở Hạ Long</h3>
-      <p>Các khách sạn giá rẻ, tiện nghi, phù hợp với túi tiền của bạn.</p>
+      <p>Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm...</p>
     </div>
     <div class="card">
-      <img src="images/danang.jpg" alt="Đà Nẵng" />
-      <h3>Cảnh hội dịch vụ ở Đà Nẵng</h3>
-      <p>Các dịch vụ tiện ích, đa dạng, đáp ứng mọi nhu cầu của bạn.</p>
+      <div class="card-image">[Ảnh Đà Nẵng]</div>
+      <h3>Căn hộ dịch vụ ở Đà Nẵng</h3>
+      <p>Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</p>
     </div>
     <div class="card">
-      <img src="images/hoian.jpg" alt="Hội An" />
+      <div class="card-image">[Ảnh Hội An]</div>
       <h3>Homestay giá tốt ở Hội An</h3>
-      <p>Các homestay giá tốt, tiện nghi, phù hợp với mọi đối tượng khách hàng.</p>
+      <p>Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</p>
     </div>
     <div class="card">
-      <img src="images/yenbai.jpg" alt="Yên Bái" />
-      <h3>Điểm du lịch nổi ở gần khu du lịch Yên Bái</h3>
-      <p>Các điểm du lịch nổi bật, hấp dẫn, phù hợp cho các chuyến đi ngắn ngày.</p>
+      <div class="card-image">[Ảnh Yên Bái]</div>
+      <h3>Dịch vụ nơi ở gần khu du lịch Yên Bái</h3>
+      <p>Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí...</p>
     </div>
     <div class="card">
-      <img src="images/ninhbinh.jpg" alt="Ninh Bình" />
-      <h3>Resort chất lượng cao ở Ninh Bình</h3>
-      <p>Các resort chất lượng cao, tiện nghi, phù hợp cho các kỳ nghỉ dưỡng.</p>
+      <div class="card-image">[Ảnh Ninh Bình]</div>
+      <h3>Resort chất lượng tại Ninh Bình</h3>
+      <p>Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí...</p>
     </div>
   </section>
 
@@ -198,8 +229,8 @@
         <ul>
           <li>Điều khoản sử dụng</li>
           <li>Quản lý thiết lập cookie</li>
-          <li>Đạo luật Dịch vụ số EU</li>
-          <li>Nguyên tắc về bảo cao nội dung</li>
+          <li>Đạo luật Dịch vụ số (EU)</li>
+          <li>Nguyên tắc và báo cáo nội dung</li>
         </ul>
       </div>
       <div>
@@ -207,16 +238,34 @@
         <ul>
           <li>Cổng thông tin đối tác</li>
           <li>Partner Hub</li>
-          <li>Quảng cáo!</li>
+          <li>Quảng cáo</li>
           <li>Đối tác liên kết</li>
         </ul>
       </div>
     </div>
     <div class="footer-icons">
-      <span style="color: red;">📢</span>
-      <span style="color: green;">📞</span>
-      <span style="color: green;">💬</span>
+      <span>📢</span>
+      <span>📞</span>
+      <span>💬</span>
     </div>
   </footer>
+
+  <script>
+    // Thêm ảnh tự động từ Unsplash
+    document.addEventListener('DOMContentLoaded', function() {
+      const imageUrls = [
+        'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.1&auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.1&auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.1&auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.1&auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.1&auto=format&fit=crop&w=300&q=80'
+      ];
+
+      const cardImages = document.querySelectorAll('.card-image');
+      cardImages.forEach((card, index) => {
+        card.innerHTML = `<img src="${imageUrls[index]}" alt="Hotel" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">`;
+      });
+    });
+  </script>
 </body>
 </html>
