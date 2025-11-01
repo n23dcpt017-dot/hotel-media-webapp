@@ -171,11 +171,13 @@
     .cards {
       display: flex;
       justify-content: space-around;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 20px;
+      overflow-x: hidden;
     }
 
     .card {
+      flex: 0 0 auto;
       width: 220px;
       text-align: center;
     }
@@ -215,7 +217,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: #2e7d32;
       border: none;
       border-radius: 50%;
       width: 40px;
@@ -228,10 +230,11 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       z-index: 10;
       transition: all 0.3s ease;
+      color: white;
     }
 
     .arrow:hover {
-      background-color: #fff;
+      background-color: #1b5e20;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
 
@@ -313,7 +316,7 @@
       }
       
       .cards {
-        justify-content: center;
+        justify-content: flex-start;
       }
       
       .footer-columns {
