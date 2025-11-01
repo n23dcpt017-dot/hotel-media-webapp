@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 4px 4px #00000040;
-  font-family: "Inter-ExtraBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 800;
   color: #fff8eb;
   font-size: 90px;
@@ -63,7 +63,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 5px 2.3px #00000040;
-  font-family: "Inter-ExtraBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 800;
   color: #00000033;
   font-size: 22px;
@@ -114,7 +114,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 6px 3px #0c0c0c40;
-  font-family: "Inter-Light", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 300;
   color: #ffffff;
   font-size: 16px;
@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Jaro-Regular", Helvetica;
+  font-family: "Jaro", Helvetica;
   font-weight: 400;
   color: #ffffff;
   font-size: 48px;
@@ -157,7 +157,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Jaldi-Bold", Helvetica;
+  font-family: "Jaldi", Helvetica;
   font-weight: 700;
   color: #ffffff;
   font-size: 32px;
@@ -183,7 +183,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 4px 4px #00000040;
-  font-family: "Jaldi-Bold", Helvetica;
+  font-family: "Jaldi", Helvetica;
   font-weight: 700;
   color: #ffffff;
   font-size: 28px;
@@ -201,7 +201,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 4px 4px #00000040;
-  font-family: "Jaldi-Bold", Helvetica;
+  font-family: "Jaldi", Helvetica;
   font-weight: 700;
   color: #ffffff;
   font-size: 28px;
@@ -219,7 +219,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 4px 4px #00000040;
-  font-family: "Jaldi-Bold", Helvetica;
+  font-family: "Jaldi", Helvetica;
   font-weight: 700;
   color: #ffffff;
   font-size: 28px;
@@ -237,7 +237,7 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 4px 4px #00000040;
-  font-family: "Jaldi-Bold", Helvetica;
+  font-family: "Jaldi", Helvetica;
   font-weight: 700;
   color: #ffffff;
   font-size: 28px;
@@ -322,7 +322,7 @@
   width: 190px;
   height: 74px;
   margin-top: -1.00px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 700;
   color: #00541c;
   font-size: 24px;
@@ -372,7 +372,7 @@
   align-self: stretch;
   height: 98px;
   margin-top: -1.00px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 700;
   color: #00541c;
   font-size: 24px;
@@ -421,7 +421,7 @@
   width: 206px;
   height: 95px;
   margin-top: -1.00px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 700;
   color: #00541c;
   font-size: 24px;
@@ -473,7 +473,7 @@
   height: 96px;
   margin-top: -1.00px;
   margin-bottom: -17.00px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 700;
   color: #00541c;
   font-size: 24px;
@@ -521,7 +521,7 @@
   justify-content: center;
   align-self: stretch;
   margin-top: -1.00px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 700;
   color: #00541c;
   font-size: 24px;
@@ -557,7 +557,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
@@ -570,7 +570,6 @@
 }
 
 .TRANG-CH-index-html .text-wrapper-7 {
-  font-family: "Inter-ExtraLight", Helvetica;
   font-weight: 200;
 }
 
@@ -582,7 +581,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-ExtraLight", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 200;
   color: #000000;
   font-size: 13px;
@@ -598,7 +597,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-SemiBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
@@ -618,7 +617,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-SemiBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
@@ -634,7 +633,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Regular", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 16px;
@@ -651,7 +650,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Regular", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 16px;
@@ -668,7 +667,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Regular", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 16px;
@@ -685,7 +684,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Regular", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 16px;
@@ -702,7 +701,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter-Regular", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 16px;
