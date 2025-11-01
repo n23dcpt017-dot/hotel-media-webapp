@@ -152,9 +152,8 @@
       margin: 10px 0 0 0;
     }
 
-    /* Cards Section với shape và mũi tên */
+    /* Cards Section - ĐÃ SỬA THEO HÌNH ẢNH */
     .cards-section {
-      position: relative;
       padding: 40px 20px;
       max-width: 1200px;
       margin: 0 auto;
@@ -165,21 +164,21 @@
       border-radius: 12px;
       padding: 30px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: relative;
     }
 
     .cards {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: nowrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      overflow-x: hidden;
+      justify-content: center;
     }
 
     .card {
-      flex: 0 0 auto;
-      width: 220px;
       text-align: center;
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .card-image {
@@ -205,45 +204,13 @@
       color: #2e7d32;
       margin-top: 10px;
       font-size: 16px;
+      line-height: 1.3;
     }
 
     .card p {
       font-size: 14px;
       color: #666;
-    }
-
-    /* Navigation arrows */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: #2e7d32;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 10;
-      transition: all 0.3s ease;
-      color: white;
-    }
-
-    .arrow:hover {
-      background-color: #1b5e20;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    .arrow-left {
-      left: 10px;
-    }
-
-    .arrow-right {
-      right: 10px;
+      line-height: 1.4;
     }
 
     footer {
@@ -316,17 +283,12 @@
       }
       
       .cards {
-        justify-content: flex-start;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
       
       .footer-columns {
         flex-direction: column;
         gap: 20px;
-      }
-      
-      .arrow {
-        width: 35px;
-        height: 35px;
       }
     }
   </style>
@@ -363,10 +325,9 @@
     </div>
   </section>
 
-  <!-- Cards Section với shape và mũi tên -->
+  <!-- Cards Section - ĐÃ SỬA THEO HÌNH ẢNH -->
   <section class="cards-section">
     <div class="cards-container">
-      <button class="arrow arrow-left">←</button>
       <div class="cards">
         <div class="card">
           <div class="card-image">
@@ -404,7 +365,6 @@
           <p>Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí...</p>
         </div>
       </div>
-      <button class="arrow arrow-right">→</button>
     </div>
   </section>
 
@@ -444,30 +404,5 @@
       <span>💬</span>
     </div>
   </footer>
-
-  <script>
-    // JavaScript để xử lý chức năng mũi tên
-    document.addEventListener('DOMContentLoaded', function() {
-      const cardsContainer = document.querySelector('.cards');
-      const arrowLeft = document.querySelector('.arrow-left');
-      const arrowRight = document.querySelector('.arrow-right');
-      
-      // Xử lý sự kiện cho mũi tên trái
-      arrowLeft.addEventListener('click', function() {
-        cardsContainer.scrollBy({
-          left: -300,
-          behavior: 'smooth'
-        });
-      });
-      
-      // Xử lý sự kiện cho mũi tên phải
-      arrowRight.addEventListener('click', function() {
-        cardsContainer.scrollBy({
-          left: 300,
-          behavior: 'smooth'
-        });
-      });
-    });
-  </script>
 </body>
 </html>
