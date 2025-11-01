@@ -121,4 +121,90 @@
     .disclaimer {
       margin-top: 20px;
       font-size: 12px;
-      color
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .disclaimer a {
+      font-weight: 600;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .disclaimer a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+      
+      h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span class="logo">3CE</span> Room Search</h1>
+    <h2>Create an account</h2>
+    <p class="subtitle">Enter your email to sign up for this website</p>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="email@domain.com" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Create a password" required minlength="6" />
+      </div>
+      
+      <button type="submit">Sign up</button>
+    </form>
+
+    <a href="index.html" class="home-link">← Go to Home Page</a>
+    
+    <p class="disclaimer">
+      By clicking Sign up, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fullname = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Basic validation
+      if (fullname && email && password.length >= 6) {
+        // Here you would typically send data to your backend
+        console.log('Sign up attempt:', { fullname, email, password });
+        alert('Thank you for signing up! Please check your email to verify your account.');
+        
+        // Reset form
+        this.reset();
+      } else {
+        alert('Please fill in all fields correctly. Password must be at least 6 characters.');
+      }
+    });
+  </script>
+</body>
+</html>
