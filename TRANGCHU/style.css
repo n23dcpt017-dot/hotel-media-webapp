@@ -1,9 +1,10 @@
 .TRANG-CH-index-html {
   background-color: #ffffff;
-  width: 100%;
-  min-width: 1440px;
-  min-height: 960px;
+  width: 1440px; /* SỬA LẠI: Đặt chiều rộng cố định */
+  margin: 0 auto; /* SỬA LẠI: Tự động căn giữa */
+  min-height: 1080px; /* SỬA LẠI: Tăng chiều cao */
   position: relative;
+  /* Đã xóa: width: 100% và min-width: 1440px */
 }
 
 .TRANG-CH-index-html .frame {
@@ -248,7 +249,7 @@
 
 .TRANG-CH-index-html .rectangle-4 {
   position: absolute;
-  top: 424px;
+  top: 534px;  
   left: 46px;
   width: 1354px;
   height: 366px;
@@ -258,7 +259,7 @@
 
 .TRANG-CH-index-html .rectangle-5 {
   position: absolute;
-  top: 829px;
+  top: 939px;  
   left: 0;
   width: 1440px;
   height: 131px;
@@ -281,7 +282,7 @@
   align-items: flex-start;
   gap: 32px 32px;
   position: absolute;
-  top: 452px;
+  top: 562px;  
   left: 86px;
 }
 
@@ -535,7 +536,7 @@
 
 .TRANG-CH-index-html .next-page {
   position: absolute;
-  top: 498px;
+  top: 608px;  
   left: 8px;
   width: 61px;
   height: 61px;
@@ -543,7 +544,7 @@
 
 .TRANG-CH-index-html .next-page-2 {
   position: absolute;
-  top: 496px;
+  top: 606px;  
   left: 1376px;
   width: 61px;
   height: 61px;
@@ -551,12 +552,10 @@
 
 .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr {
   position: absolute;
-  top: 841px;
+  top: 950px;  
   left: 274px;
   height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Đã xóa: display: flex, align-items: center, justify-content: center */
   font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
@@ -575,12 +574,10 @@
 
 .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu {
   position: absolute;
-  top: 861px;
+  top: 950px;  
   left: 527px;
   height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Đã xóa: display: flex, align-items: center, justify-content: center */
   font-family: "Inter", Helvetica;
   font-weight: 200;
   color: #000000;
@@ -591,12 +588,10 @@
 
 .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i {
   position: absolute;
-  top: 840px;
+  top: 950px;  
   left: 849px;
   height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Đã xóa: display: flex, align-items: center, justify-content: center */
   font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
@@ -611,12 +606,10 @@
 
 .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i {
   position: absolute;
-  top: 841px;
+  top: 950px;  
   left: 1031px;
   height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Đã xóa: display: flex, align-items: center, justify-content: center */
   font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
@@ -627,7 +620,7 @@
 
 .TRANG-CH-index-html .c-c-l-a-ch-n-l-t-ng {
   position: absolute;
-  top: 694px;
+  top: 804px;  
   left: 93px;
   height: 72px;
   display: flex;
@@ -644,7 +637,7 @@
 
 .TRANG-CH-index-html .du-kh-ch-d-d-ng-ti-p {
   position: absolute;
-  top: 696px;
+  top: 806px;  
   left: 369px;
   height: 72px;
   display: flex;
@@ -661,7 +654,7 @@
 
 .TRANG-CH-index-html .homestay-cung-c-p-c {
   position: absolute;
-  top: 695px;
+  top: 805px;  
   left: 625px;
   height: 72px;
   display: flex;
@@ -678,7 +671,7 @@
 
 .TRANG-CH-index-html .cung-c-p-ch-ngh-c-xe {
   position: absolute;
-  top: 695px;
+  top: 805px;  
   left: 872px;
   height: 72px;
   display: flex;
@@ -695,7 +688,7 @@
 
 .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i {
   position: absolute;
-  top: 696px;
+  top: 806px;  
   left: 1144px;
   height: 72px;
   display: flex;
@@ -712,7 +705,7 @@
 
 .TRANG-CH-index-html .unread-messages {
   position: absolute;
-  top: 890px;
+  top: 1000px;  
   left: 1365px;
   width: 52px;
   height: 52px;
@@ -720,7 +713,7 @@
 
 .TRANG-CH-index-html .ringer-volume {
   position: absolute;
-  top: 888px;
+  top: 998px;  
   left: 1288px;
   width: 52px;
   height: 52px;
@@ -728,7 +721,7 @@
 
 .TRANG-CH-index-html .record {
   position: absolute;
-  top: 882px;
+  top: 992px;  
   left: 16px;
   width: 53px;
   height: 53px;
@@ -736,7 +729,7 @@
 
 .TRANG-CH-index-html .level {
   position: absolute;
-  top: 873px;
+  top: 983px;  
   left: 43px;
   width: 33px;
   height: 33px;
