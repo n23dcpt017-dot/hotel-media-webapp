@@ -1,17 +1,16 @@
 .TRANG-CH-index-html {
   background-color: #ffffff;
   width: 100%;
-  /* Xóa dòng này: min-width: 1440px; */
+  min-width: 1440px;
   min-height: 960px;
   position: relative;
-  overflow-x: hidden; /* Thêm dòng này */
 }
 
 .TRANG-CH-index-html .frame {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* Thay 1440px bằng 100% */
+  width: 1440px;
   height: 514px;
   background-color: #1c1f21;
   overflow: hidden;
@@ -20,13 +19,13 @@
 .TRANG-CH-index-html .ti-xung {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%); /* Thêm để căn giữa */
-  width: 100%; /* Thay 1440px bằng 100% */
+  left: calc(50.00% - 720px);
+  width: 1440px;
   height: 514px;
   aspect-ratio: 0.67;
   object-fit: cover;
 }
+
 .TRANG-CH-index-html .text-wrapper {
   position: absolute;
   top: 167px;
@@ -50,7 +49,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 1440px;
   height: 84px;
   background-color: #2c2c2c;
 }
@@ -64,9 +63,9 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0px 5px 2.3px #00000040;
-  font-family: "Inter-ExtraBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 800;
-  color: #ffffff; /* Thay #00000033 bằng #ffffff */
+  color: #00000033;
   font-size: 22px;
   text-align: center;
   letter-spacing: 0;
@@ -78,7 +77,7 @@
   position: absolute;
   top: 84px;
   left: 0;
-  width: 100%;
+  width: 1440px;
   height: 38px;
   background-color: #2d2828cc;
 }
@@ -553,74 +552,77 @@
 .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr {
   position: absolute;
   top: 841px;
-  left: 150px; /* Điều chỉnh vị trí */
+  left: 274px;
   height: 100px;
   display: flex;
-  align-items: flex-start; /* Thay center bằng flex-start */
-  justify-content: flex-start; /* Thay center bằng flex-start */
-  flex-direction: column; /* Thêm dòng này */
-  font-family: "Inter-Bold", Helvetica;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19.5px;
-  width: 200px; /* Thêm width cố định */
+}
+
+.TRANG-CH-index-html .span {
+  font-weight: 700;
+}
+
+.TRANG-CH-index-html .text-wrapper-7 {
+  font-weight: 200;
 }
 
 .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu {
   position: absolute;
   top: 861px;
-  left: 150px; /* Cùng vị trí với TRỢ GIÚP */
+  left: 527px;
   height: 80px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  font-family: "Inter-ExtraLight", Helvetica;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", Helvetica;
   font-weight: 200;
   color: #000000;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19.5px;
-  width: 200px;
-  margin-top: 20px; /* Thêm khoảng cách */
 }
 
 .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i {
   position: absolute;
-  top: 841px; /* Về đầu cột */
-  left: 400px; /* Vị trí mới cho cột thứ 2 */
+  top: 840px;
+  left: 849px;
   height: 100px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  font-family: "Inter-SemiBold", Helvetica;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19.5px;
-  width: 200px;
+}
+
+.TRANG-CH-index-html .text-wrapper-8 {
+  font-weight: 600;
 }
 
 .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i {
   position: absolute;
-  top: 841px; /* Về đầu cột */
-  left: 650px; /* Vị trí mới cho cột thứ 3 */
+  top: 841px;
+  left: 1031px;
   height: 100px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  font-family: "Inter-SemiBold", Helvetica;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", Helvetica;
   font-weight: 400;
   color: #000000;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19.5px;
-  width: 200px;
 }
 
 .TRANG-CH-index-html .c-c-l-a-ch-n-l-t-ng {
