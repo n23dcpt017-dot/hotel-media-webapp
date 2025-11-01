@@ -78,17 +78,19 @@
     }
 
     .icon-button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  text-decoration: none; 
+}
     }
 
     /* Second Header với navigation */
@@ -284,7 +286,7 @@
     <div class="top-icons">
       <button class="language-selector">🇻🇳 Tiếng Việt</button>
       <button class="icon-button">🔔</button>
-      <button class="icon-button" onclick="window.location.href='signup.html'">👤</button>
+    <a href="signup.html" class="icon-button">👤</a>
     </div>
   </header>
 
