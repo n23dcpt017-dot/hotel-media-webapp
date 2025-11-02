@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <title>3CE Room Search - Tin Tức</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tin Tức - 3CE Room Search</title>
     <style>
-        @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
         @import url("https://fonts.googleapis.com/css?family=Inter:300,800,400,700,200|Jaro:400|Jaldi:700");
-        
         * {
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
-        html,
-        body {
+        html, body {
             margin: 0px;
             height: 100%;
         }
-        button:focus-visible {
-            outline: 2px solid #4a90e2 !important;
-            outline: -webkit-focus-ring-color auto 5px !important;
-        }
         a {
             text-decoration: none;
+            color: inherit;
         }
 
-        .DANH-SCH-BI-VIT-news {
+        .news-page {
             background-color: #ffffff;
-            overflow: hidden;
-            width: 100%;
-            min-width: 1440px;
-            height: 960px;
+            width: 1440px;
+            margin: 0 auto;
+            min-height: 1080px;
             position: relative;
         }
 
-        .DANH-SCH-BI-VIT-news .frame {
+        /* Header Section */
+        .header-frame {
             position: absolute;
             top: 0;
             left: 0;
             width: 1440px;
-            height: 112px;
+            height: 84px;
+            background-color: #2c2c2c;
+            overflow: hidden;
+        }
+
+        .rectangle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1440px;
+            height: 84px;
             background-color: #2c2c2c;
         }
 
-        .DANH-SCH-BI-VIT-news .rectangle {
+        .rectangle-3 {
             position: absolute;
             top: 18px;
             left: calc(50.00% - 272px);
@@ -54,7 +58,7 @@
             opacity: 0.5;
         }
 
-        .DANH-SCH-BI-VIT-news .text-wrapper {
+        .text-wrapper-2 {
             position: absolute;
             top: 24px;
             left: 498px;
@@ -71,14 +75,20 @@
             letter-spacing: 0;
             line-height: 24px;
             white-space: nowrap;
-            pointer-events: none;
-            z-index: 1;
         }
 
-        .DANH-SCH-BI-VIT-news .title {
+        .vector {
             position: absolute;
-            top: 9px;
-            left: 36px;
+            width: 3.04%;
+            height: 8.49%;
+            top: 3.66%;
+            left: 94.85%;
+        }
+
+        .logo-title {
+            position: absolute;
+            top: 4px;
+            left: 49px;
             height: 72px;
             display: flex;
             align-items: center;
@@ -92,10 +102,10 @@
             white-space: nowrap;
         }
 
-        .DANH-SCH-BI-VIT-news .div {
+        .logo-subtitle {
             position: absolute;
-            top: 29px;
-            left: 115px;
+            top: 24px;
+            left: 128px;
             height: 48px;
             display: flex;
             align-items: center;
@@ -109,1323 +119,503 @@
             white-space: nowrap;
         }
 
-        .DANH-SCH-BI-VIT-news .text-wrapper-2 {
+        .search-icon {
             position: absolute;
-            top: 455px;
-            left: 33px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-            white-space: nowrap;
+            top: 20px;
+            left: 458px;
+            width: 31px;
+            height: 31px;
+            cursor: pointer;
         }
 
-        .DANH-SCH-BI-VIT-news .text-wrapper-3 {
+        .bell-icon {
             position: absolute;
-            top: 117px;
-            left: 31px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            top: 16px;
+            left: 1307px;
+            width: 43px;
+            height: 46px;
+            cursor: pointer;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: absolute;
+            top: 84px;
+            left: 0;
+            width: 1440px;
+            height: 38px;
+            background-color: #2d2828cc;
+        }
+
+        .nav-item {
+            position: absolute;
+            top: 83px;
+            height: 42px;
             text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            color: #ffd700;
+        }
+
+        .nav-item.active {
+            background-color: #757575;
+            padding: 0 30px;
+            border-radius: 26px;
+            top: 78px;
+            height: 48px;
+            line-height: 48px;
+            border: 1px solid #000000;
+        }
+
+        .nav-home { left: 101px; }
+        .nav-news { left: 461px; }
+        .nav-about { left: 855px; }
+        .nav-contact { left: 1207px; }
+
+        /* News Content Section */
+        .section-title {
+            position: absolute;
+            top: 140px;
+            left: 31px;
             font-family: "Inter", Helvetica;
             font-weight: 700;
             color: #090909;
             font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-            white-space: nowrap;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .DANH-SCH-BI-VIT-news .text-wrapper-4 {
+        /* News Grid - Tin nổi bật */
+        .featured-news {
             position: absolute;
-            top: 666px;
-            left: 34px;
-            height: 24px;
+            top: 170px;
+            left: 46px;
+            width: 1348px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
+            gap: 32px;
+            overflow-x: auto;
+        }
+
+        .news-card-large {
+            min-width: 230px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .news-image-large {
+            width: 206px;
+            height: 154px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .news-title-large {
+            margin-top: 12px;
+            width: 190px;
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #00541c;
+            font-size: 24px;
+            line-height: 36px;
+        }
+
+        .news-description {
+            margin-top: 8px;
+            width: 196px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+        }
+
+        /* Tất cả section */
+        .all-section-title {
+            position: absolute;
+            top: 455px;
+            left: 33px;
             font-family: "Inter", Helvetica;
             font-weight: 700;
             color: #000000;
             font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-            white-space: nowrap;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .DANH-SCH-BI-VIT-news .rectangle-2 {
+        .all-news-grid {
             position: absolute;
-            top: 829px;
+            top: 485px;
+            left: 46px;
+            width: 1348px;
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .news-card-small {
+            width: 155px;
+            cursor: pointer;
+        }
+
+        .news-image-small {
+            width: 155px;
+            height: 103px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .news-title-small {
+            margin-top: 12px;
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #00541c;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        /* Video section */
+        .video-section-title {
+            position: absolute;
+            top: 666px;
+            left: 34px;
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #000000;
+            font-size: 16px;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .video-grid {
+            position: absolute;
+            top: 696px;
+            left: 46px;
+            width: 1348px;
+            display: flex;
+            gap: 32px;
+            overflow-x: auto;
+        }
+
+        .video-card {
+            min-width: 158px;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-thumbnail {
+            width: 158px;
+            height: 115px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 15px solid #00541c;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 3px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            top: 939px;
             left: 0;
             width: 1440px;
             height: 131px;
             background-color: #d2d2d2;
         }
 
-        .DANH-SCH-BI-VIT-news .alarm {
+        .footer-section {
             position: absolute;
-            top: 19px;
-            left: 1307px;
-            width: 43px;
-            height: 46px;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .small-grid {
-            display: flex;
-            flex-wrap: wrap;
-            width: 1314px;
-            height: 253px;
-            align-items: flex-start;
-            gap: 32px 32px;
-            position: absolute;
-            top: 145px;
-            left: 76px;
-        }
-
-        .DANH-SCH-BI-VIT-news .album {
-            display: flex;
-            flex-direction: column;
-            width: 230px;
-            height: 292px;
-            align-items: flex-start;
-            gap: 12px;
-            position: relative;
-            margin-bottom: -39.00px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image {
-            width: 214px;
-            height: 162px;
-            margin-left: -4.00px;
-            aspect-ratio: 1.33;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .copy {
-            width: 218px;
-            height: 86px;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .kh-ch-s-n-gi-r-h {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            width: 190px;
-            height: 74px;
-            margin-top: -1.00px;
+            top: 950px;
             font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            letter-spacing: 0;
-            line-height: 36px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-2 {
-            display: flex;
-            width: 226px;
-            height: 262px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -9.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-2:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .img {
-            position: relative;
-            align-self: stretch;
-            width: 100%;
-            margin-left: -4.00px;
-            margin-right: -4.00px;
-            aspect-ratio: 1.5;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .c-n-h-d-ch-v-n-ng-wrapper {
-            width: 210px;
-            height: 98px;
-            align-items: flex-start;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .c-n-h-d-ch-v-n-ng {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            height: 98px;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            letter-spacing: 0;
-            line-height: 36px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-3 {
-            display: flex;
-            width: 240px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -3.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-3:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-2 {
-            position: relative;
-            width: 232px;
-            height: 157px;
-            margin-left: -4.00px;
-            aspect-ratio: 1.5;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .div-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-            align-self: stretch;
-            width: 100%;
-            flex: 0 0 auto;
-        }
-
-        .DANH-SCH-BI-VIT-news .homestay-gi-t-t-h-i {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            width: 206px;
-            height: 95px;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            letter-spacing: 0;
-            line-height: 36px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-4 {
-            display: inline-flex;
-            height: 262px;
-            align-items: flex-start;
-            gap: 12px;
-            flex: 0 0 auto;
-            margin-bottom: -9.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-4:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-3 {
-            width: 227px;
-            height: 154px;
-            margin-left: -4.00px;
-            margin-right: -1.00px;
-            aspect-ratio: 1.5;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .d-ch-v-n-i-g-n-khu-wrapper {
-            height: 78px;
-            align-items: flex-start;
-            align-self: stretch;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .d-ch-v-n-i-g-n-khu {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            width: 222px;
-            height: 96px;
-            margin-top: -1.00px;
-            margin-bottom: -17.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            letter-spacing: 0;
-            line-height: 36px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-5 {
-            display: flex;
-            width: 232px;
-            height: 292px;
-            align-items: flex-end;
-            justify-content: space-between;
-            margin-bottom: -39.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-5:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-4 {
-            width: 230px;
-            height: 156px;
-            margin-right: -4.00px;
-            aspect-ratio: 1.5;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .resort-ch-t-l-ng-t-i-wrapper {
-            width: 232px;
-            height: 116px;
-            align-items: flex-start;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .resort-ch-t-l-ng-t-i {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            letter-spacing: 0;
-            line-height: 36px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .small-grid-2 {
-            display: flex;
-            flex-wrap: wrap;
-            width: 724px;
-            height: 172px;
-            align-items: flex-start;
-            gap: 32px 32px;
-            position: absolute;
-            top: 495px;
-            left: 22px;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-6 {
-            display: flex;
-            width: 158px;
-            height: 186px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -14.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-6:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-5 {
-            width: 163px;
-            height: 111px;
-            margin-left: -4.00px;
-            margin-right: -1.00px;
-            aspect-ratio: 1.5;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .copy-2 {
-            width: 155px;
-            height: 49px;
-            align-items: flex-start;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .p {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            height: 49px;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            letter-spacing: 0;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-7 {
-            display: flex;
-            width: 154px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -38.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-7:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-6 {
-            width: 162px;
-            height: 111px;
-            margin-left: -4.00px;
-            margin-right: -4.00px;
-            aspect-ratio: 1.5;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .homestay-gi-t-t-h-i-wrapper {
-            height: 95px;
-            align-items: flex-start;
-            align-self: stretch;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .homestay-gi-t-t-h-i-2 {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            height: 47px;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            letter-spacing: 0;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-8 {
-            display: flex;
-            width: 153px;
-            height: 262px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -90.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-8:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-7 {
-            width: 161px;
-            margin-right: -4.00px;
-            position: relative;
-            height: 110px;
-            margin-left: -4.00px;
-            aspect-ratio: 1.5;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .d-ch-v-n-i-g-n-khu-2 {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            height: 72px;
-            margin-top: -1.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            letter-spacing: 0;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-9 {
-            display: flex;
-            width: 147px;
-            height: 292px;
-            align-items: flex-end;
-            justify-content: space-between;
-            margin-bottom: -120.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-9:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-8 {
-            position: relative;
-            width: 159px;
-            height: 108px;
-            margin-left: -8.00px;
-            margin-right: -4.00px;
-            aspect-ratio: 1.5;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .copy-3 {
-            width: 151px;
-            height: 182px;
-            align-items: flex-start;
-            margin-left: -4.00px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .resort-ch-t-l-ng-t-i-2 {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            width: 156px;
-            margin-top: -1.00px;
-            margin-right: -5.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            letter-spacing: 0;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .small-grid-3 {
-            position: absolute;
-            top: 700px;
-            left: 0;
-            width: 723px;
-            height: 260px;
-        }
-
-        .DANH-SCH-BI-VIT-news .tr-gi-p-trung-t-m-tr {
-            position: absolute;
-            top: 841px;
-            left: 274px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
             font-size: 13px;
             letter-spacing: 0;
             line-height: 19.5px;
         }
 
-        .DANH-SCH-BI-VIT-news .span {
+        .footer-col-1 { left: 274px; }
+        .footer-col-2 { left: 527px; }
+        .footer-col-3 { left: 849px; }
+        .footer-col-4 { left: 1031px; }
+
+        .footer-title {
             font-weight: 700;
+            color: #000000;
         }
 
-        .DANH-SCH-BI-VIT-news .text-wrapper-5 {
-            font-weight: 200;
-        }
-
-        .DANH-SCH-BI-VIT-news .i-u-kho-n-s-d-ng-qu {
-            position: absolute;
-            top: 861px;
-            left: 527px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
+        .footer-text {
             font-weight: 200;
             color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
         }
 
-        .DANH-SCH-BI-VIT-news .c-ng-ty-v-ch-ng-t-i {
-            position: absolute;
-            top: 840px;
-            left: 849px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-6 {
+        .footer-bold {
             font-weight: 600;
-        }
-
-        .DANH-SCH-BI-VIT-news .i-t-c-c-a-ch-ng-t-i {
-            position: absolute;
-            top: 841px;
-            left: 1031px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
             color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
         }
 
-        .DANH-SCH-BI-VIT-news .c-c-l-a-ch-n-l-t-ng {
+        /* Footer Icons */
+        .footer-icon-1 {
             position: absolute;
-            top: 387px;
-            left: 83px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-        }
-
-        .DANH-SCH-BI-VIT-news .du-kh-ch-d-d-ng-ti-p {
-            position: absolute;
-            top: 389px;
-            left: 359px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-        }
-
-        .DANH-SCH-BI-VIT-news .homestay-cung-c-p-c {
-            position: absolute;
-            top: 388px;
-            left: 615px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-        }
-
-        .DANH-SCH-BI-VIT-news .cung-c-p-ch-ngh-c-xe {
-            position: absolute;
-            top: 388px;
-            left: 862px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-        }
-
-        .DANH-SCH-BI-VIT-news .c-h-b-i-ngo-i-tr-i {
-            position: absolute;
-            top: 389px;
-            left: 1134px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-        }
-
-        .DANH-SCH-BI-VIT-news .unread-messages {
-            position: absolute;
-            top: 890px;
-            left: 1365px;
-            width: 52px;
-            height: 52px;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .small-grid-4 {
-            display: flex;
-            flex-wrap: wrap;
-            width: 727px;
-            height: 175px;
-            align-items: flex-start;
-            gap: 32px 32px;
-            position: absolute;
-            top: 492px;
-            left: 755px;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-10 {
-            display: flex;
-            width: 153px;
-            height: 292px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -117.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-10:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-9 {
-            position: relative;
-            width: 151px;
-            height: 115px;
-            margin-left: -4.00px;
-            aspect-ratio: 1.33;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .kh-ch-s-n-gi-r-h-wrapper {
-            width: 217px;
-            height: 37px;
-            align-items: center;
-            margin-right: -64.00px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .kh-ch-s-n-gi-r-h-2 {
-            position: relative;
-            display: -webkit-box;
-            align-items: center;
-            justify-content: center;
-            width: 195px;
-            height: 52px;
-            margin-top: -1.00px;
-            margin-bottom: -14.00px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            letter-spacing: 0;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-11 {
-            display: flex;
-            width: 158px;
-            height: 262px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -87.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-11:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .copy-4 {
-            width: 155px;
-            height: 98px;
-            align-items: flex-start;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-12 {
-            display: flex;
-            width: 154px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -35.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-12:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .album-13 {
-            display: flex;
-            width: 153px;
-            height: 262px;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: -87.00px;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .DANH-SCH-BI-VIT-news .album-13:hover {
-            transform: translateY(-4px);
-        }
-
-        .DANH-SCH-BI-VIT-news .image-10 {
-            width: 128px;
-            position: relative;
-            height: 110px;
-            margin-left: -4.00px;
-            aspect-ratio: 1.5;
-            object-fit: cover;
-        }
-
-        .DANH-SCH-BI-VIT-news .small-grid-5 {
-            position: absolute;
-            top: 700px;
-            left: 739px;
-            width: 701px;
-            height: 260px;
-        }
-
-        .DANH-SCH-BI-VIT-news .ringer-volume {
-            position: absolute;
-            top: 888px;
-            left: 1288px;
-            width: 52px;
-            height: 52px;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .rectangle-3 {
-            position: absolute;
-            top: 77px;
-            left: 0;
-            width: 1440px;
-            height: 36px;
-            background-color: #000000cc;
-        }
-
-        .DANH-SCH-BI-VIT-news .rectangle-4 {
-            position: absolute;
-            top: 76px;
-            left: 382px;
-            width: 304px;
-            height: 37px;
-            background-color: #757575;
-            border-radius: 26px;
-            border: 1px solid;
-            border-color: #000000;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-7 {
-            position: absolute;
-            top: 76px;
-            left: 494px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 24px;
-            letter-spacing: -0.24px;
-            line-height: 36px;
-            white-space: nowrap;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-7:hover {
-            opacity: 0.8;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-8 {
-            position: absolute;
-            top: 76px;
-            left: 855px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 24px;
-            letter-spacing: -0.24px;
-            line-height: 36px;
-            white-space: nowrap;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-8:hover {
-            opacity: 0.8;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-9 {
-            position: absolute;
-            top: 76px;
-            left: 1207px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 24px;
-            letter-spacing: -0.24px;
-            line-height: 36px;
-            white-space: nowrap;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-9:hover {
-            opacity: 0.8;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-10 {
-            position: absolute;
-            top: 76px;
-            left: 101px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 24px;
-            letter-spacing: -0.24px;
-            line-height: 36px;
-            white-space: nowrap;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-10:hover {
-            opacity: 0.8;
-        }
-
-        .DANH-SCH-BI-VIT-news .vector {
-            position: absolute;
-            width: 3.04%;
-            height: 4.55%;
-            top: 0;
-            left: 94.85%;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .DANH-SCH-BI-VIT-news .search {
-            position: absolute;
-            top: 21px;
-            left: 459px;
-            width: 31px;
-            height: 31px;
-        }
-
-        .DANH-SCH-BI-VIT-news .record {
-            position: absolute;
-            top: 882px;
+            top: 992px;
             left: 16px;
             width: 53px;
             height: 53px;
-            background: none;
-            border: none;
-            padding: 0;
             cursor: pointer;
         }
 
-        .DANH-SCH-BI-VIT-news .level {
+        .footer-icon-2 {
             position: absolute;
-            top: 873px;
+            top: 998px;
+            left: 1288px;
+            width: 52px;
+            height: 52px;
+            cursor: pointer;
+        }
+
+        .footer-icon-3 {
+            position: absolute;
+            top: 1000px;
+            left: 1365px;
+            width: 52px;
+            height: 52px;
+            cursor: pointer;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 983px;
             left: 43px;
             width: 33px;
             height: 33px;
         }
-
-        .DANH-SCH-BI-VIT-news .search-input {
-            position: absolute;
-            top: 18px;
-            left: calc(50.00% - 272px);
-            width: 544px;
-            height: 36px;
-            background-color: transparent;
-            border: none;
-            border-radius: 17px;
-            padding: 0 40px 0 20px;
-            font-family: "Inter", Helvetica;
-            font-weight: 300;
-            color: #ffffff;
-            font-size: 16px;
-            z-index: 2;
-        }
-
-        .DANH-SCH-BI-VIT-news .search-input::placeholder {
-            color: #ffffff;
-            opacity: 1;
-        }
-
-        .DANH-SCH-BI-VIT-news .search-input:focus {
-            outline: 2px solid #ffffff;
-            outline-offset: 2px;
-        }
-
-        .DANH-SCH-BI-VIT-news .alarm img,
-        .DANH-SCH-BI-VIT-news .vector img,
-        .DANH-SCH-BI-VIT-news .unread-messages img,
-        .DANH-SCH-BI-VIT-news .ringer-volume img,
-        .DANH-SCH-BI-VIT-news .record img {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .DANH-SCH-BI-VIT-news .text-wrapper-10:focus,
-        .DANH-SCH-BI-VIT-news .text-wrapper-7:focus,
-        .DANH-SCH-BI-VIT-news .text-wrapper-8:focus,
-        .DANH-SCH-BI-VIT-news .text-wrapper-9:focus {
-            outline: 2px solid #ffffff;
-            outline-offset: 2px;
-        }
-
-        .DANH-SCH-BI-VIT-news .album:focus-within,
-        .DANH-SCH-BI-VIT-news .album-2:focus-within,
-        .DANH-SCH-BI-VIT-news .album-3:focus-within,
-        .DANH-SCH-BI-VIT-news .album-4:focus-within,
-        .DANH-SCH-BI-VIT-news .album-5:focus-within,
-        .DANH-SCH-BI-VIT-news .album-6:focus-within,
-        .DANH-SCH-BI-VIT-news .album-7:focus-within,
-        .DANH-SCH-BI-VIT-news .album-8:focus-within,
-        .DANH-SCH-BI-VIT-news .album-9:focus-within,
-        .DANH-SCH-BI-VIT-news .album-10:focus-within,
-        .DANH-SCH-BI-VIT-news .album-11:focus-within,
-        .DANH-SCH-BI-VIT-news .album-12:focus-within,
-        .DANH-SCH-BI-VIT-news .album-13:focus-within {
-            outline: 2px solid #00541c;
-            outline-offset: 2px;
-        }
     </style>
 </head>
 <body>
-    <main class="DANH-SCH-BI-VIT-news">
-        <header class="frame">
+    <div class="news-page">
+        <!-- Header -->
+        <div class="header-frame">
             <div class="rectangle"></div>
-            <label for="search-input" class="text-wrapper">Tìm kiếm...</label>
-            <h1 class="title">3CE</h1>
-            <p class="div">Room Search</p>
-            <img class="search" src="img/search.png" alt="Search icon" />
-            <button class="alarm" aria-label="Notifications">
-                <img src="img/alarm.png" alt="" />
-            </button>
-            <button class="vector" aria-label="User profile">
-                <img src="img/vector.svg" alt="" />
-            </button>
-            <input type="search" id="search-input" class="search-input" placeholder="Tìm kiếm..." aria-label="Tìm kiếm" />
-        </header>
-       <nav class="rectangle-3" aria-label="Main navigation">
-    <div class="rectangle-4"></div>
-    <a href="index.html" class="text-wrapper-10">Trang Chủ</a>
-    <a href="news.html" class="text-wrapper-7">Tin Tức</a>
-    <a href="about.html" class="text-wrapper-8">Giới Thiệu</a>
-    <a href="contact.html" class="text-wrapper-9">Liên Hệ</a>
-</nav>
-        <section aria-labelledby="featured-news-heading">
-            <h2 id="featured-news-heading" class="text-wrapper-3">Tin nổi bật</h2>
-            <div class="small-grid">
-                <article class="album">
-                    <img class="image" src="img/image-1-2.png" alt="Khách sạn giá rẻ ở Hạ Long" />
-                    <div class="copy">
-                        <h3 class="kh-ch-s-n-gi-r-h">Khách sạn giá rẻ ở Hạ Long</h3>
-                    </div>
-                </article>
-                <article class="album-2">
-                    <img class="img" src="img/image-2-3.png" alt="Căn hộ dịch vụ ở Đà Nẵng" />
-                    <div class="c-n-h-d-ch-v-n-ng-wrapper">
-                        <h3 class="c-n-h-d-ch-v-n-ng">Căn hộ dịch vụ ở Đà Nẵng</h3>
-                    </div>
-                </article>
-                <article class="album-3">
-                    <img class="image-2" src="img/image-3-3.png" alt="Homestay giá tốt ở Hội An" />
-                    <div class="div-wrapper">
-                        <h3 class="homestay-gi-t-t-h-i">Homestay giá tốt ở Hội An</h3>
-                    </div>
-                </article>
-                <article class="album-4">
-                    <img class="image-3" src="img/image-4.png" alt="Dịch vụ nơi ở gần khu du lịch Yên Bái" />
-                    <div class="d-ch-v-n-i-g-n-khu-wrapper">
-                        <h3 class="d-ch-v-n-i-g-n-khu">Dịch vụ nơi ở gần khu du lịch Yên Bái</h3>
-                    </div>
-                </article>
-                <article class="album-5">
-                    <img class="image-4" src="img/image-5.png" alt="Resort chất lượng tại Ninh Bình" />
-                    <div class="resort-ch-t-l-ng-t-i-wrapper">
-                        <h3 class="resort-ch-t-l-ng-t-i">Resort chất lượng tại Ninh Bình</h3>
-                    </div>
-                </article>
+            <div class="rectangle-3"></div>
+            <div class="text-wrapper-2">Tìm kiếm...</div>
+            <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
+            <div class="logo-title">3CE</div>
+            <div class="logo-subtitle">Room Search</div>
+            <img class="search-icon" src="https://c.animaapp.com/E2jI1H3B/img/search@2x.png" />
+            <img class="bell-icon" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-bar"></div>
+        <div class="rectangle-2"></div>
+        <a href="index.html" class="nav-item nav-home">Trang Chủ</a>
+        <a href="news.html" class="nav-item nav-news">Tin Tức</a>
+        <a href="about.html" class="nav-item nav-about">Giới Thiệu</a>
+        <a href="contact.html" class="nav-item nav-contact">Liên Hệ</a>
+
+        <!-- Tin nổi bật Section -->
+        <div class="section-title">Tin nổi bật</div>
+        <div class="featured-news">
+            <div class="news-card-large">
+                <img class="news-image-large" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Hạ Long">
+                <div class="news-title-large">Khách sạn<br>giá rẻ ở Hạ Long</div>
+                <div class="news-description">Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm ...</div>
             </div>
-            <div class="c-c-l-a-ch-n-l-t-ng">Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm ...</div>
-            <div class="du-kh-ch-d-d-ng-ti-p">Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</div>
-            <div class="homestay-cung-c-p-c">Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</div>
-            <div class="cung-c-p-ch-ngh-c-xe">
-                Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí, bếp chung, cùng dịch vụ phòng.
+            
+            <div class="news-card-large">
+                <img class="news-image-large" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
+                <div class="news-title-large">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
+                <div class="news-description">Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</div>
             </div>
-            <div class="c-h-b-i-ngo-i-tr-i">Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí và phòng chờ chung</div>
-        </section>
-        <section aria-labelledby="all-news-heading">
-            <h2 id="all-news-heading" class="text-wrapper-2">Tất cả</h2>
-            <div class="small-grid-2">
-                <article class="album-6">
-                    <img class="image-5" src="img/image-2.png" alt="Căn hộ dịch vụ ở Đà Nẵng" />
-                    <div class="copy-2">
-                        <h3 class="p">Căn hộ dịch vụ ở Đà Nẵng</h3>
-                    </div>
-                </article>
-                <article class="album-7">
-                    <img class="image-6" src="img/image-3-2.png" alt="Homestay giá tốt ở Hội An" />
-                    <div class="homestay-gi-t-t-h-i-wrapper">
-                        <h3 class="homestay-gi-t-t-h-i-2">Homestay giá tốt ở Hội An</h3>
-                    </div>
-                </article>
-                <article class="album-8">
-                    <img class="image-7" src="img/image-4-3.png" alt="Dịch vụ nơi ở gần khu du lịch Yên Bái" />
-                    <div class="div-wrapper">
-                        <h3 class="d-ch-v-n-i-g-n-khu-2">Dịch vụ nơi ở gần khu du lịch Yên Bái</h3>
-                    </div>
-                </article>
-                <article class="album-9">
-                    <img class="image-8" src="img/image.png" alt="Resort chất lượng tại Ninh Bình" />
-                    <div class="copy-3">
-                        <h3 class="resort-ch-t-l-ng-t-i-2">Resort chất lượng tại Ninh Bình</h3>
-                    </div>
-                </article>
+            
+            <div class="news-card-large">
+                <img class="news-image-large" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
+                <div class="news-title-large">Homestay<br>giá tốt ở Hội An</div>
+                <div class="news-description">Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</div>
             </div>
-            <div class="small-grid-4">
-                <article class="album-10">
-                    <img class="image-9" src="img/image-1.png" alt="Khách sạn giá rẻ ở Hạ Long" />
-                    <div class="kh-ch-s-n-gi-r-h-wrapper">
-                        <h3 class="kh-ch-s-n-gi-r-h-2">Khách sạn giá rẻ ở Hạ Long</h3>
-                    </div>
-                </article>
-                <article class="album-11">
-                    <img class="image-5" src="img/image-2-2.png" alt="Căn hộ dịch vụ ở Đà Nẵng" />
-                    <div class="copy-4">
-                        <h3 class="p">Căn hộ dịch vụ ở Đà Nẵng</h3>
-                    </div>
-                </article>
-                <article class="album-12">
-                    <img class="image-6" src="img/image-3.png" alt="Homestay giá tốt ở Hội An" />
-                    <div class="homestay-gi-t-t-h-i-wrapper">
-                        <h3 class="homestay-gi-t-t-h-i-2">Homestay giá tốt ở Hội An</h3>
-                    </div>
-                </article>
-                <article class="album-13">
-                    <img class="image-10" src="img/image-4-2.png" alt="Dịch vụ nơi ở gần khu du lịch Yên Bái" />
-                    <div class="div-wrapper">
-                        <h3 class="d-ch-v-n-i-g-n-khu-2">Dịch vụ nơi ở gần khu du lịch Yên Bái</h3>
-                    </div>
-                </article>
+            
+            <div class="news-card-large">
+                <img class="news-image-large" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
+                <div class="news-title-large">Dịch vụ nơi ở gần<br>khu du lịch Yên Bái</div>
+                <div class="news-description">Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí, bếp chung, cùng dịch vụ phòng.</div>
             </div>
-        </section>
-        <section aria-labelledby="video-heading">
-            <h2 id="video-heading" class="text-wrapper-4">Video</h2>
-            <img class="small-grid-3" src="img/small-grid.svg" alt="Video grid placeholder" />
-            <img class="small-grid-5" src="img/image.svg" alt="Video grid placeholder" />
-        </section>
-        <footer class="rectangle-2">
-            <nav aria-label="Footer navigation">
-                <div class="tr-gi-p-trung-t-m-tr">
-                    <span class="span">Trợ giúp<br /></span>
-                    <span class="text-wrapper-5"
-                        >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
-                    >
-                </div>
-                <div class="i-u-kho-n-s-d-ng-qu">
-                    Điều khoản sử dụng<br />Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo
-                    nội dung
-                </div>
-                <div class="c-ng-ty-v-ch-ng-t-i">
-                    <span class="text-wrapper-6">Công ty<br /></span>
-                    <span class="text-wrapper-5">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
-                </div>
-                <div class="i-t-c-c-a-ch-ng-t-i">
-                    <span class="text-wrapper-6">Đối tác của chúng tôi<br /></span>
-                    <span class="text-wrapper-5"
-                        >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
-                    >
-                </div>
-            </nav>
-            <button class="unread-messages" aria-label="Unread messages">
-                <img src="img/unread-messages.png" alt="" />
-            </button>
-            <button class="ringer-volume" aria-label="Ringer volume">
-                <img src="img/ringer-volume.png" alt="" />
-            </button>
-            <button class="record" aria-label="Record">
-                <img src="img/record.png" alt="" />
-            </button>
-            <img class="level" src="img/level-1.png" alt="Level indicator" />
-        </footer>
-    </main>
+            
+            <div class="news-card-large">
+                <img class="news-image-large" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Ninh Bình">
+                <div class="news-title-large">Resort chất lượng<br>tại Ninh Bình</div>
+                <div class="news-description">Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí và phòng chờ chung</div>
+            </div>
+        </div>
+
+        <!-- Tất cả Section -->
+        <div class="all-section-title">Tất cả</div>
+        <div class="all-news-grid">
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
+                <div class="news-title-small">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
+                <div class="news-title-small">Homestay<br>giá tốt ở Hội An</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
+                <div class="news-title-small">Dịch vụ nơi ở<br>gần khu du lịch<br>Yên Bái</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Ninh Bình">
+                <div class="news-title-small">Resort chất lượng<br>tại Ninh Bình</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Hạ Long">
+                <div class="news-title-small">Khách sạn<br>giá rẻ ở Hạ Long</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
+                <div class="news-title-small">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
+                <div class="news-title-small">Homestay<br>giá tốt ở Hội An</div>
+            </div>
+            
+            <div class="news-card-small">
+                <img class="news-image-small" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
+                <div class="news-title-small">Dịch vụ nơi ở<br>gần khu du lịch<br>Yên Bái</div>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div class="video-section-title">Video</div>
+        <div class="video-grid">
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Video 1">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Video 2">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Video 3">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Video 4">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Video 5">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=400" alt="Video 6">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Video 7">
+                <div class="play-button"></div>
+            </div>
+            
+            <div class="video-card">
+                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Video 8">
+                <div class="play-button"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer"></div>
+        
+        <div class="footer-section footer-col-1">
+            <p>
+                <span class="footer-title">Trợ giúp<br></span>
+                <span class="footer-text">Trung tâm trợ giúp<br>Câu hỏi thường gặp<br>Chính sách Bảo mật<br>Chính sách về cookie</span>
+            </p>
+        </div>
+
+        <div class="footer-section footer-col-2">
+            <p>
+                <span class="footer-bold">Điều khoản sử dụng<br></span>
+                <span class="footer-text">Quản lý thiết lập cookie<br>Đạo luật Dịch vụ số (EU)<br>Nguyên tắc và báo cáo nội dung</span>
+            </p>
+        </div>
+
+        <div class="footer-section footer-col-3">
+            <p>
+                <span class="footer-bold">Công ty<br></span>
+                <span class="footer-text">Về chúng tôi<br>Tuyển dụng<br>Báo chí<br>Nhật ký mạng</span>
+            </p>
+        </div>
+
+        <div class="footer-section footer-col-4">
+            <p>
+                <span class="footer-bold">Đối tác của chúng tôi<br></span>
+                <span class="footer-text">Cổng thông tin đối tác<br>Partner Hub<br>Quảng cáo<br>Đối tác liên kết</span>
+            </p>
+        </div>
+
+        <!-- Footer Icons -->
+        <img class="footer-icon-1" src="https://c.animaapp.com/E2jI1H3B/img/record@2x.png" />
+        <img class="notification-badge" src="https://c.animaapp.com/E2jI1H3B/img/level-1@2x.png" />
+        <img class="footer-icon-2" src="https://c.animaapp.com/E2jI1H3B/img/ringer-volume@2x.png" />
+        <img class="footer-icon-3" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" />
+    </div>
+
+    <script>
+        // Video play functionality
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Video sẽ được phát!');
+            });
+        });
+
+        // News card click
+        document.querySelectorAll('.news-card-large, .news-card-small').forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Xem chi tiết tin tức');
+            });
+        });
+    </script>
 </body>
 </html>
