@@ -14,6 +14,7 @@
         body {
             margin: 0px;
             height: 100%;
+            background-color: #ffffff;
         }
         button:focus-visible {
             outline: 2px solid #4a90e2 !important;
@@ -21,7 +22,7 @@
         }
         a {
             text-decoration: none;
-            color: inherit; /* Đảm bảo link kế thừa màu */
+            color: inherit;
         }
 
         .TRANG-CH-index-html {
@@ -32,13 +33,13 @@
             position: relative;
         }
 
-        /* --- HEADER STYLES (Y HỆT FILE INDEX.HTML) --- */
+        /* --- HEADER STYLES --- */
         .TRANG-CH-index-html .frame {
             position: absolute;
             top: 0;
             left: 0;
             width: 1440px;
-            height: 122px; /* Điều chỉnh chiều cao cho trang con */
+            height: 122px;
             background-color: #1c1f21;
             overflow: hidden;
         }
@@ -61,11 +62,10 @@
             background-color: #2d2828cc;
         }
 
-        /* Đã thay đổi: Di chuyển highlight sang "Tin Tức" như trong ảnh */
         .TRANG-CH-index-html .rectangle-2 {
             position: absolute;
             top: 83px;
-            left: 392px; /* Vị trí của "Tin Tức" */
+            left: 392px;
             width: 304px;
             height: 40px;
             background-color: #757575;
@@ -226,10 +226,6 @@
             white-space: nowrap;
         }
         
-        /* * ĐÂY LÀ PHẦN SỬA LỖI CHO EM
-         * Đoạn code này được lấy y hệt từ file index (1).html của em
-         * để đảm bảo icon chuông hiển thị đúng kích thước.
-        */
         .TRANG-CH-index-html .alarm {
             position: absolute;
             top: 16px;
@@ -238,7 +234,7 @@
             height: 46px;
         }
 
-        /* --- ẨN TOÀN BỘ NỘI DUNG VÀ FOOTER CỦA FILE INDEX.HTML --- */
+        /* --- ẨN NỘI DUNG KHÔNG CẦN THIẾT --- */
         .TRANG-CH-index-html .ti-xung,
         .TRANG-CH-index-html .text-wrapper,
         .TRANG-CH-index-html .hotel-room-search,
@@ -264,13 +260,13 @@
         .TRANG-CH-index-html .record,
         .TRANG-CH-index-html .level,
         .TRANG-CH-index-html .vector-2 {
-            display: none; /* Ẩn hết nội dung và footer của trang index */
+            display: none;
         }
 
         /* --- CSS MỚI CHO TRANG LIVESTREAM (THEO ẢNH) --- */
         .livestream-container {
             position: absolute;
-            top: 152px; /* Dưới header */
+            top: 152px;
             left: 50%;
             transform: translateX(-50%);
             width: 1200px;
@@ -282,7 +278,23 @@
             font-weight: 800;
             font-size: 26px;
             color: #000;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .livestream-subtitle {
+            font-size: 14px;
+            color: #666;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .livestream-subtitle .actions a {
+            color: #666;
+            margin-left: 15px;
+            font-size: 14px;
+            font-weight: 400;
         }
 
         .livestream-layout {
@@ -291,25 +303,27 @@
         }
 
         .livestream-left {
-            flex: 6.5; /* ~65% */
+            flex: 7;
         }
 
         .livestream-right {
-            flex: 3.5; /* ~35% */
+            flex: 3;
         }
 
         /* Cột bên trái */
         .video-player {
             background-color: #1c1f21;
-            padding: 15px;
             border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
         }
         .video-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
-            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #2c2c2c;
         }
         .video-header h3 {
             margin: 0;
@@ -325,7 +339,6 @@
         .video-player img {
             width: 100%;
             display: block;
-            border-radius: 4px;
         }
 
         .event-info {
@@ -335,8 +348,9 @@
             margin-top: 24px;
         }
         .event-info h3 {
-            color: #D9534F; /* Màu đỏ cam */
+            color: #D9534F;
             margin-top: 0;
+            margin-bottom: 10px;
             font-size: 20px;
             font-weight: 700;
         }
@@ -344,10 +358,11 @@
             font-size: 15px;
             line-height: 1.6;
             margin-bottom: 0;
+            color: #333;
         }
 
         .find-room-button {
-            background-color: #5CB85C; /* Màu xanh lá */
+            background-color: #5CB85C;
             color: #000;
             font-weight: 700;
             text-align: center;
@@ -357,6 +372,9 @@
             display: block;
             width: 250px;
             font-size: 16px;
+            border: none;
+            cursor: pointer;
+            font-family: "Inter", Helvetica;
         }
 
         /* Cột bên phải (Chat) */
@@ -364,14 +382,14 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             background-color: #FCFCFC;
+            overflow: hidden;
         }
         .chat-header {
-            background-color: #FCEEEE; /* Nền hồng nhạt */
+            background-color: #FCEEEE;
             border-bottom: 1px solid #ddd;
             padding: 10px 15px;
-            border-radius: 8px 8px 0 0;
             font-weight: 700;
-            color: #D9534F; /* Chữ đỏ cam */
+            color: #D9534F;
             font-size: 16px;
         }
         .chat-messages {
@@ -398,7 +416,7 @@
             color: #333;
             margin-bottom: 5px;
         }
-        .chat-message-header img { /* Avatar */
+        .chat-message-header img {
             width: 24px;
             height: 24px;
             border-radius: 50%;
@@ -408,14 +426,13 @@
             margin: 0;
             font-size: 15px;
             line-height: 1.5;
-            padding-left: 32px; /* Căn lề với tên */
+            padding-left: 32px;
             color: #222;
         }
         .chat-input {
             border-top: 1px solid #ddd;
             padding: 15px;
             background-color: #F8F8F8;
-            border-radius: 0 0 8px 8px;
         }
         .chat-input-wrapper {
             position: relative;
@@ -428,7 +445,7 @@
             font-family: "Inter", Helvetica;
             font-size: 14px;
         }
-        .chat-input-wrapper::after { /* Icon gửi */
+        .chat-input-wrapper::after {
             content: '▶';
             position: absolute;
             right: 15px;
@@ -439,17 +456,49 @@
             cursor: pointer;
         }
 
-        /* --- CSS MỚI CHO FOOTER (THEO ẢNH) --- */
+        /* --- CSS MỚI CHO FOOTER --- */
         .livestream-footer-icon {
             position: absolute;
-            bottom: 30px; /* Padding từ cạnh dưới */
-            right: 40px;  /* Padding từ cạnh phải */
-            width: 52px;  /* Kích thước chuẩn từ icon cũ */
+            bottom: 30px;
+            right: 40px;
+            width: 52px;
             height: 52px;
             cursor: pointer;
-            z-index: 1000; /* Nổi lên trên */
+            z-index: 1000;
         }
 
+        /* Thêm checkbox cho các tin nhắn */
+        .chat-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #333;
+        }
+        
+        .chat-checkbox input {
+            margin-right: 8px;
+        }
+        
+        .chat-checkbox.checked {
+            font-weight: 700;
+        }
+        
+        .chat-checkboxes {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .chat-messages {
+            padding-top: 0;
+        }
+        
+        .separator {
+            height: 1px;
+            background-color: #ddd;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -457,7 +506,8 @@
         <div class="frame">
             <div class="rectangle"></div>
             <div class="div"></div>
-            <div class="rectangle-2"></div> <div class="rectangle-3"></div>
+            <div class="rectangle-2"></div>
+            <div class="rectangle-3"></div>
             <div class="text-wrapper-2">Tìm kiếm...</div>
             <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
             <div class="title">3CE</div>
@@ -474,6 +524,14 @@
 
         <div class="livestream-container">
             <h1 class="livestream-title">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h1>
+            
+            <div class="livestream-subtitle">
+                <span>Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất ...</span>
+                <div class="actions">
+                    <a href="#">Xem sau</a>
+                    <a href="#">Chia sẻ</a>
+                </div>
+            </div>
             
             <div class="livestream-layout">
                 <div class="livestream-left">
@@ -493,52 +551,78 @@
                         <p>Bạn sắp đi du lịch Nha Trang mà chưa biết nên đến địa điểm nào phù hợp với nhu cầu của từng thành viên trong đoàn? Bạn đã đi Nha Trang đã lâu trước đây nhưng giờ lại muốn cập nhật thêm những địa điểm du lịch Nha Trang nổi tiếng nhất, vậy thì hãy xem hết video này để lên danh sách những điểm check in thú vị mới nhất Nha Trang năm nay</p>
                     </div>
 
-                    <a href="#" class="find-room-button">CHỖ NGHỈ CẦN TÌM</a>
+                    <button class="find-room-button">CHỖ NGHỈ CẦN TÌM</button>
                 </div>
 
                 <div class="livestream-right">
                     <div class="chat-container">
                         <div class="chat-header">💬 Khung chat trực tuyến</div>
+                        
+                        <div class="chat-checkboxes">
+                            <div class="chat-checkbox">
+                                <input type="checkbox" id="user1">
+                                <label for="user1">Chị Phương</label>
+                            </div>
+                            <div class="chat-checkbox checked">
+                                <input type="checkbox" id="user2" checked>
+                                <label for="user2">Anh Độ</label>
+                            </div>
+                            <div class="chat-checkbox">
+                                <input type="checkbox" id="user3">
+                                <label for="user3">Anh Phao</label>
+                            </div>
+                            <div class="chat-checkbox">
+                                <input type="checkbox" id="user4">
+                                <label for="user4">Chị Hoa</label>
+                            </div>
+                            <div class="chat-checkbox">
+                                <input type="checkbox" id="user5">
+                                <label for="user5">Chị Hương</label>
+                            </div>
+                        </div>
+                        
+                        <div class="separator"></div>
+                        
                         <div class="chat-messages">
                             <div class="chat-message">
                                 <div class="chat-message-header">
                                     <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-1.png" alt="avatar" />
                                     <span>Chị Phương</span>
                                 </div>
-                                <p>“Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</p>
+                                <p>"Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?"</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
                                     <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-2.png" alt="avatar" />
                                     <span>Anh Độ</span>
                                 </div>
-                                <p>“Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện”</p>
+                                <p>"Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện"</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
                                     <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-3.png" alt="avatar" />
                                     <span>Anh Phao</span>
                                 </div>
-                                <p>“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂.”</p>
+                                <p>"Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂."</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
                                     <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-4.png" alt="avatar" />
                                     <span>Chị Hoa</span>
                                 </div>
-                                <p>“Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</p>
+                                <p>"Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa."</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
                                     <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-5.png" alt="avatar" />
                                     <span>Chị Hương</span>
                                 </div>
-                                <p>“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</p>
+                                <p>"Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây."</p>
                             </div>
                         </div>
                         <div class="chat-input">
                             <div class="chat-input-wrapper">
-                                <input type="text" placeholder="Bình luận của bạn..." />
+                                <input type="text" placeholder="[👍] Bình luận của bạn..." />
                             </div>
                         </div>
                     </div>
