@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tin Tức - 3CE Room Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale-1">
+    <title>Livestream - 3CE Room Search</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Inter:300,800,400,700,200|Jaro:400|Jaldi:700");
         * {
@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* --- HEADER STYLES (GIỮ NGUYÊN TỪ INDEX) --- */
+        /* --- HEADER STYLES (Y HỆT FILE INDEX.HTML) --- */
         .TRANG-CH-index-html .frame {
             position: absolute;
             top: 0;
@@ -61,11 +61,11 @@
             background-color: #2d2828cc;
         }
 
-        /* Đã thay đổi: Di chuyển highlight sang "Tin Tức" */
+        /* Đã thay đổi: Di chuyển highlight sang "Tin Tức" như trong ảnh */
         .TRANG-CH-index-html .rectangle-2 {
             position: absolute;
             top: 83px;
-            left: 392px; 
+            left: 392px; /* Vị trí của "Tin Tức" */
             width: 304px;
             height: 40px;
             background-color: #757575;
@@ -226,9 +226,6 @@
             white-space: nowrap;
         }
 
-        /* * ĐÂY LÀ PHẦN SỬA LỖI 2: 
-         * CSS .alarm được giữ nguyên như file index (1).html 
-        */
         .TRANG-CH-index-html .alarm {
             position: absolute;
             top: 16px;
@@ -237,7 +234,7 @@
             height: 46px;
         }
 
-        /* --- ẨN CONTENT CỦA TRANG CHỦ --- */
+        /* --- ẨN TOÀN BỘ NỘI DUNG VÀ FOOTER CỦA FILE INDEX.HTML --- */
         .TRANG-CH-index-html .ti-xung,
         .TRANG-CH-index-html .text-wrapper,
         .TRANG-CH-index-html .hotel-room-search,
@@ -249,12 +246,25 @@
         .TRANG-CH-index-html .du-kh-ch-d-d-ng-ti-p,
         .TRANG-CH-index-html .homestay-cung-c-p-c,
         .TRANG-CH-index-html .cung-c-p-ch-ngh-c-xe,
-        .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i {
-            display: none;
+        .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i,
+        .TRANG-CH-index-html .rectangle-5,
+        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr,
+        .TRANG-CH-index-html .span,
+        .TRANG-CH-index-html .text-wrapper-7,
+        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu,
+        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i,
+        .TRANG-CH-index-html .text-wrapper-8,
+        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i,
+        .TRANG-CH-index-html .unread-messages,
+        .TRANG-CH-index-html .ringer-volume,
+        .TRANG-CH-index-html .record,
+        .TRANG-CH-index-html .level,
+        .TRANG-CH-index-html .vector-2 {
+            display: none; /* Ẩn hết nội dung và footer của trang index */
         }
 
-        /* --- CSS MỚI CHO TRANG CHI TIẾT (LIVESTREAM) --- */
-        .news-detail-container {
+        /* --- CSS MỚI CHO TRANG LIVESTREAM (THEO ẢNH) --- */
+        .livestream-container {
             position: absolute;
             top: 152px; /* Dưới header */
             left: 50%;
@@ -264,23 +274,23 @@
             font-family: "Inter", Helvetica;
         }
 
-        .news-detail-title {
+        .livestream-title {
             font-weight: 800;
             font-size: 26px;
             color: #000;
             margin-bottom: 20px;
         }
 
-        .news-detail-layout {
+        .livestream-layout {
             display: flex;
             gap: 24px;
         }
 
-        .news-detail-left {
+        .livestream-left {
             flex: 6.5; /* ~65% */
         }
 
-        .news-detail-right {
+        .livestream-right {
             flex: 3.5; /* ~35% */
         }
 
@@ -425,40 +435,15 @@
             cursor: pointer;
         }
 
-        /* * ĐÂY LÀ PHẦN SỬA LỖI 3: 
-         * CSS cho Footer mới và ẩn tất cả CSS Footer cũ 
-        */
-        .TRANG-CH-index-html .rectangle-5,
-        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr,
-        .TRANG-CH-index-html .span,
-        .TRANG-CH-index-html .text-wrapper-7,
-        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu,
-        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i,
-        .TRANG-CH-index-html .text-wrapper-8,
-        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i,
-        .TRANG-CH-index-html .unread-messages,
-        .TRANG-CH-index-html .ringer-volume,
-        .TRANG-CH-index-html .record,
-        .TRANG-CH-index-html .level,
-        .TRANG-CH-index-html .vector-2 {
-            display: none; /* Ẩn hết các thành phần footer cũ */
-        }
-
-        .new-footer {
+        /* --- CSS MỚI CHO FOOTER (THEO ẢNH) --- */
+        .livestream-footer-icon {
             position: absolute;
-            top: 939px; /* Vị trí của footer cũ */
-            left: 0;
-            width: 1440px;
-            height: 131px; /* Chiều cao footer cũ */
-            background-color: #d2d2d2; /* Màu nền cũ */
-            display: flex;
-            justify-content: center; /* Căn giữa các icon */
-            align-items: center;
-            gap: 50px; /* Khoảng cách giữa 2 icon */
-        }
-        .footer-icon {
-            width: 52px; /* Kích thước chuẩn từ icon cũ */
+            bottom: 30px; /* Padding từ cạnh dưới */
+            right: 40px;  /* Padding từ cạnh phải */
+            width: 52px;  /* Kích thước chuẩn từ icon cũ */
             height: 52px;
+            cursor: pointer;
+            z-index: 1000; /* Nổi lên trên */
         }
 
     </style>
@@ -468,8 +453,7 @@
         <div class="frame">
             <div class="rectangle"></div>
             <div class="div"></div>
-            <div class="rectangle-2"></div>
-            <div class="rectangle-3"></div>
+            <div class="rectangle-2"></div> <div class="rectangle-3"></div>
             <div class="text-wrapper-2">Tìm kiếm...</div>
             <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
             <div class="title">3CE</div>
@@ -483,11 +467,11 @@
         </div>
         <img class="alarm" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
 
-        <div class="news-detail-container">
-            <h1 class="news-detail-title">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h1>
+        <div class="livestream-container">
+            <h1 class="livestream-title">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h1>
             
-            <div class="news-detail-layout">
-                <div class="news-detail-left">
+            <div class="livestream-layout">
+                <div class="livestream-left">
                     <div class="video-player">
                         <div class="video-header">
                             <h3>Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h3>
@@ -496,7 +480,7 @@
                                 <a href="#">Chia sẻ</a>
                             </div>
                         </div>
-                        <img src="imagewens/video-nhatrang.png" alt="Video thumbnail" />
+                        <img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" alt="Video thumbnail" />
                     </div>
 
                     <div class="event-info">
@@ -507,41 +491,41 @@
                     <a href="#" class="find-room-button">CHỖ NGHỈ CẦN TÌM</a>
                 </div>
 
-                <div class="news-detail-right">
+                <div class="livestream-right">
                     <div class="chat-container">
                         <div class="chat-header">💬 Khung chat trực tuyến</div>
                         <div class="chat-messages">
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="imagewens/avatar-phuong.png" alt="avatar" />
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-1.png" alt="avatar" />
                                     <span>Chị Phương</span>
                                 </div>
                                 <p>“Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="imagewens/avatar-do.png" alt="avatar" />
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-2.png" alt="avatar" />
                                     <span>Anh Độ</span>
                                 </div>
                                 <p>“Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện”</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="imagewens/avatar-phao.png" alt="avatar" />
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-3.png" alt="avatar" />
                                     <span>Anh Phao</span>
                                 </div>
                                 <p>“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂.”</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="imagewens/avatar-hoa.png" alt="avatar" />
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-4.png" alt="avatar" />
                                     <span>Chị Hoa</span>
                                 </div>
                                 <p>“Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="imagewens/avatar-huong.png" alt="avatar" />
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-5.png" alt="avatar" />
                                     <span>Chị Hương</span>
                                 </div>
                                 <p>“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</p>
@@ -557,10 +541,7 @@
             </div>
         </div>
 
-        <div class="new-footer">
-            <img class="footer-icon" src="imagewens/phone-icon.png" alt="Phone" />
-            <img class="footer-icon" src="imagewens/letter-icon.png" alt="Email" />
-        </div>
+        <img class="livestream-footer-icon" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" alt="Chat" />
 
     </div>
 </body>
