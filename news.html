@@ -10,16 +10,22 @@
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
-        html, body {
+        html,
+        body {
             margin: 0px;
             height: 100%;
         }
+        /* a blue color as a generic focus style */
+        button:focus-visible {
+            outline: 2px solid #4a90e2 !important;
+            outline: -webkit-focus-ring-color auto 5px !important;
+        }
         a {
             text-decoration: none;
-            color: inherit;
+            color: inherit; /* Đảm bảo link kế thừa màu từ class */
         }
 
-        .news-page {
+        .TRANG-CH-index-html {
             background-color: #ffffff;
             width: 1440px;
             margin: 0 auto;
@@ -27,18 +33,28 @@
             position: relative;
         }
 
-        /* Header Section */
-        .header-frame {
+        /* --- PHẦN HEADER ĐIỀU CHỈNH CHO NEWS.HTML --- */
+        .TRANG-CH-index-html .frame {
             position: absolute;
             top: 0;
             left: 0;
             width: 1440px;
-            height: 84px;
-            background-color: #2c2c2c;
+            height: 122px; /* Giảm chiều cao vì không có ảnh nền lớn */
+            background-color: #1c1f21;
             overflow: hidden;
         }
 
-        .rectangle {
+        .TRANG-CH-index-html .ti-xung {
+            /* Ẩn ảnh nền của trang chủ */
+            display: none; 
+        }
+
+        .TRANG-CH-index-html .text-wrapper {
+             /* Ẩn text "HOTEL MEDIA" */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .rectangle {
             position: absolute;
             top: 0;
             left: 0;
@@ -47,7 +63,33 @@
             background-color: #2c2c2c;
         }
 
-        .rectangle-3 {
+        .TRANG-CH-index-html .hotel-room-search {
+            /* Ẩn text "Hotel & Room Search" */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .div {
+            position: absolute;
+            top: 84px;
+            left: 0;
+            width: 1440px;
+            height: 38px;
+            background-color: #2d2828cc;
+        }
+
+        .TRANG-CH-index-html .rectangle-2 {
+            position: absolute;
+            top: 83px;
+            left: 392px; /* Đã thay đổi: Di chuyển từ -1px sang 392px để highlight "Tin Tức" */
+            width: 304px;
+            height: 40px;
+            background-color: #757575;
+            border-radius: 26px;
+            border: 1px solid;
+            border-color: #000000;
+        }
+
+        .TRANG-CH-index-html .rectangle-3 {
             position: absolute;
             top: 18px;
             left: calc(50.00% - 272px);
@@ -58,7 +100,7 @@
             opacity: 0.5;
         }
 
-        .text-wrapper-2 {
+        .TRANG-CH-index-html .text-wrapper-2 {
             position: absolute;
             top: 24px;
             left: 498px;
@@ -77,7 +119,7 @@
             white-space: nowrap;
         }
 
-        .vector {
+        .TRANG-CH-index-html .vector {
             position: absolute;
             width: 3.04%;
             height: 8.49%;
@@ -85,7 +127,7 @@
             left: 94.85%;
         }
 
-        .logo-title {
+        .TRANG-CH-index-html .title {
             position: absolute;
             top: 4px;
             left: 49px;
@@ -102,7 +144,7 @@
             white-space: nowrap;
         }
 
-        .logo-subtitle {
+        .TRANG-CH-index-html .title-2 {
             position: absolute;
             top: 24px;
             left: 128px;
@@ -119,38 +161,23 @@
             white-space: nowrap;
         }
 
-        .search-icon {
+        .TRANG-CH-index-html .search {
             position: absolute;
             top: 20px;
             left: 458px;
             width: 31px;
             height: 31px;
-            cursor: pointer;
         }
 
-        .bell-icon {
+        /* --- CSS CHO THANH ĐIỀU HƯỚNG (NAV) --- */
+        .TRANG-CH-index-html .text-wrapper-3 {
             position: absolute;
-            top: 16px;
-            left: 1307px;
-            width: 43px;
-            height: 46px;
-            cursor: pointer;
-        }
-
-        /* Navigation Bar */
-        .nav-bar {
-            position: absolute;
-            top: 84px;
-            left: 0;
-            width: 1440px;
-            height: 38px;
-            background-color: #2d2828cc;
-        }
-
-        .nav-item {
-            position: absolute;
-            top: 83px;
+            top: 81px;
+            left: 494px;
             height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-shadow: 0px 4px 4px #00000040;
             font-family: "Jaldi", Helvetica;
             font-weight: 700;
@@ -158,464 +185,435 @@
             font-size: 28px;
             letter-spacing: -0.28px;
             line-height: 42px;
-            cursor: pointer;
-            transition: all 0.3s;
+            white-space: nowrap;
         }
 
-        .nav-item:hover {
-            color: #ffd700;
-        }
-
-        .nav-item.active {
-            background-color: #757575;
-            padding: 0 30px;
-            border-radius: 26px;
-            top: 78px;
-            height: 48px;
-            line-height: 48px;
-            border: 1px solid #000000;
-        }
-
-        .nav-home { left: 101px; }
-        .nav-news { left: 461px; }
-        .nav-about { left: 855px; }
-        .nav-contact { left: 1207px; }
-
-        /* News Content Section */
-        .section-title {
+        .TRANG-CH-index-html .text-wrapper-4 {
             position: absolute;
-            top: 140px;
-            left: 31px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #090909;
-            font-size: 16px;
-            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        /* News Grid - Tin nổi bật */
-        .featured-news {
-            position: absolute;
-            top: 170px;
-            left: 46px;
-            width: 1348px;
-            display: flex;
-            gap: 32px;
-            overflow-x: auto;
-        }
-
-        .news-card-large {
-            min-width: 230px;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-
-        .news-image-large {
-            width: 206px;
-            height: 154px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .news-title-large {
-            margin-top: 12px;
-            width: 190px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 24px;
-            line-height: 36px;
-        }
-
-        .news-description {
-            margin-top: 8px;
-            width: 196px;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 16px;
-            line-height: 24px;
-            text-align: center;
-        }
-
-        /* Tất cả section */
-        .all-section-title {
-            position: absolute;
-            top: 455px;
-            left: 33px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #000000;
-            font-size: 16px;
-            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .all-news-grid {
-            position: absolute;
-            top: 485px;
-            left: 46px;
-            width: 1348px;
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .news-card-small {
-            width: 155px;
-            cursor: pointer;
-        }
-
-        .news-image-small {
-            width: 155px;
-            height: 103px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .news-title-small {
-            margin-top: 12px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #00541c;
-            font-size: 16px;
-            line-height: 24px;
-        }
-
-        /* Video section */
-        .video-section-title {
-            position: absolute;
-            top: 666px;
-            left: 34px;
-            font-family: "Inter", Helvetica;
-            font-weight: 700;
-            color: #000000;
-            font-size: 16px;
-            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .video-grid {
-            position: absolute;
-            top: 696px;
-            left: 46px;
-            width: 1348px;
-            display: flex;
-            gap: 32px;
-            overflow-x: auto;
-        }
-
-        .video-card {
-            min-width: 158px;
-            flex-shrink: 0;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .video-thumbnail {
-            width: 158px;
-            height: 115px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
+            top: 81px;
+            left: 855px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
         }
 
-        .play-button::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 15px solid #00541c;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            margin-left: 3px;
-        }
-
-        /* Footer */
-        .footer {
+        .TRANG-CH-index-html .text-wrapper-5 {
             position: absolute;
-            top: 939px;
+            top: 81px;
+            left: 1207px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-6 {
+            position: absolute;
+            top: 83px;
+            left: 101px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        /* --- PHẦN NỘI DUNG MỚI CHO NEWS.HTML --- */
+        .news-content {
+            position: absolute;
+            top: 140px; /* Ngay dưới header (122px) + 18px padding */
+            left: 40px;
+            width: 1360px; /* 1440 - 40 - 40 */
+        }
+        .news-content h2 {
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #000000;
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        
+        /* Grid "Tin nổi bật" */
+        .news-grid-featured {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: flex-start;
+            padding-bottom: 20px;
+        }
+        .news-item-featured {
+            display: flex;
+            flex-direction: column;
+            width: 240px; /* 5 items / row */
+            gap: 8px;
+        }
+        .news-item-featured img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .news-item-featured .title-text {
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #00541c;
+            font-size: 20px;
+            line-height: 1.4;
+            margin: 0;
+            min-height: 56px; /* 2 dòng */
+        }
+        .news-item-featured .sub-text {
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Grid "Tất cả" */
+        .news-grid-small {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Tighter gap */
+            justify-content: flex-start;
+            padding-bottom: 20px;
+        }
+        .news-item-small {
+            display: flex;
+            flex-direction: column;
+            width: 210px; /* 6 items / row */
+            gap: 8px;
+        }
+        .news-item-small img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .news-item-small p {
+            font-family: "Inter", Helvetica;
+            font-weight: 700;
+            color: #00541c;
+            font-size: 18px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        /* Grid "Video" */
+        .news-grid-video {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            padding-bottom: 40px; /* Thêm padding dưới cùng */
+        }
+        .news-item-video {
+            width: 210px; /* 6 items / row */
+        }
+        .news-item-video img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        /* --- KẾT THÚC CSS MỚI --- */
+
+
+        /* --- PHẦN FOOTER (GIỮ NGUYÊN) --- */
+        .TRANG-CH-index-html .rectangle-4 {
+            /* Ẩn rectangle-4 của trang chủ */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .rectangle-5 {
+            position: absolute;
+            top: 939px;  
             left: 0;
             width: 1440px;
             height: 131px;
             background-color: #d2d2d2;
         }
 
-        .footer-section {
+        .TRANG-CH-index-html .alarm {
             position: absolute;
-            top: 950px;
+            top: 16px;
+            left: 1307px;
+            width: 43px;
+            height: 46px;
+        }
+
+        .TRANG-CH-index-html .small-grid {
+             /* Ẩn small-grid của trang chủ */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .next-page {
+            /* Ẩn next-page của trang chủ */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .next-page-2 {
+            /* Ẩn next-page-2 của trang chủ */
+            display: none;
+        }
+
+        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr {
+            position: absolute;
+            top: 950px;  
+            left: 274px;
+            height: 100px;
             font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
             font-size: 13px;
             letter-spacing: 0;
             line-height: 19.5px;
         }
 
-        .footer-col-1 { left: 274px; }
-        .footer-col-2 { left: 527px; }
-        .footer-col-3 { left: 849px; }
-        .footer-col-4 { left: 1031px; }
-
-        .footer-title {
+        .TRANG-CH-index-html .span {
             font-weight: 700;
-            color: #000000;
         }
 
-        .footer-text {
+        .TRANG-CH-index-html .text-wrapper-7 {
+            font-weight: 200;
+        }
+
+        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu {
+            position: absolute;
+            top: 950px;  
+            left: 527px;
+            height: 80px;
+            font-family: "Inter", Helvetica;
             font-weight: 200;
             color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
         }
 
-        .footer-bold {
-            font-weight: 600;
+        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i {
+            position: absolute;
+            top: 950px;  
+            left: 849px;
+            height: 100px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
             color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
         }
 
-        /* Footer Icons */
-        .footer-icon-1 {
-            position: absolute;
-            top: 992px;
-            left: 16px;
-            width: 53px;
-            height: 53px;
-            cursor: pointer;
+        .TRANG-CH-index-html .text-wrapper-8 {
+            font-weight: 600;
         }
 
-        .footer-icon-2 {
+        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i {
             position: absolute;
-            top: 998px;
-            left: 1288px;
-            width: 52px;
-            height: 52px;
-            cursor: pointer;
+            top: 950px;  
+            left: 1031px;
+            height: 100px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
         }
 
-        .footer-icon-3 {
+        /* Ẩn các text mô tả của trang chủ */
+        .TRANG-CH-index-html .c-c-l-a-ch-n-l-t-ng,
+        .TRANG-CH-index-html .du-kh-ch-d-d-ng-ti-p,
+        .TRANG-CH-index-html .homestay-cung-c-p-c,
+        .TRANG-CH-index-html .cung-c-p-ch-ngh-c-xe,
+        .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i {
+            display: none;
+        }
+
+
+        .TRANG-CH-index-html .unread-messages {
             position: absolute;
-            top: 1000px;
+            top: 1000px;  
             left: 1365px;
             width: 52px;
             height: 52px;
-            cursor: pointer;
         }
 
-        .notification-badge {
+        .TRANG-CH-index-html .ringer-volume {
             position: absolute;
-            top: 983px;
+            top: 998px;  
+            left: 1288px;
+            width: 52px;
+            height: 52px;
+        }
+
+        .TRANG-CH-index-html .record {
+            position: absolute;
+            top: 992px;  
+            left: 16px;
+            width: 53px;
+            height: 53px;
+        }
+
+        .TRANG-CH-index-html .level {
+            position: absolute;
+            top: 983px;  
             left: 43px;
             width: 33px;
             height: 33px;
         }
+
+        .TRANG-CH-index-html .vector-2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1440px;
+            height: 902px;
+        }
     </style>
 </head>
 <body>
-    <div class="news-page">
-        <!-- Header -->
-        <div class="header-frame">
+    <div class="TRANG-CH-index-html" data-model-id="5:7730">
+        <div class="frame">
             <div class="rectangle"></div>
-            <div class="rectangle-3"></div>
+            <div class="div"></div>
+            <div class="rectangle-2"></div> <div class="rectangle-3"></div>
             <div class="text-wrapper-2">Tìm kiếm...</div>
             <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
-            <div class="logo-title">3CE</div>
-            <div class="logo-subtitle">Room Search</div>
-            <img class="search-icon" src="https://c.animaapp.com/E2jI1H3B/img/search@2x.png" />
-            <img class="bell-icon" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
+            <div class="title">3CE</div>
+            <div class="title-2">Room Search</div>
+            <img class="search" src="https://c.animaapp.com/E2jI1H3B/img/search@2x.png" />
+            
+            <a href="news.html" class="text-wrapper-3">Tin Tức</a>
+            <a href="#" class="text-wrapper-4">Giới Thiệu</a>
+            <a href="#" class="text-wrapper-5">Liên Hệ</a>
+            <a href="index tong.html" class="text-wrapper-6">Trang Chủ</a>
         </div>
-
-        <!-- Navigation -->
-        <div class="nav-bar"></div>
-        <div class="rectangle-2"></div>
-        <a href="index.html" class="nav-item nav-home">Trang Chủ</a>
-        <a href="news.html" class="nav-item nav-news">Tin Tức</a>
-        <a href="about.html" class="nav-item nav-about">Giới Thiệu</a>
-        <a href="contact.html" class="nav-item nav-contact">Liên Hệ</a>
-
-        <!-- Tin nổi bật Section -->
-        <div class="section-title">Tin nổi bật</div>
-        <div class="featured-news">
-            <div class="news-card-large">
-                <img class="news-image-large" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Hạ Long">
-                <div class="news-title-large">Khách sạn<br>giá rẻ ở Hạ Long</div>
-                <div class="news-description">Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm ...</div>
-            </div>
-            
-            <div class="news-card-large">
-                <img class="news-image-large" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
-                <div class="news-title-large">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
-                <div class="news-description">Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</div>
-            </div>
-            
-            <div class="news-card-large">
-                <img class="news-image-large" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
-                <div class="news-title-large">Homestay<br>giá tốt ở Hội An</div>
-                <div class="news-description">Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</div>
-            </div>
-            
-            <div class="news-card-large">
-                <img class="news-image-large" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
-                <div class="news-title-large">Dịch vụ nơi ở gần<br>khu du lịch Yên Bái</div>
-                <div class="news-description">Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí, bếp chung, cùng dịch vụ phòng.</div>
-            </div>
-            
-            <div class="news-card-large">
-                <img class="news-image-large" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Ninh Bình">
-                <div class="news-title-large">Resort chất lượng<br>tại Ninh Bình</div>
-                <div class="news-description">Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí và phòng chờ chung</div>
-            </div>
-        </div>
-
-        <!-- Tất cả Section -->
-        <div class="all-section-title">Tất cả</div>
-        <div class="all-news-grid">
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
-                <div class="news-title-small">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
-                <div class="news-title-small">Homestay<br>giá tốt ở Hội An</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
-                <div class="news-title-small">Dịch vụ nơi ở<br>gần khu du lịch<br>Yên Bái</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Ninh Bình">
-                <div class="news-title-small">Resort chất lượng<br>tại Ninh Bình</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Hạ Long">
-                <div class="news-title-small">Khách sạn<br>giá rẻ ở Hạ Long</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Đà Nẵng">
-                <div class="news-title-small">Căn hộ dịch vụ<br>ở Đà Nẵng</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Hội An">
-                <div class="news-title-small">Homestay<br>giá tốt ở Hội An</div>
-            </div>
-            
-            <div class="news-card-small">
-                <img class="news-image-small" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Yên Bái">
-                <div class="news-title-small">Dịch vụ nơi ở<br>gần khu du lịch<br>Yên Bái</div>
-            </div>
-        </div>
-
-        <!-- Video Section -->
-        <div class="video-section-title">Video</div>
-        <div class="video-grid">
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Video 1">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Video 2">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Video 3">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400" alt="Video 4">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400" alt="Video 5">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=400" alt="Video 6">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400" alt="Video 7">
-                <div class="play-button"></div>
-            </div>
-            
-            <div class="video-card">
-                <img class="video-thumbnail" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400" alt="Video 8">
-                <div class="play-button"></div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer"></div>
         
-        <div class="footer-section footer-col-1">
-            <p>
-                <span class="footer-title">Trợ giúp<br></span>
-                <span class="footer-text">Trung tâm trợ giúp<br>Câu hỏi thường gặp<br>Chính sách Bảo mật<br>Chính sách về cookie</span>
-            </p>
-        </div>
+        <img class="alarm" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
 
-        <div class="footer-section footer-col-2">
-            <p>
-                <span class="footer-bold">Điều khoản sử dụng<br></span>
-                <span class="footer-text">Quản lý thiết lập cookie<br>Đạo luật Dịch vụ số (EU)<br>Nguyên tắc và báo cáo nội dung</span>
-            </p>
-        </div>
+        <div class="news-content">
+            <h2>Tin nổi bật</h2>
+            <div class="news-grid-featured">
+                <div class="news-item-featured">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" />
+                    <p class="title-text">Khách sạn<br />giá rẻ ở Hạ Long</p>
+                    <p class="sub-text">Các lựa chọn lý tưởng dành cho du khách muốn tìm kiếm ...</p>
+                </div>
+                <div class="news-item-featured">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-2.png" />
+                    <p class="title-text">Căn hộ dịch vụ<br />ở Đà Nẵng</p>
+                    <p class="sub-text">Du khách dễ dàng tiếp cận các điểm tham quan nổi tiếng...</p>
+                </div>
+                <div class="news-item-featured">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-3.png" />
+                    <p class="title-text">Homestay<br />giá tốt ở Hội An</p>
+                    <p class="sub-text">Homestay cung cấp các phòng nghỉ hiện đại và tiện nghi...</p>
+                </div>
+                <div class="news-item-featured">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-4.png" />
+                    <p class="title-text">Dịch vụ nơi ở gần<br />khu du lịch Yên Bái</p>
+                    <p class="sub-text">Cung cấp chỗ nghỉ có xe đạp miễn phí, Wi-Fi miễn phí, bếp chung, cùng dịch vụ phòng.</p>
+                </div>
+                <div class="news-item-featured">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-5.png" />
+                    <p class="title-text">Resort chất lượng<br />tại Ninh Bình</p>
+                    <p class="sub-text">Có hồ bơi ngoài trời, chỗ đậu xe riêng miễn phí và phòng chờ chung</p>
+                </div>
+            </div>
 
-        <div class="footer-section footer-col-3">
-            <p>
-                <span class="footer-bold">Công ty<br></span>
-                <span class="footer-text">Về chúng tôi<br>Tuyển dụng<br>Báo chí<br>Nhật ký mạng</span>
-            </p>
-        </div>
+            <h2>Tất cả</h2>
+            <div class="news-grid-small">
+                <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-2.png" />
+                    <p>Căn hộ dịch vụ<br />ở Đà Nẵng</p>
+                </div>
+                <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-3.png" />
+                    <p>Homestay<br />giá tốt ở Hội An</p>
+                </div>
+                <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-4.png" />
+                    <p>Dịch vụ nơi ở<br />gần khu du lịch Yên Bái</p>
+                </div>
+                 <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-5.png" />
+                    <p>Resort chất lượng<br />tại Ninh Bình</p>
+                </div>
+                 <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" />
+                    <p>Khách sạn<br />giá rẻ ở Hạ Long</p>
+                </div>
+                 <div class="news-item-small">
+                    <img src="https://c.animaapp.com/E2jI1H3B/img/image-4.png" />
+                    <p>Dịch vụ nơi ở<br />gần khu du lịch Yên Bái</p>
+                </div>
+            </div>
 
-        <div class="footer-section footer-col-4">
-            <p>
-                <span class="footer-bold">Đối tác của chúng tôi<br></span>
-                <span class="footer-text">Cổng thông tin đối tác<br>Partner Hub<br>Quảng cáo<br>Đối tác liên kết</span>
-            </p>
+            <h2>Video</h2>
+            <div class="news-grid-video">
+                 <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" /></div>
+                <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-2.png" /></div>
+                <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-3.png" /></div>
+                <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-4.png" /></div>
+                <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-5.png" /></div>
+                <div class="news-item-video"><img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" /></div>
+            </div>
         </div>
-
-        <!-- Footer Icons -->
-        <img class="footer-icon-1" src="https://c.animaapp.com/E2jI1H3B/img/record@2x.png" />
-        <img class="notification-badge" src="https://c.animaapp.com/E2jI1H3B/img/level-1@2x.png" />
-        <img class="footer-icon-2" src="https://c.animaapp.com/E2jI1H3B/img/ringer-volume@2x.png" />
-        <img class="footer-icon-3" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" />
+        <div class="rectangle-5"></div>
+        <p class="tr-gi-p-trung-t-m-tr">
+            <span class="span">Trợ giúp<br /></span>
+            <span class="text-wrapper-7"
+                >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
+            >
+        </p>
+        <p class="i-u-kho-n-s-d-ng-qu">
+            <span class="text-wrapper-8">Điều khoản sử dụng<br /></span>
+            <span class="text-wrapper-7"
+                >Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo nội dung</span
+            >
+        </p>
+        <p class="c-ng-ty-v-ch-ng-t-i">
+            <span class="text-wrapper-8">Công ty<br /></span>
+            <span class="text-wrapper-7">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
+        </p>
+        <p class="i-t-c-c-a-ch-ng-t-i">
+            <span class="text-wrapper-8">Đối tác của chúng tôi<br /></span>
+            <span class="text-wrapper-7"
+                >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
+            >
+        </p>
+        <img class="unread-messages" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" />
+        <img class="ringer-volume" src="https://c.animaapp.com/E2jI1H3B/img/ringer-volume@2x.png" />
+        <img class="record" src="https://c.animaapp.com/E2jI1H3B/img/record@2x.png" />
+        <img class="level" src="https://c.animaapp.com/E2jI1H3B/img/level-1@2x.png" />
+        <img class="vector-2" src="https://c.animaapp.com/E2jI1H3B/img/vector-15.svg" />
     </div>
-
-    <script>
-        // Video play functionality
-        document.querySelectorAll('.video-card').forEach(card => {
-            card.addEventListener('click', function() {
-                alert('Video sẽ được phát!');
-            });
-        });
-
-        // News card click
-        document.querySelectorAll('.news-card-large, .news-card-small').forEach(card => {
-            card.addEventListener('click', function() {
-                alert('Xem chi tiết tin tức');
-            });
-        });
-    </script>
 </body>
 </html>
