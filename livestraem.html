@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* --- HEADER STYLES (TỪ FILE INDEX) --- */
+        /* --- HEADER STYLES (GIỮ NGUYÊN TỪ INDEX) --- */
         .TRANG-CH-index-html .frame {
             position: absolute;
             top: 0;
@@ -226,6 +226,9 @@
             white-space: nowrap;
         }
 
+        /* * ĐÂY LÀ PHẦN SỬA LỖI 2: 
+         * CSS .alarm được giữ nguyên như file index (1).html 
+        */
         .TRANG-CH-index-html .alarm {
             position: absolute;
             top: 16px;
@@ -422,119 +425,42 @@
             cursor: pointer;
         }
 
-        /* --- FOOTER STYLES (TỪ FILE INDEX) --- */
-        .TRANG-CH-index-html .rectangle-5 {
-            position: absolute;
-            top: 939px;  
-            left: 0;
-            width: 1440px;
-            height: 131px;
-            background-color: #d2d2d2;
-        }
-
-        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr {
-            position: absolute;
-            top: 950px;  
-            left: 274px;
-            height: 100px;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
-        }
-
-        .TRANG-CH-index-html .span {
-            font-weight: 700;
-        }
-
-        .TRANG-CH-index-html .text-wrapper-7 {
-            font-weight: 200;
-        }
-
-        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu {
-            position: absolute;
-            top: 950px;  
-            left: 527px;
-            height: 80px;
-            font-family: "Inter", Helvetica;
-            font-weight: 200;
-            color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
-        }
-
-        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i {
-            position: absolute;
-            top: 950px;  
-            left: 849px;
-            height: 100px;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
-        }
-
-        .TRANG-CH-index-html .text-wrapper-8 {
-            font-weight: 600;
-        }
-
-        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i {
-            position: absolute;
-            top: 950px;  
-            left: 1031px;
-            height: 100px;
-            font-family: "Inter", Helvetica;
-            font-weight: 400;
-            color: #000000;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 19.5px;
-        }
-
-        .TRANG-CH-index-html .unread-messages {
-            position: absolute;
-            top: 1000px;  
-            left: 1365px;
-            width: 52px;
-            height: 52px;
-        }
-
-        .TRANG-CH-index-html .ringer-volume {
-            position: absolute;
-            top: 998px;  
-            left: 1288px;
-            width: 52px;
-            height: 52px;
-        }
-
-        .TRANG-CH-index-html .record {
-            position: absolute;
-            top: 992px;  
-            left: 16px;
-            width: 53px;
-            height: 53px;
-        }
-
-        .TRANG-CH-index-html .level {
-            position: absolute;
-            top: 983px;  
-            left: 43px;
-            width: 33px;
-            height: 33px;
-        }
-
+        /* * ĐÂY LÀ PHẦN SỬA LỖI 3: 
+         * CSS cho Footer mới và ẩn tất cả CSS Footer cũ 
+        */
+        .TRANG-CH-index-html .rectangle-5,
+        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr,
+        .TRANG-CH-index-html .span,
+        .TRANG-CH-index-html .text-wrapper-7,
+        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu,
+        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i,
+        .TRANG-CH-index-html .text-wrapper-8,
+        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i,
+        .TRANG-CH-index-html .unread-messages,
+        .TRANG-CH-index-html .ringer-volume,
+        .TRANG-CH-index-html .record,
+        .TRANG-CH-index-html .level,
         .TRANG-CH-index-html .vector-2 {
+            display: none; /* Ẩn hết các thành phần footer cũ */
+        }
+
+        .new-footer {
             position: absolute;
-            top: 0;
+            top: 939px; /* Vị trí của footer cũ */
             left: 0;
             width: 1440px;
-            height: 902px;
+            height: 131px; /* Chiều cao footer cũ */
+            background-color: #d2d2d2; /* Màu nền cũ */
+            display: flex;
+            justify-content: center; /* Căn giữa các icon */
+            align-items: center;
+            gap: 50px; /* Khoảng cách giữa 2 icon */
         }
+        .footer-icon {
+            width: 52px; /* Kích thước chuẩn từ icon cũ */
+            height: 52px;
+        }
+
     </style>
 </head>
 <body>
@@ -570,7 +496,7 @@
                                 <a href="#">Chia sẻ</a>
                             </div>
                         </div>
-                        <img src="https://c.animaapp.com/E2jI1H3B/img/video-thumbnail-nha-trang.png" alt="Video thumbnail" />
+                        <img src="imagewens/video-nhatrang.png" alt="Video thumbnail" />
                     </div>
 
                     <div class="event-info">
@@ -587,35 +513,35 @@
                         <div class="chat-messages">
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-phuong.png" alt="avatar" />
+                                    <img src="imagewens/avatar-phuong.png" alt="avatar" />
                                     <span>Chị Phương</span>
                                 </div>
                                 <p>“Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-do.png" alt="avatar" />
+                                    <img src="imagewens/avatar-do.png" alt="avatar" />
                                     <span>Anh Độ</span>
                                 </div>
                                 <p>“Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện”</p>
                             </div>
                             <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-phao.png" alt="avatar" />
+                                    <img src="imagewens/avatar-phao.png" alt="avatar" />
                                     <span>Anh Phao</span>
                                 </div>
                                 <p>“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂.”</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-hoa.png" alt="avatar" />
+                                    <img src="imagewens/avatar-hoa.png" alt="avatar" />
                                     <span>Chị Hoa</span>
                                 </div>
                                 <p>“Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</p>
                             </div>
                              <div class="chat-message">
                                 <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-huong.png" alt="avatar" />
+                                    <img src="imagewens/avatar-huong.png" alt="avatar" />
                                     <span>Chị Hương</span>
                                 </div>
                                 <p>“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</p>
@@ -631,34 +557,11 @@
             </div>
         </div>
 
-        <div class="rectangle-5"></div>
-        <p class="tr-gi-p-trung-t-m-tr">
-            <span class="span">Trợ giúp<br /></span>
-            <span class="text-wrapper-7"
-                >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
-            >
-        </p>
-        <p class="i-u-kho-n-s-d-ng-qu">
-            <span class="text-wrapper-8">Điều khoản sử dụng<br /></span>
-            <span class="text-wrapper-7"
-                >Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo nội dung</span
-            >
-        </p>
-        <p class="c-ng-ty-v-ch-ng-t-i">
-            <span class="text-wrapper-8">Công ty<br /></span>
-            <span class="text-wrapper-7">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
-        </p>
-        <p class="i-t-c-c-a-ch-ng-t-i">
-            <span class="text-wrapper-8">Đối tác của chúng tôi<br /></span>
-            <span class="text-wrapper-7"
-                >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
-            >
-        </p>
-        <img class="unread-messages" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" />
-        <img class="ringer-volume" src="https://c.animaapp.com/E2jI1H3B/img/ringer-volume@2x.png" />
-        <img class="record" src="https://c.animaapp.com/E2jI1H3B/img/record@2x.png" />
-        <img class="level" src="https://c.animaapp.com/E2jI1H3B/img/level-1@2x.png" />
-        <img class="vector-2" src="https://c.animaapp.com/E2jI1H3B/img/vector-15.svg" />
+        <div class="new-footer">
+            <img class="footer-icon" src="imagewens/phone-icon.png" alt="Phone" />
+            <img class="footer-icon" src="imagewens/letter-icon.png" alt="Email" />
+        </div>
+
     </div>
 </body>
 </html>
