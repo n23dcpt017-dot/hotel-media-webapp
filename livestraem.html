@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tin Tức - 3CE Room Search</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Inter:300,800,400,700,200|Jaro:400|Jaldi:700");
+        * {
+            -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            margin: 0px;
+            height: 100%;
+        }
+        button:focus-visible {
+            outline: 2px solid #4a90e2 !important;
+            outline: -webkit-focus-ring-color auto 5px !important;
+        }
+        a {
+            text-decoration: none;
+            color: inherit; /* Đảm bảo link kế thừa màu */
+        }
+
+        .TRANG-CH-index-html {
+            background-color: #ffffff;
+            width: 1440px;
+            margin: 0 auto;
+            min-height: 1080px;
+            position: relative;
+        }
+
+        /* --- HEADER STYLES (TỪ FILE INDEX) --- */
+        .TRANG-CH-index-html .frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1440px;
+            height: 122px; /* Điều chỉnh chiều cao cho trang con */
+            background-color: #1c1f21;
+            overflow: hidden;
+        }
+
+        .TRANG-CH-index-html .rectangle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1440px;
+            height: 84px;
+            background-color: #2c2c2c;
+        }
+
+        .TRANG-CH-index-html .div {
+            position: absolute;
+            top: 84px;
+            left: 0;
+            width: 1440px;
+            height: 38px;
+            background-color: #2d2828cc;
+        }
+
+        /* Đã thay đổi: Di chuyển highlight sang "Tin Tức" */
+        .TRANG-CH-index-html .rectangle-2 {
+            position: absolute;
+            top: 83px;
+            left: 392px; 
+            width: 304px;
+            height: 40px;
+            background-color: #757575;
+            border-radius: 26px;
+            border: 1px solid;
+            border-color: #000000;
+        }
+
+        .TRANG-CH-index-html .rectangle-3 {
+            position: absolute;
+            top: 18px;
+            left: calc(50.00% - 272px);
+            width: 544px;
+            height: 36px;
+            background-color: #d9d9d9;
+            border-radius: 17px;
+            opacity: 0.5;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-2 {
+            position: absolute;
+            top: 24px;
+            left: 498px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 6px 3px #0c0c0c40;
+            font-family: "Inter", Helvetica;
+            font-weight: 300;
+            color: #ffffff;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .vector {
+            position: absolute;
+            width: 3.04%;
+            height: 8.49%;
+            top: 3.66%;
+            left: 94.85%;
+        }
+
+        .TRANG-CH-index-html .title {
+            position: absolute;
+            top: 4px;
+            left: 49px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Jaro", Helvetica;
+            font-weight: 400;
+            color: #ffffff;
+            font-size: 48px;
+            letter-spacing: -0.48px;
+            line-height: 72px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .title-2 {
+            position: absolute;
+            top: 24px;
+            left: 128px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: -0.32px;
+            line-height: 48px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .search {
+            position: absolute;
+            top: 20px;
+            left: 458px;
+            width: 31px;
+            height: 31px;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-3 {
+            position: absolute;
+            top: 81px;
+            left: 494px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-4 {
+            position: absolute;
+            top: 81px;
+            left: 855px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-5 {
+            position: absolute;
+            top: 81px;
+            left: 1207px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-6 {
+            position: absolute;
+            top: 83px;
+            left: 101px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0px 4px 4px #00000040;
+            font-family: "Jaldi", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: -0.28px;
+            line-height: 42px;
+            white-space: nowrap;
+        }
+
+        .TRANG-CH-index-html .alarm {
+            position: absolute;
+            top: 16px;
+            left: 1307px;
+            width: 43px;
+            height: 46px;
+        }
+
+        /* --- ẨN CONTENT CỦA TRANG CHỦ --- */
+        .TRANG-CH-index-html .ti-xung,
+        .TRANG-CH-index-html .text-wrapper,
+        .TRANG-CH-index-html .hotel-room-search,
+        .TRANG-CH-index-html .rectangle-4,
+        .TRANG-CH-index-html .small-grid,
+        .TRANG-CH-index-html .next-page,
+        .TRANG-CH-index-html .next-page-2,
+        .TRANG-CH-index-html .c-c-l-a-ch-n-l-t-ng,
+        .TRANG-CH-index-html .du-kh-ch-d-d-ng-ti-p,
+        .TRANG-CH-index-html .homestay-cung-c-p-c,
+        .TRANG-CH-index-html .cung-c-p-ch-ngh-c-xe,
+        .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i {
+            display: none;
+        }
+
+        /* --- CSS MỚI CHO TRANG CHI TIẾT (LIVESTREAM) --- */
+        .news-detail-container {
+            position: absolute;
+            top: 152px; /* Dưới header */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            max-width: 90%;
+            font-family: "Inter", Helvetica;
+        }
+
+        .news-detail-title {
+            font-weight: 800;
+            font-size: 26px;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .news-detail-layout {
+            display: flex;
+            gap: 24px;
+        }
+
+        .news-detail-left {
+            flex: 6.5; /* ~65% */
+        }
+
+        .news-detail-right {
+            flex: 3.5; /* ~35% */
+        }
+
+        /* Cột bên trái */
+        .video-player {
+            background-color: #1c1f21;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .video-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        .video-header .links a {
+            color: #fff;
+            margin-left: 15px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        .video-player img {
+            width: 100%;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .event-info {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+        .event-info h3 {
+            color: #D9534F; /* Màu đỏ cam */
+            margin-top: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .event-info p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .find-room-button {
+            background-color: #5CB85C; /* Màu xanh lá */
+            color: #000;
+            font-weight: 700;
+            text-align: center;
+            padding: 12px;
+            border-radius: 20px;
+            margin-top: 24px;
+            display: block;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        /* Cột bên phải (Chat) */
+        .chat-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #FCFCFC;
+        }
+        .chat-header {
+            background-color: #FCEEEE; /* Nền hồng nhạt */
+            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 700;
+            color: #D9534F; /* Chữ đỏ cam */
+            font-size: 16px;
+        }
+        .chat-messages {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .chat-message {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #EAEAEA;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .chat-message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .chat-message-header img { /* Avatar */
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #eee;
+        }
+        .chat-message p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+            padding-left: 32px; /* Căn lề với tên */
+            color: #222;
+        }
+        .chat-input {
+            border-top: 1px solid #ddd;
+            padding: 15px;
+            background-color: #F8F8F8;
+            border-radius: 0 0 8px 8px;
+        }
+        .chat-input-wrapper {
+            position: relative;
+        }
+        .chat-input-wrapper input {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 10px 40px 10px 15px;
+            font-family: "Inter", Helvetica;
+            font-size: 14px;
+        }
+        .chat-input-wrapper::after { /* Icon gửi */
+            content: '▶';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER STYLES (TỪ FILE INDEX) --- */
+        .TRANG-CH-index-html .rectangle-5 {
+            position: absolute;
+            top: 939px;  
+            left: 0;
+            width: 1440px;
+            height: 131px;
+            background-color: #d2d2d2;
+        }
+
+        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr {
+            position: absolute;
+            top: 950px;  
+            left: 274px;
+            height: 100px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
+        }
+
+        .TRANG-CH-index-html .span {
+            font-weight: 700;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-7 {
+            font-weight: 200;
+        }
+
+        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu {
+            position: absolute;
+            top: 950px;  
+            left: 527px;
+            height: 80px;
+            font-family: "Inter", Helvetica;
+            font-weight: 200;
+            color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
+        }
+
+        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i {
+            position: absolute;
+            top: 950px;  
+            left: 849px;
+            height: 100px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
+        }
+
+        .TRANG-CH-index-html .text-wrapper-8 {
+            font-weight: 600;
+        }
+
+        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i {
+            position: absolute;
+            top: 950px;  
+            left: 1031px;
+            height: 100px;
+            font-family: "Inter", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 19.5px;
+        }
+
+        .TRANG-CH-index-html .unread-messages {
+            position: absolute;
+            top: 1000px;  
+            left: 1365px;
+            width: 52px;
+            height: 52px;
+        }
+
+        .TRANG-CH-index-html .ringer-volume {
+            position: absolute;
+            top: 998px;  
+            left: 1288px;
+            width: 52px;
+            height: 52px;
+        }
+
+        .TRANG-CH-index-html .record {
+            position: absolute;
+            top: 992px;  
+            left: 16px;
+            width: 53px;
+            height: 53px;
+        }
+
+        .TRANG-CH-index-html .level {
+            position: absolute;
+            top: 983px;  
+            left: 43px;
+            width: 33px;
+            height: 33px;
+        }
+
+        .TRANG-CH-index-html .vector-2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1440px;
+            height: 902px;
+        }
+    </style>
+</head>
+<body>
+    <div class="TRANG-CH-index-html" data-model-id="5:7730">
+        <div class="frame">
+            <div class="rectangle"></div>
+            <div class="div"></div>
+            <div class="rectangle-2"></div>
+            <div class="rectangle-3"></div>
+            <div class="text-wrapper-2">Tìm kiếm...</div>
+            <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
+            <div class="title">3CE</div>
+            <div class="title-2">Room Search</div>
+            <img class="search" src="https://c.animaapp.com/E2jI1H3B/img/search@2x.png" />
+            
+            <a href="news.html" class="text-wrapper-3">Tin Tức</a>
+            <a href="#" class="text-wrapper-4">Giới Thiệu</a>
+            <a href="#" class="text-wrapper-5">Liên Hệ</a>
+            <a href="index.html" class="text-wrapper-6">Trang Chủ</a>
+        </div>
+        <img class="alarm" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
+
+        <div class="news-detail-container">
+            <h1 class="news-detail-title">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h1>
+            
+            <div class="news-detail-layout">
+                <div class="news-detail-left">
+                    <div class="video-player">
+                        <div class="video-header">
+                            <h3>Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h3>
+                            <div class="links">
+                                <a href="#">Xem sau</a>
+                                <a href="#">Chia sẻ</a>
+                            </div>
+                        </div>
+                        <img src="https://c.animaapp.com/E2jI1H3B/img/video-thumbnail-nha-trang.png" alt="Video thumbnail" />
+                    </div>
+
+                    <div class="event-info">
+                        <h3>🔴 Sự kiện đang phát</h3>
+                        <p>Bạn sắp đi du lịch Nha Trang mà chưa biết nên đến địa điểm nào phù hợp với nhu cầu của từng thành viên trong đoàn? Bạn đã đi Nha Trang đã lâu trước đây nhưng giờ lại muốn cập nhật thêm những địa điểm du lịch Nha Trang nổi tiếng nhất, vậy thì hãy xem hết video này để lên danh sách những điểm check in thú vị mới nhất Nha Trang năm nay</p>
+                    </div>
+
+                    <a href="#" class="find-room-button">CHỖ NGHỈ CẦN TÌM</a>
+                </div>
+
+                <div class="news-detail-right">
+                    <div class="chat-container">
+                        <div class="chat-header">💬 Khung chat trực tuyến</div>
+                        <div class="chat-messages">
+                            <div class="chat-message">
+                                <div class="chat-message-header">
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-phuong.png" alt="avatar" />
+                                    <span>Chị Phương</span>
+                                </div>
+                                <p>“Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</p>
+                            </div>
+                            <div class="chat-message">
+                                <div class="chat-message-header">
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-do.png" alt="avatar" />
+                                    <span>Anh Độ</span>
+                                </div>
+                                <p>“Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện”</p>
+                            </div>
+                            <div class="chat-message">
+                                <div class="chat-message-header">
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-phao.png" alt="avatar" />
+                                    <span>Anh Phao</span>
+                                </div>
+                                <p>“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂.”</p>
+                            </div>
+                             <div class="chat-message">
+                                <div class="chat-message-header">
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-hoa.png" alt="avatar" />
+                                    <span>Chị Hoa</span>
+                                </div>
+                                <p>“Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</p>
+                            </div>
+                             <div class="chat-message">
+                                <div class="chat-message-header">
+                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-huong.png" alt="avatar" />
+                                    <span>Chị Hương</span>
+                                </div>
+                                <p>“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</p>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <div class="chat-input-wrapper">
+                                <input type="text" placeholder="Bình luận của bạn..." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rectangle-5"></div>
+        <p class="tr-gi-p-trung-t-m-tr">
+            <span class="span">Trợ giúp<br /></span>
+            <span class="text-wrapper-7"
+                >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
+            >
+        </p>
+        <p class="i-u-kho-n-s-d-ng-qu">
+            <span class="text-wrapper-8">Điều khoản sử dụng<br /></span>
+            <span class="text-wrapper-7"
+                >Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo nội dung</span
+            >
+        </p>
+        <p class="c-ng-ty-v-ch-ng-t-i">
+            <span class="text-wrapper-8">Công ty<br /></span>
+            <span class="text-wrapper-7">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
+        </p>
+        <p class="i-t-c-c-a-ch-ng-t-i">
+            <span class="text-wrapper-8">Đối tác của chúng tôi<br /></span>
+            <span class="text-wrapper-7"
+                >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
+            >
+        </p>
+        <img class="unread-messages" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" />
+        <img class="ringer-volume" src="https://c.animaapp.com/E2jI1H3B/img/ringer-volume@2x.png" />
+        <img class="record" src="https://c.animaapp.com/E2jI1H3B/img/record@2x.png" />
+        <img class="level" src="https://c.animaapp.com/E2jI1H3B/img/level-1@2x.png" />
+        <img class="vector-2" src="https://c.animaapp.com/E2jI1H3B/img/vector-15.svg" />
+    </div>
+</body>
+</html>
