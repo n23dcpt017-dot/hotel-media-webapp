@@ -1,0 +1,240 @@
+.TRANG-NG-k-BNG-EMAIL {
+    background-color: #ffffff;
+    width: 100%;
+    min-width: 1440px;
+    min-height: 960px;
+    position: relative;
+}
+
+.TRANG-NG-k-BNG-EMAIL .content {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-items: center;
+    gap: 24px;
+    position: absolute;
+    top: calc(50.00% - 208px);
+    left: calc(50.00% - 200px);
+}
+
+.TRANG-NG-k-BNG-EMAIL .copy {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.TRANG-NG-k-BNG-EMAIL .text-wrapper {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: -0.24px;
+    line-height: 36px;
+    white-space: nowrap;
+}
+
+.TRANG-NG-k-BNG-EMAIL .div {
+    position: relative;
+    width: fit-content;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+.TRANG-NG-k-BNG-EMAIL .input-and-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.TRANG-NG-k-BNG-EMAIL .field {
+    width: 400px;
+    height: 40px;
+    padding: 8px 16px;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #dfdfdf;
+    flex: 1;
+    margin-top: -4.00px;
+    margin-bottom: -2.00px;
+    font-family: var(--body-text-font-family);
+    font-weight: var(--body-text-font-weight);
+    color: #828282;
+    font-size: var(--body-text-font-size);
+    letter-spacing: var(--body-text-letter-spacing);
+    line-height: var(--body-text-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-style: var(--body-text-font-style);
+}
+
+.TRANG-NG-k-BNG-EMAIL .label-wrapper {
+    display: flex;
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #dfdfdf;
+}
+
+.TRANG-NG-k-BNG-EMAIL .label {
+    position: relative;
+    flex: 1;
+    margin-top: -4.00px;
+    margin-bottom: -2.00px;
+    font-family: var(--body-text-font-family);
+    font-weight: var(--body-text-font-weight);
+    color: #828282;
+    font-size: var(--body-text-font-size);
+    letter-spacing: var(--body-text-letter-spacing);
+    line-height: var(--body-text-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-style: var(--body-text-font-style);
+}
+
+.TRANG-NG-k-BNG-EMAIL .button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0px 16px;
+    position: relative;
+    background-color: #000000;
+    border-radius: 8px;
+}
+
+.TRANG-NG-k-BNG-EMAIL .text-wrapper-2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    font-family: var(--small-text-font-family);
+    font-weight: var(--small-text-font-weight);
+    color: #ffffff;
+    font-size: var(--small-text-font-size);
+    letter-spacing: var(--small-text-letter-spacing);
+    line-height: var(--small-text-line-height);
+    white-space: nowrap;
+    font-style: var(--small-text-font-style);
+}
+
+.TRANG-NG-k-BNG-EMAIL .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.TRANG-NG-k-BNG-EMAIL .rectangle {
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    height: 1px;
+    background-color: #e6e6e6;
+}
+
+.TRANG-NG-k-BNG-EMAIL .text-wrapper-3 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #828282;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+.TRANG-NG-k-BNG-EMAIL .by-clicking-continue {
+    position: relative;
+    align-self: stretch;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+
+.TRANG-NG-k-BNG-EMAIL .span {
+    color: #828282;
+}
+
+.TRANG-NG-k-BNG-EMAIL .text-wrapper-4 {
+    color: #000000;
+}
+
+.TRANG-NG-k-BNG-EMAIL .title {
+    position: absolute;
+    top: 200px;
+    left: 600px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Jaro-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 48px;
+    letter-spacing: -0.48px;
+    line-height: 72px;
+    white-space: nowrap;
+}
+
+.TRANG-NG-k-BNG-EMAIL .title-2 {
+    position: absolute;
+    top: 220px;
+    left: 679px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Jaldi-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 32px;
+    letter-spacing: -0.32px;
+    line-height: 48px;
+    white-space: nowrap;
+}
