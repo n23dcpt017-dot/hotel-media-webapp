@@ -1,1 +1,732 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>3CE Room Search - Hoàn tất đặt phòng</title>
+    <style>
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+        * {
+          -webkit-font-smoothing: antialiased;
+          box-sizing: border-box;
+        }
+        html,
+        body {
+          margin: 0px;
+          height: 100%;
+        }
+        /* a blue color as a generic focus style */
+        button:focus-visible {
+          outline: 2px solid #4a90e2 !important;
+          outline: -webkit-focus-ring-color auto 5px !important;
+        }
+        a {
+          text-decoration: none;
+        }
+        
+        .XC-NHN-t-PHNG {
+          background-color: #ffffff;
+          width: 100%;
+          min-width: 1440px;
+          min-height: 961px;
+          position: relative;
+        }
+
+        .XC-NHN-t-PHNG .frame {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1440px;
+          height: 122px;
+          background-color: #1c1f21;
+        }
+
+        .XC-NHN-t-PHNG .rectangle {
+          position: absolute;
+          top: 18px;
+          left: calc(50.00% - 272px);
+          width: 544px;
+          height: 36px;
+          background-color: #d9d9d9;
+          border-radius: 17px;
+          opacity: 0.5;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper {
+          position: absolute;
+          top: 24px;
+          left: 498px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-shadow: 0px 6px 3px #0c0c0c40;
+          font-family: "Inter-Light", Helvetica;
+          font-weight: 300;
+          color: #ffffff;
+          font-size: 16px;
+          text-align: center;
+          letter-spacing: 0;
+          line-height: 24px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .title {
+          position: absolute;
+          top: 9px;
+          left: 36px;
+          height: 72px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaro-Regular", Helvetica;
+          font-weight: 400;
+          color: #ffffff;
+          font-size: 48px;
+          letter-spacing: -0.48px;
+          line-height: 72px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .div {
+          position: absolute;
+          top: 29px;
+          left: 115px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #ffffff;
+          font-size: 32px;
+          letter-spacing: -0.32px;
+          line-height: 48px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .vector {
+          position: absolute;
+          width: 3.06%;
+          height: 32.84%;
+          top: 14.93%;
+          left: 94.86%;
+        }
+
+        .XC-NHN-t-PHNG .search {
+          position: absolute;
+          top: 21px;
+          left: 459px;
+          width: 31px;
+          height: 31px;
+        }
+
+        .XC-NHN-t-PHNG .alarm {
+          position: absolute;
+          top: 19px;
+          left: 1307px;
+          width: 43px;
+          height: 46px;
+        }
+
+        .XC-NHN-t-PHNG .check-mark {
+          position: absolute;
+          top: 140px;
+          left: 68px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .XC-NHN-t-PHNG .element-circled {
+          position: absolute;
+          top: 140px;
+          left: 643px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-2 {
+          position: absolute;
+          top: 142px;
+          left: 119px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #000000;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-3 {
+          position: absolute;
+          top: 142px;
+          left: 700px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #000000;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .p {
+          position: absolute;
+          top: 489px;
+          left: 562px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #000000;
+          font-size: 40px;
+          text-align: center;
+          letter-spacing: -0.40px;
+          line-height: 60px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-4 {
+          position: absolute;
+          top: 544px;
+          left: 663px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Regular", Helvetica;
+          font-weight: 400;
+          color: #004e03;
+          font-size: 20px;
+          text-align: center;
+          letter-spacing: -0.20px;
+          line-height: 30px;
+          text-decoration: underline;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-5 {
+          position: absolute;
+          top: 142px;
+          left: 1220px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #000000;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .rectangle-2 {
+          position: absolute;
+          top: 162px;
+          left: 212px;
+          width: 413px;
+          height: 2px;
+          background-color: #000000;
+        }
+
+        .XC-NHN-t-PHNG .rectangle-3 {
+          position: absolute;
+          top: 162px;
+          left: 780px;
+          width: 383px;
+          height: 2px;
+          background-color: #000000;
+        }
+
+        .XC-NHN-t-PHNG .rectangle-4 {
+          position: absolute;
+          top: 829px;
+          left: 0;
+          width: 1440px;
+          height: 131px;
+          background-color: #d2d2d2;
+        }
+
+        .XC-NHN-t-PHNG .c-ng-ty-v-ch-ng-t-i {
+          position: absolute;
+          top: 840px;
+          left: 849px;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Inter-SemiBold", Helvetica;
+          font-weight: 400;
+          color: #000000;
+          font-size: 13px;
+          letter-spacing: 0;
+          line-height: 19.5px;
+        }
+
+        .XC-NHN-t-PHNG .span {
+          font-weight: 600;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-6 {
+          font-family: "Inter-ExtraLight", Helvetica;
+          font-weight: 200;
+        }
+
+        .XC-NHN-t-PHNG .tr-gi-p-trung-t-m-tr {
+          position: absolute;
+          top: 841px;
+          left: 274px;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Inter-Bold", Helvetica;
+          font-weight: 400;
+          color: #000000;
+          font-size: 13px;
+          letter-spacing: 0;
+          line-height: 19.5px;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-7 {
+          font-weight: 700;
+        }
+
+        .XC-NHN-t-PHNG .i-t-c-c-a-ch-ng-t-i {
+          position: absolute;
+          top: 841px;
+          left: 1031px;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Inter-SemiBold", Helvetica;
+          font-weight: 400;
+          color: #000000;
+          font-size: 13px;
+          letter-spacing: 0;
+          line-height: 19.5px;
+        }
+
+        .XC-NHN-t-PHNG .i-u-kho-n-s-d-ng-qu {
+          position: absolute;
+          top: 861px;
+          left: 527px;
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Inter-ExtraLight", Helvetica;
+          font-weight: 200;
+          color: #000000;
+          font-size: 13px;
+          letter-spacing: 0;
+          line-height: 19.5px;
+        }
+
+        .XC-NHN-t-PHNG .ringer-volume {
+          position: absolute;
+          top: 888px;
+          left: 1288px;
+          width: 52px;
+          height: 52px;
+        }
+
+        .XC-NHN-t-PHNG .unread-messages {
+          position: absolute;
+          top: 890px;
+          left: 1365px;
+          width: 52px;
+          height: 52px;
+        }
+
+        .XC-NHN-t-PHNG .circled {
+          position: absolute;
+          top: 142px;
+          left: 1172px;
+          width: 39px;
+          height: 39px;
+        }
+
+        .XC-NHN-t-PHNG .rectangle-5 {
+          position: absolute;
+          top: 87px;
+          left: 0;
+          width: 1440px;
+          height: 36px;
+          background-color: #000000cc;
+        }
+
+        .XC-NHN-t-PHNG .rectangle-6 {
+          position: absolute;
+          top: 86px;
+          left: 382px;
+          width: 304px;
+          height: 37px;
+          background-color: #757575;
+          border-radius: 26px;
+          border: 1px solid;
+          border-color: #000000;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-8 {
+          position: absolute;
+          top: 86px;
+          left: 101px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-shadow: 0px 4px 4px #00000040;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #ffffff;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-9 {
+          position: absolute;
+          top: 86px;
+          left: 494px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-shadow: 0px 4px 4px #00000040;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #ffffff;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-10 {
+          position: absolute;
+          top: 86px;
+          left: 855px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-shadow: 0px 4px 4px #00000040;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #ffffff;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-11 {
+          position: absolute;
+          top: 86px;
+          left: 1207px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-shadow: 0px 4px 4px #00000040;
+          font-family: "Jaldi-Bold", Helvetica;
+          font-weight: 700;
+          color: #ffffff;
+          font-size: 24px;
+          letter-spacing: -0.24px;
+          line-height: 36px;
+          white-space: nowrap;
+        }
+
+        .XC-NHN-t-PHNG .img {
+          position: absolute;
+          top: 345px;
+          left: 663px;
+          width: 136px;
+          height: 136px;
+        }
+
+        .XC-NHN-t-PHNG .record {
+          position: absolute;
+          top: 882px;
+          left: 16px;
+          width: 53px;
+          height: 53px;
+        }
+
+        .XC-NHN-t-PHNG .level {
+          position: absolute;
+          top: 873px;
+          left: 43px;
+          width: 33px;
+          height: 33px;
+        }
+
+        .XC-NHN-t-PHNG .search-input {
+          position: absolute;
+          top: 18px;
+          left: calc(50.00% - 272px);
+          width: 544px;
+          height: 36px;
+          background-color: transparent;
+          border: none;
+          border-radius: 17px;
+          padding: 0 40px 0 50px;
+          font-family: "Inter-Light", Helvetica;
+          font-weight: 300;
+          color: #ffffff;
+          font-size: 16px;
+          z-index: 10;
+          opacity: 0;
+        }
+
+        .XC-NHN-t-PHNG .search-input:focus {
+          opacity: 1;
+          outline: 2px solid #ffffff;
+        }
+
+        .XC-NHN-t-PHNG .search-input::placeholder {
+          color: #ffffff;
+          opacity: 0.8;
+        }
+
+        .XC-NHN-t-PHNG .vector,
+        .XC-NHN-t-PHNG .search,
+        .XC-NHN-t-PHNG .alarm,
+        .XC-NHN-t-PHNG .record,
+        .XC-NHN-t-PHNG .level,
+        .XC-NHN-t-PHNG .ringer-volume,
+        .XC-NHN-t-PHNG .unread-messages {
+          background: none;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+        }
+
+        .XC-NHN-t-PHNG .vector img,
+        .XC-NHN-t-PHNG .search img,
+        .XC-NHN-t-PHNG .alarm img,
+        .XC-NHN-t-PHNG .record img,
+        .XC-NHN-t-PHNG .level img,
+        .XC-NHN-t-PHNG .ringer-volume img,
+        .XC-NHN-t-PHNG .unread-messages img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+
+        .XC-NHN-t-PHNG .progress-steps {
+          position: absolute;
+          top: 140px;
+          left: 68px;
+          right: 68px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .XC-NHN-t-PHNG .step {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+        }
+
+        .XC-NHN-t-PHNG .step-completed .check-mark,
+        .XC-NHN-t-PHNG .step-completed .element-circled {
+          filter: none;
+        }
+
+        .XC-NHN-t-PHNG .step-active .circled {
+          filter: none;
+        }
+
+        .XC-NHN-t-PHNG .progress-line {
+          flex: 1;
+          margin: 0 20px;
+        }
+
+        .XC-NHN-t-PHNG .completion-message {
+          position: absolute;
+          top: 345px;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+        }
+
+        .XC-NHN-t-PHNG .secondary-nav {
+          position: absolute;
+          top: 86px;
+          left: 0;
+          right: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          padding: 0 100px;
+        }
+
+        .XC-NHN-t-PHNG .secondary-nav a {
+          position: relative;
+          z-index: 2;
+        }
+
+        .XC-NHN-t-PHNG .footer-content {
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-start;
+          padding: 0 274px;
+        }
+
+        .XC-NHN-t-PHNG .footer-icons {
+          position: absolute;
+          bottom: 16px;
+          left: 16px;
+          right: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-4 {
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-4:hover {
+          color: #006604;
+        }
+
+        .XC-NHN-t-PHNG .text-wrapper-4:focus {
+          outline: 2px solid #004e03;
+          outline-offset: 2px;
+        }
+
+        .XC-NHN-t-PHNG .secondary-nav a:hover {
+          text-shadow: 0px 4px 8px #00000080;
+        }
+
+        .XC-NHN-t-PHNG .secondary-nav a:focus {
+          outline: 2px solid #ffffff;
+          outline-offset: 4px;
+        }
+
+        .XC-NHN-t-PHNG button:hover {
+          opacity: 0.8;
+          transition: opacity 0.3s ease;
+        }
+
+        .XC-NHN-t-PHNG button:active {
+          opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <main class="XC-NHN-t-PHNG">
+        <header class="frame">
+            <div class="rectangle" role="presentation"></div>
+            <label for="search-input" class="text-wrapper">Tìm kiếm...</label>
+            <h1 class="title">3CE</h1>
+            <div class="div">Room Search</div>
+            <button class="vector" aria-label="User profile">
+                <img src="img/vector.svg" alt="" />
+            </button>
+            <button class="search" aria-label="Search">
+                <img src="img/search-2.png" alt="" />
+            </button>
+            <input
+                type="search"
+                id="search-input"
+                class="search-input"
+                placeholder="Tìm kiếm..."
+                aria-label="Search rooms"
+            />
+        </header>
+        <button class="alarm" aria-label="Notifications">
+            <img src="img/image.png" alt="" />
+        </button>
+        <nav class="progress-steps" aria-label="Booking progress">
+            <div class="step step-completed">
+                <img class="check-mark" src="img/check-mark.png" alt="" />
+                <span class="text-wrapper-2">Bạn chọn</span>
+            </div>
+            <div class="progress-line rectangle-2" role="presentation"></div>
+            <div class="step step-completed">
+                <img class="element-circled" src="img/2-circled.png" alt="" />
+                <span class="text-wrapper-3">Chi tiết</span>
+            </div>
+            <div class="progress-line rectangle-3" role="presentation"></div>
+            <div class="step step-active">
+                <img class="circled" src="img/circled-3.png" alt="" />
+                <span class="text-wrapper-5">Hoàn tất đặt phòng</span>
+            </div>
+        </nav>
+        <section class="completion-message" aria-live="polite">
+            <img class="img" src="img/check-mark-2.png" alt="Success" />
+            <h2 class="p">Đã hoàn tất đặt phòng</h2>
+            <a href="/" class="text-wrapper-4">Quay về trang chủ</a>
+        </section>
+        <nav class="secondary-nav">
+            <div class="rectangle-5" role="presentation"></div>
+            <div class="rectangle-6" role="presentation"></div>
+            <a href="/" class="text-wrapper-8">Trang Chủ</a>
+            <a href="/tin-tuc" class="text-wrapper-9">Tin Tức</a>
+            <a href="/gioi-thieu" class="text-wrapper-10">Giới Thiệu</a>
+            <a href="/lien-he" class="text-wrapper-11">Liên Hệ</a>
+        </nav>
+        <footer class="rectangle-4">
+            <section class="footer-content">
+                <div class="tr-gi-p-trung-t-m-tr">
+                    <span class="text-wrapper-7">Trợ giúp<br /></span>
+                    <span class="text-wrapper-6"
+                        >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
+                    >
+                </div>
+                <div class="i-u-kho-n-s-d-ng-qu">
+                    Điều khoản sử dụng<br />Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo
+                    nội dung
+                </div>
+                <div class="c-ng-ty-v-ch-ng-t-i">
+                    <span class="span">Công ty<br /></span>
+                    <span class="text-wrapper-6">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
+                </div>
+                <div class="i-t-c-c-a-ch-ng-t-i">
+                    <span class="span">Đối tác của chúng tôi<br /></span>
+                    <span class="text-wrapper-6"
+                        >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
+                    >
+                </div>
+            </section>
+            <div class="footer-icons">
+                <button class="record" aria-label="Record">
+                    <img src="img/record.png" alt="" />
+                </button>
+                <button class="level" aria-label="Level">
+                    <img src="img/level-1.png" alt="" />
+                </button>
+                <button class="ringer-volume" aria-label="Volume settings">
+                    <img src="img/ringer-volume.png" alt="" />
+                </button>
+                <button class="unread-messages" aria-label="Messages">
+                    <img src="img/unread-messages-2.png" alt="" />
+                </button>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
