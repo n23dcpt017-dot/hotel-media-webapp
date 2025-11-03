@@ -1,602 +1,741 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Livestream - 3CE Room Search</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Jaro&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Jaldi&display=swap" rel="stylesheet" />
+    
     <style>
-        @import url("https://fonts.googleapis.com/css?family=Inter:300,800,400,700,200|Jaro:400|Jaldi:700");
         * {
-            -webkit-font-smoothing: antialiased;
-            box-sizing: border-box;
+          box-sizing: border-box;
         }
-        html,
         body {
-            margin: 0px;
-            height: 100%;
+          font-size: 14px;
         }
-        button:focus-visible {
-            outline: 2px solid #4a90e2 !important;
-            outline: -webkit-focus-ring-color auto 5px !important;
+        .v88_1057 {
+          width: 100%;
+          height: 960px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: relative;
+          top: 0px;
+          left: 0px;
+          overflow: hidden;
         }
-        a {
-            text-decoration: none;
-            color: inherit; /* Đảm bảo link kế thừa màu */
+        .v88_1127 {
+          width: 52px;
+          height: 52px;
+          background: url("images/v88_1127.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 890px;
+          left: 1365px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html {
-            background-color: #ffffff;
-            width: 1440px;
-            margin: 0 auto;
-            min-height: 1080px;
-            position: relative;
+        .v88_1154 {
+          width: 52px;
+          height: 52px;
+          background: url("images/v88_1154.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 888px;
+          left: 1288px;
+          overflow: hidden;
         }
-
-        /* --- HEADER STYLES (Y HỆT FILE INDEX TONG.HTML) --- */
-        .TRANG-CH-index-html .frame {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1440px;
-            height: 514px; /* SỬA LỖI: Đổi chiều cao về 514px */
-            background-color: #1c1f21;
-            overflow: hidden;
+        .v89_1167 {
+          width: 713px;
+          height: 357px;
+          background: url("images/v89_1167.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 224px;
+          left: 38px;
+          overflow: hidden;
         }
-
-        /* SỬA LỖI: Thêm lại CSS cho ảnh nền, text... từ index tong.html */
-        .TRANG-CH-index-html .ti-xung {
-            position: absolute;
-            top: 0;
-            left: calc(50.00% - 720px);
-            width: 1440px;
-            height: 514px;
-            aspect-ratio: 0.67;
-            object-fit: cover;
+        .v92_1208 {
+          width: 655px;
+          height: 591px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 224px;
+          left: 769px;
+          border: 3px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .text-wrapper {
-            position: absolute;
-            top: 167px;
-            left: calc(50.00% - 312px);
-            height: 135px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Inter", Helvetica;
-            font-weight: 800;
-            color: #fff8eb;
-            font-size: 90px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 135px;
-            white-space: nowrap;
+        .v92_1211 {
+          width: 649px;
+          height: 52px;
+          background: rgba(255,208,208,1);
+          opacity: 1;
+          position: absolute;
+          top: 227px;
+          left: 772px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .hotel-room-search {
-            position: absolute;
-            top: 281px;
-            left: 606px;
-            height: 33px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 5px 2.3px #00000040;
-            font-family: "Inter", Helvetica;
-            font-weight: 800;
-            color: #FFFFFF;
-            font-size: 22px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 33px;
-            white-space: nowrap;
+        .v89_1175 {
+          width: 637px;
+          height: 80px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 293px;
+          left: 777px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-        /* Kết thúc CSS thêm lại */
-
-
-        .TRANG-CH-index-html .rectangle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1440px;
-            height: 84px;
-            background-color: #2c2c2c;
+        .v92_1204 {
+          width: 637px;
+          height: 80px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 573px;
+          left: 775px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .div {
-            position: absolute;
-            top: 84px;
-            left: 0;
-            width: 1440px;
-            height: 38px;
-            background-color: #2d2828cc;
+        .v92_1212 {
+          width: 637px;
+          height: 80px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 661px;
+          left: 775px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-
-        /* SỬA LỖI: Đổi highlight về "Trang Chủ" */
-        .TRANG-CH-index-html .rectangle-2 {
-            position: absolute;
-            top: 83px;
-            left: -1px; /* Vị trí của "Trang Chủ" */
-            width: 304px;
-            height: 40px;
-            background-color: #757575;
-            border-radius: 26px;
-            border: 1px solid;
-            border-color: #000000;
+        .v89_1176 {
+          width: 446px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 301px;
+          left: 797px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .rectangle-3 {
-            position: absolute;
-            top: 18px;
-            left: calc(50.00% - 272px);
-            width: 544px;
-            height: 36px;
-            background-color: #d9d9d9;
-            border-radius: 17px;
-            opacity: 0.5;
+        .v92_1209 {
+          width: 446px;
+          color: rgba(187,39,26,1);
+          position: absolute;
+          top: 232px;
+          left: 822px;
+          font-family: Inter;
+          font-weight: Extra Bold;
+          font-size: 26px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .text-wrapper-2 {
-            position: absolute;
-            top: 24px;
-            left: 498px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 6px 3px #0c0c0c40;
-            font-family: "Inter", Helvetica;
-            font-weight: 300;
-            color: #ffffff;
-            font-size: 16px;
-            text-align: center;
-            letter-spacing: 0;
-            line-height: 24px;
-            white-space: nowrap;
+        .v92_1205 {
+          width: 446px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 581px;
+          left: 795px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .vector {
-            position: absolute;
-            width: 3.04%;
-            height: 8.49%;
-            top: 3.66%;
-            left: 94.85%;
+        .v92_1213 {
+          width: 446px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 669px;
+          left: 795px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .title {
-            position: absolute;
-            top: 4px;
-            left: 49px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Jaro", Helvetica;
-            font-weight: 400;
-            color: #ffffff;
-            font-size: 48px;
-            letter-spacing: -0.48px;
-            line-height: 72px;
-            white-space: nowrap;
+        .v95_1216 {
+          width: 695px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 646px;
+          left: 38px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .title-2 {
-            position: absolute;
-            top: 24px;
-            left: 128px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 32px;
-            letter-spacing: -0.32px;
-            line-height: 48px;
-            white-space: nowrap;
+        .v89_1178 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v89_1178.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 332px;
+          left: 1277px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .search {
-            position: absolute;
-            top: 20px;
-            left: 458px;
-            width: 31px;
-            height: 31px;
+        .v92_1206 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v92_1206.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 612px;
+          left: 1275px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .text-wrapper-3 {
-            position: absolute;
-            top: 81px;
-            left: 494px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 28px;
-            letter-spacing: -0.28px;
-            line-height: 42px;
-            white-space: nowrap;
+        .v92_1214 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v92_1214.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 700px;
+          left: 1275px;
+          overflow: hidden;
         }
-
-        .TRANG-CH-index-html .text-wrapper-4 {
-            position: absolute;
-            top: 81px;
-            left: 855px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 28px;
-            letter-spacing: -0.28px;
-            line-height: 42px;
-            white-space: nowrap;
+        .v89_1179 {
+          width: 91px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 340px;
+          left: 1317px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .text-wrapper-5 {
-            position: absolute;
-            top: 81px;
-            left: 1207px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 28px;
-            letter-spacing: -0.28px;
-            line-height: 42px;
-            white-space: nowrap;
+        .v92_1207 {
+          width: 61px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 620px;
+          left: 1315px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .TRANG-CH-index-html .text-wrapper-6 {
-            position: absolute;
-            top: 83px;
-            left: 101px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0px 4px 4px #00000040;
-            font-family: "Jaldi", Helvetica;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 28px;
-            letter-spacing: -0.28px;
-            line-height: 42px;
-            white-space: nowrap;
+        .v92_1215 {
+          width: 83px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 708px;
+          left: 1315px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-        
-        /* SỬA LỖI: CSS Icon chuông y hệt file index tong.html */
-        .TRANG-CH-index-html .alarm {
-            position: absolute;
-            top: 16px;
-            left: 1307px;
-            width: 43px;
-            height: 46px;
+        .v89_1180 {
+          width: 637px;
+          height: 88px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 380px;
+          left: 775px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-
-        /* --- ẨN CÁC PHẦN CỦA FILE INDEX.HTML (NHƯNG GIỮ LẠI HEADER) --- */
-        .TRANG-CH-index-html .rectangle-4,
-        .TRANG-CH-index-html .small-grid,
-        .TRANG-CH-index-html .next-page,
-        .TRANG-CH-index-html .next-page-2,
-        .TRANG-CH-index-html .c-c-l-a-ch-n-l-t-ng,
-        .TRANG-CH-index-html .du-kh-ch-d-d-ng-ti-p,
-        .TRANG-CH-index-html .homestay-cung-c-p-c,
-        .TRANG-CH-index-html .cung-c-p-ch-ngh-c-xe,
-        .TRANG-CH-index-html .c-h-b-i-ngo-i-tr-i,
-        .TRANG-CH-index-html .rectangle-5,
-        .TRANG-CH-index-html .tr-gi-p-trung-t-m-tr,
-        .TRANG-CH-index-html .span,
-        .TRANG-CH-index-html .text-wrapper-7,
-        .TRANG-CH-index-html .i-u-kho-n-s-d-ng-qu,
-        .TRANG-CH-index-html .c-ng-ty-v-ch-ng-t-i,
-        .TRANG-CH-index-html .text-wrapper-8,
-        .TRANG-CH-index-html .i-t-c-c-a-ch-ng-t-i,
-        .TRANG-CH-index-html .unread-messages,
-        .TRANG-CH-index-html .ringer-volume,
-        .TRANG-CH-index-html .record,
-        .TRANG-CH-index-html .level,
-        .TRANG-CH-index-html .vector-2 {
-            display: none; /* Ẩn hết nội dung và footer của trang index */
+        .v92_1200 {
+          width: 637px;
+          height: 88px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 477px;
+          left: 775px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-
-        /* --- CSS MỚI CHO TRANG LIVESTREAM (THEO ẢNH) --- */
-        .livestream-container {
-            position: absolute;
-            top: 544px; /* SỬA LỖI: Đẩy nội dung xuống dưới header 514px + 30px padding */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1200px;
-            max-width: 90%;
-            font-family: "Inter", Helvetica;
+        .v89_1181 {
+          width: 464px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 391px;
+          left: 796px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .livestream-title {
-            font-weight: 800;
-            font-size: 26px;
-            color: #000;
-            margin-bottom: 20px;
+        .v92_1201 {
+          width: 464px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 488px;
+          left: 796px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-
-        .livestream-layout {
-            display: flex;
-            gap: 24px;
+        .v89_1183 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v89_1183.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 428px;
+          left: 1277px;
+          overflow: hidden;
         }
-
-        .livestream-left {
-            flex: 6.5; /* ~65% */
+        .v92_1202 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v92_1202.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 525px;
+          left: 1277px;
+          overflow: hidden;
         }
-
-        .livestream-right {
-            flex: 3.5; /* ~35% */
+        .v89_1184 {
+          width: 57px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 436px;
+          left: 1315px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-
-        /* Cột bên trái */
-        .video-player {
-            background-color: #1c1f21;
-            padding: 15px;
-            border-radius: 8px;
+        .v92_1203 {
+          width: 75px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 533px;
+          left: 1315px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-        .video-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            margin-bottom: 10px;
+        .v89_1190 {
+          width: 637px;
+          height: 45px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 763px;
+          left: 776px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+          border-bottom-left-radius: 13px;
+          border-bottom-right-radius: 13px;
+          overflow: hidden;
         }
-        .video-header h3 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 400;
+        .v89_1191 {
+          width: 35px;
+          height: 35px;
+          background: url("images/v89_1191.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 766px;
+          left: 788px;
+          overflow: hidden;
         }
-        .video-header .links a {
-            color: #fff;
-            margin-left: 15px;
-            font-size: 14px;
-            font-weight: 300;
+        .v89_1192 {
+          width: 146px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 774px;
+          left: 827px;
+          font-family: Inter;
+          font-weight: Light;
+          font-size: 16px;
+          opacity: 1;
+          text-align: left;
         }
-        .video-player img {
-            width: 100%;
-            display: block;
-            border-radius: 4px;
+        .v89_1196 {
+          width: 216px;
+          height: 50px;
+          background: rgba(65,84,59,1);
+          opacity: 1;
+          position: absolute;
+          top: 815px;
+          left: 38px;
+          border-top-left-radius: 14px;
+          border-top-right-radius: 14px;
+          border-bottom-left-radius: 14px;
+          border-bottom-right-radius: 14px;
+          overflow: hidden;
         }
-
-        .event-info {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 24px;
+        .v89_1197 {
+          width: 193px;
+          color: rgba(255,252,252,1);
+          position: absolute;
+          top: 825px;
+          left: 47px;
+          font-family: Inter;
+          font-weight: Black;
+          font-size: 20px;
+          opacity: 1;
+          text-align: left;
         }
-        .event-info h3 {
-            color: #D9534F; /* Màu đỏ cam */
-            margin-top: 0;
-            font-size: 20px;
-            font-weight: 700;
+        .v89_1198 {
+          width: 31px;
+          height: 29px;
+          background: url("images/v89_1198.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 773px;
+          left: 1358px;
+          overflow: hidden;
         }
-        .event-info p {
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 0;
+        .v96_1543 {
+          width: 813px;
+          color: rgba(0,0,0,1);
+          position: absolute;
+          top: 147px;
+          left: 35px;
+          font-family: Inter;
+          font-weight: Extra Bold;
+          font-size: 32px;
+          opacity: 1;
+          text-align: center;
         }
-
-        .find-room-button {
-            background-color: #5CB85C; /* Màu xanh lá */
-            color: #000;
-            font-weight: 700;
-            text-align: center;
-            padding: 12px;
-            border-radius: 20px;
-            margin-top: 24px;
-            display: block;
-            width: 250px;
-            font-size: 16px;
+        .v96_1545 {
+          width: 210px;
+          color: rgba(187,39,26,1);
+          position: absolute;
+          top: 599px;
+          left: 80px;
+          font-family: Inter;
+          font-weight: Semi Bold;
+          font-size: 24px;
+          opacity: 1;
+          text-align: center;
         }
-
-        /* Cột bên phải (Chat) */
-        .chat-container {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #FCFCFC;
+        .v96_1546 {
+          width: 45px;
+          height: 45px;
+          background: url("images/v96_1546.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 595px;
+          left: 35px;
+          overflow: hidden;
         }
-        .chat-header {
-            background-color: #FCEEEE; /* Nền hồng nhạt */
-            border-bottom: 1px solid #ddd;
-            padding: 10px 15px;
-            border-radius: 8px 8px 0 0;
-            font-weight: 700;
-            color: #D9534F; /* Chữ đỏ cam */
-            font-size: 16px;
+        .v101_2112 {
+          width: 100%;
+          height: 112px;
+          background: rgba(44,44,44,1);
+          opacity: 1;
+          position: relative;
+          top: 0px;
+          left: 0px;
+          overflow: hidden;
         }
-        .chat-messages {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-height: 450px;
-            overflow-y: auto;
+        .v101_2113 {
+          width: 544px;
+          height: 36px;
+          background: rgba(217,217,217,1);
+          opacity: 0.5;
+          position: absolute;
+          top: 18px;
+          left: 448px;
+          border-top-left-radius: 17px;
+          border-top-right-radius: 17px;
+          border-bottom-left-radius: 17px;
+          border-bottom-right-radius: 17px;
+          overflow: hidden;
         }
-        .chat-message {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 12px;
-            border: 1px solid #EAEAEA;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        .v101_2114 {
+          width: 81px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 24px;
+          left: 498px;
+          text-shadow: 0px 6px 3px rgba(0.05096156895160675, 0.05096156895160675, 0.05096156895160675, 0.25);
+          font-family: Inter;
+          font-weight: Light;
+          font-size: 16px;
+          opacity: 1;
+          text-align: center;
         }
-        .chat-message-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 5px;
+        .v101_2115 {
+          width: 68px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 9px;
+          left: 36px;
+          font-family: Jaro;
+          font-weight: Regular;
+          font-size: 48px;
+          opacity: 1;
+          text-align: left;
         }
-        .chat-message-header img { /* Avatar */
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #eee;
+        .v101_2116 {
+          width: 160px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 29px;
+          left: 115px;
+          font-family: Jaldi;
+          font-weight: Bold;
+          font-size: 32px;
+          opacity: 1;
+          text-align: left;
         }
-        .chat-message p {
-            margin: 0;
-            font-size: 15px;
-            line-height: 1.5;
-            padding-left: 32px; /* Căn lề với tên */
-            color: #222;
+        .v101_2117 {
+          width: 43px;
+          height: 46px;
+          background: url("images/v101_2117.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 19px;
+          left: 1307px;
+          overflow: hidden;
         }
-        .chat-input {
-            border-top: 1px solid #ddd;
-            padding: 15px;
-            background-color: #F8F8F8;
-            border-radius: 0 0 8px 8px;
+        .v101_2118 {
+          width: 100%;
+          height: 36px;
+          background: rgba(0,0,0,0.800000011920929);
+          opacity: 1;
+          position: absolute;
+          top: 77px;
+          left: 0px;
+          overflow: hidden;
         }
-        .chat-input-wrapper {
-            position: relative;
+        .v101_2119 {
+          width: 302px;
+          height: 35px;
+          background: rgba(117,117,117,1);
+          opacity: 1;
+          position: absolute;
+          top: 77px;
+          left: 383px;
+          border: 1px solid rgba(0,0,0,1);
+          border-top-left-radius: 26px;
+          border-top-right-radius: 26px;
+          border-bottom-left-radius: 26px;
+          border-bottom-right-radius: 26px;
+          overflow: hidden;
         }
-        .chat-input-wrapper input {
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            padding: 10px 40px 10px 15px;
-            font-family: "Inter", Helvetica;
-            font-size: 14px;
+        .v101_2120 {
+          width: 66px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 76px;
+          left: 494px;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          font-family: Jaldi;
+          font-weight: Bold;
+          font-size: 24px;
+          opacity: 1;
+          text-align: left;
         }
-        .chat-input-wrapper::after { /* Icon gửi */
-            content: '▶';
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #555;
-            font-size: 12px;
-            cursor: pointer;
+        .v101_2121 {
+          width: 92px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 76px;
+          left: 855px;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          font-family: Jaldi;
+          font-weight: Bold;
+          font-size: 24px;
+          opacity: 1;
+          text-align: left;
         }
-
-        /* --- CSS MỚI CHO FOOTER (THEO ẢNH) --- */
-        .livestream-footer-icon {
-            position: absolute;
-            bottom: 30px; /* Padding từ cạnh dưới */
-            right: 40px;  /* Padding từ cạnh phải */
-            width: 52px;  /* Kích thước chuẩn từ icon cũ */
-            height: 52px;
-            cursor: pointer;
-            z-index: 1000; /* Nổi lên trên */
+        .v101_2122 {
+          width: 69px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 76px;
+          left: 1207px;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          font-family: Jaldi;
+          font-weight: Bold;
+          font-size: 24px;
+          opacity: 1;
+          text-align: left;
         }
-
+        .v101_2123 {
+          width: 93px;
+          color: rgba(255,255,255,1);
+          position: absolute;
+          top: 76px;
+          left: 101px;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          font-family: Jaldi;
+          font-weight: Bold;
+          font-size: 24px;
+          opacity: 1;
+          text-align: left;
+        }
+        .v101_2124 {
+          width: 43px;
+          height: 43px;
+          background: rgba(255,255,255,1);
+          opacity: 1;
+          position: absolute;
+          top: 18px;
+          left: 1366px;
+        }
+        .v101_2125 {
+          width: 31px;
+          height: 31px;
+          background: url("images/v101_2125.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 21px;
+          left: 459px;
+          overflow: hidden;
+        }
+        .v141_933 {
+          width: 45px;
+          height: 45px;
+          background: url("images/v141_933.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          opacity: 1;
+          position: absolute;
+          top: 229px;
+          left: 777px;
+          overflow: hidden;
+        }
     </style>
+
+    <title>Document</title>
 </head>
 <body>
-    <div class="TRANG-CH-index-html" data-model-id="5:7730">
-        <div class="frame">
-            <img class="ti-xung" src="https://c.animaapp.com/E2jI1H3B/img/t-i-xu-ng-1.png" />
-            <div class="text-wrapper">HOTEL MEDIA</div>
-            <div class="hotel-room-search">Hotel &amp; Room Search</div>
-            
-            <div class="rectangle"></div>
-            <div class="div"></div>
-            <div class="rectangle-2"></div> <div class="rectangle-3"></div>
-            <div class="text-wrapper-2">Tìm kiếm...</div>
-            <img class="vector" src="https://c.animaapp.com/E2jI1H3B/img/vector.svg" />
-            <div class="title">3CE</div>
-            <div class="title-2">Room Search</div>
-            <img class="search" src="https://c.animaapp.com/E2jI1H3B/img/search@2x.png" />
-            
-            <div class="text-wrapper-3">Tin Tức</div>
-            <div class="text-wrapper-4">Giới Thiệu</div>
-            <div class="text-wrapper-5">Liên Hệ</div>
-            <div class="text-wrapper-6">Trang Chủ</div>
+    <div class="v88_1057">
+        <div class="v88_1127"></div>
+        <div class="v88_1154"></div>
+        <div class="v89_1167"></div>
+        <div class="v92_1208"></div>
+        <div class="v92_1211"></div>
+        <div class="v89_1175"></div>
+        <div class="v92_1204"></div>
+        <div class="v92_1212"></div>
+        <span class="v89_1176"> “Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</span>
+        <span class="v92_1209">Khung chat trực tuyến</span>
+        <span class="v92_1205"> “Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</span>
+        <span class="v92_1213">“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</span>
+        <span class="v95_1216">Bạn sắp đi du lịch Nha Trang mà chưa biết nên đến địa điểm nào phù hợp với nhu cầu của từng thành viên trong đoàn? Bạn đã đi Nha Trang đã lâu trước đây nhưng giờ lại muốn cập nhật thêm những địa điểm du lịch Nha Trang nổi tiếng nhất, vậy thì hãy xem hết video này để lên danh sách những điểm check in thú vị mới nhất Nha Trang năm nay</span>
+        <div class="v89_1178"></div>
+        <div class="v92_1206"></div>
+        <div class="v92_1214"></div>
+        <span class="v89_1179">Chị Phương </span>
+        <span class="v92_1207">Chị Hoa </span>
+        <span class="v92_1215">Chị Hương</span>
+        <div class="v89_1180"></div>
+        <div class="v92_1200"></div>
+        <span class="v89_1181">“Không khí trong lành, cảnh quan đẹp, gần gũi 
+thiên nhiên, vị trí thuận tiện“</span>
+        <span class="v92_1201">“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😅.”</span>
+        <div class="v89_1183"></div>
+        <div class="v92_1202"></div>
+        <span class="v89_1184">Anh Độ</span>
+        <span class="v92_1203">Anh Phao</span>
+        <div class="v89_1190"></div>
+        <div class="v89_1191"></div>
+        <span class="v89_1192">Bình luận của bạn...</span>
+        <div class="v89_1196"></div>
+        <span class="v89_1197">CHỖ NGHỈ CẦN TÌM</span>
+        <div class="v89_1198"></div>
+        <span class="v96_1543">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất </span>
+        <span class="v96_1545">Sự kiện đang phát </span>
+        <div class="v96_1546"></div>
+        <div class="v101_2112">
+            <div class="v101_2113"></div>
+            <span class="v101_2114">Tìm kiếm...</span>
+            <span class="v101_2115">3CE</span>
+            <span class="v101_2116">Room Search</span>
         </div>
-        
-        <img class="alarm" src="https://c.animaapp.com/E2jI1H3B/img/alarm@2x.png" />
-
-        <div class="livestream-container">
-            <h1 class="livestream-title">Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h1>
-            
-            <div class="livestream-layout">
-                <div class="livestream-left">
-                    <div class="video-player">
-                        <div class="video-header">
-                            <h3>Tổng hợp 20 địa điểm du lịch Nha Trang đầy đủ nhất</h3>
-                            <div class="links">
-                                <a href="#">Xem sau</a>
-                                <a href="#">Chia sẻ</a>
-                            </div>
-                        </div>
-                        <img src="https://c.animaapp.com/E2jI1H3B/img/image-1.png" alt="Video thumbnail" />
-                    </div>
-
-                    <div class="event-info">
-                        <h3>🔴 Sự kiện đang phát</h3>
-                        <p>Bạn sắp đi du lịch Nha Trang mà chưa biết nên đến địa điểm nào phù hợp với nhu cầu của từng thành viên trong đoàn? Bạn đã đi Nha Trang đã lâu trước đây nhưng giờ lại muốn cập nhật thêm những địa điểm du lịch Nha Trang nổi tiếng nhất, vậy thì hãy xem hết video này để lên danh sách những điểm check in thú vị mới nhất Nha Trang năm nay</p>
-                    </div>
-
-                    <a href="#" class="find-room-button">CHỖ NGHỈ CẦN TÌM</a>
-                </div>
-
-                <div class="livestream-right">
-                    <div class="chat-container">
-                        <div class="chat-header">💬 Khung chat trực tuyến</div>
-                        <div class="chat-messages">
-                            <div class="chat-message">
-                                <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-1.png" alt="avatar" />
-                                    <span>Chị Phương</span>
-                                </div>
-                                <p>“Sóng biển Nha Trang đánh vào tim tui rồi, còn ai cứu khônggg?”</p>
-                            </div>
-                            <div class="chat-message">
-                                <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-2.png" alt="avatar" />
-                                    <span>Anh Độ</span>
-                                </div>
-                                <p>“Không khí trong lành, cảnh quan đẹp, gần gũi thiên nhiên, vị trí thuận tiện”</p>
-                            </div>
-                            <div class="chat-message">
-                                <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-3.png" alt="avatar" />
-                                    <span>Anh Phao</span>
-                                </div>
-                                <p>“Ăn hải sản xong nhìn hóa đơn mà tưởng đang góp vốn cho quán 😂.”</p>
-                            </div>
-                             <div class="chat-message">
-                                <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-4.png" alt="avatar" />
-                                    <span>Chị Hoa</span>
-                                </div>
-                                <p>“Bình minh ở đây đẹp lắm á, mà tui dậy lúc trưa.”</p>
-                            </div>
-                             <div class="chat-message">
-                                <div class="chat-message-header">
-                                    <img src="https://c.animaapp.com/E2jI1H3B/img/avatar-placeholder-5.png" alt="avatar" />
-                                    <span>Chị Hương</span>
-                                </div>
-                                <p>“Biển Nha Trang xanh như mắt người yêu cũ — mà người yêu cũ thì không tắm ở đây.”</p>
-                            </div>
-                        </div>
-                        <div class="chat-input">
-                            <div class="chat-input-wrapper">
-                                <input type="text" placeholder="Bình luận của bạn..." />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <img class="livestream-footer-icon" src="https://c.animaapp.com/E2jI1H3B/img/unread-messages@2x.png" alt="Chat" />
-
+        <div class="v101_2117"></div>
+        <div class="v101_2118"></div>
+        <div class="v101_2119"></div>
+        <span class="v101_2120">Tin Tức</span>
+        <span class="v101_2121">Giới Thiệu</span>
+        <span class="v101_2122">Liên Hệ</span>
+        <span class="v101_2123">Trang Chủ</span>
+        <div class="v101_2124"></div>
+        <div class="v101_2125"></div>
+        <div class="v141_933"></div>
     </div>
 </body>
 </html>
