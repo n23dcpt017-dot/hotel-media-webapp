@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>3CE Room Search - Tìm kiếm phòng</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="POPUP-NOTIFICATION">
+      <header class="frame">
+        <div class="rectangle"></div>
+        <label for="search-input" class="text-wrapper">Tìm kiếm...</label>
+        <h1 class="title">3CE</h1>
+        <p class="div">Room Search</p>
+        <img class="vector" src="img/vector.svg" alt="Menu icon" />
+        <img class="search" src="img/search.png" alt="Search icon" />
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Tìm kiếm..."
+          aria-label="Tìm kiếm phòng"
+        />
+      </header>
+      <div class="rectangle-3" role="button" aria-label="Thông báo" tabindex="0">
+        <img class="alarm" src="img/alarm.png" alt="Thông báo" />
+      </div>
+      <nav class="rectangle-4" role="navigation" aria-label="Main navigation">
+        <a href="#home" class="text-wrapper-7">Trang Chủ</a>
+        <a href="#news" class="text-wrapper-4">Tin Tức</a>
+        <a href="#about" class="text-wrapper-5">Giới Thiệu</a>
+        <a href="#contact" class="text-wrapper-6">Liên Hệ</a>
+        <div class="rectangle-5"></div>
+      </nav>
+      <aside class="rectangle-9" role="complementary" aria-label="Thông báo">
+        <article class="rectangle-14">
+          <p class="text-wrapper-13">Chị Bình đã trả lời một bình luận</p>
+          <img class="profile" src="img/profile-2.png" alt="Chị Bình" />
+        </article>
+        <article class="rectangle-10">
+          <p class="text-wrapper-14">Chị Léc đã đánh giá 1 địa điểm</p>
+          <img class="img" src="img/profile.png" alt="Chị Léc" />
+        </article>
+        <article class="rectangle-11">
+          <p class="text-wrapper-15">Chị Lé đã đánh giá 1 địa điểm</p>
+          <img class="profile-2" src="img/profile-3.png" alt="Chị Lé" />
+        </article>
+        <article class="rectangle-12">
+          <p class="video-m-i-kh-m-ph-h">"Video mới: Khám phá hồ bơi <br />vô cực Sunrise Hotel</p>
+          <img class="circled-play-button" src="img/circled-play-button.png" alt="Play video" />
+        </article>
+        <article class="rectangle-13">
+          <p class="livestream-tour-bi-n">"Livestream Tour biển đêm sẽ <br />bắt đầu sau 10 phút!"</p>
+          <img class="circled-play-button-2" src="img/image.png" alt="Play livestream" />
+        </article>
+      </aside>
+      <main>
+        <section class="contact-section">
+          <h2 class="p">TỔNG ĐÀI TƯ VẤN VÀ HỖ TRỢ TRỰC TUYẾN</h2>
+          <div class="contact-cards">
+            <article class="rectangle-6">
+              <img class="letter" src="img/letter.png" alt="Email icon" />
+              <h3 class="text-wrapper-8">EMAIL</h3>
+            </article>
+            <article class="rectangle-7">
+              <img class="call-male" src="img/call-male.png" alt="Phone icon" />
+              <h3 class="text-wrapper-9">TỔNG ĐÀI TƯ VẤN</h3>
+            </article>
+            <article class="rectangle-8">
+              <img class="web" src="img/web.png" alt="Website icon" />
+              <h3 class="text-wrapper-10">WEBSITE</h3>
+            </article>
+          </div>
+        </section>
+        <section class="company-info">
+          <h2 class="li-n-h-c-ng-ty-c-ph">
+            <span class="text-wrapper-11">Liên hệ<br /></span>
+            <span class="text-wrapper-12"
+              >Công ty cổ phần công nghệ 3CE (Technology JSC)<br />Trụ sở Tầng 6, khu phố Tân Đồng 4, phường Bình Phước,
+              tỉnh Đồng Nai<br />Chi nhánh Tầng 5, Số 70 Lữ Gia , phường Phú Thọ, TP. HCM<br />
+              Số 11 Xô Nghệ , phường Lệ Quyên, TP Đà Nẵng</span
+            >
+          </h2>
+        </section>
+      </main>
+      <footer class="rectangle-2">
+        <nav class="footer-nav" role="navigation" aria-label="Footer navigation">
+          <div class="footer-column">
+            <h3 class="tr-gi-p-trung-t-m-tr">
+              <span class="span">Trợ giúp<br /></span>
+              <span class="text-wrapper-2"
+                >Trung tâm trợ giúp<br />Câu hỏi thường gặp<br />Chính sách Bảo mật<br />Chính sách về cookie</span
+              >
+            </h3>
+          </div>
+          <div class="footer-column">
+            <p class="i-u-kho-n-s-d-ng-qu">
+              Điều khoản sử dụng<br />Quản lý thiết lập cookie<br />Đạo luật Dịch vụ số (EU)<br />Nguyên tắc và báo cáo
+              nội dung
+            </p>
+          </div>
+          <div class="footer-column">
+            <h3 class="h-tr-qu-n-l-c-c-chuy">
+              <span class="span">Hỗ trợ<br /></span>
+              <span class="text-wrapper-2"
+                >Quản lý các chuyến đi của bạn<br />Trung tâm trợ giúp điểm tham quan<br />Trung tâm thông tin bảo
+                mật</span
+              >
+            </h3>
+          </div>
+          <div class="footer-column">
+            <h3 class="i-t-c-c-a-ch-ng-t-i">
+              <span class="text-wrapper-3">Đối tác của chúng tôi<br /></span>
+              <span class="text-wrapper-2"
+                >Cổng thông tin đối tác <br />Partner Hub<br />Quảng cáo <br />Đối tác liên kết</span
+              >
+            </h3>
+          </div>
+          <div class="footer-column">
+            <h3 class="c-ng-ty-v-ch-ng-t-i">
+              <span class="text-wrapper-3">Công ty<br /></span>
+              <span class="text-wrapper-2">Về chúng tôi<br />Tuyển dụng<br />Báo chí<br />Nhật ký mạng</span>
+            </h3>
+          </div>
+        </nav>
+        <div class="footer-icons">
+          <button class="icon-button" aria-label="Ghi âm">
+            <img class="record" src="img/record.png" alt="Record icon" />
+            <img class="level" src="img/level-1.png" alt="Level indicator" />
+          </button>
+          <button class="icon-button" aria-label="Âm lượng chuông">
+            <img class="ringer-volume" src="img/ringer-volume.png" alt="Ringer volume icon" />
+          </button>
+          <button class="icon-button" aria-label="Tin nhắn chưa đọc">
+            <img class="unread-messages" src="img/unread-messages.png" alt="Unread messages icon" />
+          </button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
