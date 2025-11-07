@@ -1,0 +1,57 @@
+@startuml
+!define table(x) class x << (T,#FFEEEE) >>
+
+table(Users) {
+  + user_id : uuid
+  username : varchar
+  email : varchar
+  password_hash : varchar
+  social_provider : varchar
+  social_id : varchar
+  role_id : int
+}
+
+table(Roles) {
+  + role_id : int
+  role_name : varchar
+}
+
+table(Posts) {
+  + post_id : uuid
+  author_id : uuid
+  title : varchar
+  content : text
+  status : varchar
+  scheduled_at : timestamp
+  published_at : timestamp
+}
+
+table(Media) {
+  + media_id : uuid
+  uploader_id : uuid
+  file_url : varchar
+}
+
+table(Comments) {
+  + comment_id : uuid
+  post_id : uuid
+  user_id : uuid
+  content : text
+  status : varchar
+}
+
+table(PublicationJobs) {
+  + job_id : uuid
+  post_id : uuid
+  channel : varchar
+  status : varchar
+}
+
+Users "1" -- "many" Posts : author
+Users "1" -- "many" Media
+Users "1" -- "many" Comments
+Roles "1" -- "many" Users : role
+Posts "1" -- "many" Comments
+Posts "1" -- "many" Media
+Posts "1" -- "many" PublicationJobs
+@enduml

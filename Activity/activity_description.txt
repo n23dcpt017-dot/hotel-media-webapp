@@ -1,0 +1,126 @@
+**ACTIVITY DIAGRAM — (1) SOCIAL LOGIN OAUTH**
+@startuml
+|User|
+start
+:Click "Login with Google/FB/Zalo";
+
+|System|
+:Redirect to Social Provider;
+
+|Social Provider|
+:Show login & consent screen;
+
+|User|
+:Enter credentials + Accept;
+
+|Social Provider|
+:Send OAuth Token to System;
+
+|System|
+if (User exists in DB?) then (Yes)
+  :Load user profile;
+else (No)
+  :Create new user record;
+endif
+
+:Login success;
+stop
+@enduml
+
+
+
+**ACTIVITY DIAGRAM — (2) ADMIN TẠO BÀI VIẾT (DRAFT)**
+@startuml
+|Admin|
+start
+:Open CreatePostPage;
+:Input title/content;
+
+|System|
+:Save temporary draft;
+
+|Admin|
+:Upload media;
+
+|System|
+:Store file;
+:Return Media URL;
+
+|Admin|
+:Click "Save Draft";
+
+|System|
+:Insert post (status = Draft);
+:Return success;
+
+stop
+@enduml
+
+
+
+**ACTIVITY DIAGRAM — (3) PUBLISH ĐA KÊNH (WEB/FB/TIKTOK/ZALO/YOUTUBE)**
+@startuml
+start
+
+:Admin opens PublishPage;
+:Admin clicks "Publish";
+
+:Load post content;
+
+fork
+  :Send post to Facebook API;
+fork again
+  :Upload video to TikTok API;
+fork again
+  :Send media to Zalo API;
+fork again
+  :Upload / Create video on YouTube API;
+end fork
+
+:Update post status = Published;
+:Show "Published Successfully";
+
+stop
+@enduml
+
+
+**ACTIVITY DIAGRAM — (4) USER COMMENT**
+@startuml
+|User|
+start
+:View Post Page;
+:Type comment and submit;
+
+|System|
+:Insert comment (status = pending);
+:Show "Comment waiting for approval";
+
+stop
+@enduml
+
+
+**ACTIVITY DIAGRAM — (5) ADMIN DUYỆT BÌNH LUẬN**
+@startuml
+|Admin|
+start
+:Open CommentsPage;
+
+|System|
+:Load pending comments;
+
+|Admin|
+if (Approve comment?) then (Yes)
+  |System|
+  :Update status = approved;
+else (Reject)
+  |System|
+  :Update status = rejected;
+endif
+
+|Admin|
+:Next comment;
+
+stop
+@enduml
+
+

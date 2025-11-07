@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Public User" as PublicUser
+actor Editor
+actor Admin
+actor "Social Auth Provider\n(Google/FB/Zalo)" as SocialProvider <<external>>
+
+package "PUBLIC WEBSITE" {
+  usecase UC_ViewPosts as "Xem bài viết"
+  usecase UC_ViewPostDetail as "Xem chi tiết bài"
+  usecase UC_SocialLogin as "Đăng nhập bằng Social"
+  usecase UC_CommentPost as "Bình luận bài viết"
+}
+
+package "CMS / ADMIN" {
+  usecase UC_LoginCMS as "Đăng nhập CMS"
+  usecase UC_Dashboard as "Dashboard"
+  usecase UC_ManagePosts as "Quản lý bài viết"
+  usecase UC_CreatePost as "Tạo bài viết"
+  usecase UC_EditPost as "Sửa bài viết"
+  usecase UC_SchedulePost as "Lên lịch xuất bản"
+  usecase UC_ManageMedia as "Thư viện media"
+  usecase UC_StartLivestream as "Livestream WebRTC"
+  usecase UC_MultiChannelPublish as "Xuất bản đa kênh"
+  usecase UC_ApproveComments as "Duyệt bình luận"
+  usecase UC_ManageUsers as "Phân quyền người dùng"
+  usecase UC_ViewAnalytics as "Analytics (SEO & Core Web Vitals)"
+  usecase UC_ManageCampaigns as "Quản lý Campaigns"
+}
+
+PublicUser --> UC_ViewPosts
+PublicUser --> UC_ViewPostDetail
+PublicUser --> UC_CommentPost
+PublicUser --> UC_SocialLogin
+SocialProvider --> UC_SocialLogin
+
+Editor --> UC_LoginCMS
+Editor --> UC_CreatePost
+Editor --> UC_EditPost
+Editor --> UC_ManageMedia
+Editor --> UC_ManagePosts
+
+Admin --> UC_LoginCMS
+Admin --> UC_Dashboard
+Admin --> UC_ManagePosts
+Admin --> UC_CreatePost
+Admin --> UC_EditPost
+Admin --> UC_SchedulePost
+Admin --> UC_ManageMedia
+Admin --> UC_StartLivestream
+Admin --> UC_MultiChannelPublish
+Admin --> UC_ApproveComments
+Admin --> UC_ManageUsers
+Admin --> UC_ViewAnalytics
+Admin --> UC_ManageCampaigns
+
+UC_CreatePost .> UC_ManageMedia : <<include>>
+UC_EditPost .> UC_ManageMedia : <<include>>
+UC_MultiChannelPublish .> UC_SchedulePost : <<include>>
+UC_CommentPost .> UC_SocialLogin : <<extend>>
+@enduml

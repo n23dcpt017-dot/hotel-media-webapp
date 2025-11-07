@@ -1,0 +1,150 @@
+**SEQUENCE DIAGRAM — (1) Social Login (Google, FB , Zalo, Tiktok)**
+@startuml
+actor User as U
+participant "Public Website" as PW
+participant "Social Auth Provider\n(Google/Facebook/Zalo/Tiktok)" as SP
+database "Database" as DB
+
+U -> PW: Click "Login with Google/FB/Zalo/Tiktok"
+PW -> SP: Redirect OAuth Request
+SP -> U: Login + Consent Screen
+U -> SP: Accept
+SP -> PW: OAuth Code/Access Token
+PW -> DB: Check user in system
+alt user exists
+    DB --> PW: return user data
+else user not exists
+    PW -> DB: Create new user profile
+end
+PW -> U: Login success (redirect to Home)
+
+@enduml
+
+
+
+**SEQUENCE DIAGRAM — (2) Admin Login CMS**
+@startuml
+actor Admin as A
+participant "CMS Login Page" as LP
+database "Database" as DB
+
+A -> LP: Enter email/password
+LP -> DB: Validate credentials
+DB --> LP: Valid/Invalid
+alt Valid
+    LP -> A: Redirect to DashboardPage
+else Invalid
+    LP -> A: Show login error
+end
+
+@enduml
+
+
+**SEQUENCE DIAGRAM — (3) Create Post (Upload + Save Draft)**
+@startuml
+actor Admin as A
+participant "CreatePostPage" as CP
+participant "MediaPage" as MP
+database "Database" as DB
+database "Media Storage (S3/Local)" as FS
+
+A -> CP: Open Create Post
+A -> MP: Upload image/video
+MP -> FS: Store media file
+FS --> MP: URL of uploaded file
+MP --> CP: Return media URL
+A -> CP: Click "Save Draft"
+CP -> DB: INSERT Post (status = Draft)
+DB --> CP: return postId
+CP -> A: Show message "Draft Saved"
+
+@enduml
+
+
+
+**SEQUENCE DIAGRAM — (4) Publish Post đa kênh (Web + FB + TikTok + Zalo + YouTube)**
+@startuml
+actor Admin as A
+participant "PublishPage" as PP
+database "Database" as DB
+participant "Facebook API" as FB
+participant "TikTok API" as TK
+participant "Zalo API" as ZL
+participant "YouTube API" as YT
+
+A -> PP: Click Publish
+PP -> DB: Get post content
+par Facebook
+    PP -> FB: Post content via API
+end
+par TikTok
+    PP -> TK: Upload video via API
+end
+par Zalo
+    PP -> ZL: Push text/media via API
+end
+par YouTube
+    PP -> YT: Upload / Create video post
+end
+
+PP -> DB: Update post status to Published
+PP -> A: Show result "Published Successfully"
+
+@enduml
+
+
+
+**SEQUENCE DIAGRAM — (5) Upload Media vào thư viện (MediaPage)**
+@startuml
+actor Admin as A
+participant "MediaPage" as MP
+database "Media Storage (S3/Local)" as FS
+database "Database" as DB
+
+A -> MP: Drag & Drop upload file
+MP -> FS: Upload file data
+FS --> MP: Return URL
+MP -> DB: INSERT media record (URL, type, owner)
+DB --> MP: Saved
+MP -> A: Show uploaded media
+
+@enduml
+
+
+**SEQUENCE DIAGRAM — (6) User xem bài viết + bình luận**
+@startuml
+actor User as U
+participant "PublicPostPage" as P
+database "Database" as DB
+
+U -> P: Open post URL
+P -> DB: SELECT Post + Media + Author
+DB --> P: Return content
+P -> U: Render page
+
+U -> P: Submit comment
+P -> DB: INSERT comment (status = pending review)
+P -> U: Show "Comment waiting for approval"
+
+@enduml
+
+
+**SEQUENCE DIAGRAM — (7) Admin duyệt bình luận**
+@startuml
+actor Admin as A
+participant "CommentsPage" as C
+database "Database" as DB
+
+A -> C: Open comments moderation page
+C -> DB: SELECT comments WHERE status='pending'
+DB --> C: return list
+A -> C: Approve / Reject comment
+C -> DB: UPDATE comment status
+DB --> C: updated
+C -> A: Show update success
+
+@enduml
+
+
+
+
