@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BCC Grand Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      body {
+        background-color: #f8f5f0;
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        margin: 0;
+        background-color: #ffffff; /* ĐỔI NỀN VỀ TRẮNG */
+      }
+
+      /* --- Container chính của Header --- */
+      .main-header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        padding: 15px 0; /* Đệm trên dưới cho header */
+      }
+
+      .navbar-container {
+        display: flex;
+        justify-content: space-between; /* Căn các mục ra 3 phía */
+        align-items: center; /* Căn giữa các mục theo chiều dọc */
+        width: 90%;
+        max-width: 1400px; /* Giới hạn chiều rộng tối đa */
+        margin: 0 auto; /* Căn giữa container */
+      }
+
+      /* --- Logo --- */
+      .nav-logo .logo-image {
+        height: 50px; /* Chiều cao cố định cho logo */
+        width: auto;
+        display: block; /* Xóa khoảng trống thừa bên dưới ảnh */
+      }
+
+      /* --- Menu điều hướng (Giữa) --- */
+      .nav-menu {
+        display: flex;
+        list-style: none; /* Bỏ dấu chấm của <li> */
+        margin: 0;
+        padding: 0;
+        gap: 35px; /* Khoảng cách giữa các mục menu */
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: #333;
+        font-size: 17px;
+        font-weight: 600;
+        padding: 10px 0;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: #007bff; /* Màu khi hover hoặc active (bạn có thể đổi màu này) */
+      }
+
+      /* --- Phần bên phải (Nút & Icon) --- */
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Khoảng cách giữa nút và icon */
+      }
+
+      /* Nút Đặt phòng */
+      .btn-book {
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-book:hover {
+        background-color: #f8f8f8;
+        border-color: #aaa;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Icon User */
+      .nav-icon {
+        font-size: 24px;
+        color: #555;
+        transition: color 0.3s ease;
+      }
+
+      .nav-icon:hover {
+        color: #007bff;
+      }
+      /* --- Kiểu dáng Footer chính --- */
+      .site-footer {
+        background-color: #0d1b2a; /* Màu nền xanh đậm (gần như đen) */
+        color: #adb5bd; /* Màu chữ xám nhạt */
+        padding: 60px 0 20px 0;
+      }
+
+      .footer-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* --- Hàng trên của Footer (Layout 4 cột) --- */
+      .footer-top {
+        display: grid;
+        /* Chia layout: Cột 1 rộng hơn (2fr), 3 cột sau bằng nhau (1fr)
+      Bạn có thể điều chỉnh tỷ lệ này (ví dụ: 1.5fr 1fr 1fr 1fr) 
+    */
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px; /* Khoảng cách giữa các cột */
+        padding-bottom: 30px;
+      }
+
+      /* --- Cột 1: Logo và Mô tả --- */
+      .footer-about .footer-logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 10px 0;
+        /* Nếu dùng ảnh logo, bạn có thể xóa dòng này và style thẻ <img> */
+      }
+
+      .footer-tagline {
+        font-size: 15px;
+        color: #ced4da;
+        margin: 0;
+      }
+
+      /* --- Cột 2 & 3: Các cột liên kết --- */
+      .footer-links h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 20px 0;
+      }
+
+      .footer-links ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        text-decoration: none;
+        color: #adb5bd; /* Màu link mặc định */
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffffff; /* Màu link khi hover */
+        text-decoration: underline;
+      }
+
+      /* --- Cột 4: Thông tin liên hệ --- */
+      .footer-contact h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 20px 0;
+      }
+
+      .footer-contact p {
+        font-size: 15px;
+        margin: 0 0 10px 0;
+        color: #ced4da;
+      }
+
+      /* --- Đường kẻ ngang --- */
+      .footer-divider {
+        border: 0;
+        border-top: 1px solid #343a40; /* Màu kẻ */
+        margin: 20px 0;
+      }
+
+      /* --- Hàng dưới: Copyright --- */
+      .footer-bottom {
+        text-align: center;
+        padding-top: 10px;
+      }
+
+      .footer-bottom p {
+        margin: 0;
+        font-size: 14px;
+        color: #888;
+      }
+
+      /* --- Hero Section chính --- */
+      .hero-section {
+        position: relative; /* Bắt buộc để lớp phủ hoạt động */
+        height: 80vh; /* Chiều cao 80% màn hình, bạn có thể đổi thành 100vh */
+        color: #ffffff; /* Màu chữ chung là màu trắng */
+
+        /* Thay 'your-image-url.jpg' bằng link ảnh nền của bạn */
+        background-image: url("/images/trangchubanner.png");
+        background-size: cover; /* Phủ đầy ảnh */
+        background-position: center; /* Căn giữa ảnh */
+      }
+
+      /* --- Lớp phủ màu tối --- */
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.4); /* Màu đen mờ 40% */
+
+        /* Căn giữa nội dung bên trong */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* --- Nội dung chính (Text, Nút) --- */
+      .hero-content {
+        max-width: 800px; /* Giới hạn chiều rộng của nội dung */
+      }
+
+      /* --- Thanh tìm kiếm --- */
+      .hero-search-bar {
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.25); /* Nền trắng mờ */
+        border-radius: 50px; /* Bo tròn */
+        padding: 10px 20px;
+        margin: 0 auto 50px auto; /* Tự động căn giữa và tạo khoảng cách dưới */
+        max-width: 400px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .hero-search-bar i {
+        color: #ffffff;
+        margin-right: 10px;
+      }
+
+      .hero-search-bar input {
+        flex: 1; /* Chiếm hết không gian còn lại */
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        font-size: 16px;
+      }
+
+      /* Đổi màu chữ placeholder */
+      .hero-search-bar input::placeholder {
+        color: #ddd;
+        opacity: 1;
+      }
+
+      /* --- Tiêu đề --- */
+      .hero-title {
+        font-size: 48px;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+      }
+
+      .hero-subtitle {
+        font-size: 22px;
+        font-weight: 400;
+        margin: 0 0 35px 0;
+      }
+
+      /* --- Nút bấm --- */
+      .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Khoảng cách giữa 2 nút */
+      }
+
+      /* Kiểu chung cho nút */
+      .btn {
+        text-decoration: none;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 2px solid #ffffff;
+      }
+
+      /* Nút chính (Nền trắng) */
+      .btn-primary {
+        background-color: #ffffff;
+        color: #333; /* Màu chữ đen */
+      }
+
+      .btn-primary:hover {
+        background-color: transparent; /* Nền trong suốt khi hover */
+        color: #ffffff; /* Chữ trắng */
+      }
+
+      /* Nút phụ (Nền trong suốt) */
+      .btn-secondary {
+        background-color: transparent;
+        color: #ffffff;
+      }
+
+      .btn-secondary:hover {
+        background-color: #ffffff; /* Nền trắng khi hover */
+        color: #333; /* Chữ đen */
+      }
+      /* --- Khu vực kết nối --- */
+      .social-connect {
+        background-color: #e5e5e5; /* Màu nền xám nhạt */
+        padding: 50px 20px;
+        text-align: center;
+      }
+
+      .social-connect h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #222;
+        margin: 0 0 10px 0;
+      }
+
+      .social-connect p {
+        font-size: 17px;
+        color: #555;
+        margin: 0 0 30px 0;
+      }
+
+      /* --- Hàng chứa các nút --- */
+      .social-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* Khoảng cách giữa các nút */
+        flex-wrap: wrap; /* Cho phép xuống hàng trên di động */
+      }
+
+      /* --- Kiểu dáng các nút --- */
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* Khoảng cách giữa icon và chữ */
+
+        background-color: #ffffff;
+        border: 1px solid #dcdcdc;
+        border-radius: 8px;
+        padding: 12px 25px;
+
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .social-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* --- Icon --- */
+      .social-btn i {
+        font-size: 22px; /* Kích thước icon */
+      }
+
+      /* Màu riêng cho các icon (nếu muốn) */
+      .fa-facebook {
+        color: #1877f2;
+      }
+      .fa-youtube {
+        color: #ff0000;
+      }
+      .fa-tiktok {
+        color: #010101;
+      }
+
+      /* Giả lập icon Zalo (vì Font Awesome không có) */
+      .zalo-icon {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        text-align: center;
+        background-color: #0068ff;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      /* --- Responsive cho di động --- */
+      @media (max-width: 768px) {
+        .footer-top {
+          /* Chuyển thành 1 cột */
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+      }
+
+      .page-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto; /* Khoảng cách trên dưới và căn giữa */
+      }
+
+      /* --- Khu vực tin tức chung --- */
+      .news-section {
+        margin-bottom: 50px;
+      }
+
+      .news-section h2 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #222;
+      }
+
+      .news-section .section-subtitle {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      /* --- Lưới tin tức --- */
+      .news-grid {
+        display: grid;
+        gap: 30px; /* Khoảng cách giữa các card */
+      }
+
+      /* Layout 2 cột */
+      .grid-2-cols {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Layout 3 cột */
+      .grid-3-cols {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      /* --- Kiểu dáng thẻ tin tức (Dùng chung) --- */
+      .news-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e9ecef;
+      }
+
+      .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      /* ĐÃ THÊM: CSS cho thẻ <a> bọc card */
+      .news-card-link {
+        text-decoration: none;
+        color: inherit; /* Kế thừa màu chữ */
+      }
+
+      /* --- Phần ảnh của thẻ --- */
+      .card-image {
+        position: relative;
+        width: 100%;
+        padding-top: 60%; /* Tỷ lệ ảnh, có thể điều chỉnh */
+        overflow: hidden;
+      }
+
+      .card-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Thẻ "Nổi bật" trên ảnh */
+      .card-tag {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+      }
+
+      .tag-hot {
+        background-color: #4a00e0; /* Màu tím đậm */
+      }
+
+      /* --- Phần nội dung của thẻ --- */
+      .card-content {
+        padding: 20px;
+      }
+
+      /* Thẻ "Phòng", "Khuyến mãi" */
+      .card-category {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #fff;
+      }
+
+      .category-blue {
+        background-color: #007bff;
+      }
+      .category-green {
+        background-color: #28a745;
+      }
+      /* Thêm các màu khác nếu cần */
+
+      .card-content h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        color: #333;
+      }
+
+      .card-content .card-excerpt {
+        font-size: 15px;
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+
+      /* --- Thông tin meta (ngày, lượt xem) --- */
+      .card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        margin-top: 15px;
+      }
+
+      /* Nếu card không có excerpt, xóa margin-top đi */
+      .card-content h3 + .card-meta {
+        margin-top: 0;
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* Khoảng cách giữa icon và text */
+      }
+
+      /* --- Responsive cho di động --- */
+      @media (max-width: 992px) {
+        /* 3 cột -> 2 cột */
+        .grid-3-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        /* 2 cột và 3 cột -> 1 cột */
+        .grid-2-cols,
+        .grid-3-cols {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="navbar-container">
+        <div class="">
+          <a href="#">
+            <img
+              src="/images/logo.png"
+              alt="Logo Grand Hotel"
+              class="logo-image"
+            />
+          </a>
+        </div>
+
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link active">Trang Chủ</a></li>
+          <li><a href="#" class="nav-link">Phòng</a></li>
+          <li><a href="#" class="nav-link">Dịch vụ</a></li>
+          <li><a href="#" class="nav-link">Tin tức</a></li>
+          <li><a href="#" class="nav-link">Liên hệ</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <a href="#" class="btn-book">Đặt phòng ngay</a>
+          <a href="login.html" class="nav-icon">
+            <i class="fa-regular fa-user"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero-section">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <div class="hero-search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm bài viết, tin tức..." />
+          </div>
+
+          <h1 class="hero-title">Chào mừng đến với Grand Hotel</h1>
+          <p class="hero-subtitle">Trải nghiệm sang trọng, dịch vụ hoàn hảo</p>
+
+          <div class="hero-buttons">
+            <a href="#" class="btn btn-primary">Khám phá ngay</a>
+            <a href="#" class="btn btn-secondary">Xem video</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="page-container">
+      <section class="news-section">
+        <h2>Tin nổi bật</h2>
+        <p class_="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
+
+        <div class="news-grid grid-2-cols">
+          <a href="baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="/images/phong1.png" alt="Phòng Deluxe" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Phòng</span>
+                <h3>Khám phá không gian phòng Deluxe mới</h3>
+                <p class="card-excerpt">
+                  Trải nghiệm sang trọng với thiết kế hiện đại và tiện nghi đầy
+                  đủ
+                </p>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
+          <a href="baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="/images/lehoi.png" alt="Lễ hội đèn lồng" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Khuyến mãi</span>
+                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
+                <p class="card-excerpt">
+                  Giảm giá 30% cho tất cả các loại phòng khi đặt trước 7 ngày
+                </p>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
+
+      <section class="news-section">
+        <h2>Tin tức mới nhất</h2>
+
+        <div class="news-grid grid-3-cols">
+          <a href="baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="/images/phong1.png" alt="Phòng Deluxe" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Phòng</span>
+                <h3>Khám phá không gian phòng Deluxe mới</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
+          <a href="baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="/images/lehoi.png" alt="Lễ hội đèn lồng" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Khuyến mãi</span>
+                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
+          <a href="baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="/images/phong1.png" alt="Nhà hàng" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-green">Ẩm thực</span>
+                <h3>Thực đơn buffet sáng đặc biệt</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 03/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 987</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
+    </div>
+    <section class="social-connect">
+      <div class="social-container">
+        <h2>Kết nối với chúng tôi</h2>
+        <p>Theo dõi để nhận tin tức và ưu đãi mới nhất</p>
+
+        <div class="social-buttons">
+          <a href="#" class="social-btn">
+            <i class="fa-brands fa-facebook"></i>
+            <span>Facebook</span>
+          </a>
+
+          <a href="#" class="social-btn">
+            <i class="fa-brands fa-youtube"></i>
+            <span>Youtube</span>
+          </a>
+
+          <a href="#" class="social-btn">
+            <span class="zalo-icon">Z</span>
+            <span>Zalo</span>
+          </a>
+
+          <a href="#" class="social-btn">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>Tiktok</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="footer-column footer-about">
+            <h3 class="footer-logo">BCC Grand Hotel</h3>
+            <p class="footer-tagline">
+              Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo
+            </p>
+          </div>
+
+          <div class="footer-column footer-links">
+            <h4>Liên kết</h4>
+            <ul>
+              <li><a href="#">Về chúng tôi</a></li>
+              <li><a href="#">Dịch vụ</a></li>
+              <li><a href="#">Tin tức</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column footer-links">
+            <h4>Hỗ trợ</h4>
+            <ul>
+              <li><a href="#">Câu hỏi thường gặp</a></li>
+              <li><a href="#">Chính sách</a></li>
+              <li><a href="#">Điều khoản</a></li>
+              <li><a href="#">Bảo mật</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column footer-contact">
+            <h4>Liên hệ</h4>
+            <p>123 Đường ABC, TP.HCM</p>
+            <p>Hotline: 1900 xxxx</p>
+            <p>Email: info@grandhotel.vn</p>
+          </div>
+        </div>
+
+        <hr class="footer-divider" />
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
