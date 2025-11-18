@@ -1,0 +1,1 @@
+SELECT * FROM hotel_media_platform.bookings;
