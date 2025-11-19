@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: hotel-media-webapp
+    env: python
+    root: .
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
