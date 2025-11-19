@@ -51,7 +51,7 @@ def delete(id):
     return redirect(url_for('baiviet.index'))
 
 @bp.route('/xuat-ban/<int:id>', methods=['POST'])
-@login_required
+@login_required 
 def publish(id):
     """Xuất bản bài viết - xuatban.html"""
     PostService.publish_post(id)
