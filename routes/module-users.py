@@ -12,19 +12,19 @@ def index():
     users = User.query.all()
     return render_template('nguoidung/nguoidung.html', users=users)
 
-@bp.route('/danh-moi')
+@bp.route('/admin')
 @login_required
-def danh_moi():
-    """Người dùng được mời - nguoidungdanhmoi.html"""
-    users = User.query.filter_by(role='invited').all()
-    return render_template('nguoidung/nguoidungdanhmoi.html', users=users)
+def admin():
+    """Người dùng admin - nguoidungadmin.html"""
+    users = User.query.filter_by(role='admin').all()
+    return render_template('nguoidung/nguoidungadmin.html', users=users)
 
-@bp.route('/ngoi-tieu')
+@bp.route('/editor')
 @login_required
 def ngoi_tieu():
-    """Người dùng ngòi tiêu (editor) - nguoidungngoitieu.html"""
+    """Người dùng editor - nguoidungeditor.html"""
     users = User.query.filter_by(role='editor').all()
-    return render_template('nguoidung/nguoidungngoitieu.html', users=users)
+    return render_template('nguoidung/nguoidungeditor.html', users=users)
 
 @bp.route('/viewer')
 @login_required
