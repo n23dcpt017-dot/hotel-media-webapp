@@ -12,9 +12,17 @@ CREATE TABLE users (
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'staff', 'guest') DEFAULT 'guest',
+    role ENUM('admin', 'staff', 'guest') DEFAULT 'admin',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+INSERT INTO users (full_name, email, password_hash, role)
+VALUES (
+    'Administrator',
+    'admin@hotel.com',
+    'pbkdf2:sha256:600000$sB1G02sYzPpM0eq9$3fbb41f3a4c54ce58b406fbbf64e07a03b5f9de343d07e9bb3fde1997e7465d0',
+    'admin'
+);
+
 
 -- ========================
 -- 2. ROOM_TYPES
