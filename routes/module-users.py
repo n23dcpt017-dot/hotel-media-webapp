@@ -19,6 +19,19 @@ def admin():
     users = User.query.filter_by(role='admin').all()
     return render_template('nguoidung/nguoidungadmin.html', users=users)
 
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+
+    user = Users.query.filter_by(email=email).first()
+
+    if user and check_password_hash(user.password_hash, password):
+        session['user_id'] = user.user_id
+        return redirect('/dashboard')
+    else:
+        return "Sai tài khoản hoặc mật khẩu"
+
 @bp.route('/editor')
 @login_required
 def ngoi_tieu():
