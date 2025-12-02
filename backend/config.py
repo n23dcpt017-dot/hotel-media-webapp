@@ -8,3 +8,5 @@ class Config:
     # Upload settings
     UPLOAD_FOLDER = 'app/static/uploads'
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max
+    
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:password@localhost/hotel_media_platform"
