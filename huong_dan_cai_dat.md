@@ -13,21 +13,21 @@ cd hotel-media-webapp
 
 ```bash
 # Tạo folder static
-mkdir -p app/static/css
-mkdir -p app/static/js
-mkdir -p app/static/images
-mkdir -p app/static/uploads
+mkdir -p static/css
+mkdir -p static/js
+mkdir -p static/images
+mkdir -p static/uploads
 
 # Tạo folder templates đầy đủ
-mkdir -p app/templates/auth
-mkdir -p app/templates/dashboard
-mkdir -p app/templates/baiviet
-mkdir -p app/templates/binhluan
-mkdir -p app/templates/chienich
-mkdir -p app/templates/nguoidung
-mkdir -p app/templates/quanly
-mkdir -p app/templates/media
-mkdir -p app/templates/errors
+mkdir -p templates/auth
+mkdir -p templates/dashboard
+mkdir -p templates/baiviet
+mkdir -p templates/binhluan
+mkdir -p templates/chienich
+mkdir -p templates/nguoidung
+mkdir -p templates/quanly
+mkdir -p templates/media
+mkdir -p templates/errors
 ```
 
 ---
