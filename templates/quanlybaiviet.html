@@ -409,6 +409,27 @@
       display: flex;
       gap: 10px;
     }
+    .article-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* Cập nhật .action-btn để hỗ trợ cả button và a */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    color: #777;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
 
     .action-btn {
       background: none;
@@ -606,9 +627,48 @@
                 >
                 <span class="article-date">05/11/2025</span>
                 <div class="article-actions">
-                  <button class="action-btn btn-edit">
-                    <i class="fa-solid fa-pencil"></i>
-                  </button>
+                  <a href="suabaiviet       <div class="filter-bar-container">
+            <div class="page-search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Tìm kiếm bài viết..." />
+            </div>
+            <div class="filter-tabs">
+              <a href="quanlybaiviet.html" class="filter-tab active">Tất cả</a>
+              <a href="quanlybaivietdaxuatban.html" class="filter-tab"
+                >Đã xuất bản</a
+              >
+              <a href="quanlybaivietnhap.html" class="filter-tab">Nháp</a>
+              <a href="quanlybaivietdalenlich.html" class="filter-tab"
+                >Đã lên lịch</a
+              >
+            </div>
+          </div>
+
+          <div class="article-grid">
+            <article class="article-card">
+              <div class="card-image-wrapper">
+                <img src="../images/phong1.png" 
+                     alt="Phòng Deluxe" />
+              </div>
+              <div class="card-content">
+                <div class="card-tags">
+                  <span class="category-tag tag-blue">Phòng</span>
+                  <span class="status-tag status-published">Đã xuất bản</span>
+                </div>
+                <h3 class="article-title">
+                  Khám phá không gian phòng Deluxe mới
+                </h3>
+                <span class="article-author">Nguyễn Văn A</span>
+              </div>
+              <div class="card-footer">
+                <span class="article-stat"
+                  ><i class="fa-regular fa-eye"></i> 1,234</span
+                >
+                <span class="article-date">05/11/2025</span>
+                <div class="article-actions">
+                  <a href="templates/suabaiviet.html?id=1" class="action-btn btn-edit">
+    <i class="fa-solid fa-pencil"></i>
+</a>
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
                   </button>
