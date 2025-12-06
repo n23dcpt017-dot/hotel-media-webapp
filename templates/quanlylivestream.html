@@ -676,5 +676,54 @@
         </main>
       </div>
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cameraBtn = document.querySelector('.control-btn i.fa-camera').parentElement;
+  const videoPlaceholder = document.querySelector(".video-placeholder");
+  let stream = null;
+  let cameraOn = false;
+
+  // Tạo thẻ video để thay thế placeholder
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.style.width = "100%";
+  video.style.height = "100%";
+  video.style.objectFit = "cover";
+  video.style.borderRadius = "10px";
+
+  async function toggleCamera() {
+    if (!cameraOn) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+
+        // Thay placeholder bằng video thật
+        videoPlaceholder.innerHTML = "";
+        videoPlaceholder.appendChild(video);
+
+        cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Tắt Camera';
+        cameraOn = true;
+      } catch (error) {
+        alert("Không truy cập được camera: " + error.message);
+      }
+    } else {
+      // Tắt camera
+      stream.getTracks().forEach(track => track.stop());
+      cameraOn = false;
+
+      // Đưa placeholder trở lại
+      videoPlaceholder.innerHTML = `
+        <i class="fa-solid fa-video-slash"></i>
+        <span>Camera chưa được bật</span>
+      `;
+
+      cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Camera';
+    }
+  }
+
+  cameraBtn.addEventListener("click", toggleCamera);
+});
+</script>
+
   </body>
 </html>
