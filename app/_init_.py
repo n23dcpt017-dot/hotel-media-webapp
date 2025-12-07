@@ -7,22 +7,11 @@ login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.Config')
-    
+    app.config['SECRET_KEY'] = 'dev'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
-    
-    # Đăng ký blueprints
-    from app.routes import auth, dashboard, baiviet, binhluan, chienich, nguoidung, quanly, media
-    
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(dashboard.bp)
-    app.register_blueprint(baiviet.bp)
-    app.register_blueprint(binhluan.bp)
-    app.register_blueprint(chienich.bp)
-    app.register_blueprint(nguoidung.bp)
-    app.register_blueprint(quanly.bp)
-    app.register_blueprint(media.bp)
-    
+
     return app
