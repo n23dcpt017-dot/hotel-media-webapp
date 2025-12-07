@@ -1,7 +1,3 @@
-from app import db
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -9,8 +5,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
 
-    # THÊM CÁI NÀY
+    # thêm cho qua test
     full_name = db.Column(db.String(128))
+    role = db.Column(db.String(32), default='user')
 
     password_hash = db.Column(db.String(256))
     is_active = db.Column(db.Boolean, default=True)
