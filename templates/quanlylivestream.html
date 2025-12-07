@@ -307,11 +307,17 @@
   color: white;
   border: none;
   font-weight: 600;
+
+  /* --- THÊM 2 DÒNG NÀY --- */
+  flex-shrink: 0;    /* Không cho nút bị ép nhỏ */
+  min-width: 160px;  /* Giữ kích thước tối thiểu để không bị méo */
+
   padding: 12px 25px;
-  border-radius: 10px;     /* <— thêm dòng này */
-  cursor: pointer;
+  border-radius: 10px;
   font-size: 15px;
+  cursor: pointer;
 }
+
 
     .btn-start-stream:hover {
       background-color: #c82333;
