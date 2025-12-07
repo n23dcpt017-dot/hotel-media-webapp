@@ -4,6 +4,7 @@ from app import db
 from app.models.user import User
 
 auth = Blueprint('auth', __name__)
+app.register_blueprint(auth, url_prefix='')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
