@@ -945,5 +945,52 @@
         </main>
       </div>
     </div>
+    <script>
+  // ====== LOGIC CHUNG CHO TẤT CẢ TABS ======
+  document.querySelectorAll(".toggle-buttons").forEach(group => {
+    const tabs = group.querySelectorAll(".toggle-btn");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        // Xoá active trong group
+        tabs.forEach(t => t.classList.remove("active"));
+        // Add active cho tab vừa bấm
+        tab.classList.add("active");
+
+        // Nếu bạn muốn thay đổi nội dung theo tab:
+        const parentCard = group.closest(".chart-card");
+        if (parentCard) {
+          const placeholder = parentCard.querySelector(".chart-placeholder img");
+          const barChart = parentCard.querySelector(".bar-chart");
+
+          // Xử lý cho biểu đồ đường (ảnh)
+          if (placeholder) {
+            if (tab.textContent.includes("Lượt click")) {
+              placeholder.src = "../images/anh1.png";
+            } else {
+              placeholder.src = "../images/anh2.png"; // ảnh khác nếu bạn có
+            }
+          }
+
+          // Xử lý cho biểu đồ cột (CSS chart)
+          if (barChart) {
+            if (tab.textContent.includes("Theo danh mục")) {
+              const heights = ["75%", "70%", "60%", "50%", "45%"];
+              barChart.querySelectorAll(".bar").forEach((bar, i) => {
+                bar.style.height = heights[i];
+              });
+            } else {
+              const heights = ["65%", "40%", "55%", "30%", "20%"];
+              barChart.querySelectorAll(".bar").forEach((bar, i) => {
+                bar.style.height = heights[i];
+              });
+            }
+          }
+        }
+      });
+    });
+  });
+</script>
+
   </body>
 </html>
