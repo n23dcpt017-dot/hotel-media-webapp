@@ -17,7 +17,6 @@ def create_app(config_name=None):
     login_manager.init_app(app)
 
     from app.routes import auth
-    app.register_blueprint(auth)
-
+   app.register_blueprint(auth, url_prefix='/auth')
 
     return app
