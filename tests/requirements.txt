@@ -1,4 +1,20 @@
-pytest
-selenium
-webdriver-manager
-pytest-html
+# Testing dependencies
+selenium==4.15.2
+webdriver-manager==4.0.1
+pytest==7.4.3
+pytest-html==4.1.1
+coverage==7.3.2
+
+# Existing requirements
+pymysql
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+Flask-Migrate==4.0.5
+Flask-WTF==1.2.1
+WTForms==3.1.1
+email-validator==2.1.0
+python-dotenv==1.0.0
+Pillow==10.1.0
+gunicorn==21.2.0
+unidecode==1.3.7
