@@ -1,10 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, request, redirect, url_for
 from flask_login import login_user, logout_user
-from app import db
 from app.models.user import User
 
 auth = Blueprint('auth', __name__)
-app.register_blueprint(auth, url_prefix='')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
