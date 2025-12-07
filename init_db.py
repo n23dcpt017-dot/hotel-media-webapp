@@ -1,5 +1,5 @@
 # Trong Python shell:
-from app import create_app, db
+from main import create_app, db
 from app.models.user import User
 
 app = create_app()
