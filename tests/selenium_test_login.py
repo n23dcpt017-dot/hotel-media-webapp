@@ -63,6 +63,7 @@ class LoginSeleniumTest(unittest.TestCase):
 
     def setUp(self):
         """Setup trước mỗi test case"""
+        self.driver.delete_all_cookies()
         self.start_time = time.time()
 
     def tearDown(self):
