@@ -66,30 +66,46 @@ class LoginSeleniumTest(unittest.TestCase):
         """Setup trước mỗi test case"""
         self.start_time = time.time()
     
-    def tearDown(self):
-        """Cleanup sau mỗi test case"""
-        duration = time.time() - self.start_time
-        
-        # Lưu kết quả test
-        test_name = self._testMethodName
-        test_result = {
-            'name': test_name,
-            'status': 'PASSED' if self._outcome.success else 'FAILED',
-            'duration': f"{duration:.2f}s",
-            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'error': str(self._outcome.errors[0][1]) if self._outcome.errors else None,
-            'screenshot': None
-        }
-        
-        # Chụp screenshot nếu test fail
-        if not self._outcome.success:
-            screenshot_name = f"{test_name}_{int(time.time())}.png"
-            screenshot_path = os.path.join(self.screenshots_dir, screenshot_name)
-            self.driver.save_screenshot(screenshot_path)
-            test_result['screenshot'] = screenshot_name
-            print(f"📸 Screenshot saved: {screenshot_path}")
-        
-        self.test_results.append(test_result)
+   def tearDown(self):
+    """Cleanup sau mỗi test case"""
+    duration = time.time() - self.start_time
+
+    test_name = self._testMethodName
+
+    # Lấy result hiện đại
+    error_msg = None
+    passed = True
+
+    if hasattr(self, "_outcome"):
+        result = self._outcome.result
+        if result:
+            # Nếu có error hoặc failure
+            if result.errors or result.failures:
+                passed = False
+                if result.errors:
+                    error_msg = str(result.errors[-1][1])
+                elif result.failures:
+                    error_msg = str(result.failures[-1][1])
+
+    test_result = {
+        'name': test_name,
+        'status': 'PASSED' if passed else 'FAILED',
+        'duration': f"{duration:.2f}s",
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'error': error_msg,
+        'screenshot': None
+    }
+
+    # Chụp screenshot nếu fail
+    if not passed:
+        screenshot_name = f"{test_name}_{int(time.time())}.png"
+        screenshot_path = os.path.join(self.screenshots_dir, screenshot_name)
+        self.driver.save_screenshot(screenshot_path)
+        test_result['screenshot'] = screenshot_name
+        print(f"📸 Screenshot saved: {screenshot_path}")
+
+    self.test_results.append(test_result)
+
     
     def take_screenshot(self, name):
         """Chụp screenshot với tên custom"""
