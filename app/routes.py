@@ -15,7 +15,7 @@ def login():
 
         if user and user.check_password(password) and user.is_active:
             login_user(user)
-            return 'Login success', 200
+            return render_template('login.html'), 200
         
         flash('Sai tài khoản hoặc mật khẩu')
 
