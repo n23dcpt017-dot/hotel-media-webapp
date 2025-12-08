@@ -48,13 +48,13 @@ class LoginUnitTest(unittest.TestCase):
         
         # Tạo test user
         self.test_user = User(
-            username='testuser',
-            email='test@example.com',
-            full_name='Test User',
+            username='Admin',
+            email='admin@hotel.com',
+            full_name='Admin',
             role='admin',
             is_active=True
         )
-        self.test_user.set_password('TestPass123')
+        self.test_user.set_password('Admin@123')
         
         db.session.add(self.test_user)
         db.session.commit()
@@ -74,7 +74,7 @@ class LoginUnitTest(unittest.TestCase):
         print("🧪 Test 1: Kiểm tra tạo user...")
         
         user = User(
-            username='admin',
+            username='admin@hotel.com',
             email='admin@hotel.com',
             full_name='Admin',
             role='admin'
@@ -85,14 +85,14 @@ class LoginUnitTest(unittest.TestCase):
         db.session.commit()
         
         # Kiểm tra user đã được tạo
-        found_user = User.query.filter_by(username='Admin').first()
+        found_user = User.query.filter_by(username='admin@hotel.com').first()
         
         self.assertIsNotNone(found_user)
-        self.assertEqual(found_user.username, 'Admin')
+        self.assertEqual(found_user.username, 'admin@hotel.com')
         self.assertEqual(found_user.email, 'admin@hotel.com')
         
         print("   ✓ User được tạo thành công")
-        print("   ✓ Username: Admin")
+        print("   ✓ Username: admin@hotel.com")
         print("   ✓ Email: admin@hotel.com")
         print("✅ PASSED\n")
     
@@ -173,8 +173,8 @@ class LoginUnitTest(unittest.TestCase):
         print("🧪 Test 7: Kiểm tra login với credentials đúng...")
         
         response = self.client.post('/auth/login', data={
-            'username': 'testuser',
-            'password': 'TestPass123'
+            'username': 'admin@hotel.com',
+            'password': 'Admin@123'
         }, follow_redirects=True)
         
         self.assertEqual(response.status_code, 200)
@@ -194,7 +194,7 @@ class LoginUnitTest(unittest.TestCase):
         
         response = self.client.post('/auth/login', data={
             'username': 'wronguser',
-            'password': 'TestPass123'
+            'password': 'Admin@123'
         }, follow_redirects=True)
         
         # Không được redirect đến dashboard
@@ -208,7 +208,7 @@ class LoginUnitTest(unittest.TestCase):
         print("🧪 Test 9: Kiểm tra login với password sai...")
         
         response = self.client.post('/auth/login', data={
-            'username': 'testuser',
+            'username': 'admin@hotel.com',
             'password': 'WrongPassword'
         }, follow_redirects=True)
         
@@ -266,8 +266,8 @@ class LoginUnitTest(unittest.TestCase):
         
         # Login trước
         self.client.post('/auth/login', data={
-            'username': 'testuser',
-            'password': 'TestPass123'
+            'username': 'admin@hotel.com',
+            'password': 'Admin@123'
         })
         
         # Logout
@@ -282,11 +282,11 @@ class LoginUnitTest(unittest.TestCase):
         """Test 13: Query user bằng username"""
         print("🧪 Test 13: Kiểm tra query user by username...")
         
-        user = User.query.filter_by(username='testuser').first()
+        user = User.query.filter_by(username='admin@hotel.com').first()
         
         self.assertIsNotNone(user)
-        self.assertEqual(user.username, 'testuser')
-        self.assertEqual(user.email, 'test@example.com')
+        self.assertEqual(user.username, 'admin@hotel.com')
+        self.assertEqual(user.email, 'admin@hotel.com')
         
         print("   ✓ Query thành công")
         print(f"   ✓ Found user: {user.username}")
@@ -296,11 +296,11 @@ class LoginUnitTest(unittest.TestCase):
         """Test 14: Query user bằng email"""
         print("🧪 Test 14: Kiểm tra query user by email...")
         
-        user = User.query.filter_by(email='test@example.com').first()
+        user = User.query.filter_by(email='admin@hotel.com').first()
         
         self.assertIsNotNone(user)
-        self.assertEqual(user.email, 'test@example.com')
-        self.assertEqual(user.username, 'testuser')
+        self.assertEqual(user.email, 'admin@hotel.com')
+        self.assertEqual(user.username, 'admin@hotel.com')
         
         print("   ✓ Query thành công")
         print(f"   ✓ Found user: {user.email}")
@@ -312,7 +312,7 @@ class LoginUnitTest(unittest.TestCase):
         
         # Thử tạo user với username đã tồn tại
         duplicate_user = User(
-            username='testuser',  # Trùng với test_user
+            username='admin@hotel.com',  # Trùng với test_user
             email='another@example.com',
             full_name='Another User'
         )
