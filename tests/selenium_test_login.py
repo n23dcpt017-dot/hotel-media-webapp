@@ -65,8 +65,7 @@ class LoginSeleniumTest(unittest.TestCase):
     def setUp(self):
         """Setup trước mỗi test case"""
         self.start_time = time.time()
-    
-   def tearDown(self):
+    def tearDown(self):
     """Cleanup sau mỗi test case"""
     duration = time.time() - self.start_time
 
