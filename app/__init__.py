@@ -15,7 +15,14 @@ def create_app(config_name=None):
     db.init_app(app)
     login_manager.init_app(app)
 
+    from app.models.user import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+
     from app.routes import auth
     app.register_blueprint(auth, url_prefix='/auth')
-
+    
     return app
