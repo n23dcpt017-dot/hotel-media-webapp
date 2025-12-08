@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -22,23 +23,14 @@ class User(UserMixin, db.Model):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        def check_password(self, password):
-    if not self.password_hash:
-        return False
-    return check_password_hash(self.password_hash, password)
-
+        if not self.password_hash:
+            return False
+        return check_password_hash(self.password_hash, password)
 
     # ==== HỖ TRỢ FLASK-LOGIN ====
-
-    
     def get_id(self):
         return str(self.id)
 
-   
-    def is_active(self):
-        return self.is_active
-
-    
     @property
     def is_authenticated(self):
         return True
@@ -46,6 +38,10 @@ class User(UserMixin, db.Model):
     @property
     def is_anonymous(self):
         return False
+
+    @property
+    def is_active(self):
+        return self.__dict__.get('is_active', True)
 
     # ==== STATIC METHODS HỖ TRỢ LOGIN ====
     @staticmethod
