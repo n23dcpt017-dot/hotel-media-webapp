@@ -35,7 +35,7 @@ class LoginUnitTest(unittest.TestCase):
     def setUp(self):
         """Setup trước mỗi test case"""
         # Tạo Flask app với test config
-        self.app = create_app() 
+        self.app = create_app('testing') 
         self.app.config['TESTING'] = True
         self.app.config['WTF_CSRF_ENABLED'] = False
         self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
