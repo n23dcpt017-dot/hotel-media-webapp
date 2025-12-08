@@ -1,5 +1,6 @@
 """
-SELENIUM TEST - Login Functionality (FIXED FOR PYTHON 3.13)
+SELENIUM TEST - Login Frontend UI
+(Tương thích với file HTML giao diện tĩnh)
 """
 import unittest
 from selenium import webdriver
@@ -7,281 +8,161 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
+from selenium.common.exceptions import TimeoutException
 import time
-from datetime import datetime
 import os
 import sys
 
-# Add parent directory to path
+# Add parent directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-class LoginSeleniumTest(unittest.TestCase):
+class LoginUITest(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        """Setup trước khi chạy tất cả tests"""
         chrome_options = Options()
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--window-size=1920,1080')
-        # Tắt bớt log rác của Chrome
-        chrome_options.add_argument("--log-level=3") 
+        chrome_options.add_argument("--log-level=3")
         
         try:
             cls.driver = webdriver.Chrome(options=chrome_options)
-            cls.driver.implicitly_wait(5) # Giảm wait ngầm định để tránh conflict với wait rõ ràng
-            
-            # QUAN TRỌNG: Dùng 127.0.0.1 thay vì localhost để tránh lỗi IPv6 trên Windows
+            cls.driver.implicitly_wait(5)
             cls.base_url = "http://127.0.0.1:5000"
-            
-            cls.test_results = []
-            cls.screenshots_dir = "test_screenshots"
-            
-            if not os.path.exists(cls.screenshots_dir):
-                os.makedirs(cls.screenshots_dir)
-                
             print("\n" + "="*70)
-            print("🚀 BẮT ĐẦU SELENIUM TEST (PYTHON 3.13 COMPATIBLE)")
+            print("🚀 BẮT ĐẦU TEST GIAO DIỆN LOGIN (FRONTEND JS)")
             print("="*70 + "\n")
-
-            # Check kết nối server
-            try:
-                cls.driver.get(f"{cls.base_url}/auth/login")
-                print("✅ Kết nối đến Server thành công!")
-            except WebDriverException:
-                print("❌ KHÔNG THỂ KẾT NỐI ĐẾN SERVER!")
-                print("💡 Hãy đảm bảo bạn đã chạy 'python run.py' ở một cửa sổ khác.")
-                cls.driver.quit()
-                sys.exit(1)
-            
         except Exception as e:
-            print(f"❌ Lỗi khởi tạo Driver: {e}")
+            print(f"❌ Lỗi Driver: {e}")
             raise
     
     @classmethod
     def tearDownClass(cls):
-        if hasattr(cls, 'driver') and cls.driver:
-            cls.driver.quit()
-        cls.generate_html_report()
-        print("\n✅ HOÀN THÀNH TEST. Xem báo cáo tại: selenium_test_report.html\n")
-    
+        if hasattr(cls, 'driver'): cls.driver.quit()
+        print("\n✅ TEST COMPLETE.\n")
+
     def setUp(self):
-        self.start_time = time.time()
-    
-    def tearDown(self):
-        """Cleanup (Đã sửa lỗi crash trên Python 3.11+)"""
-        duration = time.time() - self.start_time
-        
-        # --- LOGIC BẮT LỖI MỚI CHO PYTHON 3.13 ---
-        has_error = False
-        error_msg = None
-
-        # Kiểm tra result từ _outcome (cấu trúc mới)
-        if hasattr(self._outcome, 'result'):
-            result = self._outcome.result
-            if result.errors:
-                has_error = True
-                error_msg = str(result.errors[0][1])
-            elif result.failures:
-                has_error = True
-                error_msg = str(result.failures[0][1])
-        # Fallback cho Python cũ (nếu có)
-        elif hasattr(self._outcome, 'errors') and self._outcome.errors:
-            has_error = True
-            error_msg = str(self._outcome.errors[0][1])
-
-        status = 'FAILED' if has_error else 'PASSED'
-        
-        # Chụp màn hình nếu lỗi
-        screenshot_name = None
-        if has_error and hasattr(self, 'driver') and self.driver:
-            try:
-                screenshot_name = f"{self._testMethodName}_{int(time.time())}.png"
-                self.driver.save_screenshot(os.path.join(self.screenshots_dir, screenshot_name))
-                print(f"   📸 Đã chụp ảnh lỗi: {screenshot_name}")
-            except:
-                pass
-        
-        self.test_results.append({
-            'name': self._testMethodName,
-            'status': status,
-            'duration': f"{duration:.2f}s",
-            'timestamp': datetime.now().strftime('%H:%M:%S'),
-            'error': error_msg,
-            'screenshot': screenshot_name
-        })
-
-    def take_screenshot(self, name):
-        if hasattr(self, 'driver'):
-            fname = f"{name}_{int(time.time())}.png"
-            self.driver.save_screenshot(os.path.join(self.screenshots_dir, fname))
-            return fname
-        return None
-
-    # ========================
-    # TEST CASES (ĐÃ CẬP NHẬT WAIT)
-    # ========================
-    
-    def test_01_login_page_loads(self):
-        """Test 1: Trang login load thành công"""
-        print("\n🧪 Test 1: Kiểm tra trang login load...")
         self.driver.get(f"{self.base_url}/auth/login")
-        
-        # FIX: Chờ thẻ body xuất hiện để đảm bảo trang đã load
-        try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-            # Chờ tiêu đề trang không còn rỗng
-            WebDriverWait(self.driver, 5).until(lambda d: d.title != "")
-        except TimeoutException:
-            self.fail("Trang web không tải được (Timeout)")
 
-        self.assertIn("Login", self.driver.title, f"Title sai: '{self.driver.title}'")
-        print("✅ OK")
-
-    def test_02_login_form_elements_exist(self):
-        """Test 2: Các elements của form login tồn tại"""
-        print("\n🧪 Test 2: Kiểm tra elements...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        
+    def test_01_ui_elements(self):
+        """Test 1: Kiểm tra hiển thị các phần tử giao diện"""
+        print("\n🧪 Test 1: Kiểm tra UI...")
         try:
-            # Chờ form xuất hiện tối đa 5s
-            WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located((By.NAME, "username"))
-            )
+            # Kiểm tra tiêu đề
+            self.assertIn("Đăng nhập - Hotel CMS", self.driver.title)
             
-            self.driver.find_element(By.NAME, "username")
-            self.driver.find_element(By.NAME, "password")
-            # Tìm nút submit linh hoạt hơn
-            try:
-                self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
-            except NoSuchElementException:
-                self.driver.find_element(By.CSS_SELECTOR, "input[type='submit']")
-                
-            print("✅ OK")
-        except TimeoutException:
-            self.fail("Form login không hiển thị (Timeout)")
-        except NoSuchElementException as e:
-            self.fail(f"Thiếu element: {e}")
-
-    def test_03_login_with_empty_fields(self):
-        """Test 3: Login với fields trống"""
-        print("\n🧪 Test 3: Login rỗng...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        
-        # Tìm và click nút submit
-        try:
-            btn = WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"))
-            )
-            btn.click()
-            time.sleep(1)
-            # Vẫn phải ở trang login
-            self.assertIn("/auth/login", self.driver.current_url)
-            print("✅ OK")
-        except Exception as e:
-            self.fail(f"Lỗi thao tác: {e}")
-
-    def test_04_login_with_wrong_credentials(self):
-        """Test 4: Login sai"""
-        print("\n🧪 Test 4: Login sai...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        
-        try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.NAME, "username")))
-            self.driver.find_element(By.NAME, "username").send_keys("wrong_user")
-            self.driver.find_element(By.NAME, "password").send_keys("wrong_pass")
-            self.driver.find_element(By.CSS_SELECTOR, "button[type='submit'], input[type='submit']").click()
+            # Kiểm tra input bằng ID (theo code HTML của bạn)
+            self.driver.find_element(By.ID, "email")
+            self.driver.find_element(By.ID, "password")
+            self.driver.find_element(By.CLASS_NAME, "btn-login")
             
-            time.sleep(1)
-            self.assertIn("/auth/login", self.driver.current_url)
-            print("✅ OK")
-        except Exception as e:
-            self.fail(f"Lỗi: {e}")
-
-    def test_05_login_with_correct_credentials(self):
-        """Test 5: Login đúng"""
-        print("\n🧪 Test 5: Login đúng...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        
-        try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.NAME, "username")))
-            self.driver.find_element(By.NAME, "username").send_keys("admin")
-            self.driver.find_element(By.NAME, "password").send_keys("Admin@123")
-            self.driver.find_element(By.CSS_SELECTOR, "button[type='submit'], input[type='submit']").click()
+            # Kiểm tra các nút Social
+            socials = self.driver.find_elements(By.CLASS_NAME, "btn-social")
+            self.assertEqual(len(socials), 4, "Phải có đủ 4 nút mạng xã hội")
             
-            # Chờ redirect
-            WebDriverWait(self.driver, 10).until(
-                lambda d: "/dashboard" in d.current_url or "/index" in d.current_url
-            )
-            print("✅ OK - Đã vào Dashboard")
-        except TimeoutException:
-            print(f"⚠️ URL hiện tại: {self.driver.current_url}")
-            self.fail("Không redirect sang Dashboard sau khi login")
-
-    def test_06_remember_me_checkbox(self):
-        """Test 6: Remember Me"""
-        print("\n🧪 Test 6: Checkbox...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        try:
-            chk = self.driver.find_element(By.NAME, "remember")
-            if not chk.is_selected():
-                chk.click()
-            print("✅ OK")
-        except NoSuchElementException:
-            print("⚠️ Bỏ qua (Không có checkbox)")
-
-    def test_07_password_field_masked(self):
-        """Test 7: Password mask"""
-        print("\n🧪 Test 7: Password mask...")
-        self.driver.get(f"{self.base_url}/auth/login")
-        try:
-            pwd = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.NAME, "password")))
-            self.assertEqual(pwd.get_attribute("type"), "password")
-            print("✅ OK")
+            print("✅ UI hiển thị đúng (Input, Button, Socials)")
         except Exception as e:
-            self.fail(str(e))
+            self.fail(f"Lỗi UI: {e}")
 
-    def test_08_navigation_after_login(self):
-        """Test 8: Navigation"""
-        print("\n🧪 Test 8: Navigation...")
-        # Login lại để chắc chắn
-        self.driver.get(f"{self.base_url}/auth/login")
-        self.driver.find_element(By.NAME, "username").send_keys("admin")
-        self.driver.find_element(By.NAME, "password").send_keys("Admin@123")
-        self.driver.find_element(By.CSS_SELECTOR, "button[type='submit'], input[type='submit']").click()
+    def test_02_js_validation_empty(self):
+        """Test 2: Kiểm tra validate rỗng của HTML5"""
+        print("\n🧪 Test 2: Submit form rỗng...")
+        btn = self.driver.find_element(By.CLASS_NAME, "btn-login")
+        btn.click()
+        
+        # HTML5 'required' sẽ chặn submit, URL không đổi
         time.sleep(1)
-        
-        # Thử vào trang bài viết
-        self.driver.get(f"{self.base_url}/baiviet")
-        time.sleep(1)
-        self.assertNotIn("/auth/login", self.driver.current_url)
-        print("✅ OK")
+        self.assertIn("/auth/login", self.driver.current_url)
+        print("✅ Form không submit khi rỗng")
 
-    def test_09_logout_functionality(self):
-        """Test 9: Logout"""
-        print("\n🧪 Test 9: Logout...")
-        # Giả sử đang login từ test trước
-        self.driver.get(f"{self.base_url}/auth/logout")
+    def test_03_js_validation_wrong_email(self):
+        """Test 3: Kiểm tra JS validate email sai định dạng"""
+        print("\n🧪 Test 3: Nhập sai định dạng Email...")
         
-        # Chờ redirect về login
+        email = self.driver.find_element(By.ID, "email")
+        password = self.driver.find_element(By.ID, "password")
+        btn = self.driver.find_element(By.CLASS_NAME, "btn-login")
+        
+        email.clear(); email.send_keys("admin_khong_co_a_cong")
+        password.clear(); password.send_keys("123")
+        btn.click()
+        
+        # Chờ thông báo lỗi hiện ra
+        try:
+            error_msg = WebDriverWait(self.driver, 3).until(
+                EC.visibility_of_element_located((By.CLASS_NAME, "error-message"))
+            )
+            print(f"   Thông báo: '{error_msg.text}'")
+            self.assertIn("@", error_msg.text) # Code JS báo lỗi phải chứa ký tự @
+            print("✅ JS bắt lỗi email thành công")
+        except TimeoutException:
+            self.fail("Không thấy thông báo lỗi của JS")
+
+    def test_04_js_login_wrong_credentials(self):
+        """Test 4: Nhập sai pass (Check logic JS)"""
+        print("\n🧪 Test 4: Nhập sai Password...")
+        
+        email = self.driver.find_element(By.ID, "email")
+        password = self.driver.find_element(By.ID, "password")
+        btn = self.driver.find_element(By.CLASS_NAME, "btn-login")
+        
+        email.clear(); email.send_keys("admin@hotel.com")
+        password.clear(); password.send_keys("sai_mat_khau")
+        btn.click()
+        
+        try:
+            error_msg = WebDriverWait(self.driver, 3).until(
+                EC.visibility_of_element_located((By.CLASS_NAME, "error-message"))
+            )
+            print(f"   Thông báo: '{error_msg.text}'")
+            self.assertIn("Sai tài khoản", error_msg.text)
+            print("✅ JS bắt lỗi sai pass thành công")
+        except TimeoutException:
+            self.fail("Không thấy thông báo lỗi sai pass")
+
+    def test_05_js_login_success(self):
+        """Test 5: Đăng nhập đúng (Theo tài khoản Demo trong HTML)"""
+        print("\n🧪 Test 5: Đăng nhập đúng...")
+        
+        email = self.driver.find_element(By.ID, "email")
+        password = self.driver.find_element(By.ID, "password")
+        btn = self.driver.find_element(By.CLASS_NAME, "btn-login")
+        
+        # Nhập đúng theo hardcode trong JS của bạn
+        email.clear(); email.send_keys("admin@hotel.com")
+        password.clear(); password.send_keys("admin123")
+        btn.click()
+        
+        # JS sẽ redirect sang tongquan.html (Dù file này chưa có, URL sẽ thay đổi)
         try:
             WebDriverWait(self.driver, 5).until(
-                lambda d: "/auth/login" in d.current_url
+                lambda d: "tongquan.html" in d.current_url
             )
-            print("✅ OK")
+            print("✅ Redirect sang tongquan.html thành công")
         except TimeoutException:
-            self.fail("Không redirect về login sau khi logout")
+            self.fail(f"Không redirect. URL hiện tại: {self.driver.current_url}")
 
-    @classmethod
-    def generate_html_report(cls):
-        # (Code tạo HTML giữ nguyên như cũ hoặc rút gọn, phần quan trọng là logic test)
-        with open('selenium_test_report.html', 'w', encoding='utf-8') as f:
-            f.write("<html><body><h1>Test Report</h1><ul>")
-            for r in cls.test_results:
-                color = "green" if r['status'] == 'PASSED' else "red"
-                f.write(f"<li style='color:{color}'>{r['name']}: {r['status']} (Error: {r['error']})</li>")
-            f.write("</ul></body></html>")
+    def test_06_show_hide_password(self):
+        """Test 6: Nút ẩn/hiện mật khẩu"""
+        print("\n🧪 Test 6: Toggle Password...")
+        
+        pwd_input = self.driver.find_element(By.ID, "password")
+        toggle_btn = self.driver.find_element(By.ID, "password-toggle")
+        
+        # Ban đầu là password
+        self.assertEqual(pwd_input.get_attribute("type"), "password")
+        
+        # Click để hiện
+        toggle_btn.click()
+        time.sleep(0.5)
+        self.assertEqual(pwd_input.get_attribute("type"), "text")
+        
+        # Click để ẩn
+        toggle_btn.click()
+        time.sleep(0.5)
+        self.assertEqual(pwd_input.get_attribute("type"), "password")
+        print("✅ Chức năng ẩn hiện mật khẩu hoạt động")
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
