@@ -39,9 +39,7 @@ class User(UserMixin, db.Model):
     def is_anonymous(self):
         return False
 
-    @property
-    def is_active(self):
-        return self.__dict__.get('is_active', True)
+    # ❗ KHÔNG override is_active → để SQLAlchemy xử lý
 
     # ==== STATIC METHODS HỖ TRỢ LOGIN ====
     @staticmethod
