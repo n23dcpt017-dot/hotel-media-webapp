@@ -1,67 +1,41 @@
-from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required, current_user
-from app import app, login_manager
-from app.models import User
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_user, logout_user, login_required
+from app import db
+from app.models.user import User
 
-# ================================
-# Flask-Login user loader (BẮT BUỘC)
-# ================================
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get_by_id(user_id)
+auth = Blueprint("auth", __name__)
 
-
-# ================================
-# ROUTE: LOGIN
-# ================================
-@app.route("/auth/login", methods=["GET", "POST"])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    if current_user.is_authenticated:
-        return redirect(url_for("dashboard"))
-
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "").strip()
-
-        # 1️. Rỗng
         if not username or not password:
-            flash("Vui lòng nhập đầy đủ tài khoản và mật khẩu!", "danger")
-            return redirect(url_for("login"))
+            flash("Thiếu username hoặc password", "danger")
+            return redirect(url_for('auth.login'))
 
-        # 2️. Check user
-        user = User.get_by_username(username)
+        user = User.query.filter_by(username=username).first()
 
         if not user:
-            flash("Tài khoản không tồn tại!", "danger")
-            return redirect(url_for("login"))
+            flash("User không tồn tại", "danger")
+            return redirect(url_for('auth.login'))
 
-        # 3️. Check mật khẩu
+        if not user.is_active:
+            flash("Tài khoản bị khóa", "danger")
+            return redirect(url_for('auth.login'))
+
         if not user.check_password(password):
-            flash("Sai mật khẩu!", "danger")
-            return redirect(url_for("login"))
+            flash("Sai mật khẩu", "danger")
+            return redirect(url_for('auth.login'))
 
-        # 4️. Login thành công
         login_user(user)
-        return redirect(url_for("dashboard"))
+        return redirect('/auth/tongquan.html')
 
-    return render_template("login.html")
+    return render_template('login.html')
 
-
-# ================================
-# ROUTE: DASHBOARD
-# ================================
-@app.route("/dashboard")
-@login_required
-def dashboard():
-    return render_template("tongquan.html")
-
-
-# ================================
-# ROUTE: LOGOUT
-# ================================
-@app.route("/auth/logout")
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for('auth.login'))
