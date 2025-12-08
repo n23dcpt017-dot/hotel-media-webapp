@@ -607,5 +607,25 @@
         </main>
       </div>
     </div>
+    <script>
+// --- Lấy ID từ URL ---
+const urlParams = new URLSearchParams(window.location.search);
+const postId = parseInt(urlParams.get("id"));
+
+// --- Lấy danh sách bài viết ---
+const posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+// --- Tìm bài viết đúng ID ---
+const post = posts.find(p => p.id === postId);
+
+// --- Nếu tìm được thì đổ dữ liệu vào form ---
+if (post) {
+  document.getElementById("post-title").value = post.title;
+  document.getElementById("post-content").value = post.content;
+  document.getElementById("post-category").value = post.category;
+  document.getElementById("post-status").value = post.status;
+}
+</script>
+
   </body>
 </html>
