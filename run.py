@@ -18,7 +18,7 @@ except ImportError:
     print("💡 Hãy đảm bảo:")
     print("   1. Đang chạy từ root folder")
     print("   2. File app/__init__.py tồn tại")
-    print("   3. Đã cài đặt dependencies: pip install -r requirements.txt")
+    print("   3. Đã cài đặt dependencies: pip install -r requirements_test.txt")
     sys.exit(1)
 
 # Tạo Flask app instance
