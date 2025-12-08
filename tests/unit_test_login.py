@@ -74,26 +74,26 @@ class LoginUnitTest(unittest.TestCase):
         print("🧪 Test 1: Kiểm tra tạo user...")
         
         user = User(
-            username='newuser',
-            email='new@example.com',
-            full_name='New User',
-            role='viewer'
+            username='admin',
+            email='admin@hotel.com',
+            full_name='Admin',
+            role='admin'
         )
-        user.set_password('NewPass123')
+        user.set_password('Admin@123')
         
         db.session.add(user)
         db.session.commit()
         
         # Kiểm tra user đã được tạo
-        found_user = User.query.filter_by(username='newuser').first()
+        found_user = User.query.filter_by(username='Admin').first()
         
         self.assertIsNotNone(found_user)
-        self.assertEqual(found_user.username, 'newuser')
-        self.assertEqual(found_user.email, 'new@example.com')
+        self.assertEqual(found_user.username, 'Admin')
+        self.assertEqual(found_user.email, 'admin@hotel.com')
         
         print("   ✓ User được tạo thành công")
-        print("   ✓ Username: newuser")
-        print("   ✓ Email: new@example.com")
+        print("   ✓ Username: Admin")
+        print("   ✓ Email: admin@hotel.com")
         print("✅ PASSED\n")
     
     def test_02_password_hashing(self):
@@ -103,7 +103,7 @@ class LoginUnitTest(unittest.TestCase):
         user = self.test_user
         
         # Kiểm tra password không được lưu dạng plain text
-        self.assertNotEqual(user.password_hash, 'TestPass123')
+        self.assertNotEqual(user.password_hash, 'Admin@123')
         
         # Kiểm tra password_hash có tồn tại
         self.assertIsNotNone(user.password_hash)
@@ -120,11 +120,11 @@ class LoginUnitTest(unittest.TestCase):
         user = self.test_user
         
         # Kiểm tra password đúng
-        result = user.check_password('TestPass123')
+        result = user.check_password('Admin@123')
         
         self.assertTrue(result)
         
-        print("   ✓ Password 'TestPass123' được verify đúng")
+        print("   ✓ Password 'Admin@123' được verify đúng")
         print("✅ PASSED\n")
     
     def test_04_password_verification_wrong(self):
