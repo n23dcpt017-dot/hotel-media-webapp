@@ -21,7 +21,7 @@ def login():
 
     # --- SỬA ĐỔI QUAN TRỌNG Ở ĐÂY ---
     # Thay vì return 'Login Page', hãy render file HTML giao diện đẹp của bạn
-    return render_template('login.html') 
+    return render_template('templates/login.html') 
 
 @auth.route('/logout')
 def logout():
