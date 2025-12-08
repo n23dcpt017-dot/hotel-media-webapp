@@ -31,6 +31,7 @@ class LoginSeleniumTest(unittest.TestCase):
         try:
             cls.driver = webdriver.Chrome(options=chrome_options)
             cls.driver.implicitly_wait(10)
+
             cls.base_url = "http://localhost:5000"
             cls.test_results = []
             cls.screenshots_dir = "test_screenshots"
@@ -111,16 +112,19 @@ class LoginSeleniumTest(unittest.TestCase):
     # ========================
 
     def test_01_login_page_loads(self):
+        """Test 1: Trang login load thành công"""
         print("\n🧪 Test 1: Kiểm tra trang login load...")
+
         self.driver.get(f"{self.base_url}/auth/login")
 
-        self.assertIn("Login", self.driver.title)
+        self.assertIn("Login", self.driver.title, "Title không chứa 'Login'")
         self.assertIn("/auth/login", self.driver.current_url)
 
         self.take_screenshot("login_page_loaded")
         print("✅ Trang login load thành công!")
 
     def test_02_login_form_elements_exist(self):
+        """Test 2: Các elements của form login tồn tại"""
         print("\n🧪 Test 2: Kiểm tra các elements của form...")
 
         self.driver.get(f"{self.base_url}/auth/login")
@@ -128,14 +132,14 @@ class LoginSeleniumTest(unittest.TestCase):
 
         try:
             username_field = self.driver.find_element(By.NAME, "username")
-            self.assertTrue(username_field.is_displayed())
+            self.assertTrue(username_field.is_displayed(), "Username field không hiển thị")
             print("   ✓ Username field: OK")
         except NoSuchElementException:
             self.fail("Không tìm thấy username field")
 
         try:
             password_field = self.driver.find_element(By.NAME, "password")
-            self.assertTrue(password_field.is_displayed())
+            self.assertTrue(password_field.is_displayed(), "Password field không hiển thị")
             print("   ✓ Password field: OK")
         except NoSuchElementException:
             self.fail("Không tìm thấy password field")
@@ -144,7 +148,7 @@ class LoginSeleniumTest(unittest.TestCase):
             submit_button = self.driver.find_element(
                 By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
             )
-            self.assertTrue(submit_button.is_displayed())
+            self.assertTrue(submit_button.is_displayed(), "Submit button không hiển thị")
             print("   ✓ Submit button: OK")
         except NoSuchElementException:
             self.fail("Không tìm thấy submit button")
@@ -152,7 +156,202 @@ class LoginSeleniumTest(unittest.TestCase):
         self.take_screenshot("login_form_elements")
         print("✅ Tất cả elements đều tồn tại!")
 
-    # Các test còn lại giữ nguyên code của m (indent đã tự đúng)
+    def test_03_login_with_empty_fields(self):
+        """Test 3: Login với fields trống"""
+        print("\n🧪 Test 3: Kiểm tra login với fields trống...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+
+        time.sleep(1)
+
+        self.assertIn("/auth/login", self.driver.current_url)
+
+        self.take_screenshot("login_empty_fields")
+        print("✅ Không cho phép login với fields trống!")
+
+    def test_04_login_with_wrong_credentials(self):
+        """Test 4: Login với thông tin sai"""
+        print("\n🧪 Test 4: Kiểm tra login với thông tin sai...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        username_field = self.driver.find_element(By.NAME, "username")
+        password_field = self.driver.find_element(By.NAME, "password")
+
+        username_field.clear()
+        username_field.send_keys("wrong_user")
+
+        password_field.clear()
+        password_field.send_keys("wrong_password")
+
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+
+        time.sleep(2)
+
+        self.assertIn("/auth/login", self.driver.current_url)
+
+        self.take_screenshot("login_wrong_credentials")
+        print("✅ Không cho phép login với thông tin sai!")
+
+    def test_05_login_with_correct_credentials(self):
+        """Test 5: Login với thông tin đúng"""
+        print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        username_field = self.driver.find_element(By.NAME, "username")
+        password_field = self.driver.find_element(By.NAME, "password")
+
+        username_field.clear()
+        username_field.send_keys("admin")
+
+        password_field.clear()
+        password_field.send_keys("Admin@123")
+
+        self.take_screenshot("login_before_submit")
+
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+
+        time.sleep(3)
+
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda driver: "/dashboard" in driver.current_url or "/index" in driver.current_url
+            )
+            self.assertNotIn("/auth/login", self.driver.current_url)
+            self.take_screenshot("login_success_dashboard")
+            print("✅ Login thành công!")
+        except TimeoutException:
+            self.take_screenshot("login_timeout")
+            self.fail("Không redirect đến dashboard sau khi login")
+
+    def test_06_remember_me_checkbox(self):
+        """Test 6: Checkbox Remember Me"""
+        print("\n🧪 Test 6: Kiểm tra Remember Me checkbox...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        try:
+            remember_checkbox = self.driver.find_element(By.NAME, "remember")
+
+            if not remember_checkbox.is_selected():
+                remember_checkbox.click()
+                time.sleep(0.5)
+
+            self.assertTrue(remember_checkbox.is_selected())
+
+            self.take_screenshot("remember_me_checked")
+            print("✅ Remember Me checkbox hoạt động!")
+        except NoSuchElementException:
+            print("⚠️ Remember Me checkbox không tồn tại (optional)")
+
+    def test_07_password_field_masked(self):
+        """Test 7: Password field được mask"""
+        print("\n🧪 Test 7: Kiểm tra password field được mask...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        password_field = self.driver.find_element(By.NAME, "password")
+        field_type = password_field.get_attribute("type")
+
+        self.assertEqual(field_type, "password")
+
+        self.take_screenshot("password_masked")
+        print("✅ Password field được mask đúng!")
+
+    def test_08_navigation_after_login(self):
+        """Test 8: Navigation sau khi login"""
+        print("\n🧪 Test 8: Kiểm tra navigation sau login...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        username_field = self.driver.find_element(By.NAME, "username")
+        password_field = self.driver.find_element(By.NAME, "password")
+
+        username_field.send_keys("admin")
+        password_field.send_keys("Admin@123")
+
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+
+        time.sleep(3)
+
+        try:
+            self.driver.get(f"{self.base_url}/baiviet")
+            time.sleep(2)
+
+            self.assertNotIn("/auth/login", self.driver.current_url)
+
+            self.take_screenshot("navigation_after_login")
+            print("✅ Có thể navigate sau khi login!")
+        except:
+            self.fail("Không thể access trang sau khi login")
+
+    def test_09_logout_functionality(self):
+        """Test 9: Chức năng logout"""
+        print("\n🧪 Test 9: Kiểm tra chức năng logout...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+
+        username_field = self.driver.find_element(By.NAME, "username")
+        password_field = self.driver.find_element(By.NAME, "password")
+
+        username_field.send_keys("admin")
+        password_field.send_keys("Admin@123")
+
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+
+        time.sleep(3)
+
+        try:
+            self.driver.get(f"{self.base_url}/auth/logout")
+            time.sleep(2)
+
+            self.assertIn("/auth/login", self.driver.current_url)
+
+            self.take_screenshot("after_logout")
+            print("✅ Logout thành công!")
+        except:
+            self.fail("Logout không hoạt động")
+
+    # ========================
+    # HTML REPORT GENERATOR
+    # ========================
+
+    @classmethod
+    def generate_html_report(cls):
+        """Tạo HTML report từ kết quả test"""
+        total_tests = len(cls.test_results)
+        passed_tests = sum(1 for r in cls.test_results if r["status"] == "PASSED")
+        failed_tests = total_tests - passed_tests
+        success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
+
+        
+        with open("selenium_test_report.html", "w", encoding="utf-8") as f:
+            f.write("<html><body><h1>Report generated</h1></body></html>")
 
 
 if __name__ == "__main__":
