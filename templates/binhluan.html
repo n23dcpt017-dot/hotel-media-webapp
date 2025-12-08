@@ -517,6 +517,122 @@
       }
     }
   </style>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Lưu toàn bộ comment hiện có vào allComments (chỉ chạy 1 lần nếu chưa có)
+    const current = [...document.querySelectorAll(".comment-card")].map(c => c.outerHTML);
+
+    if (!localStorage.getItem("allComments")) {
+        localStorage.setItem("allComments", JSON.stringify(current));
+    }
+
+    const cards = document.querySelectorAll(".comment-card");
+
+    cards.forEach((card) => {
+        const statusTag = card.querySelector(".comment-status-tag");
+        const btnApprove = card.querySelector(".btn-approve");
+        const btnReject = card.querySelector(".btn-reject");
+        const btnDelete = card.querySelector(".btn-delete");
+
+        // ==== TOAST ====
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            if (!toast) {
+                toast = document.createElement("div");
+                toast.id = "toast";
+                toast.style = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #333;
+                    color: #fff;
+                    padding: 12px 18px;
+                    border-radius: 6px;
+                    opacity: 0;
+                    transition: opacity 0.6s ease;
+                    z-index: 9999;
+                `;
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.style.opacity = "1";
+
+            setTimeout(() => {
+                toast.style.opacity = "0";
+            }, 1200);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // =============== DUYỆT ===============
+        if (btnApprove) {
+            btnApprove.addEventListener("click", () => {
+
+                const data = card.outerHTML;
+                const approved = JSON.parse(localStorage.getItem("approvedComments") || "[]");
+                approved.push(data);
+                localStorage.setItem("approvedComments", JSON.stringify(approved));
+
+                statusTag.textContent = "Đã duyệt";
+                statusTag.classList.remove("status-pending", "status-rejected");
+                statusTag.classList.add("status-approved");
+                card.style.border = "1px solid #a7f3d0";
+
+                card.style.transition = "opacity 0.6s ease";
+                card.style.opacity = "0";
+
+                setTimeout(() => card.remove(), 700);
+                showToast("✔ Đã duyệt bình luận");
+            });
+        }
+
+        // =============== TỪ CHỐI ===============
+        if (btnReject) {
+            btnReject.addEventListener("click", () => {
+
+                const data = card.outerHTML;
+                const rejected = JSON.parse(localStorage.getItem("rejectedComments") || "[]");
+                rejected.push(data);
+                localStorage.setItem("rejectedComments", JSON.stringify(rejected));
+
+                statusTag.textContent = "Từ chối";
+                statusTag.classList.remove("status-pending", "status-approved");
+                statusTag.classList.add("status-rejected");
+                card.style.border = "1px solid #fecaca";
+
+                card.style.transition = "opacity 0.6s ease";
+                card.style.opacity = "0";
+
+                setTimeout(() => card.remove(), 700);
+                showToast("✖ Bình luận đã bị từ chối");
+            });
+        }
+
+        // =============== XOÁ (THÙNG RÁC) ===============
+        if (btnDelete) {
+            btnDelete.addEventListener("click", () => {
+                if (confirm("Bạn chắc chắn muốn xoá bình luận này?")) {
+
+                    const data = card.outerHTML;
+                    const deleted = JSON.parse(localStorage.getItem("deletedComments") || "[]");
+                    deleted.push(data);
+                    localStorage.setItem("deletedComments", JSON.stringify(deleted));
+
+                    card.style.transition = "opacity 0.6s ease";
+                    card.style.opacity = "0";
+
+                    setTimeout(() => card.remove(), 700);
+                    showToast("🗑 Đã xoá bình luận");
+                }
+            });
+        }
+    });
+});
+</script>
+
   <body>
     <div class="dashboard-layout">
       <aside class="sidebar">
