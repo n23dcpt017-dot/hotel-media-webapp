@@ -767,11 +767,12 @@
               </div>
             </div>
 
-            <div class="media-card">
-              <div class="media-preview video-preview">
-                <i class="fa-solid fa-play"></i>
-                <span class="video-duration">3:24</span>
-              </div>
+           <div class="media-card" data-video="https://res.cloudinary.com/dadlq8qha/video/upload/v1765170630/tour-phong-suite_abpion.mp4">
+  <div class="media-preview video-preview">
+    <i class="fa-solid fa-play"></i>
+    <span class="video-duration">3:24</span>
+  </div>
+
               <div class="media-info">
                 <strong>tour-phong-suite.mp4</strong>
                 <div class="media-details">
@@ -793,7 +794,7 @@
               </div>
             </div>
 
-            <div class="media-card">
+            <div class="media-card" data-video="https://res.cloudinary.com/dadlq8qha/video/upload/v1765170430/gioi-thieu-nha-hang_lupzcn.mp4">
               <div class="media-preview video-preview">
                 <i class="fa-solid fa-play"></i>
                 <span class="video-duration">2:15</span>
@@ -822,5 +823,26 @@
         </main>
       </div>
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const videoCards = document.querySelectorAll(".media-card");
+
+  videoCards.forEach(card => {
+    card.addEventListener("click", function (e) {
+
+      // Không cho bấm nút (eye, download, delete) mở video
+      if (e.target.closest(".action-btn")) return;
+
+      const videoUrl = card.dataset.video;
+
+      if (videoUrl) {
+        // Mở video trong tab mới
+        window.open(videoUrl, "_blank");
+      }
+    });
+  });
+});
+</script>
+
   </body>
 </html>
