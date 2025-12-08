@@ -1,41 +1,53 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response
+from flask_login import login_user, logout_user
+
 from app import db
 from app.models.user import User
 
-auth = Blueprint("auth", __name__)
+auth = Blueprint('auth', __name__)
 
+
+# ==============================
+# GET: hiển thị trang login
+# POST: xử lý đăng nhập
+# ==============================
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    # ---------- GET ----------
+    if request.method == 'GET':
+        return make_response(render_template('login.html'), 200)
 
-        if not username or not password:
-            flash("Thiếu username hoặc password", "danger")
-            return redirect(url_for('auth.login'))
+    # ---------- POST ----------
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-        user = User.query.filter_by(username=username).first()
+    # Case: field rỗng
+    if not username or not password:
+        return make_response(render_template('login.html', error="Missing fields"), 400)
 
-        if not user:
-            flash("User không tồn tại", "danger")
-            return redirect(url_for('auth.login'))
+    user = User.query.filter_by(username=username).first()
 
-        if not user.is_active:
-            flash("Tài khoản bị khóa", "danger")
-            return redirect(url_for('auth.login'))
+    # Case: không tìm thấy user
+    if user is None:
+        return make_response(render_template('login.html', error="User not found"), 401)
 
-        if not user.check_password(password):
-            flash("Sai mật khẩu", "danger")
-            return redirect(url_for('auth.login'))
+    # Case: user bị disable
+    if not user.is_active:
+        return make_response(render_template('login.html', error="User inactive"), 403)
 
-        login_user(user)
-        return redirect('/auth/tongquan.html')
+    # Case: sai mật khẩu
+    if not user.check_password(password):
+        return make_response(render_template('login.html', error="Wrong password"), 401)
 
-    return render_template('login.html')
+    # ✅ Case: login thành công
+    login_user(user)
+    return make_response(render_template('login_success.html'), 200)
 
+
+# ==============================
+# LOGOUT
+# ==============================
 @auth.route('/logout')
-@login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
