@@ -4,36 +4,52 @@ from app.models.user import User
 
 auth = Blueprint('auth', __name__)
 
+# ================== LOGIN ==================
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # empty fields → fail
+        # Trường hợp trống field
         if not username or not password:
-            return make_response("Missing fields", 400)
+            if current_app.config.get('TESTING'):
+                return make_response("Missing fields", 400)
+            return render_template('login.html')  # ở lại trang login
 
         user = User.get_by_username(username)
 
-        if user and user.check_password(password):
-            login_user(user)
-
-            # ✅ Unit test mode
+        # Sai user hoặc sai password
+        if not user or not user.check_password(password):
             if current_app.config.get('TESTING'):
-                return make_response("Login successful", 200)
+                return make_response("Invalid credentials", 401)
+            return render_template('login.html')
 
-            # ✅ Selenium / normal browser
-            return redirect(url_for('auth.tongquan'))
+        # Login thành công
+        login_user(user)
 
-        return make_response("Invalid credentials", 401)
+        if current_app.config.get('TESTING'):
+            return make_response("Login successful", 200)
+
+        
+        return redirect(url_for('auth.tongquan'))
 
     return render_template('login.html')
 
-@auth.route('/tongquan')
+
+# ================== DASHBOARD / TỔNG QUAN ==================
+@auth.route('/tongquan.html')
 def tongquan():
     return render_template('tongquan.html')
 
+
+
+@auth.route('/dashboard')
+def dashboard():
+    return redirect(url_for('auth.tongquan'))
+
+
+# ================== LOGOUT ==================
 @auth.route('/logout')
 def logout():
     logout_user()
