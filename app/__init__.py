@@ -2,28 +2,45 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app(config_name=None):
     app = Flask(__name__)
 
+ 
     app.config['SECRET_KEY'] = 'dev'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['TESTING'] = True
 
+ 
+    if config_name == 'testing':
+       
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+    else:
+      
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
+        app.config['TESTING'] = False 
+
+  
     db.init_app(app)
     login_manager.init_app(app)
     
-    from app.models.user import User  
+    
+    login_manager.login_view = 'auth.login' 
+
+  
+    from app.models.user import User
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
-        from app.routes import auth
-
-    from app.routes import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+   
+    from app.routes import auth
     app.register_blueprint(auth, url_prefix='/auth')
 
+   
+    
     return app
