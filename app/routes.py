@@ -7,6 +7,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        # Logic này phục vụ cho Unit Test (Test Backend)
         username = request.form.get('username')
         password = request.form.get('password')
 
@@ -18,8 +19,9 @@ def login():
         
         flash('Sai tài khoản hoặc mật khẩu')
 
-    return 'Login Page', 200
-
+    # --- SỬA ĐỔI QUAN TRỌNG Ở ĐÂY ---
+    # Thay vì return 'Login Page', hãy render file HTML giao diện đẹp của bạn
+    return render_template('login.html') 
 
 @auth.route('/logout')
 def logout():
