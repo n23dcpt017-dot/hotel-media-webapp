@@ -18,7 +18,7 @@ def login():
         
         flash('Sai tài khoản hoặc mật khẩu')
 
-    return 'Login Page', 200
+        return render_template('login.html')
 
 
 @auth.route('/logout')
