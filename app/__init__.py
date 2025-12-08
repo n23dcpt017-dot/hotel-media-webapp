@@ -7,7 +7,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app(config_name=None):
-    app = Flask(_name_)
+    app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
