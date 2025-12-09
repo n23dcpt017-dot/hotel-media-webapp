@@ -4,6 +4,7 @@
 - Thư mục `routes`: chứa toàn bộ code (CRUD + demo).
 - `hotel_media_platform.sql`: script tạo database + bảng.
 - `requirements.txt`: thư viện cần cài.
+- `requirements_test.txt`: thư viện cần cài khi chạy test.
   
 ## Cài đặt
 
