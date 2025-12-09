@@ -10,8 +10,15 @@ def create_app(config_name=None):
 
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+if config_name == 'testing':
+    with app.app_context():
+        db.create_all()   
+else:
+    with app.app_context():
+        db.create_all()
+        seed_selenium_user()  
 
-    # ✅ Quan trọng: nếu là unit test thì dùng DB trong RAM
     if config_name == 'testing':
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
@@ -34,5 +41,16 @@ def create_app(config_name=None):
     if config_name == 'testing':
         with app.app_context():
             db.create_all()
+
+    def seed_selenium_user():
+    from app.models.user import User
+    if not User.query.filter_by(username="admin").first():
+        admin = User(
+            username="admin",
+            is_active=True
+        )
+        admin.set_password("Admin@123")
+        db.session.add(admin)
+        db.session.commit()
 
     return app
