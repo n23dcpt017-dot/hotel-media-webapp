@@ -12,26 +12,26 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # ❌ Field rỗng → ở lại trang login
+        # ❌ Rỗng → ở lại login
         if not username or not password:
-            return render_template('login.html', error="Vui lòng nhập đầy đủ thông tin"), 400
+            return render_template('login.html', error="Vui lòng nhập đủ thông tin"), 400
 
-        # check user (ví dụ thôi, m giữ logic cũ)
-        user = User.query.filter_by(username=username, password=password).first()
+        # check user
+        try:
+            user = User.query.filter_by(username=username, password=password).first()
+        except:
+            user = None
 
-        # ❌ Sai tài khoản → ở lại login
+        # ❌ Sai → ở lại login
         if not user:
-            return render_template('login.html', error="Sai tài khoản hoặc mật khẩu"), 401
+            return render_template('login.html', error="Sai tài khoản"), 401
 
-        # ✅ Đúng → mới redirect
+        # ✅ Đúng → redirect dashboard
         session['user_id'] = user.id
-        return redirect('/dashboard')   # cái này Selenium đang đợi
+        return redirect('/dashboard')
 
     return render_template('login.html')
 
-
-    # selenium test accept /dashboard OR /index
-    return redirect("/dashboard")
 
 
 # ===== PAGE SAU LOGIN =====
