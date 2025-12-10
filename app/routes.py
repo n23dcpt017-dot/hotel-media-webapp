@@ -1,55 +1,33 @@
-from flask import Blueprint, render_template, request, redirect, url_for, make_response
-from flask_login import login_user, logout_user
-from app.models.user import User
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_user
+from app.models import User
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-# ====================== LOGIN ======================
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    # GET
+    # GET: hiển thị form
     if request.method == 'GET':
-        return render_template('login.html'), 200
+        return render_template('login.html')
 
+    # POST: xử lý login
     username = request.form.get('username', '').strip()
     password = request.form.get('password', '').strip()
 
-    # ❌ Trống field -> ở lại login
+    # Case 1: bỏ trống field
     if not username or not password:
-        return render_template('login.html', error='Missing fields'), 200
+        flash("Vui lòng nhập đầy đủ thông tin", "error")
+        return render_template('login.html'), 200   # QUAN TRỌNG
 
-    user = User.get_by_username(username)
+    user = User.query.filter_by(username=username).first()
 
-    # ❌ Sai tài khoản
-    if not user:
-        return render_template('login.html', error='Invalid user'), 200
+    # Case 2: sai account
+    if not user or not user.check_password(password):
+        flash("Sai tài khoản hoặc mật khẩu", "error")
+        return render_template('login.html'), 200
 
-    # ❌ Sai mật khẩu
-    if not user.check_password(password):
-        return render_template('login.html', error='Wrong password'), 200
-
-    # ❌ User bị vô hiệu hóa
-    if not user.is_active:
-        return render_template('login.html', error='Inactive user'), 200
-
-    # ✅ Đúng toàn bộ
+    # Case 3: login đúng
     login_user(user)
 
-    # Selenium expect /dashboard or /index
-    return redirect(url_for('auth.dashboard'))
-
-# ====================== DASHBOARD ======================
-@auth.route('/dashboard')
-def dashboard():
-    return render_template('tongquan.html'), 200
-
-# Alias: để test nào tìm /index vẫn pass
-@auth.route('/index')
-def index():
-    return redirect(url_for('auth.dashboard'))
-
-# ====================== LOGOUT ======================
-@auth.route('/logout', methods=['GET', 'POST'])
-def logout():
-    logout_user()
-    return redirect(url_for('auth.login'))
+    # ✅ Selenium cần redirect sang dashboard
+    return redirect('/dashboard')   # hoặc '/index'
