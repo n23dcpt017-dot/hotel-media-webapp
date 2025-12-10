@@ -462,6 +462,123 @@
       }
     }
   </style>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cameraBtn = document.querySelector('.control-btn i.fa-camera').parentElement;
+  const micBtn = document.querySelector('.control-btn i.fa-microphone').parentElement;
+  const screenBtn = document.querySelector('.control-btn i.fa-desktop').parentElement;
+
+  const videoPlaceholder = document.querySelector(".video-placeholder");
+
+  let stream = null;
+  let screenStream = null;
+
+  let cameraOn = false;
+  let micOn = false;
+  let screenOn = false;
+
+  // Tạo thẻ video
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.playsInline = true;
+  video.style.width = "100%";
+  video.style.height = "100%";
+  video.style.objectFit = "cover";
+  video.style.borderRadius = "10px";
+
+  // -------- CAMERA --------
+  async function toggleCamera() {
+    if (!cameraOn) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: micOn });
+        video.srcObject = stream;
+
+        videoPlaceholder.innerHTML = "";
+        videoPlaceholder.appendChild(video);
+
+        cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Tắt Camera';
+        cameraOn = true;
+      } catch (error) {
+        alert("Không truy cập được camera: " + error.message);
+      }
+    } else {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      cameraOn = false;
+
+      videoPlaceholder.innerHTML = `
+        <i class="fa-solid fa-video-slash"></i>
+        <span>Camera chưa được bật</span>
+      `;
+
+      cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Camera';
+    }
+  }
+
+  // -------- MICROPHONE --------
+  async function toggleMic() {
+    if (!micOn) {
+      try {
+        if (!stream) {
+          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } else {
+          const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          audioStream.getAudioTracks().forEach(track => stream.addTrack(track));
+        }
+
+        micBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i> Tắt Mic';
+        micOn = true;
+      } catch (error) {
+        alert("Không bật được microphone: " + error.message);
+      }
+    } else {
+      if (stream) {
+        stream.getAudioTracks().forEach(t => t.stop());
+      }
+      micOn = false;
+      micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Mic';
+    }
+  }
+
+  // -------- SHARE SCREEN --------
+  async function toggleScreen() {
+    if (!screenOn) {
+      try {
+        screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        video.srcObject = screenStream;
+
+        videoPlaceholder.innerHTML = "";
+        videoPlaceholder.appendChild(video);
+
+        screenOn = true;
+        screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Dừng chia sẻ';
+
+        screenStream.getVideoTracks()[0].onended = () => toggleScreen();
+      } catch (error) {
+        alert("Không thể chia sẻ màn hình: " + error.message);
+      }
+    } else {
+      if (screenStream) screenStream.getTracks().forEach(t => t.stop());
+      screenOn = false;
+
+      if (cameraOn && stream) {
+        video.srcObject = stream;
+      } else {
+        videoPlaceholder.innerHTML = `
+          <i class="fa-solid fa-video-slash"></i>
+          <span>Camera chưa được bật</span>
+        `;
+      }
+
+      screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Chia sẻ màn hình';
+    }
+  }
+
+  cameraBtn.addEventListener("click", toggleCamera);
+  micBtn.addEventListener("click", toggleMic);
+  screenBtn.addEventListener("click", toggleScreen);
+});
+</script>
+
   <body>
     <div class="dashboard-layout">
       <aside class="sidebar">
