@@ -29,7 +29,9 @@ def login():
         return redirect("/auth/dashboard")
 
     return render_template('login.html')
-
+    @login_manager.unauthorized_handler
+def unauthorized():
+    return redirect("/auth/login")
 
 
 # ===== PAGE SAU LOGIN =====
