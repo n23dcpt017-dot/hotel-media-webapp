@@ -6,28 +6,29 @@ from app import db
 auth = Blueprint("auth", __name__)
 
 # ===== LOGIN PAGE =====
-@auth.route("/login", methods=["GET", "POST"])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    username = request.form.get("username", "").strip()
-    password = request.form.get("password", "").strip()
+        # ❌ Field rỗng → ở lại trang login
+        if not username or not password:
+            return render_template('login.html', error="Vui lòng nhập đầy đủ thông tin"), 400
 
-    # ❌ thiếu field → ở lại login
-    if not username or not password:
-        flash("Thiếu thông tin")
-        return render_template("login.html"), 200
+        # check user (ví dụ thôi, m giữ logic cũ)
+        user = User.query.filter_by(username=username, password=password).first()
 
-    user = User.query.filter_by(username=username).first()
+        # ❌ Sai tài khoản → ở lại login
+        if not user:
+            return render_template('login.html', error="Sai tài khoản hoặc mật khẩu"), 401
 
-    # ❌ sai tài khoản
-    if not user or not user.check_password(password):
-        flash("Sai tài khoản hoặc mật khẩu")
-        return render_template("login.html"), 200
+        # ✅ Đúng → mới redirect
+        session['user_id'] = user.id
+        return redirect('/dashboard')   # cái này Selenium đang đợi
 
-    # ✅ đúng → login + redirect đúng chuẩn test
-    login_user(user)
+    return render_template('login.html')
+
 
     # selenium test accept /dashboard OR /index
     return redirect("/dashboard")
