@@ -30,7 +30,7 @@ def login():
 
     # ✅ Đúng tài khoản
     login_user(user)
-    return redirect("/dashboard")
+    return redirect("/tongquan")
 
 
 # ===== DASHBOARD =====
