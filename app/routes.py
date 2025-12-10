@@ -1,9 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, session
 from flask_login import login_user, logout_user, login_required
 from app.models.user import User
-from app import db
+from app import db, login_manager
 
 auth = Blueprint("auth", __name__)
+
+# ===== UNAUTHORIZED HANDLER =====
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect("/auth/login")
+
 
 # ===== LOGIN PAGE =====
 @auth.route('/login', methods=['GET', 'POST'])
@@ -29,9 +35,6 @@ def login():
         return redirect("/auth/dashboard")
 
     return render_template('login.html')
-    @login_manager.unauthorized_handler
-def unauthorized():
-    return redirect("/auth/login")
 
 
 # ===== PAGE SAU LOGIN =====
