@@ -14,11 +14,13 @@ def seed_selenium_user():
         if not User.query.filter_by(username="admin").first():
             admin = User(
                 username="admin",
+                email="admin@example.com",   # ✅ BẮT BUỘC
                 is_active=True
             )
             admin.set_password("Admin@123")
             db.session.add(admin)
             db.session.commit()
+
 
 
 # ========================
