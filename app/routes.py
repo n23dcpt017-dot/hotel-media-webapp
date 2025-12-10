@@ -31,3 +31,6 @@ def login():
 
     # ✅ Selenium cần redirect sang dashboard
     return redirect('/dashboard')   # hoặc '/index'
+@auth.route('/dashboard')
+def dashboard():
+    return render_template('tongquan.html')
