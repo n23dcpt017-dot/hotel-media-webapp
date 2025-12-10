@@ -8,33 +8,28 @@ auth = Blueprint("auth", __name__)
 # ===== LOGIN PAGE =====
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    # Force logout khi vào trang login (fix selenium fail)
+    if request.method == 'GET':
+        logout_user()
+        session.clear()
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # ❌ Rỗng → ở lại login
         if not username or not password:
             return render_template('login.html', error="Vui lòng nhập đủ thông tin"), 200
 
-        # ✅ Query user đúng cách
         user = User.query.filter_by(username=username).first()
 
-        # ❌ User không tồn tại
-        if not user:
-            return render_template('login.html', error="Sai tài khoản"), 200
+        if not user or not user.check_password(password):
+            return render_template('login.html', error="Sai thông tin đăng nhập"), 200
 
-        # ❌ Sai password
-        if not user.check_password(password):
-            return render_template('login.html', error="Sai mật khẩu"), 200
-
-        # ✅ Login thành công
         login_user(user)
-        session['user_id'] = user.id
-
-        # Selenium + Unit test cần redirect này
         return redirect("/auth/dashboard")
 
     return render_template('login.html')
+
 
 
 # ===== PAGE SAU LOGIN =====
