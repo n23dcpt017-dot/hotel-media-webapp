@@ -571,6 +571,21 @@
         grid-template-columns: 1fr;
       }
     }
+    <script>
+  const bell = document.querySelector(".notification-btn");
+  const popup = document.getElementById("notificationPopup");
+
+  bell.addEventListener("click", (e) => {
+    e.stopPropagation();
+    popup.style.display = 
+      popup.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+</script>
+
   </style>
   <body>
     <div class="dashboard-layout">
@@ -665,6 +680,43 @@
               <i class="fa-solid fa-bell"></i>
               <span class="notification-dot"></span>
             </button>
+            <div class="notification-popup" id="notificationPopup">
+  <div class="notif-header">
+    <h4>Thông báo hệ thống</h4>
+    <span class="notif-sub">Dành cho quản trị khách sạn</span>
+  </div>
+
+  <ul class="notif-list">
+
+    <li class="notif-item urgent">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div>
+        <p class="notif-title">Khách đặt phòng mới</p>
+        <span class="notif-time">2 phút trước</span>
+      </div>
+    </li>
+
+    <li class="notif-item normal">
+      <i class="fa-solid fa-circle-info"></i>
+      <div>
+        <p class="notif-title">Yêu cầu hỗ trợ từ lễ tân</p>
+        <span class="notif-time">10 phút trước</span>
+      </div>
+    </li>
+
+    <li class="notif-item low">
+      <i class="fa-solid fa-check-circle"></i>
+      <div>
+        <p class="notif-title">Cập nhật hệ thống hoàn tất</p>
+        <span class="notif-time">1 giờ trước</span>
+      </div>
+    </li>
+
+  </ul>
+
+  <button class="notif-view-all">Xem tất cả</button>
+</div>
+
           </div>
         </header>
 
@@ -818,5 +870,20 @@
         </main>
       </div>
     </div>
+    <script>
+  const bell = document.querySelector(".notification-btn");
+  const popup = document.getElementById("notificationPopup");
+
+  bell.addEventListener("click", (e) => {
+    e.stopPropagation();
+    popup.style.display = 
+      popup.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+</script>
+
   </body>
 </html>
