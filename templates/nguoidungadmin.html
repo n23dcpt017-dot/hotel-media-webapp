@@ -571,20 +571,93 @@
         grid-template-columns: 1fr;
       }
     }
-    <script>
-  const bell = document.querySelector(".notification-btn");
-  const popup = document.getElementById("notificationPopup");
+.notification-popup {
+  position: absolute;
+  top: 60px;
+  right: 25px;
+  width: 300px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  border: 1px solid #e4e4e4;
+}
 
-  bell.addEventListener("click", (e) => {
-    e.stopPropagation();
-    popup.style.display = 
-      popup.style.display === "block" ? "none" : "block";
-  });
+.notif-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
 
-  document.addEventListener("click", () => {
-    popup.style.display = "none";
-  });
-</script>
+.notif-sub {
+  font-size: 12px;
+  color: #777;
+}
+
+.notif-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-item i {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.notif-item.urgent i {
+  color: #d9534f;
+}
+
+.notif-item.normal i {
+  color: #0d6efd;
+}
+
+.notif-item.low i {
+  color: #28a745;
+}
+
+.notif-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.notif-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.notif-view-all {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 0;
+  background: #4338ca;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.notif-view-all:hover {
+  background: #3730a3;
+}
 
   </style>
   <body>
@@ -680,7 +753,7 @@
               <i class="fa-solid fa-bell"></i>
               <span class="notification-dot"></span>
             </button>
-            <div class="notification-popup" id="notificationPopup">
+<div class="notification-popup" id="notificationPopup">
   <div class="notif-header">
     <h4>Thông báo hệ thống</h4>
     <span class="notif-sub">Dành cho quản trị khách sạn</span>
@@ -870,7 +943,7 @@
         </main>
       </div>
     </div>
-    <script>
+<script>
   const bell = document.querySelector(".notification-btn");
   const popup = document.getElementById("notificationPopup");
 
