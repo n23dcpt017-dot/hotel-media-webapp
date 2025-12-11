@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session
+from flask import Blueprint, render_template, request, redirect, session, url_for
 from flask_login import login_user, logout_user, login_required
 from app.models.user import User
 from app import db, login_manager
@@ -32,22 +32,30 @@ def login():
             return render_template('login.html', error="Sai thông tin đăng nhập"), 200
 
         login_user(user)
-        return redirect("/auth/dashboard")
+        return redirect(url_for("auth.dashboard"))
 
     return render_template('login.html')
 
 
-# ===== PAGE SAU LOGIN =====
+# ===== DASHBOARD PAGE =====
 @auth.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("tongquan.html")
+    return render_template("dashboard.html")
 
 
-# Alias cho unit test
+# ===== INDEX/HOME PAGE =====
+@auth.route("/")
 @auth.route("/index")
 @login_required
 def index():
+    return render_template("index.html")
+
+
+# ===== TONGQUAN PAGE =====
+@auth.route("/tongquan")
+@login_required
+def tongquan():
     return render_template("tongquan.html")
 
 
