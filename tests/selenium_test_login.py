@@ -292,7 +292,6 @@ class LoginSeleniumTest(unittest.TestCase):
                     
         except NoSuchElementException:
             self.skipTest("Không tìm thấy form elements")
-
     def test_05_login_correct_credentials_redirects(self):
     """Test 5: Login thông tin đúng chuyển hướng"""
     print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
