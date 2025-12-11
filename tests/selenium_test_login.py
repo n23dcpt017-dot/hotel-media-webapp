@@ -843,6 +843,466 @@ class LoginSeleniumTest(unittest.TestCase):
         else:
             print("     ⚠️  Không có validation khi thiếu username")
         
-        # Test 4: Nhập cả hai nhưng sai
+                # Test 4: Nhập cả hai nhưng sai
         print("   Test 4: Nhập cả hai nhưng sai...")
-        self.driver.get(f"{self
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+        
+        username_field = self.driver.find_element(By.NAME, "username")
+        password_field = self.driver.find_element(By.NAME, "password")
+        
+        username_field.send_keys("wronguser")
+        password_field.send_keys("wrongpass")
+        
+        submit_button = self.driver.find_element(
+            By.CSS_SELECTOR, "button[type='submit'], input[type='submit']"
+        )
+        submit_button.click()
+        time.sleep(1)
+        
+        has_error, error_msg = self.check_for_error_message()
+        if has_error:
+            print(f"     ✓ Có validation khi thông tin sai: '{error_msg[:50] if error_msg else 'Có lỗi'}'")
+        else:
+            print("     ⚠️  Không có validation khi thông tin sai")
+
+        self.take_screenshot("form_validation")
+        print("✅ Đã kiểm tra form validation!")
+
+    # ========================
+    # HTML REPORT GENERATOR
+    # ========================
+
+    @classmethod
+    def generate_html_report(cls):
+        """Tạo HTML report từ kết quả test"""
+        if not cls.test_results:
+            print("⚠️  Không có kết quả test để tạo report")
+            return
+        
+        total_tests = len(cls.test_results)
+        passed_tests = sum(1 for r in cls.test_results if r["status"] == "PASSED")
+        failed_tests = total_tests - passed_tests
+        success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
+        
+        # Màu sắc cho report
+        if success_rate >= 90:
+            overall_color = "#28a745"  # Green
+            overall_status = "EXCELLENT"
+        elif success_rate >= 70:
+            overall_color = "#17a2b8"  # Blue
+            overall_status = "GOOD"
+        elif success_rate >= 50:
+            overall_color = "#ffc107"  # Yellow
+            overall_status = "FAIR"
+        else:
+            overall_color = "#dc3545"  # Red
+            overall_status = "POOR"
+
+        # Tạo HTML report chi tiết
+        html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Selenium Test Report - Login Functionality</title>
+    <style>
+        body {{ 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f8f9fa; 
+            color: #333;
+        }}
+        .container {{ 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1); 
+        }}
+        .header {{ 
+            text-align: center; 
+            padding-bottom: 20px; 
+            border-bottom: 3px solid {overall_color}; 
+            margin-bottom: 30px;
+        }}
+        h1 {{ 
+            color: #2c3e50; 
+            margin: 0; 
+            font-size: 2.5em;
+        }}
+        .subtitle {{ 
+            color: #7f8c8d; 
+            font-size: 1.1em; 
+            margin-top: 5px;
+        }}
+        .summary {{ 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 40px; 
+            border-left: 5px solid {overall_color};
+        }}
+        .stats {{ 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            margin-top: 20px;
+        }}
+        .stat-box {{ 
+            text-align: center; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 23%; 
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }}
+        .stat-box:hover {{ 
+            transform: translateY(-5px);
+        }}
+        .total {{ 
+            background: #e3f2fd; 
+            color: #1565c0; 
+            border: 2px solid #bbdefb;
+        }}
+        .passed {{ 
+            background: #e8f5e9; 
+            color: #2e7d32; 
+            border: 2px solid #c8e6c9;
+        }}
+        .failed {{ 
+            background: #ffebee; 
+            color: #c62828; 
+            border: 2px solid #ffcdd2;
+        }}
+        .rate {{ 
+            background: #fff3e0; 
+            color: #ef6c00; 
+            border: 2px solid #ffe0b2;
+        }}
+        .stat-box h3 {{ 
+            margin: 0 0 10px 0; 
+            font-size: 1em; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }}
+        .stat-box p {{ 
+            font-size: 2em; 
+            font-weight: bold; 
+            margin: 0;
+        }}
+        .overall-status {{ 
+            text-align: center; 
+            font-size: 1.2em; 
+            font-weight: bold; 
+            color: {overall_color}; 
+            margin-top: 20px; 
+            padding: 10px; 
+            background: rgba(255,255,255,0.7); 
+            border-radius: 5px; 
+            display: inline-block; 
+            width: 100%;
+        }}
+        h2 {{ 
+            color: #34495e; 
+            border-bottom: 2px solid #ecf0f1; 
+            padding-bottom: 10px; 
+            margin-top: 40px;
+        }}
+        table {{ 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }}
+        th, td {{ 
+            padding: 15px; 
+            text-align: left; 
+            border-bottom: 1px solid #ecf0f1;
+        }}
+        th {{ 
+            background-color: #2c3e50; 
+            color: white; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }}
+        tr:hover {{ 
+            background-color: #f8f9fa;
+        }}
+        .status-passed {{ 
+            color: #27ae60; 
+            background-color: #d5f4e6; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            display: inline-block; 
+            border: 1px solid #2ecc71;
+        }}
+        .status-failed {{ 
+            color: #e74c3c; 
+            background-color: #fadbd8; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            display: inline-block; 
+            border: 1px solid #e74c3c;
+        }}
+        .screenshot {{ 
+            max-width: 150px; 
+            max-height: 100px; 
+            cursor: pointer; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            transition: transform 0.3s ease;
+        }}
+        .screenshot:hover {{ 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }}
+        .error-message {{ 
+            color: #e74c3c; 
+            font-size: 0.9em; 
+            font-family: monospace; 
+            background: #fdf2f2; 
+            padding: 8px; 
+            border-radius: 5px; 
+            border-left: 3px solid #e74c3c;
+            max-width: 300px; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }}
+        .modal {{ 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            padding-top: 50px; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }}
+        @keyframes fadeIn {{
+            from {{ opacity: 0; }}
+            to {{ opacity: 1; }}
+        }}
+        .modal-content {{ 
+            margin: auto; 
+            display: block; 
+            width: 80%; 
+            max-width: 900px; 
+            animation: zoomIn 0.3s ease;
+        }}
+        @keyframes zoomIn {{
+            from {{ transform: scale(0.9); opacity: 0; }}
+            to {{ transform: scale(1); opacity: 1; }}
+        }}
+        .close {{ 
+            position: absolute; 
+            top: 20px; 
+            right: 35px; 
+            color: white; 
+            font-size: 40px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: color 0.3s ease;
+        }}
+        .close:hover {{ 
+            color: #f1c40f;
+        }}
+        .timestamp {{ 
+            color: #7f8c8d; 
+            font-size: 0.9em;
+        }}
+        .test-name {{ 
+            font-weight: 600; 
+            color: #2c3e50;
+        }}
+        .duration {{ 
+            font-family: monospace; 
+            background: #f8f9fa; 
+            padding: 3px 8px; 
+            border-radius: 3px; 
+            border: 1px solid #dee2e6;
+        }}
+        .footer {{ 
+            text-align: center; 
+            margin-top: 40px; 
+            padding-top: 20px; 
+            border-top: 1px solid #ecf0f1; 
+            color: #7f8c8d; 
+            font-size: 0.9em;
+        }}
+        @media (max-width: 768px) {{
+            .stat-box {{ width: 48%; }}
+            .container {{ padding: 15px; }}
+            th, td {{ padding: 10px; font-size: 0.9em; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Selenium Test Report</h1>
+            <div class="subtitle">Login Functionality | Generated on: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</div>
+        </div>
+        
+        <div class="summary">
+            <h2>Test Summary</h2>
+            <div class="stats">
+                <div class="stat-box total">
+                    <h3>Total Tests</h3>
+                    <p>{total_tests}</p>
+                </div>
+                <div class="stat-box passed">
+                    <h3>Passed</h3>
+                    <p>{passed_tests}</p>
+                </div>
+                <div class="stat-box failed">
+                    <h3>Failed</h3>
+                    <p>{failed_tests}</p>
+                </div>
+                <div class="stat-box rate">
+                    <h3>Success Rate</h3>
+                    <p>{success_rate:.1f}%</p>
+                </div>
+            </div>
+            <div class="overall-status">
+                Overall Status: {overall_status}
+            </div>
+        </div>
+        
+        <h2>📋 Test Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                    <th>Status</th>
+                    <th>Duration</th>
+                    <th>Timestamp</th>
+                    <th>Screenshot</th>
+                    <th>Error Message</th>
+                </tr>
+            </thead>
+            <tbody>
+"""
+
+        # Thêm từng test result vào table
+        for i, result in enumerate(cls.test_results, 1):
+            status_class = "status-passed" if result["status"] == "PASSED" else "status-failed"
+            status_text = result["status"]
+            
+            screenshot_html = ""
+            if result["screenshot"]:
+                screenshot_path = os.path.join(cls.screenshots_dir, result["screenshot"])
+                screenshot_html = f'<img src="{screenshot_path}" class="screenshot" onclick="openModal(this.src)" alt="Screenshot" title="Click to enlarge">'
+            
+            error_msg = result["error"] or ""
+            error_html = ""
+            if error_msg:
+                # Escape HTML và giới hạn độ dài
+                import html
+                error_escaped = html.escape(error_msg)
+                if len(error_escaped) > 150:
+                    error_escaped = error_escaped[:150] + "..."
+                error_html = f'<div class="error-message" title="{html.escape(error_msg)}">{error_escaped}</div>'
+
+            html_content += f"""
+                <tr>
+                    <td>{i}</td>
+                    <td class="test-name">{result['name']}</td>
+                    <td><span class="{status_class}">{status_text}</span></td>
+                    <td><span class="duration">{result['duration']}</span></td>
+                    <td class="timestamp">{result['timestamp']}</td>
+                    <td>{screenshot_html}</td>
+                    <td>{error_html}</td>
+                </tr>
+"""
+
+        html_content += f"""
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>Test Environment: Flask Application | Base URL: {cls.base_url}</p>
+            <p>Total Execution Time: {sum(float(r['duration'][:-1]) for r in cls.test_results):.2f}s</p>
+            <p>Report generated automatically by Selenium Test Suite</p>
+        </div>
+    </div>
+    
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <script>
+        function openModal(src) {{
+            document.getElementById('imageModal').style.display = "block";
+            document.getElementById('modalImage').src = src;
+            document.body.style.overflow = "hidden";
+        }}
+        
+        function closeModal() {{
+            document.getElementById('imageModal').style.display = "none";
+            document.body.style.overflow = "auto";
+        }}
+        
+        // Đóng modal khi click bên ngoài ảnh
+        window.onclick = function(event) {{
+            var modal = document.getElementById('imageModal');
+            if (event.target == modal) {{
+                closeModal();
+            }}
+        }}
+        
+        // Đóng modal bằng phím ESC
+        document.addEventListener('keydown', function(event) {{
+            if (event.key === 'Escape') {{
+                closeModal();
+            }}
+        }});
+        
+        // Highlight các test failed
+        document.addEventListener('DOMContentLoaded', function() {{
+            const failedRows = document.querySelectorAll('.status-failed').forEach(function(el) {{
+                el.closest('tr').style.backgroundColor = '#fff5f5';
+            }});
+        }});
+    </script>
+</body>
+</html>
+"""
+
+        report_path = "selenium_test_report.html"
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write(html_content)
+        
+        print(f"📄 Report đã được tạo: {report_path}")
+        print(f"   - Tổng số test: {total_tests}")
+        print(f"   - Passed: {passed_tests}")
+        print(f"   - Failed: {failed_tests}")
+        print(f"   - Tỷ lệ thành công: {success_rate:.1f}%")
+
+if __name__ == "__main__":
+    print("🚀 Starting Selenium Login Tests...")
+    print("=" * 80)
+    print("⚠️  LƯU Ý QUAN TRỌNG:")
+    print("1. Đảm bảo Flask app đang chạy: python app.py hoặc flask run")
+    print("2. Đảm bảo user 'admin' với password 'Admin@123' tồn tại trong database")
+    print("3. Đảm bảo Chrome/Chromium và ChromeDriver đã được cài đặt")
+    print("=" * 80 + "\n")
+    
+    try:
+        # Chạy test với verbosity cao
+        unittest.main(verbosity=2)
+    except Exception as e:
+        print(f"\n❌ Lỗi khi chạy test: {e}")
+        print("\n💡 HƯỚNG DẪN KHẮC PHỤC:")
+        print("1. Kiểm tra Flask app có đang chạy trên http://localhost:5000 không")
+        print("2. Chạy seed_selenium_user() trong __init__.py để tạo user test")
+        print("3. Kiểm tra ChromeDriver version có tương thích với Chrome không")
+        print("4. Thử chạy với option: python selenium_test_login.py -v")
