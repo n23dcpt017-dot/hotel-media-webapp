@@ -516,8 +516,7 @@
         grid-template-columns: 1fr;
       }
     }
-  </style>
-  .notification-popup {
+.notification-popup {
   position: absolute;
   top: 60px;
   right: 25px;
@@ -605,6 +604,7 @@
   background: #3730a3;
 }
 
+  </style>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -814,7 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="fa-solid fa-bell"></i>
               <span class="notification-dot"></span>
             </button>
-            <div class="notification-popup" id="notificationPopup">
+<div class="notification-popup" id="notificationPopup">
   <div class="notif-header">
     <h4>Thông báo hệ thống</h4>
     <span class="notif-sub">Dành cho quản trị khách sạn</span>
@@ -1041,7 +1041,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </main>
       </div>
     </div>
-    <script>
+<script>
   const bell = document.querySelector(".notification-btn");
   const popup = document.getElementById("notificationPopup");
 
