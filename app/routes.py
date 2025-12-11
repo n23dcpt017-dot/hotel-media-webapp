@@ -14,7 +14,7 @@ def unauthorized():
 # ===== LOGIN PAGE =====
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    # Force logout khi vào trang login (fix selenium fail)
+    
     if request.method == 'GET':
         logout_user()
         session.clear()
@@ -32,7 +32,7 @@ def login():
             return render_template('login.html', error="Sai thông tin đăng nhập"), 200
 
         login_user(user)
-        return redirect(url_for("auth.tongquan"))
+        return redirect("/auth/tongquan.html")
 
     return render_template('login.html')
 
@@ -41,7 +41,7 @@ def login():
 @auth.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("tongquan.html")
 
 
 # ===== INDEX/HOME PAGE =====
@@ -53,9 +53,9 @@ def index():
 
 
 # ===== TONGQUAN PAGE =====
-@auth.route("/tongquan")
+@auth.route("/tongquan.html")
 @login_required
-def tongquan():
+def tongquan_html():
     return render_template("tongquan.html")
 
 
