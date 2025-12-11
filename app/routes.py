@@ -32,7 +32,7 @@ def login():
             return render_template('login.html', error="Sai thông tin đăng nhập"), 200
 
         login_user(user)
-        return redirect(url_for("auth.dashboard"))
+        return redirect(url_for("auth.tongquan"))
 
     return render_template('login.html')
 
