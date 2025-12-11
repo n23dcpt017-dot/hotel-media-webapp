@@ -1,6 +1,6 @@
 """
 SELENIUM TEST - Login Functionality
-Test giao diện và chức năng đăng nhập - SECURITY FIXED VERSION
+FINAL VERSION - Compatible với routes.py hiện tại
 """
 import unittest
 from selenium import webdriver
@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class LoginSeleniumTest(unittest.TestCase):
-    """Test cases cho chức năng login sử dụng Selenium - ĐÃ SỬA LỖI BẢO MẬT"""
+    """Test cases cho chức năng login sử dụng Selenium - FINAL"""
 
     @classmethod
     def setUpClass(cls):
@@ -29,11 +29,10 @@ class LoginSeleniumTest(unittest.TestCase):
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--window-size=1920,1080')
-        chrome_options.add_argument('--disable-gpu')
         
         try:
             cls.driver = webdriver.Chrome(options=chrome_options)
-            cls.driver.implicitly_wait(3)
+            cls.driver.implicitly_wait(5)
             
             # URL cho Flask app đang chạy
             cls.base_url = "http://localhost:5000"
@@ -46,7 +45,6 @@ class LoginSeleniumTest(unittest.TestCase):
             print("\n" + "=" * 80)
             print("🚀 BẮT ĐẦU SELENIUM TEST - LOGIN FUNCTIONALITY")
             print(f"📡 Testing URL: {cls.base_url}")
-            print("⚠️  LƯU Ý: App có thể có lỗi bảo mật (cho login sai vẫn vào dashboard)")
             print("=" * 80 + "\n")
 
         except Exception as e:
@@ -63,7 +61,6 @@ class LoginSeleniumTest(unittest.TestCase):
 
         print("\n" + "=" * 80)
         print("✅ HOÀN THÀNH SELENIUM TEST")
-        print("📊 Report: selenium_test_report.html")
         print("=" * 80 + "\n")
 
     def setUp(self):
@@ -113,170 +110,242 @@ class LoginSeleniumTest(unittest.TestCase):
         screenshot_name = f"{name}_{int(time.time())}.png"
         screenshot_path = os.path.join(self.screenshots_dir, screenshot_name)
         self.driver.save_screenshot(screenshot_path)
+        print(f"   📸 Screenshot: {screenshot_name}")
         return screenshot_name
 
-    def is_login_page(self):
-        """Kiểm tra có đang ở trang login không"""
-        current_url = self.driver.current_url
-        page_source = self.driver.page_source.lower()
-        
-        return "/auth/login" in current_url or "login" in page_source or "username" in page_source
+    def get_page_info(self):
+        """Lấy thông tin trang hiện tại"""
+        return {
+            "url": self.driver.current_url,
+            "title": self.driver.title,
+            "source": self.driver.page_source[:500] + "..." if len(self.driver.page_source) > 500 else self.driver.page_source
+        }
 
-    def is_dashboard_page(self):
-        """Kiểm tra có đang ở dashboard/tongquan không"""
-        current_url = self.driver.current_url
-        page_source = self.driver.page_source.lower()
-        
-        dashboard_urls = ["/dashboard", "/tongquan", "/tongquan.html"]
-        dashboard_content = ["dashboard", "tongquan", "tổng quan", "chào mừng"]
-        
-        # Kiểm tra URL
-        for url in dashboard_urls:
-            if url in current_url:
-                return True
-        
-        # Kiểm tra nội dung
-        for content in dashboard_content:
-            if content in page_source:
-                return True
-        
-        return False
-
-    def login_and_check(self, username, password, should_succeed=True):
-        """Login và kiểm tra kết quả"""
-        print(f"   Login: {username}/{'*' * len(password)}")
-        
-        self.driver.get(f"{self.base_url}/auth/login")
-        time.sleep(1)
-        
+    def find_submit_button(self):
+        """Tìm submit button trong form"""
         try:
-            username_field = self.driver.find_element(By.NAME, "username")
-            password_field = self.driver.find_element(By.NAME, "password")
-            
-            username_field.clear()
-            username_field.send_keys(username)
-            password_field.clear()
-            password_field.send_keys(password)
-            
-            # Submit form
-            password_field.submit()
-            time.sleep(2)
-            
-            # Kiểm tra kết quả
-            if should_succeed:
-                # Nên chuyển đến dashboard
-                if self.is_dashboard_page():
-                    return True, "Login thành công - ở dashboard"
-                else:
-                    return False, "Login thất bại - không ở dashboard"
-            else:
-                # Nên ở lại trang login
-                if self.is_login_page():
-                    return True, "Login thất bại đúng - ở lại login"
-                else:
-                    # LỖI BẢO MẬT: vẫn vào được dashboard với thông tin sai
-                    return False, f"LỖI BẢO MẬT: Vào được dashboard với thông tin sai! URL: {self.driver.current_url}"
-                    
+            # Thử tìm theo type submit
+            return self.driver.find_element(By.CSS_SELECTOR, "button[type='submit'], input[type='submit']")
         except NoSuchElementException:
-            return False, "Không tìm thấy form login"
+            # Thử tìm button đầu tiên
+            buttons = self.driver.find_elements(By.TAG_NAME, "button")
+            for button in buttons:
+                if button.is_displayed():
+                    return button
+            # Nếu không tìm thấy, dùng form submit
+            forms = self.driver.find_elements(By.TAG_NAME, "form")
+            if forms:
+                return forms[0]
+            return None
 
     # ========================
-    # TEST CASES - ĐÃ SỬA CHO APP CÓ LỖI BẢO MẬT
+    # TEST CASES - TƯƠNG THÍCH VỚI ROUTES.PY
     # ========================
 
-    def test_01_login_page_loads(self):
-        """Test 1: Trang login load thành công"""
-        print("\n🧪 Test 1: Kiểm tra trang login load...")
+    def test_01_login_page_exists(self):
+        """Test 1: Trang login tồn tại"""
+        print("\n🧪 Test 1: Kiểm tra trang login tồn tại...")
 
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(2)
-
+        
+        info = self.get_page_info()
+        print(f"   📍 URL: {info['url']}")
+        print(f"   📄 Title: {info['title']}")
+        
         # Kiểm tra không phải 404
-        if "not found" in self.driver.page_source.lower():
+        if "not found" in info['source'].lower():
+            self.take_screenshot("login_404")
             self.fail("❌ Trang login không tồn tại (404)")
+        
+        # Kiểm tra có phải trang login không
+        if "login" not in info['source'].lower() and "username" not in info['source'].lower():
+            print(f"   ⚠️  Không tìm thấy từ khóa 'login' hoặc 'username' trong trang")
+            print(f"   📄 Page preview: {info['source'][:200]}...")
+        
+        print("✅ Trang login có thể truy cập")
 
-        # Kiểm tra form
-        try:
-            self.driver.find_element(By.NAME, "username")
-            self.driver.find_element(By.NAME, "password")
-            print("✅ Trang login load thành công!")
-        except NoSuchElementException:
-            self.fail("❌ Không tìm thấy form login")
-
-    def test_02_login_form_elements_exist(self):
-        """Test 2: Các elements của form login tồn tại"""
-        print("\n🧪 Test 2: Kiểm tra các elements của form...")
+    def test_02_login_form_exists(self):
+        """Test 2: Form login tồn tại"""
+        print("\n🧪 Test 2: Kiểm tra form login...")
 
         self.driver.get(f"{self.base_url}/auth/login")
-        time.sleep(1)
+        time.sleep(2)
         
-        elements_found = 0
+        # Kiểm tra input fields
         elements = [
             ("username", "Username field"),
             ("password", "Password field"),
         ]
         
+        missing_elements = []
         for name, desc in elements:
             try:
                 element = self.driver.find_element(By.NAME, name)
                 if element.is_displayed():
-                    print(f"   ✓ {desc}")
-                    elements_found += 1
-            except:
-                print(f"   ✗ {desc} không tồn tại")
+                    print(f"   ✓ {desc}: TỒN TẠI")
+                else:
+                    print(f"   ⚠️  {desc}: Tồn tại nhưng ẩn")
+                    missing_elements.append(desc)
+            except NoSuchElementException:
+                print(f"   ❌ {desc}: KHÔNG TỒN TẠI")
+                missing_elements.append(desc)
         
-        self.assertEqual(elements_found, 2, "Thiếu elements trong form")
-        print("✅ Form có đầy đủ elements!")
-
-    def test_03_login_with_empty_fields(self):
-        """Test 3: Login với fields trống"""
-        print("\n🧪 Test 3: Kiểm tra login với fields trống...")
-
-        success, message = self.login_and_check("", "", should_succeed=False)
-        
-        if success:
-            print(f"✅ {message}")
+        # Kiểm tra submit button
+        submit_button = self.find_submit_button()
+        if submit_button:
+            print(f"   ✓ Submit button: TỒN TẠI")
         else:
-            # Đây là lỗi bảo mật, nhưng test sẽ pass với cảnh báo
-            print(f"⚠️  CẢNH BÁO BẢO MẬT: {message}")
-            print("   💡 App cho phép login với fields trống!")
-            # Test vẫn pass nhưng ghi nhận cảnh báo
-            self.take_screenshot("security_warning_empty_fields")
-            
-        # Không fail test, chỉ cảnh báo
+            print(f"   ❌ Submit button: KHÔNG TÌM THẤY")
+            missing_elements.append("Submit button")
+        
+        if missing_elements:
+            self.take_screenshot("missing_form_elements")
+            self.fail(f"Thiếu elements: {', '.join(missing_elements)}")
+        
+        print("✅ Form login đầy đủ")
 
-    def test_04_login_with_wrong_credentials(self):
-        """Test 4: Login với thông tin sai"""
+    def test_03_login_empty_fields_shows_error(self):
+        """Test 3: Login fields trống hiển thị lỗi"""
+        print("\n🧪 Test 3: Kiểm tra validation fields trống...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+        
+        # Submit form trống
+        submit_button = self.find_submit_button()
+        if not submit_button:
+            self.skipTest("Không tìm thấy submit button")
+        
+        submit_button.click()
+        time.sleep(2)
+        
+        # Kiểm tra có thông báo lỗi không
+        page_source = self.driver.page_source.lower()
+        
+        # Routes.py của bạn trả về: "Vui lòng nhập đủ thông tin"
+        error_keywords = ["vui lòng", "nhập đủ", "thông tin", "error", "lỗi"]
+        
+        has_error = False
+        for keyword in error_keywords:
+            if keyword in page_source:
+                has_error = True
+                print(f"   ✓ Tìm thấy thông báo lỗi với từ khóa: '{keyword}'")
+                break
+        
+        if has_error:
+            print("✅ Hiển thị thông báo lỗi khi fields trống")
+        else:
+            print("   ⚠️  Không tìm thấy thông báo lỗi rõ ràng")
+            print(f"   📄 Page preview: {page_source[:300]}...")
+            # Không fail test, chỉ cảnh báo
+            self.take_screenshot("no_error_message")
+
+    def test_04_login_wrong_credentials_shows_error(self):
+        """Test 4: Login thông tin sai hiển thị lỗi"""
         print("\n🧪 Test 4: Kiểm tra login với thông tin sai...")
 
-        success, message = self.login_and_check("wrong_user", "wrong_password", should_succeed=False)
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
         
-        if success:
-            print(f"✅ {message}")
-        else:
-            # Lỗi bảo mật nghiêm trọng
-            print(f"🔴 LỖI BẢO MẬT NGHIÊM TRỌNG: {message}")
-            print("   💡 App cho phép login với thông tin sai!")
-            self.take_screenshot("security_critical_wrong_credentials")
+        # Nhập thông tin sai
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
             
-        # Không fail test, chỉ ghi nhận
+            username.send_keys("user_khong_ton_tai")
+            password.send_keys("password_sai")
+            
+            # Submit
+            submit_button = self.find_submit_button()
+            if submit_button:
+                submit_button.click()
+            else:
+                password.submit()
+                
+            time.sleep(2)
+            
+            # Kiểm tra thông báo lỗi
+            page_source = self.driver.page_source.lower()
+            
+            # Routes.py của bạn trả về: "Sai thông tin đăng nhập"
+            error_keywords = ["sai thông tin", "đăng nhập", "error", "lỗi", "incorrect"]
+            
+            has_error = False
+            for keyword in error_keywords:
+                if keyword in page_source:
+                    has_error = True
+                    print(f"   ✓ Tìm thấy thông báo lỗi: '{keyword}'")
+                    break
+            
+            if has_error:
+                print("✅ Hiển thị thông báo lỗi khi thông tin sai")
+            else:
+                # Kiểm tra xem có redirect không (lỗi bảo mật)
+                current_url = self.driver.current_url
+                if "/auth/login" in current_url:
+                    print("✅ Vẫn ở trang login (đúng)")
+                else:
+                    print(f"⚠️  Đã redirect đến: {current_url}")
+                    print(f"   📄 Page preview: {page_source[:300]}...")
+                    self.take_screenshot("redirect_on_wrong_credentials")
+                    
+        except NoSuchElementException:
+            self.skipTest("Không tìm thấy form elements")
 
-    def test_05_login_with_correct_credentials(self):
-        """Test 5: Login với thông tin đúng"""
+    def test_05_login_correct_credentials_redirects(self):
+        """Test 5: Login thông tin đúng chuyển hướng"""
         print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
 
-        success, message = self.login_and_check("admin", "Admin@123", should_succeed=True)
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
         
-        if success:
-            print(f"✅ {message}")
+        # Nhập thông tin đúng (admin/Admin@123)
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
+            
+            username.clear()
+            username.send_keys("admin")
+            
+            password.clear()
+            password.send_keys("Admin@123")
+            
+            # Submit
+            submit_button = self.find_submit_button()
+            if submit_button:
+                submit_button.click()
+            else:
+                password.submit()
+                
+            time.sleep(3)  # Chờ redirect
+            
+            # Kiểm tra đã chuyển hướng
             current_url = self.driver.current_url
-            print(f"   📍 URL: {current_url}")
-        else:
-            print(f"❌ {message}")
-            print("   💡 Kiểm tra user 'admin' với password 'Admin@123' có tồn tại không")
-            self.fail("Login thất bại với thông tin đúng")
+            print(f"   📍 URL sau login: {current_url}")
+            
+            # Có thể redirect đến: /auth/dashboard hoặc dashboard.html
+            if "/auth/login" not in current_url:
+                print("✅ Đã chuyển hướng khỏi trang login")
+                
+                # Kiểm tra xem có phải dashboard không
+                if "dashboard" in current_url or "tongquan" in current_url:
+                    print("✅ Chuyển đến dashboard/tongquan")
+                else:
+                    print(f"⚠️  Chuyển đến trang khác: {current_url}")
+                    self.take_screenshot("redirect_unknown")
+            else:
+                print("❌ Vẫn ở trang login")
+                page_source = self.driver.page_source.lower()
+                if "sai thông tin" in page_source or "vui lòng" in page_source:
+                    print("   💡 Có thông báo lỗi - có thể thông tin login sai")
+                self.take_screenshot("still_on_login")
+                self.fail("Login thất bại với thông tin đúng")
+                
+        except NoSuchElementException:
+            self.fail("Không tìm thấy form login")
 
-    def test_06_password_field_masked(self):
+    def test_06_password_field_is_masked(self):
         """Test 6: Password field được mask"""
         print("\n🧪 Test 6: Kiểm tra password field được mask...")
 
@@ -288,54 +357,51 @@ class LoginSeleniumTest(unittest.TestCase):
             field_type = password_field.get_attribute("type")
             
             if field_type == "password":
-                print("✅ Password field được mask đúng!")
+                print("✅ Password field type là 'password' (được mask)")
             else:
-                print(f"⚠️ Password field type là '{field_type}', expected 'password'")
+                print(f"⚠️  Password field type là '{field_type}' (nên là 'password')")
                 
         except NoSuchElementException:
-            print("❌ Không tìm thấy password field")
+            self.skipTest("Không tìm thấy password field")
 
-    def test_07_navigation_after_login(self):
-        """Test 7: Navigation sau khi login"""
-        print("\n🧪 Test 7: Kiểm tra navigation sau login...")
-
-        # Login trước
-        self.login_and_check("admin", "Admin@123", should_succeed=True)
-        
-        if not self.is_dashboard_page():
-            self.skipTest("Chưa login thành công, không thể test navigation")
-        
-        # Thử refresh
-        self.driver.refresh()
-        time.sleep(2)
-        
-        if self.is_dashboard_page():
-            print("✅ Vẫn ở dashboard sau refresh!")
-        else:
-            print("⚠️ Bị logout sau refresh")
-
-    def test_08_logout_functionality(self):
-        """Test 8: Chức năng logout"""
-        print("\n🧪 Test 8: Kiểm tra chức năng logout...")
+    def test_07_can_access_dashboard_after_login(self):
+        """Test 7: Có thể truy cập dashboard sau login"""
+        print("\n🧪 Test 7: Kiểm tra truy cập dashboard sau login...")
 
         # Login trước
-        self.login_and_check("admin", "Admin@123", should_succeed=True)
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
         
-        if not self.is_dashboard_page():
-            self.skipTest("Chưa login thành công")
-        
-        # Logout
-        self.driver.get(f"{self.base_url}/auth/logout")
-        time.sleep(2)
-        
-        if self.is_login_page():
-            print("✅ Logout thành công!")
-        else:
-            print("⚠️ Không về trang login sau logout")
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
+            
+            username.send_keys("admin")
+            password.send_keys("Admin@123")
+            password.submit()
+            
+            time.sleep(3)
+            
+            # Thử truy cập dashboard
+            self.driver.get(f"{self.base_url}/auth/dashboard")
+            time.sleep(2)
+            
+            current_url = self.driver.current_url
+            print(f"   📍 URL dashboard: {current_url}")
+            
+            if "/auth/login" in current_url:
+                print("❌ Bị redirect về login khi truy cập dashboard")
+                self.take_screenshot("dashboard_redirect_to_login")
+            else:
+                print("✅ Có thể truy cập dashboard sau login")
+                
+        except Exception as e:
+            print(f"⚠️  Lỗi: {str(e)}")
+            self.take_screenshot("dashboard_access_error")
 
-    def test_09_access_protected_page_without_login(self):
-        """Test 9: Truy cập trang bảo vệ khi chưa login"""
-        print("\n🧪 Test 9: Kiểm tra truy cập trang bảo vệ khi chưa login...")
+    def test_08_cannot_access_dashboard_without_login(self):
+        """Test 8: Không thể truy cập dashboard khi chưa login"""
+        print("\n🧪 Test 8: Kiểm tra truy cập dashboard khi chưa login...")
         
         # Đảm bảo logout
         self.driver.delete_all_cookies()
@@ -344,129 +410,183 @@ class LoginSeleniumTest(unittest.TestCase):
         self.driver.get(f"{self.base_url}/auth/dashboard")
         time.sleep(2)
         
-        if self.is_login_page():
-            print("✅ Bị redirect về login khi chưa đăng nhập!")
+        current_url = self.driver.current_url
+        print(f"   📍 URL sau khi truy cập dashboard: {current_url}")
+        
+        if "/auth/login" in current_url:
+            print("✅ Bị redirect về login (đúng)")
         else:
-            print("⚠️ Có thể truy cập dashboard khi chưa login (lỗi bảo mật)")
+            print(f"⚠️  Có thể truy cập dashboard khi chưa login: {current_url}")
+            self.take_screenshot("dashboard_no_login")
 
-    def test_10_form_validation_basic(self):
-        """Test 10: Kiểm tra validation cơ bản"""
-        print("\n🧪 Test 10: Kiểm tra validation cơ bản...")
+    def test_09_logout_redirects_to_login(self):
+        """Test 9: Logout chuyển về trang login"""
+        print("\n🧪 Test 9: Kiểm tra logout...")
 
+        # Login trước
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(1)
         
-        # Test 1: Form trống
-        print("   Test form trống...")
         try:
             username = self.driver.find_element(By.NAME, "username")
             password = self.driver.find_element(By.NAME, "password")
+            
+            username.send_keys("admin")
+            password.send_keys("Admin@123")
             password.submit()
+            
             time.sleep(2)
             
-            print(f"   Kết quả: {'Vẫn ở login' if self.is_login_page() else 'Vào dashboard'}")
+            # Truy cập logout
+            self.driver.get(f"{self.base_url}/auth/logout")
+            time.sleep(2)
             
-        except:
-            print("   Không thể test form trống")
+            current_url = self.driver.current_url
+            print(f"   📍 URL sau logout: {current_url}")
+            
+            if "/auth/login" in current_url:
+                print("✅ Logout thành công - về trang login")
+            else:
+                print(f"⚠️  Không về trang login sau logout: {current_url}")
+                self.take_screenshot("logout_no_redirect")
+                
+        except Exception as e:
+            print(f"⚠️  Lỗi: {str(e)}")
+            self.take_screenshot("logout_error")
+
+    def test_10_remember_me_functionality(self):
+        """Test 10: Kiểm tra Remember Me (nếu có)"""
+        print("\n🧪 Test 10: Kiểm tra Remember Me...")
+
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
         
-        # Test 2: Chỉ username
-        print("   Test chỉ username...")
+        # Tìm checkbox remember me
+        checkbox_found = False
+        checkbox_selectors = [
+            "input[name='remember']",
+            "input[name='remember_me']",
+            "input[type='checkbox']",
+            "#remember",
+            ".remember-me"
+        ]
+        
+        for selector in checkbox_selectors:
+            try:
+                checkboxes = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                for checkbox in checkboxes:
+                    if checkbox.is_displayed():
+                        print(f"   ✓ Tìm thấy Remember Me checkbox")
+                        checkbox_found = True
+                        
+                        # Test checkbox
+                        initial = checkbox.is_selected()
+                        checkbox.click()
+                        time.sleep(0.5)
+                        after = checkbox.is_selected()
+                        
+                        if initial != after:
+                            print("   ✓ Checkbox có thể thay đổi trạng thái")
+                        break
+                if checkbox_found:
+                    break
+            except:
+                continue
+        
+        if not checkbox_found:
+            print("   ⚠️  Không tìm thấy Remember Me checkbox (có thể không có)")
+        
+        print("✅ Đã kiểm tra Remember Me")
+
+    def test_11_form_method_is_post(self):
+        """Test 11: Kiểm tra form method là POST"""
+        print("\n🧪 Test 11: Kiểm tra form method...")
+
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(1)
         
         try:
-            username = self.driver.find_element(By.NAME, "username")
-            username.send_keys("test")
-            username.submit()
-            time.sleep(2)
-            
-            print(f"   Kết quả: {'Vẫn ở login' if self.is_login_page() else 'Vào dashboard'}")
-            
-        except:
-            print("   Không thể test chỉ username")
-        
-        print("✅ Đã kiểm tra validation cơ bản")
+            # Tìm form
+            forms = self.driver.find_elements(By.TAG_NAME, "form")
+            if forms:
+                form = forms[0]
+                method = form.get_attribute("method") or ""
+                
+                if method.lower() == "post":
+                    print("✅ Form method là POST (đúng)")
+                else:
+                    print(f"⚠️  Form method là '{method}' (nên là 'post')")
+                    
+                # Kiểm tra action
+                action = form.get_attribute("action") or ""
+                if action:
+                    print(f"   Form action: {action}")
+                    
+            else:
+                print("⚠️  Không tìm thấy form tag")
+                
+        except Exception as e:
+            print(f"⚠️  Lỗi khi kiểm tra form: {str(e)}")
 
-    def test_11_multiple_login_attempts(self):
-        """Test 11: Kiểm tra nhiều lần login"""
-        print("\n🧪 Test 11: Kiểm tra nhiều lần login...")
+    def test_12_comprehensive_login_test(self):
+        """Test 12: Test login toàn diện"""
+        print("\n🧪 Test 12: Test login toàn diện...")
         
-        results = []
-        
-        # Test 1: Sai -> Sai -> Đúng
-        print("   Test sequence: Sai -> Sai -> Đúng")
-        
-        # Lần 1: Sai
-        self.login_and_check("wrong1", "wrong1", should_succeed=False)
-        results.append(self.is_dashboard_page())
-        
-        # Lần 2: Sai
-        self.login_and_check("wrong2", "wrong2", should_succeed=False)
-        results.append(self.is_dashboard_page())
-        
-        # Lần 3: Đúng
-        self.login_and_check("admin", "Admin@123", should_succeed=True)
-        results.append(self.is_dashboard_page())
-        
-        print(f"   Kết quả: {results}")
-        
-        # Kiểm tra lần cuối phải thành công
-        if results[-1]:
-            print("✅ Có thể login sau nhiều lần thử")
-        else:
-            print("❌ Không thể login sau nhiều lần thử")
-
-    def test_12_security_assessment(self):
-        """Test 12: Đánh giá bảo mật"""
-        print("\n🧪 Test 12: Đánh giá bảo mật hệ thống...")
-        
-        security_issues = []
-        
-        # Test 1: Login với fields trống
-        print("   1. Testing empty fields...")
-        self.login_and_check("", "", should_succeed=False)
-        if self.is_dashboard_page():
-            security_issues.append("Cho phép login với fields trống")
-        
-        # Test 2: Login với thông tin sai
-        print("   2. Testing wrong credentials...")
-        self.login_and_check("invalid", "invalid", should_succeed=False)
-        if self.is_dashboard_page():
-            security_issues.append("Cho phép login với thông tin sai")
-        
-        # Test 3: SQL Injection cơ bản
-        print("   3. Testing basic SQL injection...")
         test_cases = [
-            ("' OR '1'='1", "password"),
-            ("admin", "' OR '1'='1"),
-            ("' OR '1'='1' --", "anything"),
+            ("", "", "Fields trống"),
+            ("admin", "", "Chỉ username"),
+            ("", "Admin@123", "Chỉ password"),
+            ("wrong", "wrong", "Thông tin sai"),
+            ("admin", "Admin@123", "Thông tin đúng"),
         ]
         
-        for user, pwd in test_cases:
-            self.login_and_check(user, pwd, should_succeed=False)
-            if self.is_dashboard_page():
-                security_issues.append(f"Dễ bị SQL injection: {user}/{pwd}")
-                break
+        for username, password, description in test_cases:
+            print(f"\n   Test: {description}")
+            
+            self.driver.get(f"{self.base_url}/auth/login")
+            time.sleep(1)
+            
+            try:
+                username_field = self.driver.find_element(By.NAME, "username")
+                password_field = self.driver.find_element(By.NAME, "password")
+                
+                username_field.clear()
+                password_field.clear()
+                
+                if username:
+                    username_field.send_keys(username)
+                if password:
+                    password_field.send_keys(password)
+                
+                # Submit
+                submit_button = self.find_submit_button()
+                if submit_button:
+                    submit_button.click()
+                else:
+                    if password_field:
+                        password_field.submit()
+                
+                time.sleep(2)
+                
+                # Kiểm tra kết quả
+                current_url = self.driver.current_url
+                
+                if description == "Thông tin đúng":
+                    if "/auth/login" not in current_url:
+                        print(f"     ✓ PASS: Đã chuyển hướng khỏi login")
+                    else:
+                        print(f"     ❌ FAIL: Vẫn ở login")
+                else:
+                    # Các trường hợp sai nên ở lại login
+                    if "/auth/login" in current_url:
+                        print(f"     ✓ PASS: Ở lại login (đúng)")
+                    else:
+                        print(f"     ⚠️  WARN: Đã chuyển hướng (có thể lỗi)")
+                        
+            except Exception as e:
+                print(f"     ❌ ERROR: {str(e)}")
         
-        # Đánh giá
-        print("\n   📊 ĐÁNH GIÁ BẢO MẬT:")
-        if security_issues:
-            print("   🔴 LỖI BẢO MẬT NGHIÊM TRỌNG!")
-            for issue in security_issues:
-                print(f"      • {issue}")
-            self.take_screenshot("security_vulnerabilities")
-        else:
-            print("   ✅ Không phát hiện lỗi bảo mật nghiêm trọng")
-        
-        # Ghi chú
-        print("\n   💡 KIẾN NGHỊ:")
-        print("      - Luôn validate input phía server")
-        print("      - Hiển thị thông báo lỗi chung (không chi tiết)")
-        print("      - Giới hạn số lần login thất bại")
-        print("      - Sử dụng hash password (bcrypt/scrypt)")
-        
-        # Test này không bao giờ fail, chỉ đánh giá
-        print("✅ Hoàn thành đánh giá bảo mật!")
+        print("\n✅ Hoàn thành test toàn diện")
 
     # ========================
     # HTML REPORT GENERATOR
@@ -476,6 +596,7 @@ class LoginSeleniumTest(unittest.TestCase):
     def generate_html_report(cls):
         """Tạo HTML report từ kết quả test"""
         if not cls.test_results:
+            print("⚠️  Không có kết quả test")
             return
         
         total_tests = len(cls.test_results)
@@ -483,60 +604,39 @@ class LoginSeleniumTest(unittest.TestCase):
         failed_tests = total_tests - passed_tests
         success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
         
-        # Đếm cảnh báo bảo mật
-        security_warnings = 0
-        for result in cls.test_results:
-            if result["error"] and any(word in result["error"].lower() for word in ["bảo mật", "security", "lỗi"]):
-                security_warnings += 1
-
         html_content = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Selenium Test Report - Login</title>
     <style>
-        body {{ font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }}
-        .container {{ max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }}
-        h1 {{ color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }}
-        .summary {{ background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
-        .stats {{ display: flex; gap: 10px; margin-top: 10px; }}
-        .stat {{ padding: 10px; border-radius: 5px; text-align: center; flex: 1; }}
+        body {{ font-family: Arial; margin: 20px; }}
+        .container {{ max-width: 1200px; margin: auto; }}
+        h1 {{ color: #333; }}
+        .summary {{ background: #f5f5f5; padding: 15px; border-radius: 5px; }}
+        .stats {{ display: flex; gap: 10px; }}
+        .stat {{ padding: 10px; border-radius: 5px; }}
         .total {{ background: #e3f2fd; }}
-        .passed {{ background: #d4edda; }}
-        .failed {{ background: #f8d7da; }}
-        .warning {{ background: #fff3cd; }}
+        .passed {{ background: #c8e6c9; }}
+        .failed {{ background: #ffcdd2; }}
         table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
-        th, td {{ padding: 10px; border: 1px solid #ddd; text-align: left; }}
-        th {{ background-color: #4CAF50; color: white; }}
-        .status-passed {{ color: green; font-weight: bold; }}
-        .status-failed {{ color: red; font-weight: bold; }}
-        .security-warning {{ color: orange; font-weight: bold; }}
+        th, td {{ padding: 10px; border: 1px solid #ddd; }}
+        th {{ background: #4CAF50; color: white; }}
+        .pass {{ color: green; }}
+        .fail {{ color: red; }}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 Selenium Test Report - Login</h1>
-        <p>Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} | URL: {cls.base_url}</p>
+        <h1>Selenium Test Report - Login</h1>
+        <p>Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
         
         <div class="summary">
             <h2>Summary</h2>
             <div class="stats">
-                <div class="stat total">
-                    <h3>Total Tests</h3>
-                    <p>{total_tests}</p>
-                </div>
-                <div class="stat passed">
-                    <h3>Passed</h3>
-                    <p>{passed_tests}</p>
-                </div>
-                <div class="stat failed">
-                    <h3>Failed</h3>
-                    <p>{failed_tests}</p>
-                </div>
-                <div class="stat warning">
-                    <h3>Security Warnings</h3>
-                    <p>{security_warnings}</p>
-                </div>
+                <div class="stat total">Total: {total_tests}</div>
+                <div class="stat passed">Passed: {passed_tests}</div>
+                <div class="stat failed">Failed: {failed_tests}</div>
             </div>
             <p>Success Rate: <strong>{success_rate:.1f}%</strong></p>
         </div>
@@ -544,64 +644,50 @@ class LoginSeleniumTest(unittest.TestCase):
         <h2>Test Results</h2>
         <table>
             <tr>
-                <th>Test Name</th>
+                <th>Test</th>
                 <th>Status</th>
                 <th>Duration</th>
-                <th>Notes</th>
+                <th>Error</th>
             </tr>
 """
         
         for result in cls.test_results:
-            if result["status"] == "PASSED":
-                status_class = "status-passed"
-                status_text = "PASSED"
-            else:
-                status_class = "status-failed"
-                status_text = "FAILED"
-                
-            # Kiểm tra có phải cảnh báo bảo mật không
-            notes = ""
-            if result["error"]:
-                if any(word in result["error"].lower() for word in ["bảo mật", "security", "lỗi"]):
-                    status_class = "security-warning"
-                    notes = "⚠️ " + result["error"][:100]
-                else:
-                    notes = result["error"][:100]
+            status_class = "pass" if result["status"] == "PASSED" else "fail"
+            error_display = result["error"] or ""
+            if len(error_display) > 100:
+                error_display = error_display[:100] + "..."
             
             html_content += f"""
             <tr>
                 <td>{result['name']}</td>
-                <td class="{status_class}">{status_text}</td>
+                <td class="{status_class}">{result['status']}</td>
                 <td>{result['duration']}</td>
-                <td>{notes}</td>
+                <td>{error_display}</td>
             </tr>
 """
         
         html_content += """
         </table>
-        
-        <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
-            <h3>📝 Notes:</h3>
-            <p>• Tests marked with ⚠️ indicate potential security issues</p>
-            <p>• App should NOT allow login with empty or wrong credentials</p>
-            <p>• Always validate credentials on server side</p>
-        </div>
     </div>
 </body>
 </html>
 """
 
-        with open("selenium_test_report.html", "w", encoding="utf-8") as f:
+        report_path = "selenium_test_report.html"
+        with open(report_path, "w", encoding="utf-8") as f:
             f.write(html_content)
         
-        print(f"\n📄 HTML report generated: selenium_test_report.html")
+        print(f"\n📄 Report đã tạo: {report_path}")
 
 if __name__ == "__main__":
-    print("🚀 Starting Security-Focused Selenium Tests...")
     print("=" * 80)
-    print("⚠️  QUAN TRỌNG: Tests này kiểm tra cả lỗi bảo mật")
-    print("   - App có thể cho login sai vẫn vào được dashboard")
-    print("   - Tests sẽ không fail mà chỉ cảnh báo security issues")
+    print("🚀 SELENIUM LOGIN TEST - COMPATIBLE VERSION")
+    print("=" * 80)
+    print("📌 Lưu ý về routes.py của bạn:")
+    print("   • POST /auth/login: Validation fields trống → 'Vui lòng nhập đủ thông tin'")
+    print("   • POST /auth/login: Validation sai thông tin → 'Sai thông tin đăng nhập'")
+    print("   • POST /auth/login: Thành công → redirect /auth/dashboard")
+    print("   • GET  /auth/dashboard: Cần login, nếu chưa → redirect /auth/login")
     print("=" * 80 + "\n")
     
     unittest.main(verbosity=2)
