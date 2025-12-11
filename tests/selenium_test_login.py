@@ -292,48 +292,55 @@ class LoginSeleniumTest(unittest.TestCase):
                     
         except NoSuchElementException:
             self.skipTest("Không tìm thấy form elements")
+
     def test_05_login_correct_credentials_redirects(self):
-    """Test 5: Login thông tin đúng chuyển hướng"""
-    print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
+        """Test 5: Login thông tin đúng chuyển hướng"""
+        print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
 
-    self.driver.get(f"{self.base_url}/auth/login")
-    time.sleep(1)
-
-    try:
-        username = self.driver.find_element(By.NAME, "username")
-        password = self.driver.find_element(By.NAME, "password")
-
-        username.clear()
-        username.send_keys("admin")
-
-        password.clear()
-        password.send_keys("Admin@123")
-
-        submit_button = self.find_submit_button()
-        if submit_button:
-            submit_button.click()
-        else:
-            password.submit()
-
-        time.sleep(3)
-
-        current_url = self.driver.current_url
-        expected_url = f"{self.base_url}/auth/tongquan"
-        print(f"   📍 URL sau login: {current_url}")
-
-        if current_url == expected_url:
-            print("✅ Đã chuyển hướng đến trang tongquan")
-        elif "/auth/login" not in current_url:
-            print("✅ Đã chuyển hướng khỏi trang login")
-            print(f"⚠️  Chuyển đến URL khác: {current_url}")
-        else:
-            print("❌ Vẫn ở trang login")
-            self.take_screenshot("still_on_login")
-            self.fail("Login thất bại với thông tin đúng")
-
-    except NoSuchElementException:
-        self.fail("Không tìm thấy form login")
-
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+        
+        # Nhập thông tin đúng (admin/Admin@123)
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
+            
+            username.clear()
+            username.send_keys("admin")
+            
+            password.clear()
+            password.send_keys("Admin@123")
+            
+            # Submit
+            submit_button = self.find_submit_button()
+            if submit_button:
+                submit_button.click()
+            else:
+                password.submit()
+                
+            time.sleep(3)  # Chờ redirect
+            
+            # Kiểm tra đã chuyển hướng
+            current_url = self.driver.current_url
+            print(f"   📍 URL sau login: {current_url}")
+            
+            # KIỂM TRA ĐÚNG URL TONGQUAN
+            expected_url = f"{self.base_url}/auth/tongquan"
+            if current_url == expected_url:
+                print("✅ Đã chuyển hướng đến trang tongquan")
+            elif "/auth/login" not in current_url:
+                print(f"✅ Đã chuyển hướng khỏi trang login")
+                print(f"⚠️  Chuyển đến: {current_url} (mong đợi: {expected_url})")
+            else:
+                print("❌ Vẫn ở trang login")
+                page_source = self.driver.page_source.lower()
+                if "sai thông tin" in page_source or "vui lòng" in page_source:
+                    print("   💡 Có thông báo lỗi - có thể thông tin login sai")
+                self.take_screenshot("still_on_login")
+                self.fail("Login thất bại với thông tin đúng")
+                
+        except NoSuchElementException:
+            self.fail("Không tìm thấy form login")
 
     def test_06_password_field_is_masked(self):
         """Test 6: Password field được mask"""
@@ -354,58 +361,60 @@ class LoginSeleniumTest(unittest.TestCase):
         except NoSuchElementException:
             self.skipTest("Không tìm thấy password field")
 
-    def test_07_can_access_dashboard_after_login(self):
-    """Test 7: Có thể truy cập dashboard/tongquan sau login"""
-    print("\n🧪 Test 7: Kiểm tra truy cập tongquan sau login...")
+    def test_07_can_access_tongquan_after_login(self):
+        """Test 7: Có thể truy cập tongquan sau login"""
+        print("\n🧪 Test 7: Kiểm tra truy cập tongquan sau login...")
 
-    self.driver.get(f"{self.base_url}/auth/login")
-    time.sleep(1)
+        # Login trước
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+        
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
+            
+            username.send_keys("admin")
+            password.send_keys("Admin@123")
+            password.submit()
+            
+            time.sleep(3)
+            
+            # Thử truy cập tongquan (thay vì dashboard)
+            self.driver.get(f"{self.base_url}/auth/tongquan")
+            time.sleep(2)
+            
+            current_url = self.driver.current_url
+            print(f"   📍 URL tongquan: {current_url}")
+            
+            if "/auth/login" in current_url:
+                print("❌ Bị redirect về login khi truy cập tongquan")
+                self.take_screenshot("tongquan_redirect_to_login")
+            else:
+                print("✅ Có thể truy cập tongquan sau login")
+                
+        except Exception as e:
+            print(f"⚠️  Lỗi: {str(e)}")
+            self.take_screenshot("tongquan_access_error")
 
-    try:
-        username = self.driver.find_element(By.NAME, "username")
-        password = self.driver.find_element(By.NAME, "password")
-
-        username.send_keys("admin")
-        password.send_keys("Admin@123")
-        password.submit()
-
-        time.sleep(3)
-
+    def test_08_cannot_access_tongquan_without_login(self):
+        """Test 8: Không thể truy cập tongquan khi chưa login"""
+        print("\n🧪 Test 8: Kiểm tra truy cập tongquan khi chưa login...")
+        
+        # Đảm bảo logout
+        self.driver.delete_all_cookies()
+        
+        # Thử truy cập tongquan (thay vì dashboard)
         self.driver.get(f"{self.base_url}/auth/tongquan")
         time.sleep(2)
-
+        
         current_url = self.driver.current_url
-        print(f"   📍 URL tongquan: {current_url}")
-
+        print(f"   📍 URL sau khi truy cập tongquan: {current_url}")
+        
         if "/auth/login" in current_url:
-            print("❌ Bị redirect về login khi truy cập tongquan")
-            self.take_screenshot("tongquan_redirect_to_login")
+            print("✅ Bị redirect về login (đúng)")
         else:
-            print("✅ Có thể truy cập tongquan sau login")
-
-    except Exception as e:
-        print(f"⚠️  Lỗi: {str(e)}")
-        self.take_screenshot("tongquan_access_error")
-
-
-    def test_08_cannot_access_dashboard_without_login(self):
-    """Test 8: Không thể truy cập tongquan khi chưa login"""
-    print("\n🧪 Test 8: Kiểm tra truy cập tongquan khi chưa login...")
-
-    self.driver.delete_all_cookies()
-
-    self.driver.get(f"{self.base_url}/auth/tongquan")
-    time.sleep(2)
-
-    current_url = self.driver.current_url
-    print(f"   📍 URL sau khi truy cập tongquan: {current_url}")
-
-    if "/auth/login" in current_url:
-        print("✅ Bị redirect về login (đúng)")
-    else:
-        print(f"⚠️  Có thể truy cập tongquan khi chưa login: {current_url}")
-        self.take_screenshot("tongquan_no_login")
-
+            print(f"⚠️  Có thể truy cập tongquan khi chưa login: {current_url}")
+            self.take_screenshot("tongquan_no_login")
 
     def test_09_logout_redirects_to_login(self):
         """Test 9: Logout chuyển về trang login"""
@@ -674,8 +683,8 @@ if __name__ == "__main__":
     print("📌 Lưu ý về routes.py của bạn:")
     print("   • POST /auth/login: Validation fields trống → 'Vui lòng nhập đủ thông tin'")
     print("   • POST /auth/login: Validation sai thông tin → 'Sai thông tin đăng nhập'")
-    print("   • POST /auth/login: Thành công → redirect /auth/dashboard")
-    print("   • GET  /auth/dashboard: Cần login, nếu chưa → redirect /auth/login")
+    print("   • POST /auth/login: Thành công → redirect /auth/tongquan (ĐÃ SỬA)")
+    print("   • GET  /auth/tongquan: Cần login, nếu chưa → redirect /auth/login")
     print("=" * 80 + "\n")
     
     unittest.main(verbosity=2)
