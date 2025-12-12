@@ -17,7 +17,7 @@ with app.app_context():
         print("➕ Tạo user 'admin' mới...")
 
         admin = User(
-            username="admin",
+            username="Admin",
             email="admin@hotel.com",
             full_name="Administrator",
             role="admin",
