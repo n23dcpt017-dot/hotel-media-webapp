@@ -139,7 +139,11 @@ class LoginSeleniumTest(unittest.TestCase):
                 return forms[0]
             return None
 
-    def test_login_form_elements(self):
+    # ===========================================
+    # TEST CASES - ĐÁNH SỐ THỨ TỰ ĐỂ CHẠY ĐÚNG ORDER
+    # ===========================================
+
+    def test_01_login_form_elements(self):
         """Test 1: Kiểm tra tất cả elements trong form login"""
         print("\n🧪 Test 1: Kiểm tra form login elements...")
         
@@ -179,10 +183,10 @@ class LoginSeleniumTest(unittest.TestCase):
             print("✅ Tất cả form elements đều tồn tại")
         else:
             self.take_screenshot("missing_form_elements")
-            
-        return all_found
+        
+        # KHÔNG return giá trị để tránh DeprecationWarning
 
-    def test_validation_messages(self):
+    def test_02_validation_messages(self):
         """Test 2: Kiểm tra validation messages"""
         print("\n🧪 Test 2: Kiểm tra validation messages...")
         
@@ -232,7 +236,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra validation messages")
 
-    def test_form_security(self):
+    def test_03_form_security(self):
         """Test 3: Kiểm tra bảo mật form"""
         print("\n🧪 Test 3: Kiểm tra bảo mật form...")
         
@@ -288,7 +292,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra bảo mật form")
 
-    def test_session_management(self):
+    def test_04_session_management(self):
         """Test 4: Kiểm tra quản lý session"""
         print("\n🧪 Test 4: Kiểm tra quản lý session...")
         
@@ -328,7 +332,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra session management")
 
-    def test_ui_ux_features(self):
+    def test_05_ui_ux_features(self):
         """Test 5: Kiểm tra UI/UX features"""
         print("\n🧪 Test 5: Kiểm tra UI/UX features...")
         
@@ -430,7 +434,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra UI/UX features")
 
-    def test_form_submission_flow(self):
+    def test_06_form_submission_flow(self):
         """Test 6: Kiểm tra form submission flow"""
         print("\n🧪 Test 6: Kiểm tra form submission flow...")
         
@@ -515,7 +519,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra form submission flow")
 
-    def test_error_handling(self):
+    def test_07_error_handling(self):
         """Test 7: Kiểm tra error handling"""
         print("\n🧪 Test 7: Kiểm tra error handling...")
         
@@ -620,7 +624,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra error handling")
 
-    def test_remember_me_functionality(self):
+    def test_08_remember_me_functionality(self):
         """Test 8: Kiểm tra Remember Me functionality"""
         print("\n🧪 Test 8: Kiểm tra Remember Me...")
         
@@ -682,7 +686,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra Remember Me functionality")
 
-    def test_browser_compatibility(self):
+    def test_09_browser_compatibility(self):
         """Test 9: Kiểm tra browser compatibility features"""
         print("\n🧪 Test 9: Kiểm tra browser compatibility...")
         
@@ -744,7 +748,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra browser compatibility")
 
-    def test_performance_and_load(self):
+    def test_10_performance_and_load(self):
         """Test 10: Kiểm tra performance và load time"""
         print("\n🧪 Test 10: Kiểm tra performance và load time...")
         
@@ -836,7 +840,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra performance và load time")
 
-    def test_summary_report(self):
+    def test_11_summary_report(self):
         """Test 11: Tạo summary report"""
         print("\n🧪 Test 11: Tạo summary report...")
         
@@ -939,7 +943,7 @@ class LoginSeleniumTest(unittest.TestCase):
         print("✅ SUMMARY REPORT COMPLETED")
         print("=" * 80)
 
-    def test_credentials_discovery(self):
+    def test_12_credentials_discovery(self):
         """Test 12: Tìm kiếm và gợi ý credentials"""
         print("\n🧪 Test 12: Tìm kiếm và gợi ý credentials...")
         
@@ -1089,14 +1093,26 @@ if __name__ == "__main__":
     print("=" * 80)
     print("🚀 SELENIUM LOGIN TEST - COMPREHENSIVE VERSION")
     print("=" * 80)
-    print("📌 Test coverage:")
-    print("   • Form elements và validation")
-    print("   • Security analysis")
-    print("   • Session management")
-    print("   • UI/UX features")
-    print("   • Error handling")
-    print("   • Performance testing")
-    print("   • Browser compatibility")
+    print("📌 Test coverage (12 tests):")
+    print("   01. Login form elements")
+    print("   02. Validation messages")
+    print("   03. Form security")
+    print("   04. Session management")
+    print("   05. UI/UX features")
+    print("   06. Form submission flow")
+    print("   07. Error handling")
+    print("   08. Remember Me functionality")
+    print("   09. Browser compatibility")
+    print("   10. Performance và load time")
+    print("   11. Summary report")
+    print("   12. Credentials discovery guide")
     print("=" * 80 + "\n")
     
-    unittest.main(verbosity=2)
+    # Sắp xếp test theo thứ tự số
+    loader = unittest.TestLoader()
+    loader.sortTestMethodsUsing = None
+    
+    # Chạy test
+    suite = loader.loadTestsFromTestCase(LoginSeleniumTest)
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)
