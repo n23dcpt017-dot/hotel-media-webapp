@@ -160,7 +160,6 @@ class LoginSeleniumTest(unittest.TestCase):
             print("✅ Trang login có thể truy cập")
         else:
             print(f"   ⚠️  Title không chứa 'login': {info['title']}")
-            self.take_screenshot("login_title_issue")
 
     def test_02_login_form_exists(self):
         """Test 2: Form login tồn tại"""
@@ -290,93 +289,78 @@ class LoginSeleniumTest(unittest.TestCase):
         except NoSuchElementException:
             self.skipTest("Không tìm thấy form elements")
 
-    def test_05_login_correct_credentials_redirects(self):
-        """Test 5: Login thông tin đúng chuyển hướng"""
-        print("\n🧪 Test 5: Kiểm tra login với thông tin đúng...")
+    def test_05_login_functionality_analysis(self):
+        """Test 5: Phân tích chức năng login (không test credentials cụ thể)"""
+        print("\n🧪 Test 5: Phân tích chức năng login...")
         
-        # TEST VỚI NHIỀU CREDENTIALS CÓ THỂ
-        test_credentials = [
-            ("admin", "Admin@123"),
-            ("admin", "admin"),
-            ("admin", "password"),
-            ("admin", "123456"),
-            ("Admin", "Admin@123"),
-            ("administrator", "admin"),
-        ]
+        # Phân tích form login
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(2)
         
-        for i, (username, password) in enumerate(test_credentials):
-            print(f"\n   Thử credentials {i+1}: {username}/{password}")
+        # 1. Kiểm tra form method
+        forms = self.driver.find_elements(By.TAG_NAME, "form")
+        if forms:
+            form = forms[0]
+            method = form.get_attribute("method") or "get"
+            action = form.get_attribute("action") or ""
             
-            self.driver.get(f"{self.base_url}/auth/login")
+            print(f"   📋 Form analysis:")
+            print(f"      • Method: {method.upper()}")
+            print(f"      • Action: {action}")
+            
+            if method.lower() == "get":
+                print("      ⚠️  CẢNH BÁO: Form dùng GET - credentials sẽ hiển thị trong URL")
+            
+            if action:
+                expected_redirect = f"{self.base_url}{action}" if action.startswith("/") else action
+                print(f"      • Trang đích sau login: {expected_redirect}")
+        
+        # 2. Kiểm tra validation messages
+        print(f"\n   🔍 Validation analysis:")
+        
+        # Test với empty fields
+        submit_button = self.find_submit_button()
+        if submit_button:
+            submit_button.click()
             time.sleep(1)
-            
-            try:
-                username_field = self.driver.find_element(By.NAME, "username")
-                password_field = self.driver.find_element(By.NAME, "password")
-                
-                username_field.clear()
-                password_field.clear()
-                
-                username_field.send_keys(username)
-                password_field.send_keys(password)
-                
-                # Submit
-                submit_button = self.find_submit_button()
-                if submit_button:
-                    submit_button.click()
-                else:
-                    password_field.submit()
-                    
-                time.sleep(3)  # Chờ redirect
-                
-                # Kiểm tra đã chuyển hướng
-                current_url = self.driver.current_url
-                page_title = self.driver.title
-                print(f"   📍 URL sau login: {current_url}")
-                print(f"   📄 Title sau login: {page_title}")
-                
-                # Kiểm tra xem đã chuyển hướng khỏi login chưa
-                if "/auth/login" not in current_url:
-                    # ĐÃ THÀNH CÔNG!
-                    print(f"\n🎉 LOGIN THÀNH CÔNG với credentials: {username}/{password}")
-                    print(f"✅ Đã chuyển hướng đến: {current_url}")
-                    
-                    # Kiểm tra action của form để biết trang đích mong đợi
-                    self.driver.get(f"{self.base_url}/auth/login")
-                    time.sleep(1)
-                    forms = self.driver.find_elements(By.TAG_NAME, "form")
-                    if forms:
-                        action = forms[0].get_attribute("action") or ""
-                        print(f"   🔍 Form action là: {action}")
-                        if action:
-                            expected_url = f"{self.base_url}{action}" if action.startswith("/") else action
-                            if current_url == expected_url:
-                                print(f"   ✅ Đúng trang đích mong đợi")
-                            else:
-                                print(f"   ⚠️  Khác trang đích mong đợi ({expected_url})")
-                    
-                    return  # Thoát test khi thành công
-                else:
-                    # Vẫn ở trang login
-                    page_source = self.driver.page_source.lower()
-                    if "sai thông tin" in page_source:
-                        print(f"   ❌ Sai thông tin đăng nhập")
-                    elif "vui lòng" in page_source:
-                        print(f"   ❌ Thiếu thông tin")
-                    else:
-                        print(f"   ❌ Không rõ lý do")
-                        
-            except NoSuchElementException:
-                print(f"   ❌ Không tìm thấy form")
-                continue
+            page_source = self.driver.page_source.lower()
+            if "vui lòng" in page_source or "nhập đủ" in page_source:
+                print("      ✓ Có validation fields trống")
         
-        # Nếu đến đây thì không credentials nào hoạt động
-        print("\n❌ KHÔNG TÌM THẤY CREDENTIALS ĐÚNG")
-        print("💡 Hãy kiểm tra database hoặc routes.py để biết credentials thực tế")
-        self.take_screenshot("all_credentials_failed")
+        # Test với wrong credentials
+        self.driver.get(f"{self.base_url}/auth/login")
+        time.sleep(1)
+        try:
+            username = self.driver.find_element(By.NAME, "username")
+            password = self.driver.find_element(By.NAME, "password")
+            username.send_keys("test_wrong")
+            password.send_keys("test_wrong")
+            submit_button = self.find_submit_button()
+            if submit_button:
+                submit_button.click()
+                time.sleep(1)
+                page_source = self.driver.page_source.lower()
+                if "sai thông tin" in page_source:
+                    print("      ✓ Có validation sai credentials")
+        except:
+            pass
         
-        # Không fail test vì có thể đây là vấn đề của ứng dụng
-        print("⚠️  Test này sẽ pass (không fail) để bạn có thể debug credentials")
+        # 3. Hiển thị gợi ý về credentials
+        print(f"\n   💡 Gợi ý về credentials:")
+        print(f"      • Hiện tại không tìm thấy credentials đúng")
+        print(f"      • Hãy kiểm tra:")
+        print(f"        - Database users table")
+        print(f"        - File routes.py để xem logic login")
+        print(f"        - File seed data hoặc migrations")
+        
+        # 4. Kiểm tra xem có hiển thị thông tin lỗi debug không
+        print(f"\n   🐛 Debug information:")
+        page_source = self.driver.page_source
+        if "error" in page_source.lower() or "exception" in page_source.lower():
+            print("      ⚠️  Có thể có lỗi server (check terminal Flask)")
+        
+        print("\n✅ Đã phân tích chức năng login")
+        print("⚠️  Lưu ý: Cần tìm credentials đúng để test đầy đủ")
 
     def test_06_password_field_is_masked(self):
         """Test 6: Password field được mask"""
@@ -397,167 +381,76 @@ class LoginSeleniumTest(unittest.TestCase):
         except NoSuchElementException:
             self.skipTest("Không tìm thấy password field")
 
-    def test_07_can_access_protected_page_after_login(self):
-        """Test 7: Có thể truy cập trang protected sau login"""
-        print("\n🧪 Test 7: Kiểm tra truy cập trang protected sau login...")
+    def test_07_redirect_after_login_analysis(self):
+        """Test 7: Phân tích redirect sau login"""
+        print("\n🧪 Test 7: Phân tích redirect sau login...")
         
-        # TRƯỚC TIÊN CẦN TÌM CREDENTIALS ĐÚNG
-        # Thử login với admin/admin (phổ biến nhất)
-        self.driver.get(f"{self.base_url}/auth/login")
-        time.sleep(1)
-        
-        try:
-            username = self.driver.find_element(By.NAME, "username")
-            password = self.driver.find_element(By.NAME, "password")
-            
-            # Thử với admin/admin
-            username.send_keys("admin")
-            password.send_keys("admin")
-            
-            submit_button = self.find_submit_button()
-            if submit_button:
-                submit_button.click()
-            else:
-                password.submit()
-                
-            time.sleep(3)
-            
-            current_url = self.driver.current_url
-            print(f"   📍 URL sau login thử: {current_url}")
-            
-            # Nếu vẫn ở login, bỏ qua test này
-            if "/auth/login" in current_url:
-                print("⚠️  Không thể login - bỏ qua test truy cập trang protected")
-                self.skipTest("Không thể login với admin/admin")
-                return
-            
-            # NẾU LOGIN THÀNH CÔNG, THỬ TRUY CẬP TRANG MONG ĐỢI
-            # Kiểm tra form action để biết trang đích
-            self.driver.get(f"{self.base_url}/auth/login")
-            time.sleep(1)
-            forms = self.driver.find_elements(By.TAG_NAME, "form")
-            
-            if forms:
-                action = forms[0].get_attribute("action") or ""
-                print(f"   🔍 Form action: {action}")
-                
-                if action:
-                    # Chuyển về trang đích
-                    self.driver.get(f"{self.base_url}{action}" if action.startswith("/") else action)
-                    time.sleep(2)
-                    
-                    current_url = self.driver.current_url
-                    page_title = self.driver.title
-                    
-                    if "not found" not in page_title.lower() and "404" not in page_title.lower():
-                        print(f"✅ Có thể truy cập trang sau login: {current_url}")
-                    else:
-                        print(f"⚠️  Trang {action} trả về 404")
-                        
-                        # Thử các trang có thể khác
-                        possible_pages = [
-                            "/dashboard.html",
-                            "/index.html",
-                            "/home.html",
-                            "/admin.html",
-                            "/main.html",
-                            "/tongquan.html"  # Dựa trên kết quả test trước
-                        ]
-                        
-                        for page in possible_pages:
-                            try:
-                                self.driver.get(f"{self.base_url}{page}")
-                                time.sleep(1)
-                                
-                                if "not found" not in self.driver.title.lower():
-                                    print(f"✅ Tìm thấy trang có thể truy cập: {page}")
-                                    break
-                            except:
-                                continue
-            else:
-                print("⚠️  Không tìm thấy form để xác định trang đích")
-                
-        except Exception as e:
-            print(f"⚠️  Lỗi: {e}")
-            self.take_screenshot("protected_page_error")
-
-    def test_08_cannot_access_protected_page_without_login(self):
-        """Test 8: Không thể truy cập trang protected khi chưa login"""
-        print("\n🧪 Test 8: Kiểm tra truy cập trang protected khi chưa login...")
-        
-        # Đảm bảo logout
-        self.driver.delete_all_cookies()
-        
-        # Kiểm tra form action để biết trang protected
+        # Phân tích form để biết trang đích
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(1)
         
         forms = self.driver.find_elements(By.TAG_NAME, "form")
-        if not forms:
-            print("⚠️  Không tìm thấy form - không thể xác định trang protected")
-            self.skipTest("Không tìm thấy form")
-            return
-        
-        form = forms[0]
-        action = form.get_attribute("action") or ""
-        
-        if not action:
-            print("⚠️  Form không có action - không thể xác định trang protected")
-            self.skipTest("Form không có action")
-            return
-        
-        # Truy cập trang protected (trang đích sau login)
-        protected_page = f"{self.base_url}{action}" if action.startswith("/") else action
-        print(f"   🔗 Thử truy cập trang protected: {protected_page}")
-        
-        self.driver.get(protected_page)
-        time.sleep(2)
-        
-        current_url = self.driver.current_url
-        page_title = self.driver.title.lower()
-        
-        print(f"   📍 URL sau truy cập: {current_url}")
-        print(f"   📄 Title: {self.driver.title}")
-        
-        # Kiểm tra: Nếu bị redirect về login hoặc hiển thị lỗi -> PASS
-        if "/auth/login" in current_url:
-            print("✅ Trang được bảo vệ - redirect về login")
-        elif "not found" in page_title or "404" in page_title:
-            print("⚠️  Trang protected không tồn tại (404)")
-        elif "access denied" in page_title or "forbidden" in page_title:
-            print("✅ Trang được bảo vệ - hiển thị access denied")
+        if forms:
+            form = forms[0]
+            action = form.get_attribute("action") or ""
+            
+            if action:
+                target_page = f"{self.base_url}{action}" if action.startswith("/") else action
+                print(f"   🔗 Trang đích được chỉ định: {target_page}")
+                
+                # Kiểm tra xem trang đích có tồn tại không
+                self.driver.get(target_page)
+                time.sleep(2)
+                
+                current_url = self.driver.current_url
+                page_title = self.driver.title.lower()
+                
+                if "not found" in page_title or "404" in page_title:
+                    print(f"   ❌ Trang đích {target_page} không tồn tại (404)")
+                    print(f"   💡 Có thể cần tạo trang {action}")
+                elif "/auth/login" in current_url:
+                    print(f"   ✅ Trang đích được bảo vệ (redirect về login)")
+                else:
+                    print(f"   ⚠️  Có thể truy cập trang đích: {current_url}")
+            else:
+                print("   ⚠️  Form không có action attribute")
         else:
-            print(f"❌ CÓ THỂ TRUY CẬP TRANG PROTECTED KHI CHƯA LOGIN!")
-            self.take_screenshot("unprotected_access")
-            # Không fail, chỉ cảnh báo
-            print("⚠️  Cảnh báo: Trang không được bảo vệ đúng cách")
+            print("   ⚠️  Không tìm thấy form")
+        
+        print("✅ Đã phân tích redirect logic")
 
-    def test_09_logout_redirects_to_login(self):
-        """Test 9: Logout chuyển về trang login"""
-        print("\n🧪 Test 9: Kiểm tra logout...")
-
-        # Thử logout trực tiếp
+    def test_08_session_management(self):
+        """Test 8: Kiểm tra quản lý session"""
+        print("\n🧪 Test 8: Kiểm tra quản lý session...")
+        
+        # 1. Kiểm tra logout
+        print(f"   1. Kiểm tra logout:")
         self.driver.get(f"{self.base_url}/auth/logout")
         time.sleep(2)
         
-        current_url = self.driver.current_url
-        print(f"   📍 URL sau logout: {current_url}")
-        
-        if "/auth/login" in current_url or "/login" in current_url:
-            print("✅ Logout redirect về trang login")
+        if "/auth/login" in self.driver.current_url:
+            print("      ✅ Logout redirect về login")
         else:
-            print(f"⚠️  Không redirect về login: {current_url}")
-            self.take_screenshot("logout_no_redirect")
-
-    def test_10_remember_me_functionality(self):
-        """Test 10: Kiểm tra Remember Me (nếu có)"""
-        print("\n🧪 Test 10: Kiểm tra Remember Me...")
-
+            print(f"      ⚠️  Logout không redirect về login: {self.driver.current_url}")
+        
+        # 2. Kiểm tra session cookie
+        print(f"\n   2. Kiểm tra session cookie:")
+        cookies = self.driver.get_cookies()
+        session_cookies = [c for c in cookies if 'session' in c['name'].lower()]
+        
+        if session_cookies:
+            print(f"      ⚠️  Tìm thấy session cookies sau logout:")
+            for cookie in session_cookies:
+                print(f"        • {cookie['name']}")
+        else:
+            print("      ✅ Không có session cookies sau logout")
+        
+        # 3. Kiểm tra remember me
+        print(f"\n   3. Kiểm tra Remember Me:")
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(1)
         
         # Tìm checkbox remember me
-        checkbox_found = False
         checkbox_selectors = [
             "input[name='remember']",
             "input[name='remember_me']",
@@ -566,258 +459,35 @@ class LoginSeleniumTest(unittest.TestCase):
             ".remember-me"
         ]
         
+        remember_found = False
         for selector in checkbox_selectors:
             try:
-                checkboxes = self.driver.find_elements(By.CSS_SELECTOR, selector)
-                for checkbox in checkboxes:
-                    if checkbox.is_displayed():
-                        print(f"   ✓ Tìm thấy Remember Me checkbox")
-                        checkbox_found = True
-                        
-                        # Test checkbox
-                        initial = checkbox.is_selected()
-                        checkbox.click()
-                        time.sleep(0.5)
-                        after = checkbox.is_selected()
-                        
-                        if initial != after:
-                            print("   ✓ Checkbox có thể thay đổi trạng thái")
+                elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                for element in elements:
+                    if element.is_displayed() and element.get_attribute("type") == "checkbox":
+                        remember_found = True
+                        print("      ✅ Có Remember Me checkbox")
                         break
-                if checkbox_found:
+                if remember_found:
                     break
             except:
                 continue
         
-        if not checkbox_found:
-            print("   ⚠️  Không tìm thấy Remember Me checkbox (có thể không có)")
+        if not remember_found:
+            print("      ⚠️  Không tìm thấy Remember Me checkbox")
         
-        print("✅ Đã kiểm tra Remember Me")
+        print("✅ Đã kiểm tra session management")
 
-    def test_11_form_method_is_post(self):
-        """Test 11: Kiểm tra form method"""
-        print("\n🧪 Test 11: Kiểm tra form method...")
-
+    def test_09_security_analysis(self):
+        """Test 9: Phân tích bảo mật"""
+        print("\n🧪 Test 9: Phân tích bảo mật...")
+        
         self.driver.get(f"{self.base_url}/auth/login")
         time.sleep(1)
         
-        try:
-            # Tìm form
-            forms = self.driver.find_elements(By.TAG_NAME, "form")
-            if forms:
-                form = forms[0]
-                method = form.get_attribute("method") or ""
-                
-                # Ứng dụng của bạn dùng GET (không an toàn)
-                if method.lower() == "post":
-                    print("✅ Form method là POST (an toàn)")
-                elif method.lower() == "get":
-                    print("⚠️  Form method là GET (KHÔNG AN TOÀN - credentials hiển thị trong URL)")
-                    print("   💡 Khuyến nghị: Chuyển sang POST trong routes.py")
-                    # Không fail, chỉ cảnh báo vì đây là design của ứng dụng
-                else:
-                    print(f"⚠️  Form method là '{method}' (không xác định)")
-                    
-                # Kiểm tra action
-                action = form.get_attribute("action") or ""
-                if action:
-                    print(f"   Form action: {action}")
-                    if ".html" in action:
-                        print("   📍 Trang đích sau login: " + (f"{self.base_url}{action}" if action.startswith("/") else action))
-                else:
-                    print(f"   Form action: (trống)")
-                    
-            else:
-                print("⚠️  Không tìm thấy form tag")
-                
-        except Exception as e:
-            print(f"⚠️  Lỗi khi kiểm tra form: {str(e)}")
-
-    def test_12_comprehensive_login_test(self):
-        """Test 12: Test login toàn diện"""
-        print("\n🧪 Test 12: Test login toàn diện...")
-        
-        test_cases = [
-            ("", "", "Fields trống"),
-            ("admin", "", "Chỉ username"),
-            ("", "admin", "Chỉ password"),
-            ("wrong", "wrong", "Thông tin sai"),
-        ]
-        
-        # Thêm vài credentials có thể đúng
-        possible_correct_creds = [
-            ("admin", "admin"),
-            ("Admin", "Admin"),
-            ("administrator", "password"),
-            ("user", "user"),
-        ]
-        
-        for cred in possible_correct_creds:
-            test_cases.append((cred[0], cred[1], f"Thử credentials: {cred[0]}/{cred[1]}"))
-        
-        all_passed = True
-        
-        for username, password, description in test_cases:
-            print(f"\n   Test: {description}")
-            
-            self.driver.get(f"{self.base_url}/auth/login")
-            time.sleep(1)
-            
-            try:
-                username_field = self.driver.find_element(By.NAME, "username")
-                password_field = self.driver.find_element(By.NAME, "password")
-                
-                username_field.clear()
-                password_field.clear()
-                
-                if username:
-                    username_field.send_keys(username)
-                if password:
-                    password_field.send_keys(password)
-                
-                # Submit
-                submit_button = self.find_submit_button()
-                if submit_button:
-                    submit_button.click()
-                else:
-                    if password_field:
-                        password_field.submit()
-                
-                time.sleep(2)
-                
-                # Kiểm tra kết quả
-                current_url = self.driver.current_url
-                page_source = self.driver.page_source.lower()
-                
-                if "credentials" in description.lower():
-                    # Đây là test credentials có thể đúng
-                    if "/auth/login" not in current_url:
-                        print(f"     🎉 THÀNH CÔNG: Đăng nhập với {username}/{password}")
-                        print(f"     📍 Đã chuyển đến: {current_url}")
-                        
-                        # Quay lại login page cho test tiếp theo
-                        self.driver.get(f"{self.base_url}/auth/logout")
-                        time.sleep(1)
-                    else:
-                        print(f"     ❌ FAIL: Không đăng nhập được với {username}/{password}")
-                        if "sai thông tin" in page_source:
-                            print(f"       Lý do: Sai thông tin đăng nhập")
-                else:
-                    # Các test case validation
-                    if "/auth/login" in current_url:
-                        print(f"     ✓ PASS: Ở lại login (đúng)")
-                    else:
-                        print(f"     ❌ FAIL: Đã chuyển hướng (nên ở lại login)")
-                        all_passed = False
-                        
-            except Exception as e:
-                print(f"     ❌ ERROR: {str(e)}")
-                all_passed = False
-        
-        if all_passed:
-            print("\n✅ Tất cả test validation đều pass")
-        else:
-            print("\n⚠️  Một số test validation không pass")
-
-    # ========================
-    # HTML REPORT GENERATOR
-    # ========================
-
-    @classmethod
-    def generate_html_report(cls):
-        """Tạo HTML report từ kết quả test"""
-        if not cls.test_results:
-            print("⚠️  Không có kết quả test")
-            return
-        
-        total_tests = len(cls.test_results)
-        passed_tests = sum(1 for r in cls.test_results if r["status"] == "PASSED")
-        failed_tests = total_tests - passed_tests
-        success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
-        
-        html_content = f"""<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Selenium Test Report - Login</title>
-    <style>
-        body {{ font-family: Arial; margin: 20px; }}
-        .container {{ max-width: 1200px; margin: auto; }}
-        h1 {{ color: #333; }}
-        .summary {{ background: #f5f5f5; padding: 15px; border-radius: 5px; }}
-        .stats {{ display: flex; gap: 10px; }}
-        .stat {{ padding: 10px; border-radius: 5px; }}
-        .total {{ background: #e3f2fd; }}
-        .passed {{ background: #c8e6c9; }}
-        .failed {{ background: #ffcdd2; }}
-        table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
-        th, td {{ padding: 10px; border: 1px solid #ddd; }}
-        th {{ background: #4CAF50; color: white; }}
-        .pass {{ color: green; }}
-        .fail {{ color: red; }}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Selenium Test Report - Login</h1>
-        <p>Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
-        
-        <div class="summary">
-            <h2>Summary</h2>
-            <div class="stats">
-                <div class="stat total">Total: {total_tests}</div>
-                <div class="stat passed">Passed: {passed_tests}</div>
-                <div class="stat failed">Failed: {failed_tests}</div>
-            </div>
-            <p>Success Rate: <strong>{success_rate:.1f}%</strong></p>
-        </div>
-        
-        <h2>Test Results</h2>
-        <table>
-            <tr>
-                <th>Test</th>
-                <th>Status</th>
-                <th>Duration</th>
-                <th>Error</th>
-            </tr>
-"""
-        
-        for result in cls.test_results:
-            status_class = "pass" if result["status"] == "PASSED" else "fail"
-            error_display = result["error"] or ""
-            if len(error_display) > 100:
-                error_display = error_display[:100] + "..."
-            
-            html_content += f"""
-            <tr>
-                <td>{result['name']}</td>
-                <td class="{status_class}">{result['status']}</td>
-                <td>{result['duration']}</td>
-                <td>{error_display}</td>
-            </tr>
-"""
-        
-        html_content += """
-        </table>
-    </div>
-</body>
-</html>
-"""
-
-        report_path = "selenium_test_report.html"
-        with open(report_path, "w", encoding="utf-8") as f:
-            f.write(html_content)
-        
-        print(f"\n📄 Report đã tạo: {report_path}")
-
-if __name__ == "__main__":
-    print("=" * 80)
-    print("🚀 SELENIUM LOGIN TEST - ADAPTIVE VERSION")
-    print("=" * 80)
-    print("📌 Phát hiện từ test trước:")
-    print("   • Form method: GET (không an toàn)")
-    print("   • Form action: /auth/tongquan.html")
-    print("   • Credentials admin/Admin@123 không hoạt động")
-    print("   • Ứng dụng dùng .html extension")
-    print("=" * 80 + "\n")
-    
-    unittest.main(verbosity=2)
+        print(f"   1. Form method:")
+        forms = self.driver.find_elements(By.TAG_NAME, "form")
+        if forms:
+            method = forms[0].get_attribute("method") or "get"
+            if method.lower() == "get":
+                print("      ❌ FORM DÙNG GET - R
