@@ -169,7 +169,7 @@ class LoginUnitTest(unittest.TestCase):
         
         # Kiểm tra location header
         location = response.headers.get('Location', '')
-        self.assertTrue('/auth/dashboard' in location or '/dashboard' in location)
+        self.assertTrue('/auth/tongquan.html' in location or '/tongquan' in location)
         
         # Kiểm tra session
         with self.client.session_transaction() as sess:
