@@ -19,7 +19,7 @@ def login():
         if current_user.is_authenticated:
             logout_user()
             session.clear()
-        return render_template('auth/login.html')
+        return render_template('/login.html')
 
     if request.method == 'POST':
         username = request.form.get('username')
