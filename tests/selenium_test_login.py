@@ -711,12 +711,4 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print(f"\n📄 Report đã tạo: {report_path}")
 
-if __name__ == "__main__":
-    print("=" * 80)
-    print("🚀 SELENIUM LOGIN TEST - COMPATIBLE VERSION")
-    print("=" * 80)
-    print("📌 Lưu ý về routes.py của bạn:")
-    print("   • POST /auth/login: Validation fields trống → 'Vui lòng nhập đủ thông tin'")
-    print("   • POST /auth/login: Validation sai thông tin → 'Sai thông tin đăng nhập'")
-    print("   • POST /auth/login: Thành công → redirect /auth/tongquan (ĐÃ SỬA)")
-    print("   • GET  /auth/tongquan: Cần login, nếu chưa → redirect /auth
+
