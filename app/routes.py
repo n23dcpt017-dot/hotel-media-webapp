@@ -50,7 +50,6 @@ def login():
         login_user(user)
         return redirect("/auth/tongquan.html")
 
-# ===== CÁC ROUTES KHÁC GIỮ NGUYÊN =====
 @auth.route("/dashboard")
 @login_required
 def dashboard():
