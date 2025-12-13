@@ -384,17 +384,25 @@ class LoginSeleniumTest(unittest.TestCase):
             time.sleep(2)
             
             current_url = self.driver.current_url
+            page_title = self.driver.title
             print(f"   📍 URL tongquan: {current_url}")
+            print(f"   📄 Title tongquan: {page_title}")
             
             if "/auth/login" in current_url:
                 print("❌ Bị redirect về login khi truy cập tongquan")
                 self.take_screenshot("tongquan_redirect_to_login")
+                self.fail("Không thể truy cập tongquan sau khi đã login")
+            elif "not found" in page_title.lower() or "404" in page_title.lower():
+                print("❌ Trang tongquan không tồn tại (404)")
+                self.take_screenshot("tongquan_404")
+                self.fail("Trang tongquan trả về 404")
             else:
                 print("✅ Có thể truy cập tongquan sau login")
                 
         except Exception as e:
             print(f"⚠️  Lỗi: {str(e)}")
             self.take_screenshot("tongquan_access_error")
+            raise
 
     def test_08_cannot_access_tongquan_without_login(self):
         """Test 8: Không thể truy cập tongquan khi chưa login"""
@@ -404,17 +412,32 @@ class LoginSeleniumTest(unittest.TestCase):
         self.driver.delete_all_cookies()
         
         # Thử truy cập tongquan (thay vì dashboard)
+        print(f"   🔗 Truy cập: {self.base_url}/auth/tongquan")
         self.driver.get(f"{self.base_url}/auth/tongquan")
-        time.sleep(2)
+        time.sleep(3)
         
         current_url = self.driver.current_url
+        page_source = self.driver.page_source.lower()
         print(f"   📍 URL sau khi truy cập tongquan: {current_url}")
         
+        # KIỂM TRA KỸ HƠN: Có bị redirect về login không?
         if "/auth/login" in current_url:
-            print("✅ Bị redirect về login (đúng)")
+            print("✅ Bị redirect về login (đúng - không thể truy cập tongquan khi chưa login)")
+        elif "/auth/tongquan" in current_url:
+            # Vẫn ở trang tongquan, kiểm tra có thông báo lỗi hoặc yêu cầu login không
+            error_keywords = ["login", "đăng nhập", "vui lòng", "please", "sign in"]
+            has_login_keyword = any(keyword in page_source for keyword in error_keywords)
+            
+            if has_login_keyword:
+                print("⚠️  Vẫn ở trang tongquan nhưng có thông báo yêu cầu login")
+                self.take_screenshot("tongquan_with_login_prompt")
+            else:
+                print("❌ CÓ THỂ TRUY CẬP tongquan KHI CHƯA LOGIN (LỖI BẢO MẬT)")
+                self.take_screenshot("tongquan_no_login_access")
+                self.fail("Có thể truy cập tongquan khi chưa login - lỗi bảo mật nghiêm trọng")
         else:
-            print(f"⚠️  Có thể truy cập tongquan khi chưa login: {current_url}")
-            self.take_screenshot("tongquan_no_login")
+            print(f"⚠️  Redirect đến trang khác: {current_url}")
+            self.take_screenshot("tongquan_redirect_unknown")
 
     def test_09_logout_redirects_to_login(self):
         """Test 9: Logout chuyển về trang login"""
@@ -496,7 +519,7 @@ class LoginSeleniumTest(unittest.TestCase):
         print("✅ Đã kiểm tra Remember Me")
 
     def test_11_form_method_is_post(self):
-        """Test 11: Kiểm tra form method là POST"""
+        """Test 11: Kiểm tra form method"""
         print("\n🧪 Test 11: Kiểm tra form method...")
 
         self.driver.get(f"{self.base_url}/auth/login")
@@ -509,15 +532,22 @@ class LoginSeleniumTest(unittest.TestCase):
                 form = forms[0]
                 method = form.get_attribute("method") or ""
                 
+                # CHÚ Ý: Theo routes.py của bạn, form login nên có method="post"
+                # Nếu route của bạn là POST /auth/login thì form nên là POST
                 if method.lower() == "post":
-                    print("✅ Form method là POST (đúng)")
+                    print("✅ Form method là POST (đúng cho xử lý login)")
+                elif method.lower() == "get":
+                    print("⚠️  Form method là GET (không an toàn cho login)")
+                    # Không fail test, chỉ cảnh báo vì routes.py của bạn có thể xử lý GET
                 else:
-                    print(f"⚠️  Form method là '{method}' (nên là 'post')")
+                    print(f"⚠️  Form method là '{method}' (không xác định)")
                     
                 # Kiểm tra action
                 action = form.get_attribute("action") or ""
                 if action:
                     print(f"   Form action: {action}")
+                else:
+                    print(f"   Form action: (trống - sẽ submit đến URL hiện tại)")
                     
             else:
                 print("⚠️  Không tìm thấy form tag")
@@ -567,16 +597,21 @@ class LoginSeleniumTest(unittest.TestCase):
                 
                 # Kiểm tra kết quả
                 current_url = self.driver.current_url
+                page_source = self.driver.page_source.lower()
                 
                 if description == "Thông tin đúng":
                     if "/auth/login" not in current_url:
                         print(f"     ✓ PASS: Đã chuyển hướng khỏi login")
                     else:
                         print(f"     ❌ FAIL: Vẫn ở login")
+                        print(f"     📄 Page preview: {page_source[:200]}...")
                 else:
-                    # Các trường hợp sai nên ở lại login
+                    # Các trường hợp sai nên ở lại login hoặc hiển thị lỗi
                     if "/auth/login" in current_url:
                         print(f"     ✓ PASS: Ở lại login (đúng)")
+                        # Kiểm tra có thông báo lỗi không
+                        if "vui lòng" in page_source or "sai thông tin" in page_source:
+                            print(f"     ✓ Có thông báo lỗi")
                     else:
                         print(f"     ⚠️  WARN: Đã chuyển hướng (có thể lỗi)")
                         
@@ -684,7 +719,4 @@ if __name__ == "__main__":
     print("   • POST /auth/login: Validation fields trống → 'Vui lòng nhập đủ thông tin'")
     print("   • POST /auth/login: Validation sai thông tin → 'Sai thông tin đăng nhập'")
     print("   • POST /auth/login: Thành công → redirect /auth/tongquan (ĐÃ SỬA)")
-    print("   • GET  /auth/tongquan: Cần login, nếu chưa → redirect /auth/login")
-    print("=" * 80 + "\n")
-    
-    unittest.main(verbosity=2)
+    print("   • GET  /auth/tongquan: Cần login, nếu chưa → redirect /auth
