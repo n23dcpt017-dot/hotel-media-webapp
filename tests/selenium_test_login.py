@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 import time
 from datetime import datetime
 import os
@@ -446,7 +447,6 @@ class LoginSeleniumTest(unittest.TestCase):
             password.send_keys("test_pass")
             
             # Submit bằng Enter
-            from selenium.webdriver.common.keys import Keys
             password.send_keys(Keys.ENTER)
             time.sleep(2)
             
@@ -836,7 +836,7 @@ class LoginSeleniumTest(unittest.TestCase):
         
         print("✅ Đã kiểm tra performance và load time")
 
-    def generate_summary_report(self):
+    def test_summary_report(self):
         """Test 11: Tạo summary report"""
         print("\n🧪 Test 11: Tạo summary report...")
         
@@ -926,7 +926,3 @@ class LoginSeleniumTest(unittest.TestCase):
         if "/auth/login" in self.driver.current_url:
             print("   ✅ Protected page redirects when not authenticated")
         else:
-            print("   ❌ Protected page accessible without login")
-        
-        print("\n💡 RECOMMENDATIONS:")
-        print("   1. Change form method from GET to
