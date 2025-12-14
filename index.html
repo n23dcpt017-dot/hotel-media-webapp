@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
+      ="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -605,34 +605,32 @@
     </style>
   </head>
   <body>
-    <header class="main-header">
-      <nav class="navbar-container">
-        <div class="">
-          <a href="#">
-            <img
-              src="images/logo.svg"
-              alt="Logo Grand Hotel"
-              class="logo-image"
-            />
-          </a>
-        </div>
+ <header class="main-header">
+  <nav class="navbar-container">
+    <div class="">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
+      </a>
+    </div>
 
-        <ul class="nav-menu">
-          <li><a href="#" class="nav-link active">Trang Chủ</a></li>
-          <li><a href="#" class="nav-link">Phòng</a></li>
-          <li><a href="#" class="nav-link">Dịch vụ</a></li>
-          <li><a href="#" class="nav-link">Tin tức</a></li>
-          <li><a href="#" class="nav-link">Liên hệ</a></li>
-        </ul>
+<ul class="nav-menu">
+  <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
+  <li><a href="templates/phong.html" class="nav-link">Phòng</a></li>
+  <li><a href="templates/dichvu.html" class="nav-link">Dịch vụ</a></li>
+  <li><a href="templates/tintuc.html" class="nav-link">Tin tức</a></li>
+  <li><a href="templates/lienhe.html" class="nav-link">Liên hệ</a></li>
+</ul>
 
-        <div class="nav-right">
-          <a href="#" class="btn-book">Đặt phòng ngay</a>
-          <a href="templates/login.html" class="nav-icon">
-            <i class="fa-regular fa-user"></i>
-          </a>
-        </div>
-      </nav>
-    </header>
+
+    <div class="nav-right">
+      <a href="templates/phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="templates/login.html" class="nav-icon">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
 
     <section class="hero-section">
       <div class="hero-overlay">
@@ -646,8 +644,8 @@
           <p class="hero-subtitle">Trải nghiệm sang trọng, dịch vụ hoàn hảo</p>
 
           <div class="hero-buttons">
-            <a href="#" class="btn btn-primary">Khám phá ngay</a>
-            <a href="#" class="btn btn-secondary">Xem video</a>
+            <a href="templates/phong.html" class="btn btn-primary">Khám phá ngay</a>
+            <a href="templates/videohub.html" class="btn btn-secondary">Xem video</a>
           </div>
         </div>
       </div>
@@ -679,7 +677,7 @@
             </article>
           </a>
 
-          <a href="templates/baiviet1.html" class="news-card-link">
+          <a href="templates/baiviet.html" class="news-card-link">
             <article class="news-card">
               <div class="card-image">
                 <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
@@ -705,7 +703,7 @@
         <h2>Tin tức mới nhất</h2>
 
         <div class="news-grid grid-3-cols">
-          <a href="templates/baiviet2.html" class="news-card-link">
+          <a href="templates/baiviet.html" class="news-card-link">
             <article class="news-card">
               <div class="card-image">
                 <img src="images/phong1.png" alt="Phòng Deluxe" />
@@ -831,5 +829,76 @@
         </div>
       </div>
     </footer>
+ <!-- TAILWIND -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Container popup -->
+<div id="livestream-root"></div>
+
+<!-- React + ReactDOM + Babel -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Script React popup -->
+<script type="text/babel">
+  const { useState } = React;
+
+  function MiniLivestream() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const videoUrl = "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
+
+    return (
+      <>
+        {!isOpen && (
+          <button
+            onClick={() => setIsOpen(true)}
+            className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg"
+          >
+            Xem Livestream
+          </button>
+        )}
+
+        {isOpen && (
+          <div className="fixed bottom-4 right-4 z-50 w-[360px] h-[202px] bg-white rounded shadow-lg overflow-hidden flex flex-col">
+            
+            <div className="flex justify-between items-center bg-red-600 text-white px-2 py-1">
+              <span className="text-xs font-bold uppercase">LIVE</span>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white font-bold text-lg leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="flex-1">
+              <iframe
+                src={videoUrl}
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                allow="autoplay"
+                title="Livestream"
+              ></iframe>
+            </div>
+
+            <div
+              className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer"
+              onClick={() => window.location.href = "videohub.html"}
+            >
+              Xem tất cả Livestream
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("livestream-root")).render(<MiniLivestream />);
+</script>
+
   </body>
 </html>
