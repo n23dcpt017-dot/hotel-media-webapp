@@ -548,6 +548,91 @@
 .notif-view-all:hover {
   background: #3730a3;
 }
+/* ===== POPUP CÀI ĐẶT LIVESTREAM ===== */
+
+.setting-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.setting-modal {
+  background: #ffffff;
+  width: 420px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.setting-modal h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.setting-item {
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+.setting-item label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.setting-item select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.setting-actions {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.btn-close-setting {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-close-setting:hover {
+  background: #0b5ed7;
+}
+/* ===== LIVE TITLE OVERLAY ===== */
+.live-title-overlay {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  display: none;
+  z-index: 5;
+}
+
+.video-placeholder {
+  position: relative;
+}
+.live-title-overlay.active {
+  display: block;
+}
 
   </style>
   <script>
@@ -814,9 +899,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="livestream-main-column">
               <div class="ls-card video-player-card">
                 <div class="video-placeholder">
-                  <i class="fa-solid fa-video-slash"></i>
-                  <span>Camera chưa được bật</span>
-                </div>
+  <!-- THÊM DÒNG NÀY -->
+  <div class="live-title-overlay" id="liveTitleOverlay"></div>
+
+  <i class="fa-solid fa-video-slash"></i>
+  <span>Camera chưa được bật</span>
+</div>
+
                 <div class="video-controls">
                   <div class="control-group-left">
                     <button class="control-btn">
@@ -828,11 +917,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="control-btn">
                       <i class="fa-solid fa-desktop"></i> Chia sẻ màn hình
                     </button>
-                    <button class="control-btn">
-                      <i class="fa-solid fa-cog"></i> Cài đặt
-                    </button>
+                    <button class="control-btn" id="btn-setting">
+  <i class="fa-solid fa-cog"></i> Cài đặt
+</button>
                   </div>
-                  <button class="btn-start-stream">Bắt đầu Livestream</button>
+                  <button class="btn-start-stream" id="btnStartLive">
+  Bắt đầu Livestream
+</button>
+
                 </div>
               </div>
 
@@ -840,15 +932,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3 class="ls-card-header">Thông tin phát sóng</h3>
                 <div class="form-group">
                   <input
-                    type="text"
-                    placeholder="Tiêu đề livestream (Ví dụ: Tour tham quan phòng Deluxe mới...)"
-                  />
+  type="text"
+  id="liveTitleInput"
+  placeholder="Tiêu đề livestream (Ví dụ: Tour tham quan phòng Deluxe mới...)"
+/>
+
                 </div>
                 <div class="form-group">
                   <textarea
-                    rows="4"
-                    placeholder="Mô tả nội dung livestream"
-                  ></textarea>
+  id="liveDescInput"
+  rows="4"
+  placeholder="Mô tả nội dung livestream"
+></textarea>
+
                 </div>
               </div>
             </div>
@@ -990,6 +1086,110 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", () => {
     popup.style.display = "none";
   });
+</script>
+<!-- SETTING POPUP -->
+<div class="setting-overlay" id="settingOverlay">
+  <div class="setting-modal">
+    <h3>Cài đặt livestream</h3>
+
+    <div class="setting-item">
+      <label>
+        <input type="checkbox" checked />
+        Hiển thị tiêu đề trên video
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <label>
+        <input type="checkbox" checked />
+        Bật bình luận trực tiếp
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <label>Giao diện bình luận</label>
+      <select>
+        <option>Chuẩn (YouTube)</option>
+        <option>Thu gọn</option>
+      </select>
+    </div>
+
+    <div class="setting-actions">
+      <button class="btn-close-setting">Đóng</button>
+    </div>
+  </div>
+</div>
+<script>
+  const btnSetting = document.getElementById("btn-setting");
+  const settingOverlay = document.getElementById("settingOverlay");
+  const btnCloseSetting = document.querySelector(".btn-close-setting");
+
+  btnSetting.addEventListener("click", () => {
+    settingOverlay.style.display = "flex";
+  });
+
+  btnCloseSetting.addEventListener("click", () => {
+    settingOverlay.style.display = "none";
+  });
+
+  // Click ra ngoài modal để đóng
+  settingOverlay.addEventListener("click", (e) => {
+    if (e.target === settingOverlay) {
+      settingOverlay.style.display = "none";
+    }
+  });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("btnStartLive");
+  const titleInput = document.getElementById("liveTitleInput");
+  const descInput  = document.getElementById("liveDescInput");
+
+  const titleOverlay = document.getElementById("liveTitleOverlay");
+  const commentCard  = document.querySelector(".comments-card");
+
+  if (!startBtn) return;
+
+  startBtn.addEventListener("click", () => {
+    const title = titleInput.value.trim() || "Livestream đang diễn ra";
+    const desc  = descInput.value.trim() || "Chào mừng mọi người";
+
+    // ===== TIÊU ĐỀ ĐÈ LÊN VIDEO =====
+    titleOverlay.innerHTML = `
+      <strong>${title}</strong><br/>
+      <small>${desc}</small>
+    `;
+    titleOverlay.classList.add("active");
+
+    // ===== ĐỔI GIAO DIỆN BÌNH LUẬN =====
+    commentCard.innerHTML = `
+      <h3 class="ls-card-header">Bình luận trực tiếp</h3>
+      <div class="live-comments"></div>
+    `;
+
+    const liveComments = commentCard.querySelector(".live-comments");
+
+    liveComments.innerHTML =
+      `<div class="comment system">🔴 Livestream đã bắt đầu</div>`;
+
+    const users = ["Minh", "Lan", "Tuấn", "Hà", "Viewer123"];
+    const msgs = [
+      "Nghe rõ không ạ?",
+      "Hình ảnh nét quá",
+      "Chào admin",
+      "Like mạnh nào!",
+      "Âm thanh ổn chưa?"
+    ];
+
+    setInterval(() => {
+      const c = document.createElement("div");
+      c.className = "comment";
+      c.innerHTML = `<strong>${users[Math.floor(Math.random()*users.length)]}</strong>: ${msgs[Math.floor(Math.random()*msgs.length)]}`;
+      liveComments.appendChild(c);
+      liveComments.scrollTop = liveComments.scrollHeight;
+    }, 3000);
+  });
+});
 </script>
 
   </body>
