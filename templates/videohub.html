@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Hub - BCC Grand Hotel</title>
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React + ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- HEADER -->
+<header class="main-header">
+  <nav class="navbar-container">
+    <!-- Logo -->
+    <div>
+      <a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/"><img src="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/images/logo.svg" alt="Logo Grand Hotel" class="logo-image"/></a>
+    </div>
+
+    <!-- Menu -->
+    <ul class="nav-menu">
+      <li><a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/" class="nav-link active">Trang Chủ</a></li>
+      <li><a href="phong.html" class="nav-link">Phòng</a></li>
+      <li><a href="dichvu.html" class="nav-link">Dịch vụ</a></li>
+      <li><a href="tintuc.html" class="nav-link">Tin tức</a></li>
+      <li><a href="lienhe.html" class="nav-link">Liên hệ</a></li>
+    </ul>
+
+    <!-- Right buttons -->
+    <div class="nav-right">
+      <a href="phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="login.html" class="nav-icon">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- CSS HEADER -->
+<style>
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 15px 0;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo-image { height: 50px; width: auto; display: block; }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0; padding: 0;
+}
+.nav-link {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: color 0.3s;
+  color: #333;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link.active { color: #007bff; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btn-book {
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #333;
+  text-decoration: none;
+}
+.btn-book:hover {
+  background-color: #f8f8f8;
+  border-color: #aaa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.nav-icon {
+  font-size: 24px;
+  color: #555;
+  transition: color 0.3s;
+}
+.nav-icon:hover { color: #007bff; }
+
+/* Responsive */
+@media(max-width:768px){
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+<body class="bg-gray-50">
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function VideoHub() {
+      const [activeTab, setActiveTab] = useState("live");
+      const [selectedVideo, setSelectedVideo] = useState(null);
+      const [showPopup, setShowPopup] = useState(true); // popup mặc định hiện
+
+      const livestreams = [
+        {
+          id: 1,
+          title: "ĐANG PHÁT: Trực tiếp tham quan phòng Tổng Thống – Grand Suite",
+          description: "Trải nghiệm thực tế không gian phòng Tổng Thống với nội thất cao cấp, dịch vụ đặc quyền và góc view tuyệt đẹp bao quát toàn thành phố.",
+          type: "live",
+          thumbnail: "https://images.unsplash.com/photo-1725962479542-1be0a6b0d444?w=600",
+          views: "1.2K",
+          date: "Hôm nay",
+          url: "https://www.youtube.com/embed/cmfeMfdYRFs"
+        },
+        {
+          id: 2,
+          title: "Trực tiếp: Khám phá khu ẩm thực Grand Dining",
+          description: "Giới thiệu khu buffet sáng nổi tiếng với hơn 80 món Á – Âu, cùng bếp mở cho khách tự chọn.",
+          type: "past",
+          thumbnail: "https://images.unsplash.com/photo-1756504473770-2fab6e0df54d?w=600",
+          views: "4.2K",
+          date: "Hôm qua",
+          url: "https://www.youtube.com/embed/cmfeMfdYRFs"
+        },
+        {
+          id: 3,
+          title: "Trải nghiệm dịch vụ Spa Massage cao cấp",
+          description: "Buổi livestream chia sẻ kỹ thuật massage trị liệu cùng các liệu trình mới nhất tại Grand Spa.",
+          type: "past",
+          thumbnail: "https://images.unsplash.com/photo-1604161926875-bb58f9a0d81b?w=600",
+          views: "6.7K",
+          date: "3 ngày trước",
+          url: "https://www.youtube.com/embed/cmfeMfdYRFs"
+        }
+      ];
+
+      const videos = [
+        {
+          id: 4,
+          title: "Hành trình 24 giờ trải nghiệm tại BCC Grand Hotel",
+          description: "Một ngày tại khách sạn: ăn uống, giải trí, spa và những dịch vụ cao cấp.",
+          views: "18K",
+          date: "1 tuần trước",
+          duration: "10:45",
+          thumbnail: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600",
+          url: "https://www.youtube.com/embed/cmfeMfdYRFs"
+        },
+        {
+          id: 5,
+          title: "Giới thiệu Sky Bar – View thành phố tuyệt đẹp",
+          description: "Không gian sang trọng – cocktail đặc sắc – DJ mỗi cuối tuần.",
+          views: "9.5K",
+          date: "3 ngày trước",
+          duration: "7:11",
+          thumbnail: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600",
+          url: "https://www.youtube.com/embed/cmfeMfdYRFs"
+        }
+      ];
+
+      return (
+        <div>
+
+          {/* HERO */}
+          <section className="relative h-[300px] flex items-center justify-center bg-cover bg-center"
+            style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1764805354913-953132e82086')" }}>
+            <div className="text-center text-white px-4">
+              <h1 className="text-5xl font-bold mb-4">Video & Livestream</h1>
+              <p className="text-xl text-gray-200">Khám phá BCC Grand Hotel qua các chương trình trực tiếp và video</p>
+            </div>
+          </section>
+
+          {/* TAB MENU */}
+          <section className="bg-white border-b border-gray-200">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex gap-8">
+                <button
+                  onClick={() => setActiveTab("live")}
+                  className={`py-4 px-6 border-b-2 ${activeTab === "live" ? "border-blue-500 text-blue-500" : "border-transparent text-gray-600 hover:text-gray-900"}`}>
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+                    Livestream
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveTab("videos")}
+                  className={`py-4 px-6 border-b-2 ${activeTab === "videos" ? "border-blue-500 text-blue-500" : "border-transparent text-gray-600 hover:text-gray-900"}`}>
+                  <span className="flex items-center gap-2">Video</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* TAB CONTENT */}
+          <section className="max-w-7xl mx-auto px-6 py-8">
+
+            {/* LIVESTREAM TAB */}
+            {activeTab === "live" && (
+              <div className="space-y-8">
+
+               {/* VIDEO ĐANG PHÁT */}
+{livestreams.filter(v => v.type === "live").map(ls => (
+  <div key={ls.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+
+    {/* Video frame lớn, autoplay + mute */}
+    <div className="aspect-video w-full bg-black">
+      <iframe
+        src={ls.url + "?autoplay=1&mute=1"}
+        className="w-full h-full"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title={ls.title}
+      ></iframe>
+    </div>
+
+    {/* Thông tin video */}
+    <div className="p-6">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="px-2 py-1 bg-red-600 text-white text-xs font-bold uppercase rounded">Đang phát</span>
+        <span className="text-gray-500 text-xs">{ls.date} – {ls.views} lượt xem</span>
+      </div>
+      <h2 className="text-2xl font-bold mb-2">{ls.title}</h2>
+      <p className="text-gray-600">{ls.description}</p>
+    </div>
+
+  </div>
+))}
+
+
+                {/* LỊCH PHÁT SÓNG */}
+                <div className="bg-blue-50 p-6 rounded-xl border">
+                  <h3 className="text-xl font-bold mb-4">Lịch phát sóng</h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li>• 09:00 – Trực tiếp tham quan phòng Tổng Thống</li>
+                    <li>• 14:00 – Trải nghiệm buffet trưa Grand Dining</li>
+                    <li>• 19:00 – Livestream Sky Bar Night Session</li>
+                  </ul>
+                </div>
+
+                {/* LIVESTREAM ĐÃ PHÁT */}
+                <h3 className="text-xl font-bold">Livestream đã phát</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {livestreams.filter(v => v.type === "past").map(v => (
+                    <div key={v.id} className="bg-gray-100 rounded-lg overflow-hidden cursor-pointer" onClick={() => setSelectedVideo(v)}>
+                      <div className="aspect-video">
+                        <img src={v.thumbnail} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="p-4">
+                        <h2 className="text-lg font-bold">{v.title}</h2>
+                        <p className="text-gray-600 text-sm mt-1">{v.description}</p>
+                        <p className="text-gray-500 text-xs mt-2">{v.date} – {v.views} lượt xem</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* VIDEO TAB */}
+            {activeTab === "videos" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {videos.map(v => (
+                  <div key={v.id} className="bg-white rounded-lg border shadow cursor-pointer" onClick={() => setSelectedVideo(v)}>
+                    <div className="aspect-video relative">
+                      <img src={v.thumbnail} className="w-full h-full object-cover" />
+                      <span className="absolute bottom-2 right-2 text-xs bg-black/70 text-white px-2 py-1 rounded">{v.duration}</span>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-lg">{v.title}</h3>
+                      <p className="text-gray-600 text-sm mt-1">{v.description}</p>
+                      <p className="text-gray-500 text-xs mt-2">{v.date} – {v.views} lượt xem</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+          </section>
+
+          {/* MINI POPUP LIVESTREAM */}
+          {showPopup && (
+            <div className="fixed bottom-6 right-6 bg-white rounded-lg shadow-xl w-80 z-50 overflow-hidden">
+              <div className="flex justify-between items-center p-2 bg-red-600 text-white">
+                <span className="text-sm font-bold">LIVE</span>
+                <button className="text-white font-bold" onClick={() => setShowPopup(false)}>✕</button>
+              </div>
+              <iframe
+                src={livestreams[0].url}
+                className="w-full h-40"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <div className="p-2 text-sm">
+                <strong>{livestreams[0].title}</strong>
+                <p className="truncate">{livestreams[0].description}</p>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL VIDEO */}
+          {selectedVideo && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full">
+                <iframe
+                  src={selectedVideo.url}
+                  className="modal-video rounded-t-xl w-full aspect-video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+
+                <div className="p-6">
+                  <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
+                  <p className="text-gray-600 mt-2">{selectedVideo.description}</p>
+
+                  <button
+                    onClick={() => setSelectedVideo(null)}
+                    className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<VideoHub />);
+  </script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-column footer-about">
+        <h3 class="footer-logo">3CC Grand Hotel</h3>
+        <p class="footer-tagline">Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo</p>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Liên kết</h4>
+        <ul>
+          <li><a href="#">Về chúng tôi</a></li>
+          <li><a href="#">Dịch vụ</a></li>
+          <li><a href="#">Tin tức</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách</a></li>
+          <li><a href="#">Điều khoản</a></li>
+          <li><a href="#">Bảo mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <h4>Liên hệ</h4>
+        <p>123 Đường ABC, TP.HCM</p>
+        <p>Hotline: 1900 xxxx</p>
+        <p>Email: info@grandhotel.vn</p>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CSS FOOTER -->
+<style>
+  .site-footer {
+    background-color: #0d1b2a;
+    color: #adb5bd;
+    padding: 60px 0 20px 0;
+    font-family: "Inter", sans-serif;
+  }
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 30px;
+  }
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+  }
+  .footer-tagline {
+    font-size: 15px;
+    color: #ced4da;
+    margin: 0;
+  }
+  .footer-links h4, .footer-contact h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+  }
+  .footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: #ffffff; text-decoration: underline; }
+  .footer-contact p {
+    font-size: 15px;
+    margin: 0 0 10px 0;
+    color: #ced4da;
+  }
+  .footer-divider {
+    border: 0;
+    border-top: 1px solid #343a40;
+    margin: 20px 0;
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+  }
+  .footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+</body>
+</html>
+
+

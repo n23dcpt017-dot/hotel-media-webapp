@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin tức - BCC Grand Hotel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .news-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .news-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .news-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .category-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .category-btn.active {
+            background-color: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        .category-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .news-category {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-rooms { background-color: #e3f2fd; color: #1976d2; }
+        .category-food { background-color: #f1f8e9; color: #388e3c; }
+        .category-promotion { background-color: #fff3e0; color: #f57c00; }
+        .category-events { background-color: #fce4ec; color: #c2185b; }
+        .category-services { background-color: #e8eaf6; color: #303f9f; }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .news-author {
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-header h1 {
+                font-size: 2rem;
+            }
+
+            .category-filters {
+                gap: 8px;
+            }
+
+            .category-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+ 
+    </style>
+</head>
+<body>
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- HEADER -->
+<header class="main-header">
+  <nav class="navbar-container">
+    <!-- Logo -->
+    <div>
+      <a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/"><img src="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/images/logo.svg" alt="Logo Grand Hotel" class="logo-image"/></a>
+    </div>
+
+    <!-- Menu -->
+    <ul class="nav-menu">
+      <li><a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/" class="nav-link">Trang Chủ</a></li>
+      <li><a href="phong.html" class="nav-link">Phòng</a></li>
+      <li><a href="dichvu.html" class="nav-link">Dịch vụ</a></li>
+      <li><a href="tintuc.html" class="nav-link active">Tin tức</a></li>
+      <li><a href="lienhe.html" class="nav-link">Liên hệ</a></li>
+    </ul>
+
+    <!-- Right buttons -->
+    <div class="nav-right">
+      <a href="phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="login.html" class="nav-icon">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- CSS HEADER -->
+<style>
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 15px 0;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo-image { height: 50px; width: auto; display: block; }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0; padding: 0;
+}
+.nav-link {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: color 0.3s;
+  color: #333;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link.active { color: #007bff; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btn-book {
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #333;
+  text-decoration: none;
+}
+.btn-book:hover {
+  background-color: #f8f8f8;
+  border-color: #aaa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.nav-icon {
+  font-size: 24px;
+  color: #555;
+  transition: color 0.3s;
+}
+.nav-icon:hover { color: #007bff; }
+
+/* Responsive */
+@media(max-width:768px){
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+    <div class="news-container">
+        <div class="news-header">
+            <h1>Tin tức & Sự kiện</h1>
+            <p>Cập nhật những thông tin mới nhất về các dịch vụ, ưu đãi và sự kiện đặc biệt tại BCC Grand Hotel</p>
+        </div>
+
+        <div class="category-filters" id="categoryFilters">
+            <!-- Category buttons will be generated by JavaScript -->
+        </div>
+
+        <div class="news-grid" id="newsGrid">
+            <!-- News items will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // News data
+        const news = [
+            {
+                id: 1,
+                title: 'Ra mắt phòng Presidential Suite - Đỉnh cao sang trọng',
+                category: 'rooms',
+                image: 'https://images.unsplash.com/photo-1725962479542-1be0a6b0d444?w=800',
+                excerpt: 'BCC Grand Hotel tự hào giới thiệu phòng Presidential Suite với diện tích 120m², thiết kế sang trọng bậc nhất cùng dịch vụ butler riêng 24/7.',
+                date: '10/12/2025',
+                author: 'BCC Grand Hotel',
+            },
+            {
+                id: 2,
+                title: 'Buffet hải sản cao cấp mỗi thứ 6 tại Grand Dining',
+                category: 'food',
+                image: 'https://images.unsplash.com/photo-1756504473770-2fab6e0df54d?w=800',
+                excerpt: 'Thưởng thức buffet hải sản tươi sống với hơn 50 món đặc sản biển cùng các món Á - Âu đa dạng. Giá chỉ từ 899,000đ/người.',
+                date: '09/12/2025',
+                author: 'Grand Dining',
+            },
+            {
+                id: 3,
+                title: 'FLASH SALE - Giảm giá 50% mừng cuối năm',
+                category: 'promotion',
+                image: 'https://images.unsplash.com/photo-1755419089786-e94d85396eaa?w=800',
+                excerpt: 'Chương trình khuyến mãi đặc biệt với ưu đãi lên đến 50% cho tất cả hạng phòng. Áp dụng từ nay đến 31/12/2025.',
+                date: '08/12/2025',
+                author: 'Marketing Team',
+            },
+            {
+                id: 4,
+                title: 'Đêm Gala mừng năm mới 2026 tại Grand Ballroom',
+                category: 'events',
+                image: 'https://images.unsplash.com/photo-1584564928625-483c5be78288?w=800',
+                excerpt: 'Đón chào năm mới 2026 với đêm Gala hoành tráng tại Grand Ballroom. Chương trình âm nhạc sôi động, buffet cao cấp và pháo hoa rực rỡ.',
+                date: '07/12/2025',
+                author: 'Events Team',
+            },
+            {
+                id: 5,
+                title: 'Khai trương Spa & Wellness Center mới',
+                category: 'services',
+                image: 'https://images.unsplash.com/photo-1604161926875-bb58f9a0d81b?w=800',
+                excerpt: 'Ra mắt Spa & Wellness Center với trang thiết bị hiện đại, đội ngũ chuyên viên chuyên nghiệp. Ưu đãi 30% cho dịch vụ spa trong tháng đầu.',
+                date: '06/12/2025',
+                author: 'Spa Manager',
+            },
+            {
+                id: 6,
+                title: 'Phòng Deluxe Ocean View - Trải nghiệm view biển tuyệt đẹp',
+                category: 'rooms',
+                image: 'https://images.unsplash.com/photo-1731336478850-6bce7235e320?w=800',
+                excerpt: 'Bổ sung hạng phòng Deluxe Ocean View với tầm nhìn panorama ra biển. Thiết kế hiện đại, ban công riêng, giá ưu đãi cho khách đặt sớm.',
+                date: '05/12/2025',
+                author: 'BCC Grand Hotel',
+            },
+            {
+                id: 7,
+                title: 'Workshop ẩm thực Ý cùng Chef Marco Rossi',
+                category: 'food',
+                image: 'https://images.unsplash.com/photo-1543539571-2d88da875d21?w=800',
+                excerpt: 'Học cách làm pizza, pasta chính thống từ Chef người Ý nổi tiếng. Giới hạn 20 người/buổi. Đăng ký ngay!',
+                date: '04/12/2025',
+                author: 'Culinary Team',
+            },
+            {
+                id: 8,
+                title: 'Voucher giảm 40% cho khách hàng thân thiết',
+                category: 'promotion',
+                image: 'https://images.unsplash.com/photo-1755419089786-e94d85396eaa?w=800',
+                excerpt: 'Chương trình tri ân khách hàng thân thiết với voucher giảm giá 40% cho lần đặt phòng tiếp theo. Đăng ký thành viên để nhận ưu đãi.',
+                date: '03/12/2025',
+                author: 'Customer Care',
+            },
+            {
+                id: 9,
+                title: 'Triển lãm nghệ thuật đương đại tại Lobby',
+                category: 'events',
+                image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800',
+                excerpt: 'Triển lãm tranh nghệ thuật đương đại của các họa sĩ nổi tiếng Việt Nam. Miễn phí tham quan từ 15-30/12/2025.',
+                date: '02/12/2025',
+                author: 'Events Team',
+            },
+            {
+                id: 10,
+                title: 'Dịch vụ đưa đón sân bay bằng xe sang',
+                category: 'services',
+                image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800',
+                excerpt: 'Ra mắt dịch vụ đưa đón sân bay bằng xe Mercedes S-Class. Thoải mái, sang trọng, an toàn. Ưu đãi 20% cho khách đặt trước.',
+                date: '01/12/2025',
+                author: 'Concierge',
+            },
+            {
+                id: 11,
+                title: 'Món mới: Set menu 5 món phong cách Pháp',
+                category: 'food',
+                image: 'https://images.unsplash.com/photo-1756504473770-2fab6e0df54d?w=800',
+                excerpt: 'Trải nghiệm ẩm thực Pháp cao cấp với set menu 5 món được chế biến bởi Chef người Pháp.',
+                date: '30/11/2025',
+                author: 'Culinary Team',
+            }
+        ];
+
+        // Categories data
+        const categories = [
+            { id: 'all', name: 'Tất cả', icon: null },
+            { id: 'rooms', name: 'Phòng', icon: 'fa-bed' },
+            { id: 'food', name: 'Ẩm thực', icon: 'fa-utensils' },
+            { id: 'promotion', name: 'Khuyến mãi', icon: 'fa-gift' },
+            { id: 'events', name: 'Sự kiện', icon: 'fa-calendar-alt' },
+            { id: 'services', name: 'Dịch vụ', icon: 'fa-sparkles' },
+        ];
+
+        // Current active category
+        let activeCategory = 'all';
+
+        // Initialize the component
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCategoryFilters();
+            renderNewsItems();
+
+            // Add event listeners to category buttons
+            document.getElementById('categoryFilters').addEventListener('click', function(e) {
+                if (e.target.closest('.category-btn')) {
+                    const button = e.target.closest('.category-btn');
+                    const categoryId = button.getAttribute('data-category');
+
+                    // Update active category
+                    activeCategory = categoryId;
+
+                    // Update UI
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    // Re-render news items
+                    renderNewsItems();
+                }
+            });
+        });
+
+        // Render category filter buttons
+        function renderCategoryFilters() {
+            const filtersContainer = document.getElementById('categoryFilters');
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.setAttribute('data-category', category.id);
+
+                if (category.id === activeCategory) {
+                    button.classList.add('active');
+                }
+
+                if (category.icon) {
+                    const icon = document.createElement('i');
+                    icon.className = `fas ${category.icon} category-icon`;
+                    button.appendChild(icon);
+                }
+
+                const name = document.createElement('span');
+                name.textContent = category.name;
+                button.appendChild(name);
+
+                filtersContainer.appendChild(button);
+            });
+        }
+
+        // Render news items based on active category
+        function renderNewsItems() {
+            const newsGrid = document.getElementById('newsGrid');
+            newsGrid.innerHTML = '';
+
+            const filteredNews = activeCategory === 'all'
+                ? news
+                : news.filter(item => item.category === activeCategory);
+
+            filteredNews.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="news-image">
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category category-${item.category}">${getCategoryName(item.category)}</span>
+                            <span>${item.date}</span>
+                        </div>
+                        <h3 class="news-title">${item.title}</h3>
+                        <p class="news-excerpt">${item.excerpt}</p>
+                        <div class="news-footer">
+                            <span class="news-author">${item.author}</span>
+                        </div>
+                    </div>
+                `;
+
+                newsGrid.appendChild(card);
+            });
+        }
+
+        // Get category name from category id
+        function getCategoryName(categoryId) {
+            const category = categories.find(cat => cat.id === categoryId);
+            return category ? category.name : '';
+        }
+    </script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-column footer-about">
+        <h3 class="footer-logo">3CC Grand Hotel</h3>
+        <p class="footer-tagline">Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo</p>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Liên kết</h4>
+        <ul>
+          <li><a href="#">Về chúng tôi</a></li>
+          <li><a href="#">Dịch vụ</a></li>
+          <li><a href="#">Tin tức</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách</a></li>
+          <li><a href="#">Điều khoản</a></li>
+          <li><a href="#">Bảo mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <h4>Liên hệ</h4>
+        <p>123 Đường ABC, TP.HCM</p>
+        <p>Hotline: 1900 xxxx</p>
+        <p>Email: info@grandhotel.vn</p>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CSS FOOTER -->
+<style>
+  .site-footer {
+    background-color: #0d1b2a;
+    color: #adb5bd;
+    padding: 60px 0 20px 0;
+    font-family: "Inter", sans-serif;
+  }
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 30px;
+  }
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+  }
+  .footer-tagline {
+    font-size: 15px;
+    color: #ced4da;
+    margin: 0;
+  }
+  .footer-links h4, .footer-contact h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+  }
+  .footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: #ffffff; text-decoration: underline; }
+  .footer-contact p {
+    font-size: 15px;
+    margin: 0 0 10px 0;
+    color: #ced4da;
+  }
+  .footer-divider {
+    border: 0;
+    border-top: 1px solid #343a40;
+    margin: 20px 0;
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+  }
+  .footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+
+</body>
+
+</html>
+
+
+
+
+

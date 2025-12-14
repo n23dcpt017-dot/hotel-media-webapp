@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phòng & Suite</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #f8f5f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-section {
+            padding: 5rem 0;
+            background: linear-gradient(to right, #1e293b, #475569);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            color: #e5e7eb;
+        }
+
+        .filter-section {
+            padding: 2rem 0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+            background-color: #ffffff;
+            color: #374151;
+            border: none;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .room-info {
+            padding: 1.5rem;
+        }
+
+        .room-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-price {
+            font-size: 1.125rem;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .room-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .room-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .amenity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 1rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- HEADER -->
+<header class="main-header">
+  <nav class="navbar-container">
+    <!-- Logo -->
+    <div>
+      <a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/"><img src="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/images/logo.svg" alt="Logo Grand Hotel" class="logo-image"/></a>
+    </div>
+
+    <!-- Menu -->
+    <ul class="nav-menu">
+      <li><a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/" class="nav-link">Trang Chủ</a></li>
+      <li><a href="phong.html" class="nav-link active">Phòng</a></li>
+      <li><a href="dichvu.html" class="nav-link">Dịch vụ</a></li>
+      <li><a href="tintuc.html" class="nav-link">Tin tức</a></li>
+      <li><a href="lienhe.html" class="nav-link">Liên hệ</a></li>
+    </ul>
+
+    <!-- Right buttons -->
+    <div class="nav-right">
+      <a href="phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="login.html" class="nav-icon">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- CSS HEADER -->
+<style>
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 15px 0;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo-image { height: 50px; width: auto; display: block; }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0; padding: 0;
+}
+.nav-link {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: color 0.3s;
+  color: #333;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link.active { color: #007bff; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btn-book {
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #333;
+  text-decoration: none;
+}
+.btn-book:hover {
+  background-color: #f8f8f8;
+  border-color: #aaa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.nav-icon {
+  font-size: 24px;
+  color: #555;
+  transition: color 0.3s;
+}
+.nav-icon:hover { color: #007bff; }
+
+/* Responsive */
+@media(max-width:768px){
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+    <!-- Header Section -->
+    <section class="header-section">
+        <div class="container text-center">
+            <h1 class="header-title">Phòng & Suite</h1>
+            <p class="header-subtitle">Khám phá các loại phòng sang trọng của chúng tôi</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="container filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tất cả</button>
+            <button class="filter-btn" data-filter="standard">Phòng tiêu chuẩn</button>
+            <button class="filter-btn" data-filter="suite">Phòng Suite</button>
+            <button class="filter-btn" data-filter="premium">Phòng cao cấp</button>
+        </div>
+    </section>
+
+    <!-- Rooms Grid -->
+    <section class="container">
+        <div class="rooms-grid" id="roomsGrid">
+            <!-- Room cards will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <script>
+        // Room data
+        const rooms = [
+            {
+                id: 1,
+                name: 'Phòng Deluxe',
+                price: '1,500,000',
+                image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzY1MTE0MjMzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '30m²',
+                guests: '2 người',
+                beds: '1 giường King',
+                rating: 4.5,
+                type: 'deluxe'
+            },
+            {
+                id: 2,
+                name: 'Phòng Suite',
+                price: '2,800,000',
+                image: 'https://images.unsplash.com/photo-1725962479542-1be0a6b0d444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMHN1aXRlJTIwYmVkcm9vbXxlbnwxfHx8fDE3NjUxNzM3MzN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '50m²',
+                guests: '3 người',
+                beds: '1 giường King + Sofa',
+                rating: 4.8,
+                type: 'suite'
+            },
+            {
+                id: 3,
+                name: 'Phòng Presidential',
+                price: '5,500,000',
+                image: 'https://images.unsplash.com/photo-1748652252546-6bea5d896bd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVzaWRlbnRpYWwlMjBzdWl0ZSUyMGhvdGVsfGVufDF8fHx8MTc2NTE0MTI0NXww&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '100m²',
+                guests: '4 người',
+                beds: '2 giường King',
+                rating: 5.0,
+                type: 'premium'
+            },
+            {
+                id: 4,
+                name: 'Phòng Standard',
+                price: '980,000',
+                image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzY1MTE0MjMzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '25m²',
+                guests: '2 người',
+                beds: '1 giường Queen',
+                rating: 4.3,
+                type: 'standard'
+            },
+            {
+                id: 5,
+                name: 'Phòng Family',
+                price: '3,200,000',
+                image: 'https://images.unsplash.com/photo-1725962479542-1be0a6b0d444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMHN1aXRlJTIwYmVkcm9vbXxlbnwxfHx8fDE3NjUxNzM3MzN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '60m²',
+                guests: '4-5 người',
+                beds: '2 giường Queen',
+                rating: 4.7,
+                type: 'family'
+            },
+            {
+                id: 6,
+                name: 'Phòng Executive',
+                price: '4,200,000',
+                image: 'https://images.unsplash.com/photo-1748652252546-6bea5d896bd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVzaWRlbnRpYWwlMjBzdWl0ZSUyMGhvdGVsfGVufDF8fHx8MTc2NTE0MTI0NXww&ixlib=rb-4.1.0&q=80&w=1080',
+                size: '75m²',
+                guests: '3 người',
+                beds: '1 giường King',
+                rating: 4.9,
+                type: 'premium'
+            },
+        ];
+
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+
+            // Render rooms
+            renderRooms('all');
+
+            // Set up filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Filter rooms
+                    renderRooms(this.dataset.filter);
+                });
+            });
+        });
+
+        // Function to render rooms based on filter
+        function renderRooms(filter) {
+            const roomsGrid = document.getElementById('roomsGrid');
+            roomsGrid.innerHTML = '';
+
+            const filteredRooms = filter === 'all' ? rooms :
+                rooms.filter(room => {
+                    if (filter === 'standard') return room.type === 'standard';
+                    if (filter === 'suite') return room.type === 'suite' || room.type === 'family';
+                    if (filter === 'premium') return room.type === 'premium' || room.type === 'deluxe';
+                    return true;
+                });
+
+            filteredRooms.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.className = 'room-card';
+                roomCard.innerHTML = `
+                    <img src="${room.image}" alt="${room.name}" class="room-image">
+                    <div class="room-info">
+                        <h3 class="room-name">${room.name}</h3>
+                        <div class="room-price">${room.price} VND/đêm</div>
+                        <div class="room-details">
+                            <div class="room-detail">
+                                <i data-lucide="users" class="lucide-icon"></i>
+                                <span>${room.guests}</span>
+                            </div>
+                            <div class="room-detail">
+                                <i data-lucide="bed" class="lucide-icon"></i>
+                                <span>${room.beds}</span>
+                            </div>
+                            <div class="room-detail">
+                                <i data-lucide="maximize" class="lucide-icon"></i>
+                                <span>${room.size}</span>
+                            </div>
+                        </div>
+                        <div class="amenities">
+                            <div class="amenity">
+                                <i data-lucide="wifi" class="lucide-icon"></i>
+                                <span>WiFi miễn phí</span>
+                            </div>
+                            <div class="amenity">
+                                <i data-lucide="coffee" class="lucide-icon"></i>
+                                <span>Máy pha cà phê</span>
+                            </div>
+                            <div class="amenity">
+                                <i data-lucide="tv" class="lucide-icon"></i>
+                                <span>TV thông minh</span>
+                            </div>
+                            <div class="amenity">
+                                <i data-lucide="wind" class="lucide-icon"></i>
+                                <span>Điều hòa</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <div class="stars">
+                                ${generateStars(room.rating)}
+                            </div>
+                            <span>${room.rating}</span>
+                        </div>
+                    </div>
+                `;
+                roomsGrid.appendChild(roomCard);
+            });
+
+            // Refresh icons after rendering
+            lucide.createIcons();
+        }
+
+        // Function to generate star rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i data-lucide="star" class="lucide-icon" fill="currentColor"></i>';
+            }
+
+            if (hasHalfStar) {
+                stars += '<i data-lucide="star-half" class="lucide-icon" fill="currentColor"></i>';
+            }
+
+            return stars;
+        }
+    </script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-column footer-about">
+        <h3 class="footer-logo">3CC Grand Hotel</h3>
+        <p class="footer-tagline">Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo</p>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Liên kết</h4>
+        <ul>
+          <li><a href="#">Về chúng tôi</a></li>
+          <li><a href="#">Dịch vụ</a></li>
+          <li><a href="#">Tin tức</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách</a></li>
+          <li><a href="#">Điều khoản</a></li>
+          <li><a href="#">Bảo mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <h4>Liên hệ</h4>
+        <p>123 Đường ABC, TP.HCM</p>
+        <p>Hotline: 1900 xxxx</p>
+        <p>Email: info@grandhotel.vn</p>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CSS FOOTER -->
+<style>
+  .site-footer {
+    background-color: #0d1b2a;
+    color: #adb5bd;
+    padding: 60px 0 20px 0;
+    font-family: "Inter", sans-serif;
+  }
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 30px;
+  }
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+  }
+  .footer-tagline {
+    font-size: 15px;
+    color: #ced4da;
+    margin: 0;
+  }
+  .footer-links h4, .footer-contact h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+  }
+  .footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: #ffffff; text-decoration: underline; }
+  .footer-contact p {
+    font-size: 15px;
+    margin: 0 0 10px 0;
+    color: #ced4da;
+  }
+  .footer-divider {
+    border: 0;
+    border-top: 1px solid #343a40;
+    margin: 20px 0;
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+  }
+  .footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

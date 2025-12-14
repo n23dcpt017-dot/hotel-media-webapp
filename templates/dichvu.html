@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Services</title>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Lucide icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide.js"></script>
+    <!-- Include React Router DOM (for Link component) -->
+    <script src="https://unpkg.com/react-router-dom/umd/react-router-dom.min.js"></script>
+    <style>
+        /* Custom styles if needed */
+    </style>
+</head>
+<body>
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- HEADER -->
+<header class="main-header">
+  <nav class="navbar-container">
+    <!-- Logo -->
+    <div>
+      <a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/"><img src="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/images/logo.svg" alt="Logo Grand Hotel" class="logo-image"/></a>
+    </div>
+
+    <!-- Menu -->
+    <ul class="nav-menu">
+      <li><a href="https://n23dcpt017-dot.github.io/bansao-hotel-media-webapp/" class="nav-link">Trang Chủ</a></li>
+      <li><a href="phong.html" class="nav-link">Phòng</a></li>
+      <li><a href="dichvu.html" class="nav-link active">Dịch vụ</a></li>
+      <li><a href="tintuc.html" class="nav-link">Tin tức</a></li>
+      <li><a href="lienhe.html" class="nav-link">Liên hệ</a></li>
+    </ul>
+
+    <!-- Right buttons -->
+    <div class="nav-right">
+      <a href="phong.html" class="btn-book">Đặt phòng ngay</a>
+      <a href="login.html" class="nav-icon">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- CSS HEADER -->
+<style>
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 15px 0;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo-image { height: 50px; width: auto; display: block; }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0; padding: 0;
+}
+.nav-link {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: color 0.3s;
+  color: #333;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link.active { color: #007bff; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btn-book {
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #333;
+  text-decoration: none;
+}
+.btn-book:hover {
+  background-color: #f8f8f8;
+  border-color: #aaa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.nav-icon {
+  font-size: 24px;
+  color: #555;
+  transition: color 0.3s;
+}
+.nav-icon:hover { color: #007bff; }
+
+/* Responsive */
+@media(max-width:768px){
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+    <div class="bg-[#f8f5f0] min-h-screen">
+        <!-- Header -->
+        <section class="bg-white py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl font-bold text-center text-gray-800 mb-4">Dịch vụ của chúng tôi</h1>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto">
+                    Khám phá các dịch vụ tiện ích và sang trọng mà khách sạn của chúng tôi cung cấp để mang lại trải nghiệm tuyệt vời nhất cho quý khách.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Services -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">Dịch vụ chính</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Restaurant Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1640108930193-76941e385e5e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMHJlc3RhdXJhbnQlMjBkaW5pbmd8ZW58MXx8fHwxNzY1MzQxNzAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Nhà hàng cao cấp" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v5a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-5"/><path d="M15 15v2a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-2"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Nhà hàng cao cấp</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Thưởng thức ẩm thực đa dạng từ Á đến Âu với đội ngũ đầu bếp chuyên nghiệp. Không gian sang trọng, view đẹp, phục vụ 3 bữa và thực đơn à la carte.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Buffet sáng quốc tế
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Menu à la carte
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Bar & lounge
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Phục vụ phòng 24/7
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Spa Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1604161926875-bb58f9a0d81b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMHNwYSUyMHdlbGxuZXNzfGVufDF8fHx8MTc2NTI0MjA3Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Spa & Massage" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-waves"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c1.3 0 2.5.5 2.5 1"/><path d="M1.8 12a3 3 0 0 1 2.8-2.8"/><path d="M10 10c1.3 0 2.5.5 2.5 1s-1.2 1-2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 1.3 0 2.5-.5 2.5-1"/><path d="M1.8 22a3 3 0 0 1 2.8-2.8"/><path d="M10 16c1.3 0 2.5.5 2.5 1s-1.2 1-2.5 1"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Spa & Massage</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Thư giãn hoàn toàn với các liệu pháp spa chuyên sâu, massage trị liệu bằng tinh dầu thiên nhiên. Không gian yên tĩnh với đội ngũ chuyên viên giàu kinh nghiệm.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Massage body
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Chăm sóc da mặt
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Liệu pháp thư giãn
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Phòng xông hơi
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Gym & Pool Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzY1MzE5MzAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Phòng gym & Hồ bơi" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell"><path d="m6.5 11.5 1 1"/><path d="m21 5-1.73-1.74a.39.39 0 0 0-.57 0L15 8.53l-2.47-2.46a.39.39 0 0 0-.57 0L9.53 5.03 3 11.5l1.5 1L8 10l2.5 2.5L13 11l1.9-1.92L18.5 12 21 9.5v-2z"/><path d="m21 14-1.73 1.74a.39.39 0 0 1-.57 0L15 17.47l-2.47 2.46a.39.39 0 0 1-.57 0L9.53 18.97 3 21l1.5-1 4.5-4.5L13 18l1.9 1.92L18.5 19 21 16.5v-2z"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Phòng gym & Hồ bơi</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Trang thiết bị tập luyện hiện đại, hồ bơi ngoài trời với view đẹp. Mở cửa từ 6h sáng đến 10h tối, có huấn luyện viên hỗ trợ.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Phòng gym hiện đại
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Hồ bơi ngoài trời
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Huấn luyện viên cá nhân
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Lớp yoga & aerobic
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Meeting Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGxvYmJ5fGVufDF8fHx8MTc2NTMyMjEwNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Hội nghị & Sự kiện" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M22 7H2"/><path d="M12 7v5"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Hội nghị & Sự kiện</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Phòng họp, hội trường với sức chứa từ 20-500 người, trang bị âm thanh ánh sáng chuyên nghiệp. Đội ngũ tổ chức sự kiện nhiều kinh nghiệm.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Phòng họp đa dạng
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Thiết bị hiện đại
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Catering chuyên nghiệp
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Hỗ trợ tổ chức sự kiện
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Airport Transfer Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGxvYmJ5fGVufDF8fHx8MTc2NTMyMjEwNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Đưa đón sân bay" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Đưa đón sân bay</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Dịch vụ đưa đón sân bay 24/7 với xe sang trọng, lái xe chuyên nghiệp. Đặt trước để được giá ưu đãi.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Xe sang trọng
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Lái xe chuyên nghiệp
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Dịch vụ 24/7
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Giá ưu đãi khi đặt trước
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Room Service -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1640108930193-76941e385e5e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMHJlc3RhdXJhbnQlMjBkaW5pbmd8ZW58MXx8fHwxNzY1MzQxNzAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Dịch vụ phòng" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils-crossed"><path d="m16 2-2.5 2.5"/><path d="m20 2-2.5 2.5"/><path d="m14 10-2.5 2.5"/><path d="m20 10-2.5 2.5"/><path d="m8 6 2.5 2.5"/><path d="m14 4 2.5 2.5"/><path d="m10 12 2.5 2.5"/><path d="m4 12 2.5 2.5"/><path d="m2 22 3-3"/><path d="m22 22l-3-3"/></svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800">Dịch vụ phòng</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Phục vụ đồ ăn và thức uống tận phòng 24/7 với thực đơn đa dạng. Thời gian phục vụ nhanh chóng, chuyên nghiệp.
+                            </p>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Phục vụ 24/7
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Thực đơn đa dạng
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Giao hàng nhanh chóng
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mr-2 text-green-500"><path d="M20 6 9 17l-5-5"/></svg>
+                                    Miễn phí giao trong khách sạn
+                                </li>
+                            </ul>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Tìm hiểu thêm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Services -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">Dịch vụ khác</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- WiFi Service -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="bg-blue-100 p-4 rounded-full inline-flex mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">WiFi tốc độ cao</h3>
+                        <p class="text-gray-600">Miễn phí WiFi tốc độ cao trong toàn bộ khách sạn</p>
+                    </div>
+
+                    <!-- Security Service -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="bg-blue-100 p-4 rounded-full inline-flex mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">An ninh 24/7</h3>
+                        <p class="text-gray-600">Hệ thống an ninh và camera giám sát 24/7</p>
+                    </div>
+
+                    <!-- Parking Service -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="bg-blue-100 p-4 rounded-full inline-flex mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Bãi đỗ xe</h3>
+                        <p class="text-gray-600">Bãi đỗ xe rộng rãi, an toàn và tiện lợi</p>
+                    </div>
+
+                    <!-- Concierge Service -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="bg-blue-100 p-4 rounded-full inline-flex mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M22 7H2"/><path d="M12 7v5"/></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Concierge</h3>
+                        <p class="text-gray-600">Dịch vụ tư vấn và hỗ trợ khách hàng chuyên nghiệp</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-column footer-about">
+        <h3 class="footer-logo">3CC Grand Hotel</h3>
+        <p class="footer-tagline">Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo</p>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Liên kết</h4>
+        <ul>
+          <li><a href="#">Về chúng tôi</a></li>
+          <li><a href="#">Dịch vụ</a></li>
+          <li><a href="#">Tin tức</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-links">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách</a></li>
+          <li><a href="#">Điều khoản</a></li>
+          <li><a href="#">Bảo mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <h4>Liên hệ</h4>
+        <p>123 Đường ABC, TP.HCM</p>
+        <p>Hotline: 1900 xxxx</p>
+        <p>Email: info@grandhotel.vn</p>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CSS FOOTER -->
+<style>
+  .site-footer {
+    background-color: #0d1b2a;
+    color: #adb5bd;
+    padding: 60px 0 20px 0;
+    font-family: "Inter", sans-serif;
+  }
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 30px;
+  }
+  .footer-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+  }
+  .footer-tagline {
+    font-size: 15px;
+    color: #ced4da;
+    margin: 0;
+  }
+  .footer-links h4, .footer-contact h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+  }
+  .footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: #ffffff; text-decoration: underline; }
+  .footer-contact p {
+    font-size: 15px;
+    margin: 0 0 10px 0;
+    color: #ced4da;
+  }
+  .footer-divider {
+    border: 0;
+    border-top: 1px solid #343a40;
+    margin: 20px 0;
+  }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+  }
+  .footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
