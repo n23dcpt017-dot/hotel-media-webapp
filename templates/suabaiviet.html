@@ -750,32 +750,6 @@
   });
 </script>
 <script>
-
-  if (!post) {
-    alert("Bài viết không tồn tại");
-    window.location.href = "quanlybaiviet.html";
-  }
-
-  // 5. Đổ dữ liệu vào form
-  document.getElementById("post-title").value = post.title || "";
-  document.getElementById("post-content").value = post.content || "";
-  document.getElementById("post-category").value = post.category || "";
-  document.getElementById("post-status").value = post.status || "nhap";
-
-  // 6. Nút CẬP NHẬT
-  document.querySelector(".btn.btn-primary").addEventListener("click", () => {
-    post.title = document.getElementById("post-title").value;
-    post.content = document.getElementById("post-content").value;
-    post.category = document.getElementById("post-category").value;
-    post.status = document.getElementById("post-status").value;
-
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    alert("Cập nhật bài viết thành công");
-    window.location.href = "quanlybaiviet.html";
-  });
-</script>
-<script>
   // ===== 1. Lấy ID từ URL =====
   const params = new URLSearchParams(window.location.search);
   const postId = Number(params.get("id"));
