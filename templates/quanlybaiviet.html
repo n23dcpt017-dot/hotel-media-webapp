@@ -735,7 +735,7 @@
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
-                  <button class="action-btn btn-delete">
+                 <button class="action-btn btn-delete" data-id="1">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -769,7 +769,7 @@
 </a>
 
 
-                  <button class="action-btn btn-delete">
+                <button class="action-btn btn-delete" data-id="2">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -799,7 +799,7 @@
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
-                  <button class="action-btn btn-delete">
+                <button class="action-btn btn-delete" data-id="3">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -830,7 +830,7 @@
   </button>
 </a>
 
-                  <button class="action-btn btn-delete">
+                 <button class="action-btn btn-delete" data-id="4">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -860,7 +860,7 @@
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
-                  <button class="action-btn btn-delete">
+                  <button class="action-btn btn-delete" data-id="5">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -894,7 +894,7 @@
 </a>
 
 
-                  <button class="action-btn btn-delete">
+                  <button class="action-btn btn-delete" data-id="6">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -961,6 +961,25 @@ const currentData = JSON.parse(localStorage.getItem("posts") || "[]");
 if (currentData.length < posts.length) {
   localStorage.setItem("posts", JSON.stringify(posts));
 }
+</script>
+    <script>
+document.querySelectorAll(".btn-delete").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const id = Number(this.dataset.id);
+
+    // Xác nhận xóa
+    if (!confirm("Bạn có chắc chắn muốn xóa bài viết này không?")) return;
+
+    // 1. Xóa khỏi localStorage
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+    posts = posts.filter(post => post.id !== id);
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    // 2. Xóa thẻ bài viết khỏi UI
+    const articleCard = this.closest(".article-card");
+    articleCard.remove();
+  });
+});
 </script>
   </body>
 </html>
