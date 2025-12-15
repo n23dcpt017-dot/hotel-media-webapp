@@ -31,32 +31,32 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
         margin: 0;
-        
+        /* Chuyển màu nền body ra đây để thống nhất */
         background-color: #ffffff;
       }
 
-      
+      /* --- Container chính của Header --- */
       .main-header {
         background-color: #ffffff;
         border-bottom: 1px solid #e0e0e0;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        padding: 15px 0; 
+        padding: 15px 0; /* Đệm trên dưới cho header */
       }
 
       .navbar-container {
         display: flex;
-        justify-content: space-between; 
-        align-items: center; 
+        justify-content: space-between; /* Căn các mục ra 3 phía */
+        align-items: center; /* Căn giữa các mục theo chiều dọc */
         width: 90%;
-        max-width: 1400px; 
-        margin: 0 auto; 
+        max-width: 1400px; /* Giới hạn chiều rộng tối đa */
+        margin: 0 auto; /* Căn giữa container */
       }
-      
+      /* --- CSS CHO CÁC NÚT ĐĂNG NHẬP (TỪ LẦN TRƯỚC) --- */
       .social-buttons {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 15px; 
+        gap: 15px; /* Giảm khoảng cách cho vừa */
         flex-wrap: wrap;
       }
       .social-btn {
@@ -67,7 +67,7 @@
         background-color: #ffffff;
         border: 1px solid #dcdcdc;
         border-radius: 8px;
-        padding: 10px 20px; 
+        padding: 10px 20px; /* Giảm padding cho vừa */
         text-decoration: none;
         font-size: 15px;
         font-weight: 600;
@@ -109,7 +109,7 @@
         padding: 25px 0;
       }
 
-      
+      /* --- CSS MỚI CHO DANH SÁCH BÌNH LUẬN --- */
       .comment-list {
         display: flex;
         flex-direction: column;
@@ -200,7 +200,7 @@
         color: #111827;
       }
 
-      
+      /* --- CSS CHO BÀI VIẾT LIÊN QUAN (TỪ LẦN TRƯỚC) --- */
       .related-posts .news-grid {
         display: grid;
         gap: 20px;
@@ -262,7 +262,7 @@
       }
 
       .related-posts .card-content h3 {
-        font-size: 18px; 
+        font-size: 18px; /* Giảm cỡ chữ cho vừa */
         font-weight: 700;
         margin: 0 0 10px 0;
         color: #333;
@@ -289,20 +289,20 @@
         gap: 6px;
       }
 
-      
+      /* --- Logo --- */
       .nav-logo .logo-image {
-        height: 50px; 
+        height: 50px; /* Chiều cao cố định cho logo */
         width: auto;
-        display: block; 
+        display: block; /* Xóa khoảng trống thừa bên dưới ảnh */
       }
 
-     
+      /* --- Menu điều hướng (Giữa) --- */
       .nav-menu {
         display: flex;
-        list-style: none; 
+        list-style: none; /* Bỏ dấu chấm của <li> */
         margin: 0;
         padding: 0;
-        gap: 35px; 
+        gap: 35px; /* Khoảng cách giữa các mục menu */
       }
 
       .nav-link {
@@ -316,14 +316,14 @@
 
       .nav-link:hover,
       .nav-link.active {
-        color: #007bff; 
+        color: #007bff; /* Màu khi hover hoặc active (bạn có thể đổi màu này) */
       }
 
-      
+      /* --- Phần bên phải (Nút & Icon) --- */
       .nav-right {
         display: flex;
         align-items: center;
-        gap: 20px; 
+        gap: 20px; /* Khoảng cách giữa nút và icon */
       }
 
       /* Nút Đặt phòng */
@@ -345,7 +345,7 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
       }
 
-      
+      /* Icon User */
       .nav-icon {
         font-size: 24px;
         color: #555;
@@ -355,10 +355,10 @@
       .nav-icon:hover {
         color: #007bff;
       }
-      
+      /* --- Kiểu dáng Footer chính --- */
       .site-footer {
-        background-color: #0d1b2a; 
-        color: #adb5bd; 
+        background-color: #0d1b2a; /* Màu nền xanh đậm (gần như đen) */
+        color: #adb5bd; /* Màu chữ xám nhạt */
         padding: 60px 0 20px 0;
       }
 
@@ -368,15 +368,15 @@
         margin: 0 auto;
       }
 
-      
+      /* --- Hàng trên của Footer (Layout 4 cột) --- */
       .footer-top {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 40px; 
+        gap: 40px; /* Khoảng cách giữa các cột */
         padding-bottom: 30px;
       }
 
-      
+      /* --- Cột 1: Logo và Mô tả --- */
       .footer-about .footer-logo {
         font-size: 28px;
         font-weight: 700;
@@ -390,7 +390,7 @@
         margin: 0;
       }
 
-      
+      /* --- Cột 2 & 3: Các cột liên kết --- */
       .footer-links h4 {
         font-size: 18px;
         font-weight: 600;
@@ -410,16 +410,16 @@
 
       .footer-links a {
         text-decoration: none;
-        color: #adb5bd; 
+        color: #adb5bd; /* Màu link mặc định */
         transition: color 0.3s ease;
       }
 
       .footer-links a:hover {
-        color: #ffffff; 
+        color: #ffffff; /* Màu link khi hover */
         text-decoration: underline;
       }
 
-      
+      /* --- Cột 4: Thông tin liên hệ --- */
       .footer-contact h4 {
         font-size: 18px;
         font-weight: 600;
@@ -433,7 +433,7 @@
         color: #ced4da;
       }
 
-     
+      /* --- Đường kẻ ngang --- */
       .footer-divider {
         border: 0;
         border-top: 1px solid #343a40; /* Màu kẻ */
@@ -663,23 +663,24 @@
       </h2>
         <div class="news-grid grid-3-cols">
           <article class="news-card">
-            <a href="baiviet1.html">
             <div class="card-image">
-              <img src="../images/amthuc.png" alt="Buffet sáng" /> 
+              <img src="../images/amthuc.png" alt="Buffet sáng" />
+              <a href="templates/baiviet1.html" class="absolute inset-0"></a>
+            </div>
             <div class="card-content">
               <span class="card-category category-green">Ẩm thực</span>
               <h3>Thực đơn buffet sáng đặc biệt cuối tuần</h3>
               <p class="card-excerpt">Hơn 100 món ăn đa dạng từ Á đến Âu...</p>
               <div class="card-meta">
                 <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
-                <span><i class="fa-regular fa-eye"></i> 987</span> </a>
+                <span><i class="fa-regular fa-eye"></i> 987</span>
               </div>
             </div>
           </article>
           <article class="news-card">
-            <a href="baiviet2.html">
             <div class="card-image">
               <img src="../images/spa.png" alt="Spa chăm sóc" />
+              <a href="baiviet3.html" class="absolute inset-0"></a>
             </div>
             <div class="card-content">
               <span class="card-category category-blue">Dịch vụ</span>
@@ -689,14 +690,14 @@
               </p>
               <div class="card-meta">
                 <span><i class="fa-regular fa-calendar"></i> 03/11/2025</span>
-                <span><i class="fa-regular fa-eye"></i> 754</span> </a>
+                <span><i class="fa-regular fa-eye"></i> 754</span>
               </div>
             </div>
           </article>
           <article class="news-card">
-            <a href="baiviet3.html">
             <div class="card-image">
               <img src="../images/lehoi.png" alt="Lễ hội" />
+              <a href="baiviet1.html" class="absolute inset-0"></a>
             </div>
             <div class="card-content">
               <span class="card-category category-red">Khuyến mãi</span>
@@ -706,7 +707,7 @@
               </p>
               <div class="card-meta">
                 <span><i class="fa-regular fa-calendar"></i> 02/11/2025</span>
-                <span><i class="fa-regular fa-eye"></i> 2,156</span> </a>
+                <span><i class="fa-regular fa-eye"></i> 2,156</span>
               </div>
             </div>
           </article>
