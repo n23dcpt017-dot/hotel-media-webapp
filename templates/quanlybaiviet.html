@@ -732,10 +732,12 @@
                 <span class="article-date">05/11/2025</span>
                 <div class="article-actions">
                   <a href="suabaiviet.html">
+  <a href="suabaiviet.html?id=1">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
+
 
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
@@ -764,11 +766,12 @@
                 >
                 <span class="article-date">05/11/2025</span>
                 <div class="article-actions">
-<a href="suabaiviet.html">
+<a href="suabaiviet.html?id=2">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
+
 
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
@@ -795,10 +798,12 @@
                 >
                 <span class="article-date">08/11/2025</span>
                 <div class="article-actions">
-                  <a href="suabaiviet.html">
+                  <a href="suabaiviet.html?id=3">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
+</a>
+
 </a>
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
@@ -826,10 +831,12 @@
                 <span class="article-date">04/11/2025</span>
                 <div class="article-actions">
                   <a href="suabaiviet.html">
+ <a href="suabaiviet.html?id=4">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
+
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
                   </button>
@@ -856,10 +863,12 @@
                 <span class="article-date">03/11/2025</span>
                 <div class="article-actions">
                  <a href="suabaiviet.html">
+ <a href="suabaiviet.html?id=5">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
+>
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
                   </button>
@@ -887,11 +896,12 @@
                 >
                 <span class="article-date">02/11/2025</span>
                 <div class="article-actions">
-                 <a href="suabaiviet.html">
+                <a href="suabaiviet.html?id=6">
   <button class="action-btn btn-edit">
     <i class="fa-solid fa-pencil"></i>
   </button>
 </a>
+
                   <button class="action-btn btn-delete">
                     <i class="fa-solid fa-trash"></i>
                   </button>
@@ -915,6 +925,28 @@
   document.addEventListener("click", () => {
     popup.style.display = "none";
   });
+</script>
+<script>
+const posts = [
+  {
+    id: 1,
+    title: "Khám phá không gian phòng Deluxe mới",
+    content: "Nội dung phòng Deluxe...",
+    category: "phong",
+    status: "da-xuat-ban"
+  },
+  {
+    id: 2,
+    title: "Thực đơn buffet sáng đặc biệt cuối tuần",
+    content: "Buffet sáng...",
+    category: "am-thuc",
+    status: "da-xuat-ban"
+  }
+];
+
+if (!localStorage.getItem("posts")) {
+  localStorage.setItem("posts", JSON.stringify(posts));
+}
 </script>
 
   </body>
