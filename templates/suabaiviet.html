@@ -704,7 +704,7 @@
                     </div>
                     
                     <div class="form-card">
-                        <label for="post-schedule">Ngày/giờ xuất bản</Mabel>
+                        <label for="post-schedule">Ngày/giờ xuất bản</label>
                         <div class="input-group-with-icon">
                             <input type="text" id="post-schedule" placeholder="mm/dd/yyyy">
                             <i class="fa-regular fa-calendar-days"></i>
@@ -733,23 +733,7 @@
       </div>
     </div>
     <script>
-// --- Lấy ID từ URL ---
-const urlParams = new URLSearchParams(window.location.search);
-const postId = parseInt(urlParams.get("id"));
 
-// --- Lấy danh sách bài viết ---
-const posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-// --- Tìm bài viết đúng ID ---
-const post = posts.find(p => p.id === postId);
-
-// --- Nếu tìm được thì đổ dữ liệu vào form ---
-if (post) {
-  document.getElementById("post-title").value = post.title;
-  document.getElementById("post-content").value = post.content;
-  document.getElementById("post-category").value = post.category;
-  document.getElementById("post-status").value = post.status;
-}
 </script>
 <script>
   const bell = document.querySelector(".notification-btn");
@@ -766,21 +750,6 @@ if (post) {
   });
 </script>
 <script>
-  // 1. Lấy ID từ URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const postId = parseInt(urlParams.get("id"));
-
-  // 2. Nếu không có ID thì quay lại
-  if (!postId) {
-    alert("Không tìm thấy bài viết");
-    window.location.href = "quanlybaiviet.html";
-  }
-
-  // 3. Lấy danh sách bài viết
-  const posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-  // 4. Tìm bài viết đúng ID
-  const post = posts.find(p => p.id === postId);
 
   if (!post) {
     alert("Bài viết không tồn tại");
@@ -804,6 +773,56 @@ if (post) {
 
     alert("Cập nhật bài viết thành công");
     window.location.href = "quanlybaiviet.html";
+  });
+</script>
+<script>
+  // ===== 1. Lấy ID từ URL =====
+  const params = new URLSearchParams(window.location.search);
+  const postId = Number(params.get("id"));
+
+  if (!postId) {
+    alert("Không tìm thấy bài viết");
+    window.location.href = "quanlybaiviet.html";
+  }
+
+  // ===== 2. Lấy danh sách bài viết =====
+  const posts = JSON.parse(localStorage.getItem("posts")) || [];
+  const post = posts.find(p => p.id === postId);
+
+  if (!post) {
+    alert("Bài viết không tồn tại");
+    window.location.href = "quanlybaiviet.html";
+  }
+
+  // ===== 3. Đổ dữ liệu lên form =====
+  document.getElementById("post-title").value = post.title || "";
+  document.getElementById("post-content").value = post.content || "";
+  document.getElementById("post-category").value = post.category || "";
+  document.getElementById("post-status").value = post.status || "nhap";
+
+  // ===== 4. Nút CẬP NHẬT =====
+  document.querySelector(".btn.btn-primary").addEventListener("click", () => {
+    post.title = document.getElementById("post-title").value.trim();
+    post.content = document.getElementById("post-content").value.trim();
+    post.category = document.getElementById("post-category").value;
+    post.status = document.getElementById("post-status").value;
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    alert("Cập nhật bài viết thành công!");
+    window.location.href = "quanlybaiviet.html";
+  });
+
+  // ===== 5. Nút LƯU NHÁP =====
+  document.querySelector(".btn.btn-secondary").addEventListener("click", () => {
+    post.title = document.getElementById("post-title").value.trim();
+    post.content = document.getElementById("post-content").value.trim();
+    post.category = document.getElementById("post-category").value;
+    post.status = "nhap";
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    alert("Đã lưu nháp!");
   });
 </script>
 
