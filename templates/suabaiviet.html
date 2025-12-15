@@ -657,13 +657,17 @@
                         <textarea id="post-content" rows="10" placeholder="Viết nội dung bài viết..."></textarea>
                     </div>
     
-                    <div class="form-card">
-                        <label for="post-image">Ảnh đại diện</label>
-                        <div class="image-uploader-box">
-                            <i class="fa-regular fa-image"></i>
-                            <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
-                            <small>PNG, JPG, GIF (tối đa 2MB)</small>
-                        </div>
+                    <<div class="form-card">
+    <label for="post-image">Ảnh đại diện</label>
+    <div class="image-uploader-box" id="upload-box">
+        <div id="upload-content">
+            <i class="fa-regular fa-image"></i>
+            <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
+            <small>PNG, JPG, GIF (tối đa 2MB)</small>
+        </div>
+        <img id="image-preview" src="" alt="Preview" style="display: none; max-width: 100%; max-height: 250px; border-radius: 8px; object-fit: cover;">
+    </div>
+    <input type="file" id="file-input" accept="image/*" style="display: none;">
                     </div>
     
                     <div class="form-card">
@@ -799,6 +803,103 @@
     alert("Đã lưu nháp!");
   });
 </script>
+<script>
+  // ===== 1. Lấy ID từ URL =====
+  const params = new URLSearchParams(window.location.search);
+  const postId = Number(params.get("id"));
 
+  if (!postId) {
+    alert("Không tìm thấy bài viết");
+    window.location.href = "quanlybaiviet.html";
+  }
+
+  // ===== 2. Lấy danh sách bài viết =====
+  const posts = JSON.parse(localStorage.getItem("posts")) || [];
+  const post = posts.find(p => p.id === postId);
+
+  if (!post) {
+    alert("Bài viết không tồn tại");
+    window.location.href = "quanlybaiviet.html";
+  }
+
+  // ===== 3. Khai báo các biến giao diện =====
+  const titleInput = document.getElementById("post-title");
+  const contentInput = document.getElementById("post-content");
+  const categoryInput = document.getElementById("post-category");
+  const statusInput = document.getElementById("post-status");
+  
+  // Các biến xử lý ảnh
+  const uploadBox = document.getElementById("upload-box");
+  const fileInput = document.getElementById("file-input");
+  const uploadContent = document.getElementById("upload-content"); // Phần chữ kéo thả
+  const imagePreview = document.getElementById("image-preview"); // Thẻ img
+
+  // ===== 4. Đổ dữ liệu lên form =====
+  titleInput.value = post.title || "";
+  contentInput.value = post.content || "";
+  categoryInput.value = post.category || "";
+  statusInput.value = post.status || "nhap";
+
+  // --- XỬ LÝ HIỂN THỊ ẢNH CŨ ---
+  if (post.image) {
+    uploadContent.style.display = "none";   // Ẩn phần chữ
+    imagePreview.src = post.image;          // Gán đường dẫn ảnh
+    imagePreview.style.display = "block";   // Hiện ảnh
+  }
+
+  // ===== 5. Xử lý khi bấm chọn ảnh mới =====
+  
+  // Khi bấm vào box -> kích hoạt input file
+  uploadBox.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  // Khi người dùng chọn file
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Dùng FileReader để đọc file dưới dạng URL (base64)
+      const reader = new FileReader();
+      
+      reader.onload = function(event) {
+        // 1. Hiển thị ảnh xem trước
+        uploadContent.style.display = "none";
+        imagePreview.src = event.target.result;
+        imagePreview.style.display = "block";
+
+        // 2. Cập nhật dữ liệu vào biến post (để tí nữa bấm Lưu sẽ lưu cái này)
+        post.image = event.target.result;
+      };
+
+      reader.readAsDataURL(file); // Bắt đầu đọc file
+    }
+  });
+
+  // ===== 6. Nút CẬP NHẬT =====
+  document.querySelector(".btn.btn-primary").addEventListener("click", () => {
+    post.title = titleInput.value.trim();
+    post.content = contentInput.value.trim();
+    post.category = categoryInput.value;
+    post.status = statusInput.value;
+    // post.image đã được cập nhật ở sự kiện change bên trên rồi
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    alert("Cập nhật bài viết thành công!");
+    window.location.href = "quanlybaiviet.html";
+  });
+
+  // ===== 7. Nút LƯU NHÁP =====
+  document.querySelector(".btn.btn-secondary").addEventListener("click", () => {
+    post.title = titleInput.value.trim();
+    post.content = contentInput.value.trim();
+    post.category = categoryInput.value;
+    post.status = "nhap";
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    alert("Đã lưu nháp!");
+  });
+</script>
   </body>
 </html>
