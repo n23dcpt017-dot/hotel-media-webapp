@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      ="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -23,55 +23,47 @@
 
     <style>
       body {
-        background-color: #f8f5f0;
-        font-family: "Inter", sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
         margin: 0;
-        background-color: #ffffff; /* ĐỔI NỀN VỀ TRẮNG */
+        background-color: #ffffff;
       }
 
-      /* --- Container chính của Header --- */
+      /* --- CSS THANH ĐIỀU HƯỚNG CHUẨN (ĐỒNG BỘ) --- */
       .main-header {
         background-color: #ffffff;
         border-bottom: 1px solid #e0e0e0;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        padding: 15px 0; /* Đệm trên dưới cho header */
+        padding: 15px 0;
       }
 
       .navbar-container {
         display: flex;
-        justify-content: space-between; /* Căn các mục ra 3 phía */
-        align-items: center; /* Căn giữa các mục theo chiều dọc */
+        justify-content: space-between;
+        align-items: center;
         width: 90%;
-        max-width: 1400px; /* Giới hạn chiều rộng tối đa */
-        margin: 0 auto; /* Căn giữa container */
+        max-width: 1400px;
+        margin: 0 auto;
       }
 
-      /* --- Logo --- */
       .nav-logo .logo-image {
-        height: 50px; /* Chiều cao cố định cho logo */
+        height: 50px;
         width: auto;
-        display: block; /* Xóa khoảng trống thừa bên dưới ảnh */
+        display: block;
       }
 
-      /* --- Menu điều hướng (Giữa) --- */
       .nav-menu {
         display: flex;
-        list-style: none; /* Bỏ dấu chấm của <li> */
+        list-style: none;
         margin: 0;
         padding: 0;
-        gap: 35px; /* Khoảng cách giữa các mục menu */
+        gap: 35px;
       }
 
       .nav-link {
         text-decoration: none;
         color: #333;
-        font-size: 17px;
+        font-size: 17px; /* Size chuẩn */
         font-weight: 600;
         padding: 10px 0;
         transition: color 0.3s ease;
@@ -79,17 +71,15 @@
 
       .nav-link:hover,
       .nav-link.active {
-        color: #007bff; /* Màu khi hover hoặc active (bạn có thể đổi màu này) */
+        color: #007bff;
       }
 
-      /* --- Phần bên phải (Nút & Icon) --- */
       .nav-right {
         display: flex;
         align-items: center;
-        gap: 20px; /* Khoảng cách giữa nút và icon */
+        gap: 20px;
       }
 
-      /* Nút Đặt phòng */
       .btn-book {
         text-decoration: none;
         color: #333;
@@ -108,7 +98,6 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
       }
 
-      /* Icon User */
       .nav-icon {
         font-size: 24px;
         color: #555;
@@ -118,194 +107,151 @@
       .nav-icon:hover {
         color: #007bff;
       }
-      /* --- Kiểu dáng Footer chính --- */
+
+      /* --- Footer CSS --- */
       .site-footer {
-        background-color: #0d1b2a; /* Màu nền xanh đậm (gần như đen) */
-        color: #adb5bd; /* Màu chữ xám nhạt */
+        background-color: #0d1b2a;
+        color: #adb5bd;
         padding: 60px 0 20px 0;
       }
-
       .footer-container {
         width: 90%;
         max-width: 1200px;
         margin: 0 auto;
       }
-
-      /* --- Hàng trên của Footer (Layout 4 cột) --- */
       .footer-top {
         display: grid;
-        /* Chia layout: Cột 1 rộng hơn (2fr), 3 cột sau bằng nhau (1fr)
-      Bạn có thể điều chỉnh tỷ lệ này (ví dụ: 1.5fr 1fr 1fr 1fr) 
-    */
         grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 40px; /* Khoảng cách giữa các cột */
+        gap: 40px;
         padding-bottom: 30px;
       }
-
-      /* --- Cột 1: Logo và Mô tả --- */
       .footer-about .footer-logo {
         font-size: 28px;
         font-weight: 700;
         color: #ffffff;
         margin: 0 0 10px 0;
-        /* Nếu dùng ảnh logo, bạn có thể xóa dòng này và style thẻ <img> */
       }
-
       .footer-tagline {
         font-size: 15px;
         color: #ced4da;
         margin: 0;
       }
-
-      /* --- Cột 2 & 3: Các cột liên kết --- */
-      .footer-links h4 {
-        font-size: 18px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 0 0 20px 0;
-      }
-
-      .footer-links ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .footer-links li {
-        margin-bottom: 12px;
-      }
-
-      .footer-links a {
-        text-decoration: none;
-        color: #adb5bd; /* Màu link mặc định */
-        transition: color 0.3s ease;
-      }
-
-      .footer-links a:hover {
-        color: #ffffff; /* Màu link khi hover */
-        text-decoration: underline;
-      }
-
-      /* --- Cột 4: Thông tin liên hệ --- */
+      .footer-links h4,
       .footer-contact h4 {
         font-size: 18px;
         font-weight: 600;
         color: #ffffff;
         margin: 0 0 20px 0;
       }
-
+      .footer-links ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+      .footer-links a {
+        text-decoration: none;
+        color: #adb5bd;
+        transition: color 0.3s ease;
+      }
+      .footer-links a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
       .footer-contact p {
         font-size: 15px;
         margin: 0 0 10px 0;
         color: #ced4da;
       }
-
-      /* --- Đường kẻ ngang --- */
       .footer-divider {
         border: 0;
-        border-top: 1px solid #343a40; /* Màu kẻ */
+        border-top: 1px solid #343a40;
         margin: 20px 0;
       }
-
-      /* --- Hàng dưới: Copyright --- */
       .footer-bottom {
         text-align: center;
         padding-top: 10px;
       }
-
       .footer-bottom p {
         margin: 0;
         font-size: 14px;
         color: #888;
       }
-
-      /* --- Hero Section chính --- */
-      .hero-section {
-        position: relative; /* Bắt buộc để lớp phủ hoạt động */
-        height: 80vh; /* Chiều cao 80% màn hình, bạn có thể đổi thành 100vh */
-        color: #ffffff; /* Màu chữ chung là màu trắng */
-
-        /* Thay 'your-image-url.jpg' bằng link ảnh nền của bạn */
-        background-image: url("images/trangchubanner.png");
-        background-size: cover; /* Phủ đầy ảnh */
-        background-position: center; /* Căn giữa ảnh */
+      @media (max-width: 768px) {
+        .footer-top {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
       }
 
-      /* --- Lớp phủ màu tối --- */
+      /* --- Hero Section & Components --- */
+      .hero-section {
+        position: relative;
+        height: 80vh;
+        color: #ffffff;
+        background-image: url("images/trangchubanner.png");
+        background-size: cover;
+        background-position: center;
+      }
       .hero-overlay {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.4); /* Màu đen mờ 40% */
-
-        /* Căn giữa nội dung bên trong */
+        background-color: rgba(0, 0, 0, 0.4);
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
         padding: 20px;
       }
-
-      /* --- Nội dung chính (Text, Nút) --- */
       .hero-content {
-        max-width: 800px; /* Giới hạn chiều rộng của nội dung */
+        max-width: 800px;
       }
-
-      /* --- Thanh tìm kiếm --- */
       .hero-search-bar {
         display: flex;
         align-items: center;
-        background-color: rgba(255, 255, 255, 0.25); /* Nền trắng mờ */
-        border-radius: 50px; /* Bo tròn */
+        background-color: rgba(255, 255, 255, 0.25);
+        border-radius: 50px;
         padding: 10px 20px;
-        margin: 0 auto 50px auto; /* Tự động căn giữa và tạo khoảng cách dưới */
+        margin: 0 auto 50px auto;
         max-width: 400px;
         border: 1px solid rgba(255, 255, 255, 0.3);
       }
-
       .hero-search-bar i {
         color: #ffffff;
         margin-right: 10px;
       }
-
       .hero-search-bar input {
-        flex: 1; /* Chiếm hết không gian còn lại */
+        flex: 1;
         background: transparent;
         border: none;
         outline: none;
         color: #ffffff;
         font-size: 16px;
       }
-
-      /* Đổi màu chữ placeholder */
       .hero-search-bar input::placeholder {
         color: #ddd;
         opacity: 1;
       }
-
-      /* --- Tiêu đề --- */
       .hero-title {
         font-size: 48px;
         font-weight: 700;
         margin: 0 0 15px 0;
       }
-
       .hero-subtitle {
         font-size: 22px;
         font-weight: 400;
         margin: 0 0 35px 0;
       }
-
-      /* --- Nút bấm --- */
       .hero-buttons {
         display: flex;
         justify-content: center;
-        gap: 20px; /* Khoảng cách giữa 2 nút */
+        gap: 20px;
       }
-
-      /* Kiểu chung cho nút */
       .btn {
         text-decoration: none;
         padding: 14px 30px;
@@ -315,89 +261,68 @@
         transition: all 0.3s ease;
         border: 2px solid #ffffff;
       }
-
-      /* Nút chính (Nền trắng) */
       .btn-primary {
         background-color: #ffffff;
-        color: #333; /* Màu chữ đen */
+        color: #333;
       }
-
       .btn-primary:hover {
-        background-color: transparent; /* Nền trong suốt khi hover */
-        color: #ffffff; /* Chữ trắng */
+        background-color: transparent;
+        color: #ffffff;
       }
-
-      /* Nút phụ (Nền trong suốt) */
       .btn-secondary {
         background-color: transparent;
         color: #ffffff;
       }
-
       .btn-secondary:hover {
-        background-color: #ffffff; /* Nền trắng khi hover */
-        color: #333; /* Chữ đen */
+        background-color: #ffffff;
+        color: #333;
       }
-      /* --- Khu vực kết nối --- */
       .social-connect {
-        background-color: #e5e5e5; /* Màu nền xám nhạt */
+        background-color: #e5e5e5;
         padding: 50px 20px;
         text-align: center;
       }
-
       .social-connect h2 {
         font-size: 28px;
         font-weight: 700;
         color: #222;
         margin: 0 0 10px 0;
       }
-
       .social-connect p {
         font-size: 17px;
         color: #555;
         margin: 0 0 30px 0;
       }
-
-      /* --- Hàng chứa các nút --- */
       .social-buttons {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px; /* Khoảng cách giữa các nút */
-        flex-wrap: wrap; /* Cho phép xuống hàng trên di động */
+        gap: 20px;
+        flex-wrap: wrap;
       }
-
-      /* --- Kiểu dáng các nút --- */
       .social-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px; /* Khoảng cách giữa icon và chữ */
-
+        gap: 10px;
         background-color: #ffffff;
         border: 1px solid #dcdcdc;
         border-radius: 8px;
         padding: 12px 25px;
-
         text-decoration: none;
         font-size: 16px;
         font-weight: 600;
         color: #333;
-
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
       }
-
       .social-btn:hover {
         transform: translateY(-3px);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
       }
-
-      /* --- Icon --- */
       .social-btn i {
-        font-size: 22px; /* Kích thước icon */
+        font-size: 22px;
       }
-
-      /* Màu riêng cho các icon (nếu muốn) */
       .fa-facebook {
         color: #1877f2;
       }
@@ -407,8 +332,6 @@
       .fa-tiktok {
         color: #010101;
       }
-
-      /* Giả lập icon Zalo (vì Font Awesome không có) */
       .zalo-icon {
         display: inline-block;
         width: 22px;
@@ -421,56 +344,35 @@
         font-weight: bold;
         font-size: 14px;
       }
-      /* --- Responsive cho di động --- */
-      @media (max-width: 768px) {
-        .footer-top {
-          /* Chuyển thành 1 cột */
-          grid-template-columns: 1fr;
-          gap: 30px;
-        }
-      }
-
       .page-container {
         width: 90%;
         max-width: 1200px;
-        margin: 40px auto; /* Khoảng cách trên dưới và căn giữa */
+        margin: 40px auto;
       }
-
-      /* --- Khu vực tin tức chung --- */
       .news-section {
         margin-bottom: 50px;
       }
-
       .news-section h2 {
         font-size: 28px;
         font-weight: 700;
         margin-bottom: 5px;
         color: #222;
       }
-
       .news-section .section-subtitle {
         font-size: 16px;
         color: #666;
         margin-bottom: 30px;
       }
-
-      /* --- Lưới tin tức --- */
       .news-grid {
         display: grid;
-        gap: 30px; /* Khoảng cách giữa các card */
+        gap: 30px;
       }
-
-      /* Layout 2 cột */
       .grid-2-cols {
         grid-template-columns: repeat(2, 1fr);
       }
-
-      /* Layout 3 cột */
       .grid-3-cols {
         grid-template-columns: repeat(3, 1fr);
       }
-
-      /* --- Kiểu dáng thẻ tin tức (Dùng chung) --- */
       .news-card {
         background-color: #ffffff;
         border-radius: 12px;
@@ -479,26 +381,20 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid #e9ecef;
       }
-
       .news-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
       }
-
-      /* ĐÃ THÊM: CSS cho thẻ <a> bọc card */
       .news-card-link {
         text-decoration: none;
-        color: inherit; /* Kế thừa màu chữ */
+        color: inherit;
       }
-
-      /* --- Phần ảnh của thẻ --- */
       .card-image {
         position: relative;
         width: 100%;
-        padding-top: 60%; /* Tỷ lệ ảnh, có thể điều chỉnh */
+        padding-top: 60%;
         overflow: hidden;
       }
-
       .card-image img {
         position: absolute;
         top: 0;
@@ -507,8 +403,6 @@
         height: 100%;
         object-fit: cover;
       }
-
-      /* Thẻ "Nổi bật" trên ảnh */
       .card-tag {
         position: absolute;
         top: 15px;
@@ -519,17 +413,12 @@
         font-weight: 600;
         color: #fff;
       }
-
       .tag-hot {
-        background-color: #4a00e0; /* Màu tím đậm */
+        background-color: #4a00e0;
       }
-
-      /* --- Phần nội dung của thẻ --- */
       .card-content {
         padding: 20px;
       }
-
-      /* Thẻ "Phòng", "Khuyến mãi" */
       .card-category {
         display: inline-block;
         padding: 4px 10px;
@@ -539,30 +428,24 @@
         margin-bottom: 12px;
         color: #fff;
       }
-
       .category-blue {
         background-color: #007bff;
       }
       .category-green {
         background-color: #28a745;
       }
-      /* Thêm các màu khác nếu cần */
-
       .card-content h3 {
         font-size: 20px;
         font-weight: 700;
         margin: 0 0 10px 0;
         color: #333;
       }
-
       .card-content .card-excerpt {
         font-size: 15px;
         color: #555;
         line-height: 1.5;
         margin-bottom: 20px;
       }
-
-      /* --- Thông tin meta (ngày, lượt xem) --- */
       .card-meta {
         display: flex;
         justify-content: space-between;
@@ -573,30 +456,22 @@
         padding-top: 15px;
         margin-top: 15px;
       }
-
-      /* Nếu card không có excerpt, xóa margin-top đi */
       .card-content h3 + .card-meta {
         margin-top: 0;
         border-top: none;
         padding-top: 0;
       }
-
       .card-meta span {
         display: flex;
         align-items: center;
-        gap: 6px; /* Khoảng cách giữa icon và text */
+        gap: 6px;
       }
-
-      /* --- Responsive cho di động --- */
       @media (max-width: 992px) {
-        /* 3 cột -> 2 cột */
         .grid-3-cols {
           grid-template-columns: repeat(2, 1fr);
         }
       }
-
       @media (max-width: 768px) {
-        /* 2 cột và 3 cột -> 1 cột */
         .grid-2-cols,
         .grid-3-cols {
           grid-template-columns: 1fr;
@@ -605,32 +480,36 @@
     </style>
   </head>
   <body>
- <header class="main-header">
-  <nav class="navbar-container">
-    <div class="">
-      <a href="index.html">
-        <img src="images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
-      </a>
-    </div>
+    <header class="main-header">
+      <nav class="navbar-container">
+        <div class="nav-logo">
+          <a href="index.html">
+            <img
+              src="images/logo.svg"
+              alt="Logo Grand Hotel"
+              class="logo-image"
+            />
+          </a>
+        </div>
 
-<ul class="nav-menu">
-  <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
-  <li><a href="templates/phong.html" class="nav-link">Phòng</a></li>
-  <li><a href="templates/dichvu.html" class="nav-link">Dịch vụ</a></li>
-  <li><a href="templates/tintuc.html" class="nav-link">Tin tức</a></li>
-  <li><a href="templates/lienhe.html" class="nav-link">Liên hệ</a></li>
-</ul>
+        <ul class="nav-menu">
+          <li>
+            <a href="index.html" class="nav-link active">Trang Chủ</a>
+          </li>
+          <li><a href="templates/phong.html" class="nav-link">Phòng</a></li>
+          <li><a href="templates/dichvu.html" class="nav-link">Dịch vụ</a></li>
+          <li><a href="templates/tintuc.html" class="nav-link">Tin tức</a></li>
+          <li><a href="templates/lienhe.html" class="nav-link">Liên hệ</a></li>
+        </ul>
 
-
-    <div class="nav-right">
-      <a href="templates/phong.html" class="btn-book">Đặt phòng ngay</a>
-      <a href="templates/login.html" class="nav-icon">
-        <i class="fa-regular fa-user"></i>
-      </a>
-    </div>
-  </nav>
-</header>
-
+        <div class="nav-right">
+          <a href="templates/phong.html" class="btn-book">Đặt phòng ngay</a>
+          <a href="templates/login.html" class="nav-icon">
+            <i class="fa-regular fa-user"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
 
     <section class="hero-section">
       <div class="hero-overlay">
@@ -644,8 +523,12 @@
           <p class="hero-subtitle">Trải nghiệm sang trọng, dịch vụ hoàn hảo</p>
 
           <div class="hero-buttons">
-            <a href="templates/phong.html" class="btn btn-primary">Khám phá ngay</a>
-            <a href="templates/videohub.html" class="btn btn-secondary">Xem video</a>
+            <a href="templates/phong.html" class="btn btn-primary"
+              >Khám phá ngay</a
+            >
+            <a href="templates/videohub.html" class="btn btn-secondary"
+              >Xem video</a
+            >
           </div>
         </div>
       </div>
@@ -829,76 +712,75 @@
         </div>
       </div>
     </footer>
- <!-- TAILWIND -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Container popup -->
-<div id="livestream-root"></div>
+    <div id="livestream-root"></div>
 
-<!-- React + ReactDOM + Babel -->
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- Script React popup -->
-<script type="text/babel">
-  const { useState } = React;
+    <script type="text/babel">
+      const { useState } = React;
 
-  function MiniLivestream() {
-    const [isOpen, setIsOpen] = useState(false);
+      function MiniLivestream() {
+        const [isOpen, setIsOpen] = useState(false);
 
-    const videoUrl = "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
+        const videoUrl =
+          "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
 
-    return (
-      <>
-        {!isOpen && (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg"
-          >
-            Xem Livestream
-          </button>
-        )}
-
-        {isOpen && (
-          <div className="fixed bottom-4 right-4 z-50 w-[360px] h-[202px] bg-white rounded shadow-lg overflow-hidden flex flex-col">
-            
-            <div className="flex justify-between items-center bg-red-600 text-white px-2 py-1">
-              <span className="text-xs font-bold uppercase">LIVE</span>
+        return (
+          <>
+            {!isOpen && (
               <button
-                onClick={() => setIsOpen(false)}
-                className="text-white font-bold text-lg leading-none"
+                onClick={() => setIsOpen(true)}
+                className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg"
               >
-                ×
+                Xem Livestream
               </button>
-            </div>
+            )}
 
-            <div className="flex-1">
-              <iframe
-                src={videoUrl}
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                allow="autoplay"
-                title="Livestream"
-              ></iframe>
-            </div>
+            {isOpen && (
+              <div className="fixed bottom-4 right-4 z-50 w-[360px] h-[202px] bg-white rounded shadow-lg overflow-hidden flex flex-col">
+                <div className="flex justify-between items-center bg-red-600 text-white px-2 py-1">
+                  <span className="text-xs font-bold uppercase">LIVE</span>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="text-white font-bold text-lg leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
 
-            <div
-              className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer"
-              onClick={() => window.location.href = "templates/videohub.html"}
-            >
-              Xem tất cả Livestream
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
+                <div className="flex-1">
+                  <iframe
+                    src={videoUrl}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    allow="autoplay"
+                    title="Livestream"
+                  ></iframe>
+                </div>
 
-  ReactDOM.createRoot(document.getElementById("livestream-root")).render(<MiniLivestream />);
-</script>
+                <div
+                  className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer"
+                  onClick={() =>
+                    (window.location.href = "templates/videohub.html")
+                  }
+                >
+                  Xem tất cả Livestream
+                </div>
+              </div>
+            )}
+          </>
+        );
+      }
 
+      ReactDOM.createRoot(document.getElementById("livestream-root")).render(
+        <MiniLivestream />
+      );
+    </script>
   </body>
 </html>
