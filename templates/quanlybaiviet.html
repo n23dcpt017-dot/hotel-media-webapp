@@ -906,41 +906,62 @@
       </div>
     </div>
 <script>
-  const bell = document.querySelector(".notification-btn");
-  const popup = document.getElementById("notificationPopup");
-
-  bell.addEventListener("click", (e) => {
-    e.stopPropagation();
-    popup.style.display = 
-      popup.style.display === "block" ? "none" : "block";
-  });
-
-  document.addEventListener("click", () => {
-    popup.style.display = "none";
-  });
-</script>
-<script>
 const posts = [
   {
     id: 1,
     title: "Khám phá không gian phòng Deluxe mới",
     content: "Nội dung phòng Deluxe...",
     category: "phong",
-    status: "da-xuat-ban"
+    status: "da-xuat-ban",
+    image: "../images/phong1.png"
   },
   {
     id: 2,
     title: "Thực đơn buffet sáng đặc biệt cuối tuần",
     content: "Buffet sáng...",
     category: "am-thuc",
-    status: "da-xuat-ban"
+    status: "da-xuat-ban",
+    image: "../images/amthuc.png"
+  },
+  {
+    id: 3,
+    title: "Ưu đãi đặc biệt mùa lễ hội",
+    content: "Nội dung ưu đãi...",
+    category: "khuyen-mai",
+    status: "len-lich",
+    image: "../images/lehoi.png"
+  },
+  {
+    id: 4,
+    title: "Hội nghị & sự kiện tại khách sạn",
+    content: "Nội dung sự kiện...",
+    category: "su-kien",
+    status: "nhap",
+    image: "../images/khachhang.png"
+  },
+  {
+    id: 5,
+    title: "Spa & chăm sóc sức khỏe cao cấp",
+    content: "Dịch vụ Spa...",
+    category: "dich-vu",
+    status: "da-xuat-ban",
+    image: "../images/spa.png"
+  },
+  {
+    id: 6,
+    title: "Trải nghiệm ẩm thực Á - Âu tại nhà hàng",
+    content: "Review nhà hàng...",
+    category: "am-thuc",
+    status: "da-xuat-ban",
+    image: "../images/restaurant.png"
   }
 ];
 
-if (!localStorage.getItem("posts")) {
+// QUAN TRỌNG: Dòng này đảm bảo cập nhật lại dữ liệu mới nếu dữ liệu cũ bị thiếu
+const currentData = JSON.parse(localStorage.getItem("posts") || "[]");
+if (currentData.length < posts.length) {
   localStorage.setItem("posts", JSON.stringify(posts));
 }
 </script>
-
   </body>
 </html>
