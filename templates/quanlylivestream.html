@@ -4,15 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CMS - Quản lý Livestream</title>
-    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
   </head>
   <style>
-    /* style.css */
-
     /* --- Thiết lập cơ bản --- */
     body,
     html {
@@ -21,23 +19,22 @@
       height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif;
-      background-color: #f0f2f5; /* Màu nền xám nhạt cho toàn trang */
+      background-color: #f0f2f5;
       color: #333;
     }
 
-    /* --- Layout Dashboard Chính (CSS Grid) --- */
+    /* --- Layout Dashboard --- */
     .dashboard-layout {
       display: grid;
-      /* Cột 1 (sidebar) rộng 260px, Cột 2 (nội dung) chiếm phần còn lại */
       grid-template-columns: 260px 1fr;
-      height: 100vh; /* Chiều cao 100% màn hình */
+      height: 100vh;
     }
 
-    /* ===== 1. Kiểu dáng Sidebar ===== */
+    /* ===== Sidebar ===== */
     .sidebar {
       background-color: #ffffff;
       display: flex;
-      flex-direction: column; /* Xếp các mục theo chiều dọc */
+      flex-direction: column;
       border-right: 1px solid #e0e0e0;
     }
 
@@ -58,7 +55,7 @@
     }
 
     .sidebar-nav {
-      flex-grow: 1; /* Đẩy footer xuống dưới */
+      flex-grow: 1;
       padding: 20px 15px;
     }
 
@@ -82,7 +79,7 @@
 
     .sidebar-nav a i {
       font-size: 18px;
-      width: 20px; /* Đảm bảo các icon căn đều */
+      width: 20px;
       margin-right: 15px;
     }
 
@@ -91,12 +88,12 @@
     }
 
     .sidebar-nav a.active {
-      background-color: #e8f0fe; /* Màu xanh nhạt khi active */
-      color: #0d6efd; /* Màu xanh đậm khi active */
+      background-color: #e8f0fe;
+      color: #0d6efd;
     }
 
     .sidebar-footer {
-      margin-top: auto; /* Tự động đẩy xuống dưới cùng */
+      margin-top: auto;
       padding: 20px;
       border-top: 1px solid #f0f0f0;
     }
@@ -106,7 +103,7 @@
       align-items: center;
       padding: 12px 15px;
       text-decoration: none;
-      color: #d9534f; /* Màu đỏ */
+      color: #d9534f;
       border-radius: 8px;
       font-weight: 500;
       transition: background-color 0.3s;
@@ -137,15 +134,15 @@
       color: #777;
     }
 
-    /* ===== 2. Kiểu dáng Main Content ===== */
+    /* ===== Main Content ===== */
     .main-content {
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow-y: hidden; /* Ẩn thanh cuộn của container này */
+      overflow-y: hidden;
     }
 
-    /* ===== 3. Kiểu dáng Header (Top Bar) ===== */
+    /* ===== Top Bar ===== */
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -153,7 +150,7 @@
       padding: 15px 30px;
       background-color: #ffffff;
       border-bottom: 1px solid #e0e0e0;
-      flex-shrink: 0; /* Không co lại */
+      flex-shrink: 0;
     }
 
     .top-bar .search-bar {
@@ -196,14 +193,12 @@
       border: 2px solid #fff;
     }
 
-    /* ===== 4. Kiểu dáng Page Content ===== */
+    /* ===== Page Content ===== */
     .page-content {
-      flex-grow: 1; /* Chiếm hết phần còn lại */
+      flex-grow: 1;
       padding: 30px;
-      overflow-y: auto; /* Chỉ thanh cuộn này được phép xuất hiện */
+      overflow-y: auto;
     }
-
-    /* ===== CSS MỚI CHO TRANG LIVESTREAM ===== */
 
     .page-header-container {
       display: flex;
@@ -223,10 +218,10 @@
       margin: 0;
     }
 
-    /* --- Bố cục 2 cột cho trang livestream --- */
+    /* --- Grid Livestream --- */
     .livestream-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr; /* Cột trái 2/3, Cột phải 1/3 */
+      grid-template-columns: 2fr 1fr;
       gap: 25px;
       align-items: flex-start;
     }
@@ -238,7 +233,7 @@
       gap: 25px;
     }
 
-    /* --- Card chung (tái sử dụng) --- */
+    /* --- Card Styles --- */
     .ls-card {
       background-color: #ffffff;
       padding: 25px;
@@ -253,9 +248,7 @@
       margin: 0 0 20px 0;
     }
 
-    /* --- Cột trái: Player và Thông tin --- */
-
-    /* Card Video Player */
+    /* --- Video Player --- */
     .video-player-card {
       padding: 20px;
     }
@@ -269,6 +262,7 @@
       align-items: center;
       justify-content: center;
       font-size: 16px;
+      position: relative; /* Để chứa overlay title */
     }
     .video-placeholder i {
       font-size: 50px;
@@ -302,35 +296,26 @@
       background-color: #e9ecef;
     }
 
-   .btn-start-stream {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  font-weight: 600;
-
-  /* --- THÊM 2 DÒNG NÀY --- */
-  flex-shrink: 0;    /* Không cho nút bị ép nhỏ */
-  min-width: 160px;  /* Giữ kích thước tối thiểu để không bị méo */
-
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-
+    .btn-start-stream {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      font-weight: 600;
+      flex-shrink: 0;
+      min-width: 160px;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
     .btn-start-stream:hover {
       background-color: #c82333;
     }
 
-    /* Card Thông tin (dùng chung style .form-card) */
+    /* --- Form Inputs --- */
     .form-group {
       margin-bottom: 15px;
     }
-    .form-group:last-child {
-      margin-bottom: 0;
-    }
-
     input[type="text"],
     textarea {
       width: 100%;
@@ -340,16 +325,14 @@
       background-color: #f9f9f9;
       font-size: 15px;
       color: #333;
-      box-sizing: border-box; /* Quan trọng */
+      box-sizing: border-box;
     }
     textarea {
       resize: vertical;
       min-height: 100px;
     }
 
-    /* --- Cột phải: Stats, Comments, Recent --- */
-
-    /* Card Thống kê */
+    /* --- Thống kê (Stats) --- */
     .stats-list {
       list-style: none;
       padding: 0;
@@ -377,7 +360,6 @@
     .stat-item-count {
       font-size: 16px;
     }
-
     .stat-item.views {
       background-color: #e8f0fe;
       color: #0d6efd;
@@ -391,19 +373,52 @@
       color: #dc3545;
     }
 
-    /* Card Bình luận */
+    /* --- Bình luận (Comments) --- */
     .comments-card {
       min-height: 200px;
+      align-items: stretch;
+      text-align: left;
+      padding: 20px;
+    }
+    .live-comments {
+      flex: 1;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 6px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #888;
+      gap: 10px;
+    }
+    .live-comments::-webkit-scrollbar {
+      width: 6px;
+    }
+    .live-comments::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    .live-comments::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .comment {
       font-size: 14px;
+      line-height: 1.4;
+      background: #f5f6f7;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+    .comment strong {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .comment.system {
+      background: transparent;
+      color: #dc3545;
+      font-weight: 600;
+      text-align: center;
+      font-size: 13px;
     }
 
-    /* Card Livestream gần đây */
+    /* --- Stream List --- */
     .stream-list {
       list-style: none;
       padding: 0;
@@ -425,7 +440,6 @@
     .stream-item:first-child {
       padding-top: 0;
     }
-
     .stream-info strong {
       display: block;
       font-size: 15px;
@@ -443,15 +457,163 @@
       color: #555;
     }
 
-    /* --- Responsive --- */
+    /* --- Popups & Overlays --- */
+    .notification-popup {
+      position: absolute;
+      top: 60px;
+      right: 25px;
+      width: 300px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 15px 18px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 9999;
+      border: 1px solid #e4e4e4;
+    }
+    .notif-header h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .notif-sub {
+      font-size: 12px;
+      color: #777;
+    }
+    .notif-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+    }
+    .notif-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .notif-item:last-child {
+      border-bottom: none;
+    }
+    .notif-item i {
+      font-size: 18px;
+      margin-top: 2px;
+    }
+    .notif-item.urgent i {
+      color: #d9534f;
+    }
+    .notif-item.normal i {
+      color: #0d6efd;
+    }
+    .notif-item.low i {
+      color: #28a745;
+    }
+    .notif-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .notif-time {
+      font-size: 12px;
+      color: #888;
+    }
+    .notif-view-all {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px 0;
+      background: #4338ca;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .notif-view-all:hover {
+      background: #3730a3;
+    }
+
+    .setting-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .setting-modal {
+      background: #ffffff;
+      width: 420px;
+      max-width: 90%;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    .setting-modal h3 {
+      margin: 0 0 20px 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .setting-item {
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+    .setting-item label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .setting-item select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    .setting-actions {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .btn-close-setting {
+      background: #0d6efd;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-close-setting:hover {
+      background: #0b5ed7;
+    }
+
+    .live-title-overlay {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      display: none;
+      z-index: 5;
+    }
+    .live-title-overlay.active {
+      display: block;
+    }
+
+    /* Responsive */
     @media (max-width: 992px) {
       .livestream-grid {
-        grid-template-columns: 1fr; /* Xếp 2 cột chồng lên nhau */
+        grid-template-columns: 1fr;
       }
     }
     @media (max-width: 768px) {
       .dashboard-layout {
-        grid-template-columns: 1fr; /* Ẩn sidebar */
+        grid-template-columns: 1fr;
       }
       .sidebar {
         display: none;
@@ -461,350 +623,7 @@
         gap: 15px;
       }
     }
-.notification-popup {
-  position: absolute;
-  top: 60px;
-  right: 25px;
-  width: 300px;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 15px 18px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  display: none;
-  z-index: 9999;
-  border: 1px solid #e4e4e4;
-}
-
-.notif-header h4 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.notif-sub {
-  font-size: 12px;
-  color: #777;
-}
-
-.notif-list {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0 0;
-}
-
-.notif-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.notif-item:last-child {
-  border-bottom: none;
-}
-
-.notif-item i {
-  font-size: 18px;
-  margin-top: 2px;
-}
-
-.notif-item.urgent i {
-  color: #d9534f;
-}
-
-.notif-item.normal i {
-  color: #0d6efd;
-}
-
-.notif-item.low i {
-  color: #28a745;
-}
-
-.notif-title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.notif-time {
-  font-size: 12px;
-  color: #888;
-}
-
-.notif-view-all {
-  width: 100%;
-  margin-top: 10px;
-  padding: 8px 0;
-  background: #4338ca;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.notif-view-all:hover {
-  background: #3730a3;
-}
-/* ===== POPUP CÀI ĐẶT LIVESTREAM ===== */
-
-.setting-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-.setting-modal {
-  background: #ffffff;
-  width: 420px;
-  max-width: 90%;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-}
-
-.setting-modal h3 {
-  margin: 0 0 20px 0;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.setting-item {
-  margin-bottom: 15px;
-  font-size: 15px;
-}
-
-.setting-item label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.setting-item select {
-  width: 100%;
-  margin-top: 6px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.setting-actions {
-  text-align: right;
-  margin-top: 20px;
-}
-
-.btn-close-setting {
-  background: #0d6efd;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-close-setting:hover {
-  background: #0b5ed7;
-}
-/* ===== LIVE TITLE OVERLAY ===== */
-.live-title-overlay {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  display: none;
-  z-index: 5;
-}
-
-.video-placeholder {
-  position: relative;
-}
-.live-title-overlay.active {
-  display: block;
-}
-/* ===== LIVESTREAM COMMENTS (YOUTUBE-LIKE) ===== */
-
-.comments-card {
-  align-items: stretch;        /* bỏ căn giữa */
-  text-align: left;
-  padding: 20px;
-}
-
-/* vùng chứa comment – có thanh cuộn */
-.live-comments {
-  flex: 1;
-  max-height: 280px;           /* chiều cao cố định */
-  overflow-y: auto;
-  padding-right: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* scrollbar gọn gàng */
-.live-comments::-webkit-scrollbar {
-  width: 6px;
-}
-.live-comments::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
-}
-.live-comments::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* từng comment */
-.comment {
-  font-size: 14px;
-  line-height: 1.4;
-  background: #f5f6f7;
-  padding: 8px 10px;
-  border-radius: 8px;
-}
-
-/* tên user */
-.comment strong {
-  color: #0d6efd;
-  font-weight: 600;
-}
-
-/* comment hệ thống */
-.comment.system {
-  background: transparent;
-  color: #dc3545;
-  font-weight: 600;
-  text-align: center;
-  font-size: 13px;
-}
-
   </style>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const cameraBtn = document.querySelector('.control-btn i.fa-camera').parentElement;
-  const micBtn = document.querySelector('.control-btn i.fa-microphone').parentElement;
-  const screenBtn = document.querySelector('.control-btn i.fa-desktop').parentElement;
-
-  const videoPlaceholder = document.querySelector(".video-placeholder");
-
-  let stream = null;
-  let screenStream = null;
-
-  let cameraOn = false;
-  let micOn = false;
-  let screenOn = false;
-
-  // Tạo thẻ video
-  const video = document.createElement("video");
-  video.autoplay = true;
-  video.playsInline = true;
-  video.style.width = "100%";
-  video.style.height = "100%";
-  video.style.objectFit = "cover";
-  video.style.borderRadius = "10px";
-
-  // -------- CAMERA --------
-  async function toggleCamera() {
-    if (!cameraOn) {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: micOn });
-        video.srcObject = stream;
-
-        videoPlaceholder.innerHTML = "";
-        videoPlaceholder.appendChild(video);
-
-        cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Tắt Camera';
-        cameraOn = true;
-      } catch (error) {
-        alert("Không truy cập được camera: " + error.message);
-      }
-    } else {
-      if (stream) stream.getTracks().forEach(t => t.stop());
-      cameraOn = false;
-
-      videoPlaceholder.innerHTML = `
-        <i class="fa-solid fa-video-slash"></i>
-        <span>Camera chưa được bật</span>
-      `;
-
-      cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Camera';
-    }
-  }
-
-  // -------- MICROPHONE --------
-  async function toggleMic() {
-    if (!micOn) {
-      try {
-        if (!stream) {
-          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        } else {
-          const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          audioStream.getAudioTracks().forEach(track => stream.addTrack(track));
-        }
-
-        micBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i> Tắt Mic';
-        micOn = true;
-      } catch (error) {
-        alert("Không bật được microphone: " + error.message);
-      }
-    } else {
-      if (stream) {
-        stream.getAudioTracks().forEach(t => t.stop());
-      }
-      micOn = false;
-      micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Mic';
-    }
-  }
-
-  // -------- SHARE SCREEN --------
-  async function toggleScreen() {
-    if (!screenOn) {
-      try {
-        screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-        video.srcObject = screenStream;
-
-        videoPlaceholder.innerHTML = "";
-        videoPlaceholder.appendChild(video);
-
-        screenOn = true;
-        screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Dừng chia sẻ';
-
-        screenStream.getVideoTracks()[0].onended = () => toggleScreen();
-      } catch (error) {
-        alert("Không thể chia sẻ màn hình: " + error.message);
-      }
-    } else {
-      if (screenStream) screenStream.getTracks().forEach(t => t.stop());
-      screenOn = false;
-
-      if (cameraOn && stream) {
-        video.srcObject = stream;
-      } else {
-        videoPlaceholder.innerHTML = `
-          <i class="fa-solid fa-video-slash"></i>
-          <span>Camera chưa được bật</span>
-        `;
-      }
-
-      screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Chia sẻ màn hình';
-    }
-  }
-
-  cameraBtn.addEventListener("click", toggleCamera);
-  micBtn.addEventListener("click", toggleMic);
-  screenBtn.addEventListener("click", toggleScreen);
-});
-</script>
 
   <body>
     <div class="dashboard-layout">
@@ -899,43 +718,36 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="fa-solid fa-bell"></i>
               <span class="notification-dot"></span>
             </button>
-<div class="notification-popup" id="notificationPopup">
-  <div class="notif-header">
-    <h4>Thông báo hệ thống</h4>
-    <span class="notif-sub">Dành cho quản trị khách sạn</span>
-  </div>
-
-  <ul class="notif-list">
-
-    <li class="notif-item urgent">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <div>
-        <p class="notif-title">Khách đặt phòng mới</p>
-        <span class="notif-time">2 phút trước</span>
-      </div>
-    </li>
-
-    <li class="notif-item normal">
-      <i class="fa-solid fa-circle-info"></i>
-      <div>
-        <p class="notif-title">Yêu cầu hỗ trợ từ lễ tân</p>
-        <span class="notif-time">10 phút trước</span>
-      </div>
-    </li>
-
-    <li class="notif-item low">
-      <i class="fa-solid fa-check-circle"></i>
-      <div>
-        <p class="notif-title">Cập nhật hệ thống hoàn tất</p>
-        <span class="notif-time">1 giờ trước</span>
-      </div>
-    </li>
-
-  </ul>
-
-  <button class="notif-view-all">Xem tất cả</button>
-</div>
-
+            <div class="notification-popup" id="notificationPopup">
+              <div class="notif-header">
+                <h4>Thông báo hệ thống</h4>
+                <span class="notif-sub">Dành cho quản trị khách sạn</span>
+              </div>
+              <ul class="notif-list">
+                <li class="notif-item urgent">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <div>
+                    <p class="notif-title">Khách đặt phòng mới</p>
+                    <span class="notif-time">2 phút trước</span>
+                  </div>
+                </li>
+                <li class="notif-item normal">
+                  <i class="fa-solid fa-circle-info"></i>
+                  <div>
+                    <p class="notif-title">Yêu cầu hỗ trợ từ lễ tân</p>
+                    <span class="notif-time">10 phút trước</span>
+                  </div>
+                </li>
+                <li class="notif-item low">
+                  <i class="fa-solid fa-check-circle"></i>
+                  <div>
+                    <p class="notif-title">Cập nhật hệ thống hoàn tất</p>
+                    <span class="notif-time">1 giờ trước</span>
+                  </div>
+                </li>
+              </ul>
+              <button class="notif-view-all">Xem tất cả</button>
+            </div>
           </div>
         </header>
 
@@ -953,12 +765,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="livestream-main-column">
               <div class="ls-card video-player-card">
                 <div class="video-placeholder">
-  <!-- THÊM DÒNG NÀY -->
-  <div class="live-title-overlay" id="liveTitleOverlay"></div>
-
-  <i class="fa-solid fa-video-slash"></i>
-  <span>Camera chưa được bật</span>
-</div>
+                  <div class="live-title-overlay" id="liveTitleOverlay"></div>
+                  <i class="fa-solid fa-video-slash"></i>
+                  <span>Camera chưa được bật</span>
+                </div>
 
                 <div class="video-controls">
                   <div class="control-group-left">
@@ -972,13 +782,12 @@ document.addEventListener("DOMContentLoaded", () => {
                       <i class="fa-solid fa-desktop"></i> Chia sẻ màn hình
                     </button>
                     <button class="control-btn" id="btn-setting">
-  <i class="fa-solid fa-cog"></i> Cài đặt
-</button>
+                      <i class="fa-solid fa-cog"></i> Cài đặt
+                    </button>
                   </div>
                   <button class="btn-start-stream" id="btnStartLive">
-  Bắt đầu Livestream
-</button>
-
+                    Bắt đầu Livestream
+                  </button>
                 </div>
               </div>
 
@@ -986,19 +795,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3 class="ls-card-header">Thông tin phát sóng</h3>
                 <div class="form-group">
                   <input
-  type="text"
-  id="liveTitleInput"
-  placeholder="Tiêu đề livestream (Ví dụ: Tour tham quan phòng Deluxe mới...)"
-/>
-
+                    type="text"
+                    id="liveTitleInput"
+                    placeholder="Tiêu đề livestream (Ví dụ: Tour tham quan phòng Deluxe mới...)"
+                  />
                 </div>
                 <div class="form-group">
                   <textarea
-  id="liveDescInput"
-  rows="4"
-  placeholder="Mô tả nội dung livestream"
-></textarea>
-
+                    id="liveDescInput"
+                    rows="4"
+                    placeholder="Mô tả nội dung livestream"
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -1011,27 +818,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span class="stat-item-info">
                       <i class="fa-solid fa-users"></i> Người xem
                     </span>
-                    <span class="stat-item-count">0</span>
+                    <span class="stat-item-count" id="statView">0</span>
                   </li>
                   <li class="stat-item comments">
                     <span class="stat-item-info">
                       <i class="fa-solid fa-comment"></i> Bình luận
                     </span>
-                    <span class="stat-item-count">0</span>
+                    <span class="stat-item-count" id="statComment">0</span>
                   </li>
                   <li class="stat-item likes">
                     <span class="stat-item-info">
                       <i class="fa-solid fa-heart"></i> Lượt thích
                     </span>
-                    <span class="stat-item-count">0</span>
+                    <span class="stat-item-count" id="statLike">0</span>
                   </li>
                 </ul>
               </div>
 
               <div class="ls-card comments-card">
                 <h3 class="ls-card-header">Bình luận trực tiếp</h3>
-                <p>Chưa có bình luận</p>
-                <small>Bắt đầu livestream để xem bình luận</small>
+                <div class="live-comments">
+                  <small style="text-align: center; display: block; margin-top: 20px;">
+                    Bắt đầu livestream để xem bình luận
+                  </small>
+                </div>
               </div>
 
               <div class="ls-card">
@@ -1053,24 +863,10 @@ document.addEventListener("DOMContentLoaded", () => {
                   </li>
                   <li class="stream-item">
                     <div class="stream-info">
-                      <strong>Tour phòng Suite sang trọng</strong>
-                      <span>04/11/2025</span>
-                    </div>
-                    <span class="stream-views">2.3K views</span>
-                  </li>
-                  <li class="stream-item">
-                    <div class="stream-info">
                       <strong>Hồ bơi & khu thể thao</strong>
                       <span>30/10/2025</span>
                     </div>
                     <span class="stream-views">1.8K views</span>
-                  </li>
-                  <li class="stream-item">
-                    <div class="stream-info">
-                      <strong>Tour phòng Suite sang trọng</strong>
-                      <span>04/11/2025</span>
-                    </div>
-                    <span class="stream-views">2.3K views</span>
                   </li>
                 </ul>
               </div>
@@ -1079,232 +875,320 @@ document.addEventListener("DOMContentLoaded", () => {
         </main>
       </div>
     </div>
+
+    <div class="setting-overlay" id="settingOverlay">
+      <div class="setting-modal">
+        <h3>Cài đặt livestream</h3>
+        <div class="setting-item">
+          <label>
+            <input type="checkbox" checked />
+            Hiển thị tiêu đề trên video
+          </label>
+        </div>
+        <div class="setting-item">
+          <label>
+            <input type="checkbox" checked />
+            Bật bình luận trực tiếp
+          </label>
+        </div>
+        <div class="setting-item">
+          <label>Giao diện bình luận</label>
+          <select>
+            <option>Chuẩn (YouTube)</option>
+            <option>Thu gọn</option>
+          </select>
+        </div>
+        <div class="setting-actions">
+          <button class="btn-close-setting">Đóng</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const cameraBtn = document.querySelector('.control-btn i.fa-camera').parentElement;
-  const videoPlaceholder = document.querySelector(".video-placeholder");
-  let stream = null;
-  let cameraOn = false;
+      document.addEventListener("DOMContentLoaded", () => {
+        const cameraBtn = document.querySelector(".control-btn i.fa-camera").parentElement;
+        const micBtn = document.querySelector(".control-btn i.fa-microphone").parentElement;
+        const screenBtn = document.querySelector(".control-btn i.fa-desktop").parentElement;
+        const videoPlaceholder = document.querySelector(".video-placeholder");
 
-  // Tạo thẻ video để thay thế placeholder
-  const video = document.createElement("video");
-  video.autoplay = true;
-  video.style.width = "100%";
-  video.style.height = "100%";
-  video.style.objectFit = "cover";
-  video.style.borderRadius = "10px";
+        let stream = null;
+        let screenStream = null;
+        let cameraOn = false;
+        let micOn = false;
+        let screenOn = false;
 
-  async function toggleCamera() {
-    if (!cameraOn) {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = stream;
+        const video = document.createElement("video");
+        video.autoplay = true;
+        video.playsInline = true;
+        video.style.width = "100%";
+        video.style.height = "100%";
+        video.style.objectFit = "cover";
+        video.style.borderRadius = "10px";
 
-        // Thay placeholder bằng video thật
-        const overlay = document.getElementById("liveTitleOverlay");
+        // CAMERA
+        async function toggleCamera() {
+          if (!cameraOn) {
+            try {
+              stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: micOn,
+              });
+              video.srcObject = stream;
+              
+              // Giữ overlay nếu có
+              const overlay = document.getElementById("liveTitleOverlay");
+              videoPlaceholder.innerHTML = "";
+              videoPlaceholder.appendChild(video);
+              if (overlay) videoPlaceholder.appendChild(overlay);
 
-// xóa video cũ (nếu có)
-const oldVideo = videoPlaceholder.querySelector("video");
-if (oldVideo) oldVideo.remove();
+              cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Tắt Camera';
+              cameraOn = true;
+            } catch (error) {
+              alert("Không truy cập được camera: " + error.message);
+            }
+          } else {
+            if (stream) stream.getTracks().forEach((t) => t.stop());
+            cameraOn = false;
+            
+            // Khôi phục placeholder
+            const overlay = document.getElementById("liveTitleOverlay");
+            videoPlaceholder.innerHTML = `
+              <i class="fa-solid fa-video-slash"></i>
+              <span>Camera chưa được bật</span>
+            `;
+            if (overlay) videoPlaceholder.prepend(overlay); // Đặt overlay lên đầu
 
-// gắn video mới
-videoPlaceholder.appendChild(video);
+            cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Camera';
+          }
+        }
 
-// đảm bảo overlay nằm trên video
-if (overlay) videoPlaceholder.appendChild(overlay);
+        // MIC
+        async function toggleMic() {
+          if (!micOn) {
+            try {
+              if (!stream) {
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+              } else {
+                const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioStream.getTracks().forEach((track) => stream.addTrack(track));
+              }
+              micBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i> Tắt Mic';
+              micOn = true;
+            } catch (error) {
+              alert("Không bật được microphone: " + error.message);
+            }
+          } else {
+            if (stream) {
+              stream.getAudioTracks().forEach((t) => t.stop());
+            }
+            micOn = false;
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Mic';
+          }
+        }
 
+        // SHARE SCREEN
+        async function toggleScreen() {
+          if (!screenOn) {
+            try {
+              screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+              video.srcObject = screenStream;
+              
+              const overlay = document.getElementById("liveTitleOverlay");
+              videoPlaceholder.innerHTML = "";
+              videoPlaceholder.appendChild(video);
+              if (overlay) videoPlaceholder.appendChild(overlay);
 
-        cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Tắt Camera';
-        cameraOn = true;
-      } catch (error) {
-        alert("Không truy cập được camera: " + error.message);
-      }
-    } else {
-      // Tắt camera
-      stream.getTracks().forEach(track => track.stop());
-      cameraOn = false;
-const overlay = document.getElementById("liveTitleOverlay");
+              screenOn = true;
+              screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Dừng chia sẻ';
+              screenStream.getVideoTracks()[0].onended = () => toggleScreen();
+            } catch (error) {
+              alert("Không thể chia sẻ màn hình: " + error.message);
+            }
+          } else {
+            if (screenStream) screenStream.getTracks().forEach((t) => t.stop());
+            screenOn = false;
+            if (cameraOn && stream) {
+              video.srcObject = stream;
+            } else {
+              const overlay = document.getElementById("liveTitleOverlay");
+              videoPlaceholder.innerHTML = `
+                <i class="fa-solid fa-video-slash"></i>
+                <span>Camera chưa được bật</span>
+              `;
+              if (overlay) videoPlaceholder.prepend(overlay);
+            }
+            screenBtn.innerHTML = '<i class="fa-solid fa-desktop"></i> Chia sẻ màn hình';
+          }
+        }
 
-const icon = document.createElement("i");
-icon.className = "fa-solid fa-video-slash";
+        cameraBtn.addEventListener("click", toggleCamera);
+        micBtn.addEventListener("click", toggleMic);
+        screenBtn.addEventListener("click", toggleScreen);
+      });
+    </script>
 
-const text = document.createElement("span");
-text.textContent = "Camera chưa được bật";
+    <script>
+      // Notification
+      const bell = document.querySelector(".notification-btn");
+      const popup = document.getElementById("notificationPopup");
+      bell.addEventListener("click", (e) => {
+        e.stopPropagation();
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+      });
+      document.addEventListener("click", () => {
+        popup.style.display = "none";
+      });
 
-const placeholder = document.createElement("div");
-placeholder.append(icon, text);
+      // Settings
+      const btnSetting = document.getElementById("btn-setting");
+      const settingOverlay = document.getElementById("settingOverlay");
+      const btnCloseSetting = document.querySelector(".btn-close-setting");
+      btnSetting.addEventListener("click", () => {
+        settingOverlay.style.display = "flex";
+      });
+      btnCloseSetting.addEventListener("click", () => {
+        settingOverlay.style.display = "none";
+      });
+      settingOverlay.addEventListener("click", (e) => {
+        if (e.target === settingOverlay) {
+          settingOverlay.style.display = "none";
+        }
+      });
+    </script>
 
-// Giữ overlay, chỉ đổi nội dung hiển thị
-// clear toàn bộ
-videoPlaceholder.innerHTML = "";
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const startBtn = document.getElementById("btnStartLive");
+        const titleInput = document.getElementById("liveTitleInput");
+        const descInput = document.getElementById("liveDescInput");
+        const titleOverlay = document.getElementById("liveTitleOverlay");
+        const commentCard = document.querySelector(".comments-card");
 
-// nếu overlay tồn tại thì giữ lại
-if (overlay) {
-  videoPlaceholder.appendChild(overlay);
-}
+        // Các thẻ hiển thị số liệu
+        const elStatView = document.getElementById("statView");
+        const elStatComment = document.getElementById("statComment");
+        const elStatLike = document.getElementById("statLike");
 
-// thêm placeholder camera off
-videoPlaceholder.appendChild(icon);
-videoPlaceholder.appendChild(text);
-      cameraBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Camera';
-    }
-  }
+        let isLive = false;
 
-  cameraBtn.addEventListener("click", toggleCamera);
-});
-</script>
-<script>
-  const bell = document.querySelector(".notification-btn");
-  const popup = document.getElementById("notificationPopup");
+        // Các biến đếm thời gian
+        let commentInterval = null;
+        let viewInterval = null;
+        let likeInterval = null;
 
-  bell.addEventListener("click", (e) => {
-    e.stopPropagation();
-    popup.style.display = 
-      popup.style.display === "block" ? "none" : "block";
-  });
+        // Biến lưu trữ số lượng hiện tại
+        let currentViews = 0;
+        let currentComments = 0;
+        let currentLikes = 0;
 
-  document.addEventListener("click", () => {
-    popup.style.display = "none";
-  });
-</script>
-<!-- SETTING POPUP -->
-<div class="setting-overlay" id="settingOverlay">
-  <div class="setting-modal">
-    <h3>Cài đặt livestream</h3>
+        function formatNumber(num) {
+          return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
-    <div class="setting-item">
-      <label>
-        <input type="checkbox" checked />
-        Hiển thị tiêu đề trên video
-      </label>
-    </div>
+        if (!startBtn) return;
 
-    <div class="setting-item">
-      <label>
-        <input type="checkbox" checked />
-        Bật bình luận trực tiếp
-      </label>
-    </div>
+        function startLive() {
+          const title = titleInput.value.trim() || "Livestream đang diễn ra";
+          const desc = descInput.value.trim() || "Chào mừng mọi người";
 
-    <div class="setting-item">
-      <label>Giao diện bình luận</label>
-      <select>
-        <option>Chuẩn (YouTube)</option>
-        <option>Thu gọn</option>
-      </select>
-    </div>
+          // 1. Hiện Overlay tiêu đề
+          titleOverlay.innerHTML = `<strong>${title}</strong><br/><small>${desc}</small>`;
+          titleOverlay.classList.add("active");
 
-    <div class="setting-actions">
-      <button class="btn-close-setting">Đóng</button>
-    </div>
-  </div>
-</div>
-<script>
-  const btnSetting = document.getElementById("btn-setting");
-  const settingOverlay = document.getElementById("settingOverlay");
-  const btnCloseSetting = document.querySelector(".btn-close-setting");
+          // 2. Reset UI Comment
+          commentCard.innerHTML = `
+            <h3 class="ls-card-header">Bình luận trực tiếp</h3>
+            <div class="live-comments">
+              <div class="comment system">🔴 Livestream đã bắt đầu</div>
+            </div>
+          `;
+          const liveComments = commentCard.querySelector(".live-comments");
 
-  btnSetting.addEventListener("click", () => {
-    settingOverlay.style.display = "flex";
-  });
+          // 3. Dữ liệu giả
+          const users = ["Minh", "Lan", "Tuấn", "Hà", "Viewer123", "Khách 502", "Thảo Ly"];
+          const msgs = [
+            "Nghe rõ không ạ?", "Hình ảnh nét quá", "Chào admin",
+            "Like mạnh nào mọi người ơi!", "Âm thanh ổn chưa?",
+            "Khách sạn đẹp quá", "Tư vấn mình phòng Deluxe với"
+          ];
 
-  btnCloseSetting.addEventListener("click", () => {
-    settingOverlay.style.display = "none";
-  });
+          // 4. Tăng View
+          viewInterval = setInterval(() => {
+            const randomIncrease = Math.floor(Math.random() * 10) + 5;
+            currentViews += randomIncrease;
+            elStatView.textContent = formatNumber(currentViews);
+          }, 1000);
 
-  // Click ra ngoài modal để đóng
-  settingOverlay.addEventListener("click", (e) => {
-    if (e.target === settingOverlay) {
-      settingOverlay.style.display = "none";
-    }
-  });
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const startBtn = document.getElementById("btnStartLive");
-  const titleInput = document.getElementById("liveTitleInput");
-  const descInput  = document.getElementById("liveDescInput");
+          // 5. Tăng Like
+          likeInterval = setInterval(() => {
+            const randomIncrease = Math.floor(Math.random() * 5) + 1;
+            currentLikes += randomIncrease;
+            elStatLike.textContent = formatNumber(currentLikes);
+          }, 500);
 
-  const titleOverlay = document.getElementById("liveTitleOverlay");
-  const commentCard  = document.querySelector(".comments-card");
+          // 6. Tăng Comment
+          commentInterval = setInterval(() => {
+            const c = document.createElement("div");
+            c.className = "comment";
+            c.innerHTML = `<strong>${users[Math.floor(Math.random() * users.length)]}</strong>: ${msgs[Math.floor(Math.random() * msgs.length)]}`;
+            liveComments.appendChild(c);
+            liveComments.scrollTop = liveComments.scrollHeight;
 
-  let isLive = false;
-  let commentInterval = null;
+            currentComments++;
+            elStatComment.textContent = formatNumber(currentComments);
+          }, 2500);
 
-  if (!startBtn) return;
+          startBtn.textContent = "Kết thúc Livestream";
+          startBtn.style.backgroundColor = "#6c757d";
+          isLive = true;
+        }
 
-  function startLive() {
-    const title = titleInput.value.trim() || "Livestream đang diễn ra";
-    const desc  = descInput.value.trim() || "Chào mừng mọi người";
+        function stopLive() {
+          // 1. Xóa intervals
+          clearInterval(commentInterval);
+          clearInterval(viewInterval);
+          clearInterval(likeInterval);
+          commentInterval = null;
+          viewInterval = null;
+          likeInterval = null;
 
-    // Overlay tiêu đề
-    titleOverlay.innerHTML = `
-      <strong>${title}</strong><br/>
-      <small>${desc}</small>
-    `;
-    titleOverlay.classList.add("active");
+          // 2. Reset biến đếm về 0
+          currentViews = 0;
+          currentComments = 0;
+          currentLikes = 0;
 
-    // UI comment
-   commentCard.innerHTML = `
-  <h3 class="ls-card-header">Bình luận trực tiếp</h3>
-  <div class="live-comments">
-    <div class="comment system">🔴 Livestream đã bắt đầu</div>
-  </div>
-`;
-const liveComments = commentCard.querySelector(".live-comments");
+          // 3. Reset hiển thị về 0
+          elStatView.textContent = "0";
+          elStatComment.textContent = "0";
+          elStatLike.textContent = "0";
 
+          // 4. Ẩn Overlay
+          titleOverlay.innerHTML = "";
+          titleOverlay.classList.remove("active");
 
-    const users = ["Minh", "Lan", "Tuấn", "Hà", "Viewer123"];
-    const msgs = [
-      "Nghe rõ không ạ?",
-      "Hình ảnh nét quá",
-      "Chào admin",
-      "Like mạnh nào!",
-      "Âm thanh ổn chưa?"
-    ];
+          // 5. Thông báo kết thúc
+          const liveCommentsDiv = commentCard.querySelector(".live-comments");
+          if (liveCommentsDiv) {
+            const endMsg = document.createElement("div");
+            endMsg.className = "comment system";
+            endMsg.textContent = "⏹ Livestream đã kết thúc";
+            liveCommentsDiv.appendChild(endMsg);
+            liveCommentsDiv.scrollTop = liveCommentsDiv.scrollHeight;
+          }
 
-    commentInterval = setInterval(() => {
-      const c = document.createElement("div");
-      c.className = "comment";
-      c.innerHTML = `<strong>${users[Math.floor(Math.random()*users.length)]}</strong>: ${msgs[Math.floor(Math.random()*msgs.length)]}`;
-      liveComments.appendChild(c);
-      liveComments.scrollTop = liveComments.scrollHeight;
-    }, 3000);
+          startBtn.textContent = "Bắt đầu Livestream";
+          startBtn.style.backgroundColor = "#dc3545";
+          isLive = false;
+        }
 
-    startBtn.textContent = "Kết thúc Livestream";
-    startBtn.style.backgroundColor = "#6c757d";
-    isLive = true;
-  }
-
-  function stopLive() {
-    clearInterval(commentInterval);
-    commentInterval = null;
-
-titleOverlay.innerHTML = "";
-titleOverlay.classList.remove("active");
-
-    commentCard.innerHTML = `
-  <h3 class="ls-card-header">Bình luận trực tiếp</h3>
-  <div class="live-comments ended">
-    <div class="comment system">⏹ Livestream đã kết thúc</div>
-  </div>
-`;
-
-
-    startBtn.textContent = "Bắt đầu Livestream";
-    startBtn.style.backgroundColor = "#dc3545";
-    isLive = false;
-  }
-
-  startBtn.addEventListener("click", () => {
-    if (!isLive) {
-      startLive();
-    } else {
-      stopLive();
-    }
-  });
-});
-</script>
-
+        startBtn.addEventListener("click", () => {
+          if (!isLive) {
+            startLive();
+          } else {
+            stopLive();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
