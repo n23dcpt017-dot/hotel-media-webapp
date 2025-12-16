@@ -825,18 +825,30 @@
     }
   });
 
-  // ===== 6. Nút CẬP NHẬT =====
+  // ===== 6. Nút CẬP NHẬT (Trong suabaiviet.html) =====
   document.querySelector(".btn.btn-primary").addEventListener("click", () => {
     post.title = titleInput.value.trim();
     post.content = contentInput.value.trim();
     post.category = categoryInput.value;
+    
+    // Tự động gán tên danh mục và màu sắc để hiển thị đẹp
+    if(post.category === 'phong') { post.categoryName = "Phòng"; post.tagColor = "tag-blue"; }
+    else if(post.category === 'am-thuc') { post.categoryName = "Ẩm thực"; post.tagColor = "tag-green"; }
+    else if(post.category === 'khuyen-mai') { post.categoryName = "Khuyến mãi"; post.tagColor = "tag-blue"; }
+    else if(post.category === 'su-kien') { post.categoryName = "Sự kiện"; post.tagColor = "tag-purple"; }
+    else { post.categoryName = "Dịch vụ"; post.tagColor = "tag-blue"; }
+
     post.status = statusInput.value;
-    // post.image đã được cập nhật ở sự kiện change bên trên rồi
-
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    alert("Cập nhật bài viết thành công!");
-    window.location.href = "quanlybaiviet.html";
+    
+    // Lưu lại vào LocalStorage
+    // Tìm vị trí bài viết cũ và ghi đè bài mới vào
+    const index = posts.findIndex(p => p.id === postId);
+    if (index !== -1) {
+        posts[index] = post;
+        localStorage.setItem("posts", JSON.stringify(posts));
+        alert("Cập nhật bài viết thành công!");
+        window.location.href = "quanlybaiviet.html";
+    }
   });
 
   // ===== 7. Nút LƯU NHÁP =====
