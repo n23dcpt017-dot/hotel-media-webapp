@@ -48,7 +48,7 @@
       .footer-bottom { text-align: center; padding-top: 10px; }
       .footer-bottom p { margin: 0; font-size: 14px; color: #888; }
       @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 30px; } }
-      .hero-section { position: relative; height: 80vh; color: #ffffff; background-image: url("../static/images/trangchubanner.png"); background-size: cover; background-position: center; }
+      .hero-section { position: relative; height: 80vh; color: #ffffff; background-image: url("static/images/trangchubanner.png"); background-size: cover; background-position: center; }
       .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
       .hero-content { max-width: 800px; }
       .hero-search-bar { display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.25); border-radius: 50px; padding: 10px 20px; margin: 0 auto 50px auto; max-width: 400px; border: 1px solid rgba(255, 255, 255, 0.3); }
@@ -110,7 +110,7 @@
       <nav class="navbar-container">
         <div class="nav-logo">
           <a href="index.html">
-            <img src="../static/images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
+            <img src="static/images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
           </a>
         </div>
         <ul class="nav-menu">
@@ -260,9 +260,9 @@
 
         // Hàm fix đường dẫn ảnh
         const fixImgPath = (path) => {
-            if (!path) return '../static/images/phong1.png';
+            if (!path) return 'static/images/phong1.png';
             if (path.startsWith("data:") || path.startsWith("http")) return path;
-            return path.replace("../static/images/", "../static/images/");
+            return path.replace("static/images/", "static/images/");
         };
 
         const getExcerpt = (content) => {
