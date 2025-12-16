@@ -329,15 +329,18 @@ def list_posts():
     posts = query.order_by(Post.created_at.desc()).all()
 
     return jsonify([
-        {
-            "id": p.id,
-            "title": p.title,
-            "status": p.status,
-            "publish_at": p.publish_at,
-            "image": p.image,
-        }
-        for p in posts
-    ])
+    {
+        "id": p.id,
+        "title": p.title,
+        "status": p.status,
+        "publish_at": p.publish_at.isoformat() if p.publish_at else None,
+        "image": p.image,
+        "category": p.category,
+        "author": p.author
+    }
+    for p in posts
+])
+
 
 # =================================================
 # COMMENTS (APPROVED / REJECTED / DELETED)
