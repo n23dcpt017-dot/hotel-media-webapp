@@ -746,7 +746,7 @@ function loadPosts(status = "") {
       grid.innerHTML = "";
 
       posts.forEach(p => {
-        const st = statusMap(p.status);
+      const cat = mapCategory(p.category);
 
 grid.innerHTML += `
   <article class="article-card">
