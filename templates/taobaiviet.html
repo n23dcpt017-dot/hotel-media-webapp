@@ -804,6 +804,37 @@ function publishPost() {
   .catch(err => alert(err.message));
 }
 </script>
+<script>
+let thumbnailUrl = null;
+
+document.getElementById("thumbnailInput").addEventListener("change", async function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  // Preview ảnh
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById("thumbnailPreview").src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+
+  // Upload ảnh
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/auth/api/upload-thumbnail", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  if (data.url) {
+    thumbnailUrl = data.url;
+  } else {
+    alert("Upload ảnh thất bại");
+  }
+});
+</script>
 
   </body>
 </html>
