@@ -15,485 +15,94 @@
       href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-
     <style>
-      /* --- GIỮ NGUYÊN CSS GỐC CỦA BẠN --- */
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-        margin: 0;
-        background-color: #ffffff;
-      }
-
-      .main-header {
-        background-color: #ffffff;
-        border-bottom: 1px solid #e0e0e0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        padding: 15px 0;
-      }
-
-      .navbar-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-
-      .nav-logo .logo-image {
-        height: 50px;
-        width: auto;
-        display: block;
-      }
-
-      .nav-menu {
-        display: flex;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        gap: 35px;
-      }
-
-      .nav-link {
-        text-decoration: none;
-        color: #333;
-        font-size: 17px;
-        font-weight: 600;
-        padding: 10px 0;
-        transition: color 0.3s ease;
-      }
-
-      .nav-link:hover,
-      .nav-link.active {
-        color: #007bff;
-      }
-
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .btn-book {
-        text-decoration: none;
-        color: #333;
-        border: 1px solid #ccc;
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .btn-book:hover {
-        background-color: #f8f8f8;
-        border-color: #aaa;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-      }
-
-      .nav-icon {
-        font-size: 24px;
-        color: #555;
-        transition: color 0.3s ease;
-      }
-
-      .nav-icon:hover {
-        color: #007bff;
-      }
-
-      /* Footer CSS */
-      .site-footer {
-        background-color: #0d1b2a;
-        color: #adb5bd;
-        padding: 60px 0 20px 0;
-      }
-      .footer-container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .footer-top {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 40px;
-        padding-bottom: 30px;
-      }
-      .footer-about .footer-logo {
-        font-size: 28px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0 0 10px 0;
-      }
-      .footer-tagline {
-        font-size: 15px;
-        color: #ced4da;
-        margin: 0;
-      }
-      .footer-links h4,
-      .footer-contact h4 {
-        font-size: 18px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 0 0 20px 0;
-      }
-      .footer-links ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .footer-links li {
-        margin-bottom: 12px;
-      }
-      .footer-links a {
-        text-decoration: none;
-        color: #adb5bd;
-        transition: color 0.3s ease;
-      }
-      .footer-links a:hover {
-        color: #ffffff;
-        text-decoration: underline;
-      }
-      .footer-contact p {
-        font-size: 15px;
-        margin: 0 0 10px 0;
-        color: #ced4da;
-      }
-      .footer-divider {
-        border: 0;
-        border-top: 1px solid #343a40;
-        margin: 20px 0;
-      }
-      .footer-bottom {
-        text-align: center;
-        padding-top: 10px;
-      }
-      .footer-bottom p {
-        margin: 0;
-        font-size: 14px;
-        color: #888;
-      }
-      @media (max-width: 768px) {
-        .footer-top {
-          grid-template-columns: 1fr;
-          gap: 30px;
-        }
-      }
-
-      /* Hero Section */
-      .hero-section {
-        position: relative;
-        height: 80vh;
-        color: #ffffff;
-        background-image: url("images/trangchubanner.png");
-        background-size: cover;
-        background-position: center;
-      }
-      .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-      }
-      .hero-content {
-        max-width: 800px;
-      }
-      .hero-search-bar {
-        display: flex;
-        align-items: center;
-        background-color: rgba(255, 255, 255, 0.25);
-        border-radius: 50px;
-        padding: 10px 20px;
-        margin: 0 auto 50px auto;
-        max-width: 400px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-      .hero-search-bar i {
-        color: #ffffff;
-        margin-right: 10px;
-      }
-      .hero-search-bar input {
-        flex: 1;
-        background: transparent;
-        border: none;
-        outline: none;
-        color: #ffffff;
-        font-size: 16px;
-      }
-      .hero-search-bar input::placeholder {
-        color: #ddd;
-        opacity: 1;
-      }
-      .hero-title {
-        font-size: 48px;
-        font-weight: 700;
-        margin: 0 0 15px 0;
-      }
-      .hero-subtitle {
-        font-size: 22px;
-        font-weight: 400;
-        margin: 0 0 35px 0;
-      }
-      .hero-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-      }
-      .btn {
-        text-decoration: none;
-        padding: 14px 30px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        border: 2px solid #ffffff;
-      }
-      .btn-primary {
-        background-color: #ffffff;
-        color: #333;
-      }
-      .btn-primary:hover {
-        background-color: transparent;
-        color: #ffffff;
-      }
-      .btn-secondary {
-        background-color: transparent;
-        color: #ffffff;
-      }
-      .btn-secondary:hover {
-        background-color: #ffffff;
-        color: #333;
-      }
-      .social-connect {
-        background-color: #e5e5e5;
-        padding: 50px 20px;
-        text-align: center;
-      }
-      .social-connect h2 {
-        font-size: 28px;
-        font-weight: 700;
-        color: #222;
-        margin: 0 0 10px 0;
-      }
-      .social-connect p {
-        font-size: 17px;
-        color: #555;
-        margin: 0 0 30px 0;
-      }
-      .social-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-      .social-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        background-color: #ffffff;
-        border: 1px solid #dcdcdc;
-        border-radius: 8px;
-        padding: 12px 25px;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 600;
-        color: #333;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-      .social-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      }
-      .social-btn i {
-        font-size: 22px;
-      }
-      .fa-facebook {
-        color: #1877f2;
-      }
-      .fa-youtube {
-        color: #ff0000;
-      }
-      .fa-tiktok {
-        color: #010101;
-      }
-      .zalo-icon {
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        line-height: 22px;
-        text-align: center;
-        background-color: #0068ff;
-        color: white;
-        border-radius: 50%;
-        font-weight: bold;
-        font-size: 14px;
-      }
-      .page-container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 40px auto;
-      }
-      .news-section {
-        margin-bottom: 50px;
-      }
-      .news-section h2 {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 5px;
-        color: #222;
-      }
-      .news-section .section-subtitle {
-        font-size: 16px;
-        color: #666;
-        margin-bottom: 30px;
-      }
-      .news-grid {
-        display: grid;
-        gap: 30px;
-      }
-      .grid-2-cols {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .grid-3-cols {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .news-card {
-        background-color: #ffffff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid #e9ecef;
-      }
-      .news-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-      }
-      .news-card-link {
-        text-decoration: none;
-        color: inherit;
-      }
-      .card-image {
-        position: relative;
-        width: 100%;
-        padding-top: 60%;
-        overflow: hidden;
-      }
-      .card-image img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .card-tag {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        color: #fff;
-      }
-      .tag-hot {
-        background-color: #4a00e0;
-      }
-      .card-content {
-        padding: 20px;
-      }
-      .card-category {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 12px;
-        color: #fff;
-      }
-      .category-blue {
-        background-color: #007bff;
-      }
-      .category-green {
-        background-color: #28a745;
-      }
-      .category-purple {
-        background-color: #6f42c1;
-      }
-      .card-content h3 {
-        font-size: 20px;
-        font-weight: 700;
-        margin: 0 0 10px 0;
-        color: #333;
-        /* Giới hạn tiêu đề 2 dòng */
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      /* QUAN TRỌNG: CSS ĐỂ GIỮ KHUNG HÌNH KHÔNG BỊ VỠ KHI CHỮ DÀI */
-      .card-excerpt {
-        font-size: 15px;
-        color: #555;
-        line-height: 1.5;
-        margin-bottom: 20px;
-        
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Chỉ hiện 2 dòng */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        height: 44px; /* Cố định chiều cao */
-      }
+      /* --- GIỮ NGUYÊN TOÀN BỘ CSS CŨ CỦA BẠN --- */
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: #ffffff; }
+      .main-header { background-color: #ffffff; border-bottom: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); padding: 15px 0; }
+      .navbar-container { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1400px; margin: 0 auto; }
+      .nav-logo .logo-image { height: 50px; width: auto; display: block; }
+      .nav-menu { display: flex; list-style: none; margin: 0; padding: 0; gap: 35px; }
+      .nav-link { text-decoration: none; color: #333; font-size: 17px; font-weight: 600; padding: 10px 0; transition: color 0.3s ease; }
+      .nav-link:hover, .nav-link.active { color: #007bff; }
+      .nav-right { display: flex; align-items: center; gap: 20px; }
+      .btn-book { text-decoration: none; color: #333; border: 1px solid #ccc; padding: 12px 25px; border-radius: 8px; font-weight: 600; font-size: 15px; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+      .btn-book:hover { background-color: #f8f8f8; border-color: #aaa; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); }
+      .nav-icon { font-size: 24px; color: #555; transition: color 0.3s ease; }
+      .nav-icon:hover { color: #007bff; }
+      .site-footer { background-color: #0d1b2a; color: #adb5bd; padding: 60px 0 20px 0; }
+      .footer-container { width: 90%; max-width: 1200px; margin: 0 auto; }
+      .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 30px; }
+      .footer-about .footer-logo { font-size: 28px; font-weight: 700; color: #ffffff; margin: 0 0 10px 0; }
+      .footer-tagline { font-size: 15px; color: #ced4da; margin: 0; }
+      .footer-links h4, .footer-contact h4 { font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 20px 0; }
+      .footer-links ul { list-style: none; margin: 0; padding: 0; }
+      .footer-links li { margin-bottom: 12px; }
+      .footer-links a { text-decoration: none; color: #adb5bd; transition: color 0.3s ease; }
+      .footer-links a:hover { color: #ffffff; text-decoration: underline; }
+      .footer-contact p { font-size: 15px; margin: 0 0 10px 0; color: #ced4da; }
+      .footer-divider { border: 0; border-top: 1px solid #343a40; margin: 20px 0; }
+      .footer-bottom { text-align: center; padding-top: 10px; }
+      .footer-bottom p { margin: 0; font-size: 14px; color: #888; }
+      @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 30px; } }
+      .hero-section { position: relative; height: 80vh; color: #ffffff; background-image: url("images/trangchubanner.png"); background-size: cover; background-position: center; }
+      .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+      .hero-content { max-width: 800px; }
+      .hero-search-bar { display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.25); border-radius: 50px; padding: 10px 20px; margin: 0 auto 50px auto; max-width: 400px; border: 1px solid rgba(255, 255, 255, 0.3); }
+      .hero-search-bar i { color: #ffffff; margin-right: 10px; }
+      .hero-search-bar input { flex: 1; background: transparent; border: none; outline: none; color: #ffffff; font-size: 16px; }
+      .hero-search-bar input::placeholder { color: #ddd; opacity: 1; }
+      .hero-title { font-size: 48px; font-weight: 700; margin: 0 0 15px 0; }
+      .hero-subtitle { font-size: 22px; font-weight: 400; margin: 0 0 35px 0; }
+      .hero-buttons { display: flex; justify-content: center; gap: 20px; }
+      .btn { text-decoration: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; border: 2px solid #ffffff; }
+      .btn-primary { background-color: #ffffff; color: #333; }
+      .btn-primary:hover { background-color: transparent; color: #ffffff; }
+      .btn-secondary { background-color: transparent; color: #ffffff; }
+      .btn-secondary:hover { background-color: #ffffff; color: #333; }
+      .social-connect { background-color: #e5e5e5; padding: 50px 20px; text-align: center; }
+      .social-connect h2 { font-size: 28px; font-weight: 700; color: #222; margin: 0 0 10px 0; }
+      .social-connect p { font-size: 17px; color: #555; margin: 0 0 30px 0; }
+      .social-buttons { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+      .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 8px; padding: 12px 25px; text-decoration: none; font-size: 16px; font-weight: 600; color: #333; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; }
+      .social-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
+      .social-btn i { font-size: 22px; }
+      .fa-facebook { color: #1877f2; }
+      .fa-youtube { color: #ff0000; }
+      .fa-tiktok { color: #010101; }
+      .zalo-icon { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #0068ff; color: white; border-radius: 50%; font-weight: bold; font-size: 14px; }
+      .page-container { width: 90%; max-width: 1200px; margin: 40px auto; }
+      .news-section { margin-bottom: 50px; }
+      .news-section h2 { font-size: 28px; font-weight: 700; margin-bottom: 5px; color: #222; }
+      .news-section .section-subtitle { font-size: 16px; color: #666; margin-bottom: 30px; }
+      .news-grid { display: grid; gap: 30px; }
+      .grid-2-cols { grid-template-columns: repeat(2, 1fr); }
+      .grid-3-cols { grid-template-columns: repeat(3, 1fr); }
+      .news-card { background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid #e9ecef; }
+      .news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); }
+      .news-card-link { text-decoration: none; color: inherit; }
+      .card-image { position: relative; width: 100%; padding-top: 60%; overflow: hidden; }
+      .card-image img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+      .card-tag { position: absolute; top: 15px; left: 15px; padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #fff; }
+      .tag-hot { background-color: #4a00e0; }
+      .card-content { padding: 20px; }
+      .card-category { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 600; margin-bottom: 12px; color: #fff; }
       
-      .card-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-        color: #888;
-        border-top: 1px solid #eee;
-        padding-top: 15px;
-        margin-top: 15px;
-      }
-      .card-content h3 + .card-meta {
-        margin-top: 0;
-        border-top: none;
-        padding-top: 0;
-      }
-      .card-meta span {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      @media (max-width: 992px) {
-        .grid-3-cols {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (max-width: 768px) {
-        .grid-2-cols,
-        .grid-3-cols {
-          grid-template-columns: 1fr;
-        }
-      }
+      /* MÀU TAG (Mới thêm để khớp CMS) */
+      .category-blue { background-color: #007bff; }
+      .category-green { background-color: #28a745; }
+      .category-purple { background-color: #6f42c1; }
+
+      .card-content h3 { font-size: 20px; font-weight: 700; margin: 0 0 10px 0; color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .card-excerpt { font-size: 15px; color: #555; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 44px; }
+      .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #888; border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px; }
+      .card-content h3 + .card-meta { margin-top: 0; border-top: none; padding-top: 0; }
+      .card-meta span { display: flex; align-items: center; gap: 6px; }
+      @media (max-width: 992px) { .grid-3-cols { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 768px) { .grid-2-cols, .grid-3-cols { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
@@ -501,29 +110,19 @@
       <nav class="navbar-container">
         <div class="nav-logo">
           <a href="index.html">
-            <img
-              src="images/logo.svg"
-              alt="Logo Grand Hotel"
-              class="logo-image"
-            />
+            <img src="images/logo.svg" alt="Logo Grand Hotel" class="logo-image" />
           </a>
         </div>
-
         <ul class="nav-menu">
-          <li>
-            <a href="index.html" class="nav-link active">Trang Chủ</a>
-          </li>
+          <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
           <li><a href="templates/phong.html" class="nav-link">Phòng</a></li>
           <li><a href="templates/dichvu.html" class="nav-link">Dịch vụ</a></li>
           <li><a href="templates/tintuc.html" class="nav-link">Tin tức</a></li>
           <li><a href="templates/lienhe.html" class="nav-link">Liên hệ</a></li>
         </ul>
-
         <div class="nav-right">
           <a href="templates/phong.html" class="btn-book">Đặt phòng ngay</a>
-          <a href="templates/login.html" class="nav-icon">
-            <i class="fa-regular fa-user"></i>
-          </a>
+          <a href="templates/login.html" class="nav-icon"><i class="fa-regular fa-user"></i></a>
         </div>
       </nav>
     </header>
@@ -535,17 +134,11 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Tìm kiếm bài viết, tin tức..." />
           </div>
-
           <h1 class="hero-title">Chào mừng đến với Grand Hotel</h1>
           <p class="hero-subtitle">Trải nghiệm sang trọng, dịch vụ hoàn hảo</p>
-
           <div class="hero-buttons">
-            <a href="templates/phong.html" class="btn btn-primary"
-              >Khám phá ngay</a
-            >
-            <a href="templates/videohub.html" class="btn btn-secondary"
-              >Xem video</a
-            >
+            <a href="templates/phong.html" class="btn btn-primary">Khám phá ngay</a>
+            <a href="templates/videohub.html" class="btn btn-secondary">Xem video</a>
           </div>
         </div>
       </div>
@@ -556,14 +149,12 @@
       <section class="news-section">
         <h2>Tin nổi bật</h2>
         <p class="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
-        <div class="news-grid grid-2-cols" id="featured-grid">
-           </div>
+        <div class="news-grid grid-2-cols" id="featured-grid"></div>
       </section>
 
       <section class="news-section">
         <h2>Tin tức mới nhất</h2>
-        <div class="news-grid grid-3-cols" id="latest-grid">
-           </div>
+        <div class="news-grid grid-3-cols" id="latest-grid"></div>
       </section>
 
     </div>
@@ -572,40 +163,22 @@
       <div class="social-container">
         <h2>Kết nối với chúng tôi</h2>
         <p>Theo dõi để nhận tin tức và ưu đãi mới nhất</p>
-
         <div class="social-buttons">
-          <a href="#" class="social-btn">
-            <i class="fa-brands fa-facebook"></i>
-            <span>Facebook</span>
-          </a>
-
-          <a href="#" class="social-btn">
-            <i class="fa-brands fa-youtube"></i>
-            <span>Youtube</span>
-          </a>
-
-          <a href="#" class="social-btn">
-            <span class="zalo-icon">Z</span>
-            <span>Zalo</span>
-          </a>
-
-          <a href="#" class="social-btn">
-            <i class="fa-brands fa-tiktok"></i>
-            <span>Tiktok</span>
-          </a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i><span>Youtube</span></a>
+          <a href="#" class="social-btn"><span class="zalo-icon">Z</span><span>Zalo</span></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i><span>Tiktok</span></a>
         </div>
       </div>
     </section>
+
     <footer class="site-footer">
       <div class="footer-container">
         <div class="footer-top">
           <div class="footer-column footer-about">
             <h3 class="footer-logo">3CC Grand Hotel</h3>
-            <p class="footer-tagline">
-              Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo
-            </p>
+            <p class="footer-tagline">Khách sạn 5 sao sang trọng với dịch vụ hoàn hảo</p>
           </div>
-
           <div class="footer-column footer-links">
             <h4>Liên kết</h4>
             <ul>
@@ -615,7 +188,6 @@
               <li><a href="templates/lienhe.html">Liên hệ</a></li>
             </ul>
           </div>
-
           <div class="footer-column footer-links">
             <h4>Hỗ trợ</h4>
             <ul>
@@ -625,7 +197,6 @@
               <li><a href="#">Bảo mật</a></li>
             </ul>
           </div>
-
           <div class="footer-column footer-contact">
             <h4>Liên hệ</h4>
             <p>123 Đường ABC, TP.HCM</p>
@@ -633,117 +204,76 @@
             <p>Email: info@grandhotel.vn</p>
           </div>
         </div>
-
         <hr class="footer-divider" />
-
         <div class="footer-bottom">
           <p>&copy; 2025 Grand Hotel. All rights reserved.</p>
         </div>
       </div>
     </footer>
+
     <script src="https://cdn.tailwindcss.com"></script>
-
     <div id="livestream-root"></div>
-
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
       const { useState } = React;
-
       function MiniLivestream() {
         const [isOpen, setIsOpen] = useState(false);
-
-        const videoUrl =
-          "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
-
+        const videoUrl = "https://www.youtube.com/embed/cmfeMfdYRFs?autoplay=1&mute=1";
         return (
           <>
             {!isOpen && (
-              <button
-                onClick={() => setIsOpen(true)}
-                className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg"
-              >
-                Xem Livestream
-              </button>
+              <button onClick={() => setIsOpen(true)} className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg">Xem Livestream</button>
             )}
-
             {isOpen && (
               <div className="fixed bottom-4 right-4 z-50 w-[360px] h-[202px] bg-white rounded shadow-lg overflow-hidden flex flex-col">
                 <div className="flex justify-between items-center bg-red-600 text-white px-2 py-1">
                   <span className="text-xs font-bold uppercase">LIVE</span>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="text-white font-bold text-lg leading-none"
-                  >
-                    ×
-                  </button>
+                  <button onClick={() => setIsOpen(false)} className="text-white font-bold text-lg leading-none">×</button>
                 </div>
-
                 <div className="flex-1">
-                  <iframe
-                    src={videoUrl}
-                    className="w-full h-full"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    allow="autoplay"
-                    title="Livestream"
-                  ></iframe>
+                  <iframe src={videoUrl} className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen allow="autoplay" title="Livestream"></iframe>
                 </div>
-
-                <div
-                  className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer"
-                  onClick={() =>
-                    (window.location.href = "templates/videohub.html")
-                  }
-                >
-                  Xem tất cả Livestream
-                </div>
+                <div className="bg-gray-100 text-xs px-2 py-1 text-gray-700 text-center cursor-pointer" onClick={() => (window.location.href = "templates/videohub.html")}>Xem tất cả Livestream</div>
               </div>
             )}
           </>
         );
       }
-
-      ReactDOM.createRoot(document.getElementById("livestream-root")).render(
-        <MiniLivestream />
-      );
+      ReactDOM.createRoot(document.getElementById("livestream-root")).render(<MiniLivestream />);
     </script>
 
     <script>
       function renderHomePage() {
-        // 1. Lấy dữ liệu từ localStorage
+        // 1. Lấy dữ liệu
         const posts = JSON.parse(localStorage.getItem("posts")) || [];
-        
-        // 2. Chỉ lấy bài viết trạng thái "Đã xuất bản"
+        // 2. Lọc bài đã xuất bản
         const publishedPosts = posts.filter(p => p.status === "da-xuat-ban");
-
-        // 3. Tách 2 bài đầu làm Tin Nổi Bật, còn lại là Tin Mới
-        const featuredPosts = publishedPosts.slice(0, 2); 
-        const latestPosts = publishedPosts.slice(2); 
+        // 3. Cắt 2 bài đầu và các bài sau
+        const featuredPosts = publishedPosts.slice(0, 2);
+        const latestPosts = publishedPosts.slice(2); // Sẽ có bài nếu bạn đã làm Bước 1
 
         const featuredGrid = document.getElementById("featured-grid");
         const latestGrid = document.getElementById("latest-grid");
 
-        // Hàm xử lý đường dẫn ảnh (Chữa lỗi ảnh bị lỗi link)
+        // Hàm fix đường dẫn ảnh
         const fixImgPath = (path) => {
-            if (!path) return 'images/phong1.png'; 
+            if (!path) return 'images/phong1.png';
             if (path.startsWith("data:") || path.startsWith("http")) return path;
-            // Xóa ../ để phù hợp với trang chủ
-            return path.replace("../images/", "images/"); 
+            return path.replace("../images/", "images/");
         };
-        
-        // Hàm cắt chữ mô tả nếu quá dài
+
         const getExcerpt = (content) => {
-            if(!content) return "";
+            if(!content) return "Nội dung đang cập nhật...";
             return content.length > 100 ? content.substring(0, 100) + "..." : content;
         };
 
-        // --- RENDER TIN NỔI BẬT (GIỮ NGUYÊN HTML CŨ CỦA BẠN) ---
+        // Render Tin Nổi Bật
         if (featuredGrid) {
-            featuredGrid.innerHTML = featuredPosts.map(post => `
+            if (featuredPosts.length === 0) featuredGrid.innerHTML = "<p>Chưa có bài viết nổi bật.</p>";
+            else featuredGrid.innerHTML = featuredPosts.map(post => `
               <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
                 <article class="news-card">
                   <div class="card-image">
@@ -755,7 +285,7 @@
                     <h3>${post.title}</h3>
                     <p class="card-excerpt">${getExcerpt(post.content)}</p>
                     <div class="card-meta">
-                      <span><i class="fa-regular fa-calendar"></i> ${post.date || '01/01/2025'}</span>
+                      <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
                       <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
                     </div>
                   </div>
@@ -764,10 +294,10 @@
             `).join("");
         }
 
-        // --- RENDER TIN MỚI NHẤT (GIỮ NGUYÊN HTML CŨ CỦA BẠN) ---
-        // Lưu ý: Mẫu này của bạn không có phần excerpt (mô tả ngắn)
+        // Render Tin Mới Nhất
         if (latestGrid) {
-            latestGrid.innerHTML = latestPosts.map(post => `
+            if (latestPosts.length === 0) latestGrid.innerHTML = "<p>Đang cập nhật thêm tin tức...</p>";
+            else latestGrid.innerHTML = latestPosts.map(post => `
               <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
                 <article class="news-card">
                   <div class="card-image">
@@ -778,7 +308,7 @@
                     <span class="card-category ${post.tagColor || 'category-blue'}">${post.categoryName || 'Tin tức'}</span>
                     <h3>${post.title}</h3>
                     <div class="card-meta">
-                      <span><i class="fa-regular fa-calendar"></i> ${post.date || '01/01/2025'}</span>
+                      <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
                       <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
                     </div>
                   </div>
@@ -787,8 +317,6 @@
             `).join("");
         }
       }
-
-      // Chạy hàm khi trang web tải xong
       document.addEventListener("DOMContentLoaded", renderHomePage);
     </script>
   </body>
