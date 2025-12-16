@@ -657,14 +657,15 @@
                         <textarea id="post-content" rows="10" placeholder="Viết nội dung bài viết..."></textarea>
                     </div>
     
-                    <div class="form-card">
-                        <label for="post-image">Ảnh đại diện</label>
-                        <div class="image-uploader-box">
-                            <i class="fa-regular fa-image"></i>
-                            <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
-                            <small>PNG, JPG, GIF (tối đa 2MB)</small>
-                        </div>
-                    </div>
+                    <input type="file" id="thumbnailInput" accept="image/*" hidden>
+
+<div class="thumbnail-upload" onclick="document.getElementById('thumbnailInput').click()">
+  <img id="thumbnailPreview"
+       src="/static/images/placeholder.png"
+       alt="Thumbnail">
+  <p>Click để chọn ảnh</p>
+</div>
+
     
                     <div class="form-card">
                         <label>Nhúng video</label>
