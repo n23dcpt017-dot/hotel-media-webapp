@@ -341,6 +341,30 @@ def list_posts():
     for p in posts
 ])
 
+import uuid
+from werkzeug.utils import secure_filename
+
+@auth.route("/api/upload-thumbnail", methods=["POST"])
+@login_required
+def upload_thumbnail():
+    if "file" not in request.files:
+        return jsonify({"error": "Không có file"}), 400
+
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"error": "File rỗng"}), 400
+
+    ext = file.filename.rsplit(".", 1)[-1].lower()
+    if ext not in ["jpg", "jpeg", "png", "webp"]:
+        return jsonify({"error": "Định dạng không hỗ trợ"}), 400
+
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    upload_path = os.path.join("static/uploads/thumbnails", filename)
+    file.save(upload_path)
+
+    return jsonify({
+        "url": f"/static/uploads/thumbnail/{filename}"
+    })
 
 # =================================================
 # COMMENTS (APPROVED / REJECTED / DELETED)
