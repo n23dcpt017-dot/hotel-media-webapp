@@ -20,6 +20,11 @@ auth = Blueprint("auth", __name__)
 # =================================================
 # AUTH HANDLER
 # =================================================
+@auth.route("/test-login")
+@login_required
+def test_login():
+    return "LOGIN OK"
+
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect(url_for("auth.login"))
