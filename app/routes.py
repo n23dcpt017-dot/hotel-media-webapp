@@ -131,6 +131,47 @@ def index():
 def tongquan_html():
     return render_template("tongquan.html")
 
+@auth.route("/quanlybaiviet.html")
+@login_required
+def page_quanly_baiviet():
+    return render_template("quanlybaiviet.html")
+
+@auth.route("/quanlylivestream.html")
+@login_required
+def page_quanly_livestream():
+    return render_template("quanlylivestream.html")
+
+@auth.route("/thuvienmedia.html")
+@login_required
+def page_thuvien_media():
+    return render_template("thuvienmedia.html")
+
+@auth.route("/nguoidung.html")
+@login_required
+def page_nguoidung():
+    return render_template("nguoidung.html")
+
+@auth.route("/analyticsvaseo.html")
+@login_required
+def page_analytics():
+    return render_template("analyticsvaseo.html")
+
+@auth.route("/binhluan.html")
+@login_required
+def page_binhluan():
+    return render_template("binhluan.html")
+
+@auth.route("/chiendich.html")
+@login_required
+def page_chiendich():
+    return render_template("chiendich.html")
+
+@auth.route("/xuatban.html")
+@login_required
+def page_xuatban():
+    return render_template("xuatban.html")
+
+
 # =================================================
 # POSTS (ẨN / KHÔI PHỤC)
 # =================================================
