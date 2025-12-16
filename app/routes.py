@@ -256,16 +256,28 @@ def thuvienmedia_video():
 # =================================================
 # POSTS (ẨN / KHÔI PHỤC)
 # =================================================
+from datetime import datetime
+
 @auth.route("/api/posts", methods=["POST"])
 @login_required
 def create_post():
     data = request.json
 
+    if not data.get("title"):
+        return jsonify({"error": "Thiếu tiêu đề"}), 400
+
+    publish_at = None
+    if data.get("publish_at"):
+        try:
+            publish_at = datetime.fromisoformat(data["publish_at"])
+        except ValueError:
+            return jsonify({"error": "Sai định dạng ngày"}), 400
+
     post = Post(
         title=data["title"],
         content=data.get("content"),
         status=data.get("status", "draft"),
-        publish_at=data.get("publish_at")
+        publish_at=publish_at
     )
 
     db.session.add(post)
@@ -275,6 +287,7 @@ def create_post():
         "message": "Tạo bài viết thành công",
         "id": post.id
     }), 201
+
 
 
 
