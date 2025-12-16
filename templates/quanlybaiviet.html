@@ -746,7 +746,7 @@ function loadPosts(status = "") {
       grid.innerHTML = "";
 
       posts.forEach(p => {
-        const cat = mapCategory(p.category);
+        const st = statusMap(p.status);
 
 grid.innerHTML += `
   <article class="article-card">
@@ -759,7 +759,7 @@ grid.innerHTML += `
     <div class="card-content">
       <div class="card-tags">
         <span class="category-tag ${cat.color}">${cat.name}</span>
-        <span class="status-tag">${p.status}</span>
+        <span class="status-tag ${st.cls}">${st.label}</span>
       </div>
 
       <h3 class="article-title">${p.title}</h3>
@@ -768,7 +768,6 @@ grid.innerHTML += `
   </article>
 `;
 
-        `;
       });
     });
 }
