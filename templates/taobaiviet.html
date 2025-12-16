@@ -834,6 +834,21 @@ document.getElementById("thumbnailInput").addEventListener("change", async funct
     alert("Upload ảnh thất bại");
   }
 });
+const payload = {
+  title,
+  content,
+  status,
+  category,
+  publish_at,
+  image: thumbnailUrl 
+};
+
+fetch("/auth/api/posts", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload)
+});
+
 </script>
 
   </body>
