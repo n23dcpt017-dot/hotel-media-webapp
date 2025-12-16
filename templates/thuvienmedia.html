@@ -748,10 +748,19 @@
               <h1 class="page-title">Thư viện media</h1>
               <p class="page-subtitle">Quản lý ảnh và video của khách sạn</p>
             </div>
-            <button class="btn-upload">
-              <i class="fa-solid fa-upload"></i>
-              Upload Media
-            </button>
+            <button class="btn-upload" id="btnUpload">
+  <i class="fa-solid fa-upload"></i>
+  Upload Media
+</button>
+
+<input
+  type="file"
+  id="mediaInput"
+  accept="image/*,video/*"
+  multiple
+  style="display:none"
+/>
+
           </div>
 
           <div class="media-stats-grid">
@@ -982,6 +991,84 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.style.display = "none";
   });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btnUpload = document.getElementById("btnUpload");
+  const mediaInput = document.getElementById("mediaInput");
+  const mediaGrid = document.querySelector(".media-grid");
+
+  btnUpload.addEventListener("click", () => {
+    mediaInput.click();
+  });
+
+  mediaInput.addEventListener("change", (e) => {
+    const files = Array.from(e.target.files);
+
+    files.forEach(file => {
+      const isVideo = file.type.startsWith("video");
+      const url = URL.createObjectURL(file);
+      const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+      const date = new Date().toLocaleDateString("vi-VN");
+
+      const card = document.createElement("div");
+      card.className = "media-card";
+
+      if (isVideo) {
+        card.dataset.video = url;
+        card.innerHTML = `
+          <div class="media-preview video-preview">
+            <i class="fa-solid fa-play"></i>
+            <span class="video-duration">New</span>
+          </div>
+          <div class="media-info">
+            <strong>${file.name}</strong>
+            <div class="media-details">
+              <span>${sizeMB} MB</span>
+              <span>${date}</span>
+            </div>
+            <span class="media-tag tag-video">Video</span>
+          </div>
+          <div class="media-actions">
+            <button class="action-btn"><i class="fa-solid fa-eye"></i></button>
+            <button class="action-btn"><i class="fa-solid fa-download"></i></button>
+            <button class="action-btn btn-delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <img src="${url}" class="media-preview"/>
+          <div class="media-info">
+            <strong>${file.name}</strong>
+            <div class="media-details">
+              <span>${sizeMB} MB</span>
+              <span>${date}</span>
+            </div>
+            <span class="media-tag tag-image">Ảnh</span>
+          </div>
+          <div class="media-actions">
+            <button class="action-btn"><i class="fa-solid fa-eye"></i></button>
+            <button class="action-btn"><i class="fa-solid fa-download"></i></button>
+            <button class="action-btn btn-delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `;
+      }
+
+      mediaGrid.prepend(card);
+    });
+
+    mediaInput.value = "";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".btn-delete")) {
+      e.target.closest(".media-card").remove();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
 
   </body>
 </html>
