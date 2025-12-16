@@ -10,6 +10,7 @@ class Post(db.Model):
     author = db.Column(db.String(100))
     view = db.Column(db.Integer, default=0)
     category = db.Column(db.String(100), default="phong")
+    image = db.Column(db.String(255), default="/static/images/phong1.png")
     status = db.Column(
         db.String(20),
         default="draft"  # draft | published | scheduled
