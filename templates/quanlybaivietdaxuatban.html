@@ -846,6 +846,94 @@
     popup.style.display = "none";
   });
 </script>
+<script>
+function loadPosts(status = "") {
+  let url = "/auth/api/posts";
+  if (status) {
+    url += "?status=" + status;
+  }
+
+  fetch(url)
+    .then(res => res.json())
+    .then(posts => {
+      const grid = document.querySelector(".article-grid");
+      grid.innerHTML = "";
+
+      posts.forEach(p => {
+        const st = statusMap(p.status);
+        const cat = mapCategory(p.category);
+
+        grid.innerHTML += `
+          <article class="article-card">
+            <div class="card-image-wrapper">
+              <img src="${p.image}"
+                   alt="${p.title}"
+                   onerror="this.onerror=null;this.src='/static/images/logo.svg'">
+            </div>
+
+            <div class="card-content">
+              <div class="card-tags">
+                <span class="category-tag ${cat.color}">${cat.name}</span>
+                <span class="status-tag ${st.cls}">${st.label}</span>
+              </div>
+
+              <h3 class="article-title">${p.title}</h3>
+              <span class="article-author">${p.author || "Admin"}</span>
+            </div>
+
+            <div class="card-footer">
+              <span class="article-view">
+                <i class="fa-regular fa-eye"></i> ${p.view || 0}
+              </span>
+
+              <span class="article-date">
+                ${p.publish_at
+                  ? new Date(p.publish_at).toLocaleDateString("vi-VN")
+                  : "-"}
+              </span>
+
+              <div class="article-actions">
+                <button class="action-btn btn-edit" onclick="editPost(${p.id})">
+                  <i class="fa-solid fa-pencil"></i>
+                </button>
+                <button class="action-btn btn-delete" onclick="deletePost(${p.id})">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+    });
+}
+function statusMap(status) {
+  if (status === "published")
+    return { label: "Đã xuất bản", cls: "status-published" };
+  if (status === "draft")
+    return { label: "Nháp", cls: "status-draft" };
+  if (status === "scheduled")
+    return { label: "Lên lịch", cls: "status-scheduled" };
+  return { label: status, cls: "" };
+}
+function mapCategory(category) {
+  switch (category) {
+    case "phong":
+      return { name: "Phòng", color: "tag-blue" };
+    case "am-thuc":
+      return { name: "Ẩm thực", color: "tag-green" };
+    case "khuyen-mai":
+      return { name: "Khuyến mãi", color: "tag-orange" };
+    case "su-kien":
+      return { name: "Sự kiện", color: "tag-purple" };
+    default:
+      return { name: "Tin tức", color: "tag-gray" };
+  }
+}
+
+</script>
+<script>
+loadPosts("published");
+</script>
 
   </body>
 </html>
