@@ -8,6 +8,7 @@ class Post(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text)
     author = db.Column(db.String(100))
+    view = db.Column(db.Integer, primary_key=False)
     status = db.Column(
         db.String(20),
         default="draft"  # draft | published | scheduled
