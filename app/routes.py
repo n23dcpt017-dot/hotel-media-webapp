@@ -38,23 +38,28 @@ def login():
     password = request.form.get("password")
 
     if not username or not password:
-        return render_template("login.html", error="Vui lòng nhập đủ thông tin")
-        
+        return render_template(
+            "login.html",
+            error="Vui lòng nhập đủ thông tin"
+        )
+
+    # Login bằng username HOẶC email
     user = User.query.filter(
-    (User.username == username) | (User.email == username)
+        (User.username == username) |
+        (User.email == username)
     ).first()
 
-    if not User.query.filter(
-    (User.username == "admin@hotel.com") |
-    (User.email == "admin@hotel.com")
-    ).first():
-
-
     if not user or not user.check_password(password):
-        return render_template("login.html", error="Sai thông tin đăng nhập")
+        return render_template(
+            "login.html",
+            error="Sai thông tin đăng nhập"
+        )
 
     if not user.is_active:
-        return render_template("login.html", error="Tài khoản đã bị khóa")
+        return render_template(
+            "login.html",
+            error="Tài khoản đã bị khóa"
+        )
 
     login_user(user)
     return redirect(url_for("auth.tongquan_html"))
@@ -80,20 +85,25 @@ def oauth_login(provider, email):
         )
         db.session.add(user)
         db.session.commit()
+
     login_user(user)
     return redirect(url_for("auth.tongquan_html"))
+
 
 @auth.route("/login/google")
 def login_google():
     return oauth_login("google", "google_user@gmail.com")
 
+
 @auth.route("/login/facebook")
 def login_facebook():
     return oauth_login("facebook", "fb_user@gmail.com")
 
+
 @auth.route("/login/zalo")
 def login_zalo():
     return oauth_login("zalo", "zalo_user@gmail.com")
+
 
 @auth.route("/login/tiktok")
 def login_tiktok():
@@ -108,10 +118,12 @@ def login_tiktok():
 def dashboard():
     return render_template("tongquan.html")
 
+
 @auth.route("/index")
 @login_required
 def index():
     return render_template("index.html")
+
 
 @auth.route("/tongquan.html")
 @login_required
@@ -125,10 +137,14 @@ def tongquan_html():
 @login_required
 def create_post():
     data = request.json
-    post = Post(title=data["title"], content=data["content"])
+    post = Post(
+        title=data["title"],
+        content=data["content"]
+    )
     db.session.add(post)
     db.session.commit()
     return jsonify({"message": "Đã thêm bài viết"}), 201
+
 
 @auth.route("/posts/<int:id>", methods=["PUT"])
 @login_required
@@ -140,6 +156,7 @@ def update_post(id):
     db.session.commit()
     return jsonify({"message": "Đã cập nhật bài viết"})
 
+
 @auth.route("/posts/<int:id>/hide", methods=["PUT"])
 @login_required
 def hide_post(id):
@@ -147,6 +164,7 @@ def hide_post(id):
     post.is_hidden = True
     db.session.commit()
     return jsonify({"message": "Đã ẩn bài viết"})
+
 
 @auth.route("/posts/<int:id>/restore", methods=["PUT"])
 @login_required
@@ -167,6 +185,7 @@ def approve_comment(id):
     db.session.commit()
     return jsonify({"message": "Đã duyệt comment"})
 
+
 @auth.route("/comments/<int:id>/reject", methods=["PUT"])
 @login_required
 def reject_comment(id):
@@ -174,6 +193,7 @@ def reject_comment(id):
     c.status = "rejected"
     db.session.commit()
     return jsonify({"message": "Đã từ chối comment"})
+
 
 @auth.route("/comments/<int:id>/delete", methods=["PUT"])
 @login_required
@@ -195,6 +215,7 @@ def create_campaign():
     db.session.commit()
     return jsonify({"message": "Đã tạo campaign"})
 
+
 @auth.route("/campaigns/<int:id>/pause", methods=["PUT"])
 @login_required
 def pause_campaign(id):
@@ -202,6 +223,7 @@ def pause_campaign(id):
     camp.status = "paused"
     db.session.commit()
     return jsonify({"message": "Đã tạm dừng campaign"})
+
 
 @auth.route("/campaigns/<int:id>/delete", methods=["PUT"])
 @login_required
@@ -230,10 +252,12 @@ def upload_media():
 
     return jsonify({"message": "Upload thành công"})
 
+
 @auth.route("/media/<filename>")
 @login_required
 def get_media(filename):
     return send_from_directory("uploads", filename)
+
 
 @auth.route("/media/<int:id>/hide", methods=["PUT"])
 @login_required
