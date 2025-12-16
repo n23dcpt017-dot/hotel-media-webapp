@@ -748,10 +748,18 @@
               <h1 class="page-title">Thư viện media</h1>
               <p class="page-subtitle">Quản lý ảnh và video của khách sạn</p>
             </div>
-            <button class="btn-upload">
-              <i class="fa-solid fa-upload"></i>
-              Upload Media
-            </button>
+            <button class="btn-upload" id="btnUploadVideo">
+  <i class="fa-solid fa-upload"></i>
+  Upload Video
+</button>
+<input
+  type="file"
+  id="videoInput"
+  accept="video/*"
+  multiple
+  style="display: none"
+/>
+
           </div>
 
           <div class="media-stats-grid">
@@ -906,6 +914,82 @@
   document.addEventListener("click", () => {
     popup.style.display = "none";
   });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btnUpload = document.getElementById("btnUploadVideo");
+  const videoInput = document.getElementById("videoInput");
+  const mediaGrid = document.querySelector(".media-grid");
+
+  if (!btnUpload || !videoInput || !mediaGrid) {
+    console.error("Thiếu phần tử upload video");
+    return;
+  }
+
+  // Click nút → mở chọn file
+  btnUpload.addEventListener("click", () => {
+    videoInput.click();
+  });
+
+  // Khi chọn video
+  videoInput.addEventListener("change", (e) => {
+    const files = Array.from(e.target.files);
+
+    files.forEach(file => {
+      // ❌ Chặn nếu không phải video
+      if (!file.type.startsWith("video/")) {
+        alert("Chỉ cho phép upload VIDEO.");
+        return;
+      }
+
+      const url = URL.createObjectURL(file);
+      const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+      const date = new Date().toLocaleDateString("vi-VN");
+
+      const card = document.createElement("div");
+      card.className = "media-card";
+
+      card.innerHTML = `
+        <a href="${url}" target="_blank">
+          <div class="media-preview video-preview">
+            <i class="fa-solid fa-play"></i>
+            <span class="video-duration">New</span>
+          </div>
+          <div class="media-info">
+            <strong>${file.name}</strong>
+          </a>
+            <div class="media-details">
+              <span>${sizeMB} MB</span>
+              <span>${date}</span>
+            </div>
+            <span class="media-tag tag-video">Video</span>
+          </div>
+          <div class="media-actions">
+            <button class="action-btn">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fa-solid fa-download"></i>
+            </button>
+            <button class="action-btn btn-delete">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+      `;
+
+      mediaGrid.prepend(card);
+    });
+
+    videoInput.value = "";
+  });
+
+  // Xóa video card
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".btn-delete")) {
+      e.target.closest(".media-card").remove();
+    }
+  });
+});
 </script>
 
   </body>
