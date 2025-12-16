@@ -737,7 +737,7 @@ function loadPosts(status = "") {
         grid.innerHTML += `
           <article class="article-card">
             <div class="card-image-wrapper">
-              <img src="/static/images/default-post.png" alt="${p.title}">
+              <img src="${p.image}" alt="${p.title}" onerror="this.src='/static/images/phong1.png'">
             </div>
             <div class="card-content">
               <div class="card-tags">
