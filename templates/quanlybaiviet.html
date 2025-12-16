@@ -766,6 +766,29 @@ function loadPosts(status = "") {
         <h3 class="article-title">${p.title}</h3>
         <span class="article-author">${p.author || "Admin"}</span>
       </div>
+
+      <!-- 👇 FOOTER: VIEW + DATE + ACTION -->
+      <div class="card-footer">
+        <span class="article-view">
+          <i class="fa-regular fa-eye"></i>
+          ${p.view || 0}
+        </span>
+
+        <span class="article-date">
+          ${p.publish_at
+            ? new Date(p.publish_at).toLocaleDateString("vi-VN")
+            : "-"}
+        </span>
+
+        <div class="article-actions">
+          <button class="action-btn btn-edit" onclick="editPost(${p.id})">
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button class="action-btn btn-delete" onclick="deletePost(${p.id})">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
     </article>
   `;
 });
