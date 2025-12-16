@@ -22,6 +22,7 @@
     />
 
     <style>
+      /* --- GIỮ NGUYÊN CSS GỐC CỦA BẠN --- */
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
@@ -29,7 +30,6 @@
         background-color: #ffffff;
       }
 
-      /* --- CSS THANH ĐIỀU HƯỚNG CHUẨN (ĐỒNG BỘ) --- */
       .main-header {
         background-color: #ffffff;
         border-bottom: 1px solid #e0e0e0;
@@ -63,7 +63,7 @@
       .nav-link {
         text-decoration: none;
         color: #333;
-        font-size: 17px; /* Size chuẩn */
+        font-size: 17px;
         font-weight: 600;
         padding: 10px 0;
         transition: color 0.3s ease;
@@ -108,7 +108,7 @@
         color: #007bff;
       }
 
-      /* --- Footer CSS --- */
+      /* Footer CSS */
       .site-footer {
         background-color: #0d1b2a;
         color: #adb5bd;
@@ -186,7 +186,7 @@
         }
       }
 
-      /* --- Hero Section & Components --- */
+      /* Hero Section */
       .hero-section {
         position: relative;
         height: 80vh;
@@ -434,18 +434,35 @@
       .category-green {
         background-color: #28a745;
       }
+      .category-purple {
+        background-color: #6f42c1;
+      }
       .card-content h3 {
         font-size: 20px;
         font-weight: 700;
         margin: 0 0 10px 0;
         color: #333;
+        /* Giới hạn tiêu đề 2 dòng */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
-      .card-content .card-excerpt {
+
+      /* QUAN TRỌNG: CSS ĐỂ GIỮ KHUNG HÌNH KHÔNG BỊ VỠ KHI CHỮ DÀI */
+      .card-excerpt {
         font-size: 15px;
         color: #555;
         line-height: 1.5;
         margin-bottom: 20px;
+        
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Chỉ hiện 2 dòng */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 44px; /* Cố định chiều cao */
       }
+      
       .card-meta {
         display: flex;
         justify-content: space-between;
@@ -533,112 +550,24 @@
         </div>
       </div>
     </section>
+
     <div class="page-container">
+      
       <section class="news-section">
         <h2>Tin nổi bật</h2>
-        <p class_="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
-
-        <div class="news-grid grid-2-cols">
-          <a href="templates/baiviet.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/phong1.png" alt="Phòng Deluxe" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Phòng</span>
-                <h3>Khám phá không gian phòng Deluxe</h3>
-                <p class="card-excerpt">
-                  Trải nghiệm sang trọng với thiết kế hiện đại và tiện nghi đầy
-                  đủ
-                </p>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet1.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Khuyến mãi</span>
-                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
-                <p class="card-excerpt">
-                  Giảm giá 30% cho tất cả các loại phòng khi đặt trước 7 ngày
-                </p>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
+        <p class="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
+        <div class="news-grid grid-2-cols" id="featured-grid">
+           </div>
       </section>
 
       <section class="news-section">
         <h2>Tin tức mới nhất</h2>
-
-        <div class="news-grid grid-3-cols">
-          <a href="templates/baiviet.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/phong1.png" alt="Phòng Deluxe" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Phòng</span>
-                <h3>Khám phá không gian Deluxe</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet1.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Khuyến mãi</span>
-                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet2.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/amthuc.png" alt="Nhà hàng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-green">Ẩm thực</span>
-                <h3>Thực đơn buffet sáng đặc biệt</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 03/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 987</span>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
+        <div class="news-grid grid-3-cols" id="latest-grid">
+           </div>
       </section>
+
     </div>
+
     <section class="social-connect">
       <div class="social-container">
         <h2>Kết nối với chúng tôi</h2>
@@ -781,6 +710,86 @@
       ReactDOM.createRoot(document.getElementById("livestream-root")).render(
         <MiniLivestream />
       );
+    </script>
+
+    <script>
+      function renderHomePage() {
+        // 1. Lấy dữ liệu từ localStorage
+        const posts = JSON.parse(localStorage.getItem("posts")) || [];
+        
+        // 2. Chỉ lấy bài viết trạng thái "Đã xuất bản"
+        const publishedPosts = posts.filter(p => p.status === "da-xuat-ban");
+
+        // 3. Tách 2 bài đầu làm Tin Nổi Bật, còn lại là Tin Mới
+        const featuredPosts = publishedPosts.slice(0, 2); 
+        const latestPosts = publishedPosts.slice(2); 
+
+        const featuredGrid = document.getElementById("featured-grid");
+        const latestGrid = document.getElementById("latest-grid");
+
+        // Hàm xử lý đường dẫn ảnh (Chữa lỗi ảnh bị lỗi link)
+        const fixImgPath = (path) => {
+            if (!path) return 'images/phong1.png'; 
+            if (path.startsWith("data:") || path.startsWith("http")) return path;
+            // Xóa ../ để phù hợp với trang chủ
+            return path.replace("../images/", "images/"); 
+        };
+        
+        // Hàm cắt chữ mô tả nếu quá dài
+        const getExcerpt = (content) => {
+            if(!content) return "";
+            return content.length > 100 ? content.substring(0, 100) + "..." : content;
+        };
+
+        // --- RENDER TIN NỔI BẬT (GIỮ NGUYÊN HTML CŨ CỦA BẠN) ---
+        if (featuredGrid) {
+            featuredGrid.innerHTML = featuredPosts.map(post => `
+              <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
+                <article class="news-card">
+                  <div class="card-image">
+                    <img src="${fixImgPath(post.image)}" alt="${post.title}" />
+                    <span class="card-tag tag-hot">Nổi bật</span>
+                  </div>
+                  <div class="card-content">
+                    <span class="card-category ${post.tagColor || 'category-blue'}">${post.categoryName || 'Tin tức'}</span>
+                    <h3>${post.title}</h3>
+                    <p class="card-excerpt">${getExcerpt(post.content)}</p>
+                    <div class="card-meta">
+                      <span><i class="fa-regular fa-calendar"></i> ${post.date || '01/01/2025'}</span>
+                      <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
+                    </div>
+                  </div>
+                </article>
+              </a>
+            `).join("");
+        }
+
+        // --- RENDER TIN MỚI NHẤT (GIỮ NGUYÊN HTML CŨ CỦA BẠN) ---
+        // Lưu ý: Mẫu này của bạn không có phần excerpt (mô tả ngắn)
+        if (latestGrid) {
+            latestGrid.innerHTML = latestPosts.map(post => `
+              <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
+                <article class="news-card">
+                  <div class="card-image">
+                    <img src="${fixImgPath(post.image)}" alt="${post.title}" />
+                    <span class="card-tag tag-hot">Mới</span>
+                  </div>
+                  <div class="card-content">
+                    <span class="card-category ${post.tagColor || 'category-blue'}">${post.categoryName || 'Tin tức'}</span>
+                    <h3>${post.title}</h3>
+                    <div class="card-meta">
+                      <span><i class="fa-regular fa-calendar"></i> ${post.date || '01/01/2025'}</span>
+                      <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
+                    </div>
+                  </div>
+                </article>
+              </a>
+            `).join("");
+        }
+      }
+
+      // Chạy hàm khi trang web tải xong
+      document.addEventListener("DOMContentLoaded", renderHomePage);
     </script>
   </body>
 </html>
