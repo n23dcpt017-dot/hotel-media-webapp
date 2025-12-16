@@ -9,6 +9,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+  rel="stylesheet"
+  href="https://unpkg.com/cropperjs/dist/cropper.min.css"
+/>
+
+<script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
+
   </head>
   <style>
     /* style.css */
@@ -694,12 +701,23 @@
     hidden
   />
 
-  <div class="image-uploader-box" id="imageUploader">
-    <div class="image-placeholder" id="imagePlaceholder">
-      <i class="fa-regular fa-image"></i>
-      <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
-      <small>PNG, JPG, GIF (tối đa 2MB)</small>
-    </div>
+ <div class="image-uploader-box" id="imageUploader">
+  <div class="image-placeholder" id="imagePlaceholder">
+    <i class="fa-regular fa-image"></i>
+    <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
+    <small>PNG, JPG, GIF (tối đa 2MB)</small>
+  </div>
+
+  <div class="preview-wrapper" id="previewWrapper" style="display:none">
+    <img id="imagePreview" class="image-preview" />
+
+    <button type="button" class="remove-image-btn" id="removeImageBtn">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+</div>
+
+<input type="file" id="post-image" accept="image/*" hidden />
 
     <img
       id="imagePreview"
@@ -851,66 +869,87 @@ function publishPost() {
 </script>
 <script>
 let thumbnailUrl = null;
+let cropper = null;
 
 const uploader = document.getElementById("imageUploader");
 const input = document.getElementById("post-image");
 const preview = document.getElementById("imagePreview");
 const placeholder = document.getElementById("imagePlaceholder");
+const previewWrapper = document.getElementById("previewWrapper");
+const removeBtn = document.getElementById("removeImageBtn");
 
-// Click để chọn ảnh
+// Click chọn ảnh
 uploader.addEventListener("click", () => input.click());
 
 // Chọn file
-input.addEventListener("change", handleFile);
-
-// Drag & drop
-uploader.addEventListener("dragover", e => {
-  e.preventDefault();
-  uploader.classList.add("dragover");
-});
-
-uploader.addEventListener("dragleave", () => {
-  uploader.classList.remove("dragover");
-});
-
-uploader.addEventListener("drop", e => {
-  e.preventDefault();
-  uploader.classList.remove("dragover");
-  const file = e.dataTransfer.files[0];
-  if (file) uploadImage(file);
-});
-
-function handleFile() {
+input.addEventListener("change", () => {
   const file = input.files[0];
-  if (file) uploadImage(file);
-}
+  if (file) loadImageForCrop(file);
+});
 
-async function uploadImage(file) {
-  // Preview
+// Xoá ảnh
+removeBtn.addEventListener("click", () => {
+  preview.src = "";
+  previewWrapper.style.display = "none";
+  placeholder.style.display = "block";
+  thumbnailUrl = null;
+
+  if (cropper) {
+    cropper.destroy();
+    cropper = null;
+  }
+});
+
+// Load ảnh để crop
+function loadImageForCrop(file) {
   const reader = new FileReader();
   reader.onload = e => {
     preview.src = e.target.result;
-    preview.style.display = "block";
+    previewWrapper.style.display = "block";
     placeholder.style.display = "none";
+
+    if (cropper) cropper.destroy();
+
+    cropper = new Cropper(preview, {
+      aspectRatio: 16 / 9,
+      viewMode: 1,
+      autoCropArea: 1,
+      movable: true,
+      zoomable: true,
+      scalable: false,
+      cropend: uploadCroppedImage
+    });
   };
   reader.readAsDataURL(file);
+}
 
-  // Upload
-  const formData = new FormData();
-  formData.append("file", file);
+// Upload ảnh sau khi crop
+async function uploadCroppedImage() {
+  if (!cropper) return;
 
-  const res = await fetch("/auth/api/upload-thumbnail", {
-    method: "POST",
-    body: formData
+  const canvas = cropper.getCroppedCanvas({
+    width: 1200,
+    height: 675
   });
 
-  const data = await res.json();
-  if (data.url) {
-    thumbnailUrl = data.url;
-  } else {
-    alert("Upload ảnh thất bại");
-  }
+  canvas.toBlob(async blob => {
+    const formData = new FormData();
+    formData.append("file", blob, "thumbnail.jpg");
+
+    const res = await fetch("/auth/api/upload-thumbnail", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      thumbnailUrl = data.url;
+    } else {
+      alert("Upload ảnh thất bại");
+    }
+  }, "image/jpeg");
 }
+
 const payload = {
   title,
   content,
