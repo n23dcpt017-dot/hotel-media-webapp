@@ -15,7 +15,8 @@ def seed_selenium_user():
             admin = User(
                 username="admin@hotel.com",
                 email="admin@hotel.com",   
-                is_active=True
+                is_active=True,
+                role="admin"
             )
             admin.set_password("admin123")
             db.session.add(admin)
