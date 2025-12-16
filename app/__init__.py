@@ -38,7 +38,7 @@ def seed_sample_posts():
             view=1234,
             status="published",
             category="phong",
-            image="/static/images/phong1.png",
+            image=".../static/images/phong1.png",
             publish_at=datetime(2025, 11, 5)
         ),
         Post(
@@ -48,7 +48,7 @@ def seed_sample_posts():
             view=987,
             status="published",
             category="am-thuc",
-            image="/static/images/amthuc.png",
+            image=".../static/images/amthuc.png",
             publish_at=datetime(2025, 11, 5)
         ),
         Post(
@@ -58,7 +58,7 @@ def seed_sample_posts():
             view=0,
             status="scheduled",
             category="khuyen-mai",
-            image="/static/images/lehoi.png",
+            image=".../static/images/lehoi.png",
             publish_at=datetime(2025, 11, 8)
         ),
         Post(
@@ -68,7 +68,7 @@ def seed_sample_posts():
             view=0,
             status="draft",
             category="su-kien",
-            image="/static/images/khachhang.png",
+            image=".../static/images/khachhang.png",
             publish_at=datetime(2025, 11, 4)
         ),
     ]
