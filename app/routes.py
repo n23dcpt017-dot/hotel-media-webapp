@@ -334,6 +334,7 @@ def list_posts():
             "title": p.title,
             "status": p.status,
             "publish_at": p.publish_at
+            "image": p.image
         }
         for p in posts
     ])
