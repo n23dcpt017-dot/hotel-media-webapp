@@ -6,7 +6,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 # ========================
-# Seed user for Selenium
+# Seed user
 # ========================
 def seed_selenium_user():
     from app.models.user import User
@@ -14,7 +14,7 @@ def seed_selenium_user():
         if not User.query.filter_by(username="admin").first():
             admin = User(
                 username="admin",
-                email="admin@hotel.com",   # ✅ BẮT BUỘC
+                email="admin@hotel.com",   
                 is_active=True
             )
             admin.set_password("Admin@123")
@@ -29,33 +29,32 @@ def seed_selenium_user():
 def create_app(config_name=None):
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
-    # Base config
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Database config
     if config_name == 'testing':
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     else:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
 
-    # Init extensions
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
 
-    # Register blueprints
     from app.routes import auth
     app.register_blueprint(auth, url_prefix='/auth')
 
-    # Setup DB + seed
     with app.app_context():
+        
+        from app.models.user import User
+        from app.models.post import Post
+        from app.models.comment import Comment
+        from app.models.campaign import Campaign
+        from app.models.media import Media
+
         db.create_all()
         seed_selenium_user()
-
-    # Flask-Login user loader
-    from app.models.user import User
 
     @login_manager.user_loader
     def load_user(user_id):
