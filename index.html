@@ -538,7 +538,28 @@
         <h2>Tin nổi bật</h2>
         <p class_="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
 
-        <div class="news-grid grid-2-cols" id="featuredPosts"></div>
+        <div class="news-grid grid-2-cols">
+          <a href="templates/baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="images/phong1.png" alt="Phòng Deluxe" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Phòng</span>
+                <h3>Khám phá không gian phòng Deluxe</h3>
+                <p class="card-excerpt">
+                  Trải nghiệm sang trọng với thiết kế hiện đại và tiện nghi đầy
+                  đủ
+                </p>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
           <a href="templates/baiviet1.html" class="news-card-link">
             <article class="news-card">
               <div class="card-image">
@@ -563,7 +584,58 @@
 
       <section class="news-section">
         <h2>Tin tức mới nhất</h2>
-       <div class="news-grid grid-3-cols" id="latestPosts"></div>
+
+        <div class="news-grid grid-3-cols">
+          <a href="templates/baiviet.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="images/phong1.png" alt="Phòng Deluxe" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Phòng</span>
+                <h3>Khám phá không gian Deluxe</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
+          <a href="templates/baiviet1.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">Khuyến mãi</span>
+                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
+                </div>
+              </div>
+            </article>
+          </a>
+
+          <a href="templates/baiviet2.html" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="images/amthuc.png" alt="Nhà hàng" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-green">Ẩm thực</span>
+                <h3>Thực đơn buffet sáng đặc biệt</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> 03/11/2025</span>
+                  <span><i class="fa-regular fa-eye"></i> 987</span>
+                </div>
+              </div>
+            </article>
+          </a>
         </div>
       </section>
     </div>
@@ -710,46 +782,5 @@
         <MiniLivestream />
       );
     </script>
-    <script>
-const posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-const featured = document.getElementById("featuredPosts");
-const latest = document.getElementById("latestPosts");
-
-featured.innerHTML = "";
-latest.innerHTML = "";
-
-posts.forEach(post => {
-  if (post.status !== "da-xuat-ban") return;
-
-  const html = `
-    <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
-      <article class="news-card">
-        <div class="card-image">
-          <img src="${post.image}" alt="${post.title}">
-          ${post.isHot ? `<span class="card-tag tag-hot">Nổi bật</span>` : ""}
-        </div>
-        <div class="card-content">
-          <span class="card-category category-${post.categoryColor}">
-            ${post.category}
-          </span>
-          <h3>${post.title}</h3>
-          <p class="card-excerpt">${post.excerpt || ""}</p>
-          <div class="card-meta">
-            <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
-            <span><i class="fa-regular fa-eye"></i> ${post.views || 0}</span>
-          </div>
-        </div>
-      </article>
-    </a>
-  `;
-
-  if (post.isFeatured) {
-    featured.innerHTML += html;
-  } else {
-    latest.innerHTML += html;
-  }
-});
-</script>
   </body>
 </html>
