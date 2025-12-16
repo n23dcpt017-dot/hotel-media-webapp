@@ -835,5 +835,53 @@
   // Chạy hàm render khi trang web tải xong
   document.addEventListener("DOMContentLoaded", renderPosts);
 </script>
+  <script>
+function loadPosts(status = "") {
+  let url = "/auth/api/posts";
+  if (status) {
+    url += "?status=" + status;
+  }
+
+  fetch(url)
+    .then(res => res.json())
+    .then(posts => {
+      const tbody = document.getElementById("post-table-body");
+      tbody.innerHTML = "";
+
+      posts.forEach(p => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${p.title}</td>
+          <td>${p.status}</td>
+          <td>${p.publish_at || "-"}</td>
+          <td>
+            <button onclick="editPost(${p.id})">Sửa</button>
+            <button onclick="deletePost(${p.id})">Xóa</button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    });
+}
+
+function deletePost(id) {
+  if (!confirm("Xóa bài viết này?")) return;
+
+  fetch("/auth/api/posts/" + id, {
+    method: "DELETE"
+  })
+  .then(() => loadPosts());
+}
+
+function editPost(id) {
+  window.location.href = "/auth/taobaiviet.html?id=" + id;
+}
+
+// Load khi mở trang
+loadPosts();
+</script>
+
   </body>
 </html>
