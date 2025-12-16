@@ -537,105 +537,13 @@
       <section class="news-section">
         <h2>Tin nổi bật</h2>
         <p class_="section-subtitle">Tin tức và ưu đãi đặc biệt</p>
-
-        <div class="news-grid grid-2-cols">
-          <a href="templates/baiviet.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/phong1.png" alt="Phòng Deluxe" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Phòng</span>
-                <h3>Khám phá không gian phòng Deluxe</h3>
-                <p class="card-excerpt">
-                  Trải nghiệm sang trọng với thiết kế hiện đại và tiện nghi đầy
-                  đủ
-                </p>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet1.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Khuyến mãi</span>
-                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
-                <p class="card-excerpt">
-                  Giảm giá 30% cho tất cả các loại phòng khi đặt trước 7 ngày
-                </p>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
-      </section>
+        <div class="news-grid grid-2-cols" id="featured-grid">
+      </div>
+</section>
 
       <section class="news-section">
         <h2>Tin tức mới nhất</h2>
-
-        <div class="news-grid grid-3-cols">
-          <a href="templates/baiviet.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/phong1.png" alt="Phòng Deluxe" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Phòng</span>
-                <h3>Khám phá không gian Deluxe</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 05/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 1,234</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet1.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/lehoi.png" alt="Lễ hội đèn lồng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-blue">Khuyến mãi</span>
-                <h3>Ưu đãi đặc biệt mùa lễ hội</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 04/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 2,156</span>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="templates/baiviet2.html" class="news-card-link">
-            <article class="news-card">
-              <div class="card-image">
-                <img src="images/amthuc.png" alt="Nhà hàng" />
-                <span class="card-tag tag-hot">Nổi bật</span>
-              </div>
-              <div class="card-content">
-                <span class="card-category category-green">Ẩm thực</span>
-                <h3>Thực đơn buffet sáng đặc biệt</h3>
-                <div class="card-meta">
-                  <span><i class="fa-regular fa-calendar"></i> 03/11/2025</span>
-                  <span><i class="fa-regular fa-eye"></i> 987</span>
-                </div>
-              </div>
-            </article>
-          </a>
+       <div class="news-grid grid-3-cols" id="latest-grid">
         </div>
       </section>
     </div>
@@ -782,5 +690,77 @@
         <MiniLivestream />
       );
     </script>
+    <script>
+  function renderHomePage() {
+    // Lấy dữ liệu
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    
+    // Chỉ lấy bài viết trạng thái "Đã xuất bản"
+    const publishedPosts = posts.filter(p => p.status === "da-xuat-ban");
+
+    // Tách 2 bài đầu làm Tin Nổi Bật, còn lại là Tin Mới
+    const featuredPosts = publishedPosts.slice(0, 2); 
+    const latestPosts = publishedPosts.slice(2); 
+
+    const featuredGrid = document.getElementById("featured-grid");
+    const latestGrid = document.getElementById("latest-grid");
+
+    // Hàm xử lý đường dẫn ảnh (Quan trọng: fix lỗi ../images)
+    // Nếu ảnh là Base64 (upload từ máy) thì giữ nguyên.
+    // Nếu ảnh là link cứng (../images/...) thì cắt bỏ ../ để chạy đúng ở trang chủ
+    const fixImgPath = (path) => {
+        if (!path) return 'images/phong1.png'; // Ảnh mặc định nếu thiếu
+        if (path.startsWith("data:")) return path; // Ảnh upload giữ nguyên
+        return path.replace("../images/", "images/"); // Sửa link tương đối
+    };
+
+    // 1. Render Tin Nổi Bật
+    if (featuredGrid) {
+        featuredGrid.innerHTML = featuredPosts.map(post => `
+          <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="${fixImgPath(post.image)}" alt="${post.title}" />
+                <span class="card-tag tag-hot">Nổi bật</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-blue">${post.categoryName || 'Tin tức'}</span>
+                <h3>${post.title}</h3>
+                <p class="card-excerpt">${post.title} - Trải nghiệm dịch vụ đẳng cấp 5 sao...</p>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
+                  <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        `).join("");
+    }
+
+    // 2. Render Tin Mới Nhất
+    if (latestGrid) {
+        latestGrid.innerHTML = latestPosts.map(post => `
+          <a href="templates/baiviet.html?id=${post.id}" class="news-card-link">
+            <article class="news-card">
+              <div class="card-image">
+                <img src="${fixImgPath(post.image)}" alt="${post.title}" />
+                <span class="card-tag tag-hot">Mới</span>
+              </div>
+              <div class="card-content">
+                <span class="card-category category-green">${post.categoryName || 'Tin tức'}</span>
+                <h3>${post.title}</h3>
+                <div class="card-meta">
+                  <span><i class="fa-regular fa-calendar"></i> ${post.date}</span>
+                  <span><i class="fa-regular fa-eye"></i> ${post.view || 0}</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        `).join("");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", renderHomePage);
+</script>
   </body>
 </html>
