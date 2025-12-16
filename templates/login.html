@@ -323,53 +323,45 @@
           <p>Hệ thống quản trị truyền thông khách sạn</p>
         </div>
 
-        <form class="login-form" method="POST" action="/auth/login">
+        <form class="login-form" action="tongquan.html">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="email" value="admin@hotel.com" required />
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label for="username">Email</label>
-    <div class="input-group">
-      <i class="fa-regular fa-envelope"></i>
-      <input
-        type="email"
-        id="username"
-        name="username"
-        value="admin@hotel.com"
-        required
-      />
-    </div>
-  </div>
+          <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <div class="input-group">
+              <i class="fa-solid fa-lock"></i>
+              <input
+                type="password"
+                id="password"
+                value="admin123"
+                required
+              />
+              <!-- Nút ẩn/hiện mật khẩu -->
+              <button type="button" class="password-toggle-btn" id="password-toggle">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label for="password">Mật khẩu</label>
-    <div class="input-group">
-      <i class="fa-solid fa-lock"></i>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        value="admin123"
-        required
-      />
-      <button type="button" class="password-toggle-btn" id="password-toggle">
-        <i class="fa-regular fa-eye"></i>
-      </button>
-    </div>
-  </div>
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember" checked />
+              Ghi nhớ đăng nhập
+            </label>
+            <a href="#" class="forgot-password">Quên mật khẩu</a>
+          </div>
 
-  <div class="form-options">
-    <label class="remember-me">
-      <input type="checkbox" name="remember" checked />
-      Ghi nhớ đăng nhập
-    </label>
-    <a href="#" class="forgot-password">Quên mật khẩu</a>
-  </div>
-
-  <button type="submit" class="btn-login">Đăng nhập</button>
-
-  <div class="error-message" id="error-message"></div>
-
-</form>
-
+          <button type="submit" class="btn-login">Đăng nhập</button>
+          
+          <!-- Thêm thẻ div để hiển thị thông báo lỗi -->
+          <div class="error-message" id="error-message"></div>
+        </form>
 
         <div class="separator">
           <span>Hoặc đăng nhập với</span>
@@ -511,5 +503,7 @@ function loginTiktok() {
         });
       });
     </script>
+    <form method="POST" action="/auth/login">
+    </form>
   </body>
 </html>
