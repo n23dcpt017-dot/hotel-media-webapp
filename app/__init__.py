@@ -58,7 +58,64 @@ def create_app(config_name=None):
         from app.models.media import Media
 
         db.create_all()
+        seed_sample_posts()
         seed_selenium_user()
+        
+from datetime import datetime
+
+def seed_sample_posts():
+    from app.models.post import Post
+    from app import db
+
+    if Post.query.first():
+        return
+
+    samples = [
+        Post(
+            title="Khám phá không gian phòng Deluxe mới",
+            content="Bài viết giới thiệu phòng Deluxe mới của khách sạn.",
+            author="Nguyễn Văn A",
+            view=1234,
+            status="published",
+            category="phong",
+            image="/static/images/phong1.png",
+            publish_at=datetime(2025, 11, 5)
+        ),
+        Post(
+            title="Thực đơn buffet sáng đặc biệt cuối tuần",
+            content="Giới thiệu buffet sáng cuối tuần.",
+            author="Trần Thị B",
+            view=987,
+            status="published",
+            category="am-thuc",
+            image="/static/images/amthuc.png",
+            publish_at=datetime(2025, 11, 5)
+        ),
+        Post(
+            title="Ưu đãi đặc biệt mùa lễ hội",
+            content="Ưu đãi mùa lễ hội sắp diễn ra.",
+            author="Lê Văn C",
+            view=0,
+            status="scheduled",
+            category="khuyen-mai",
+            image="/static/images/lehoi.png",
+            publish_at=datetime(2025, 11, 8)
+        ),
+        Post(
+            title="Hội nghị & sự kiện tại khách sạn",
+            content="Giới thiệu dịch vụ hội nghị và sự kiện.",
+            author="Phạm Thị D",
+            view=0,
+            status="draft",
+            category="su-kien",
+            image="/static/images/khachhang.png",
+            publish_at=datetime(2025, 11, 4)
+        ),
+    ]
+
+    db.session.add_all(samples)
+    db.session.commit()
+
 
     @login_manager.user_loader
     def load_user(user_id):
