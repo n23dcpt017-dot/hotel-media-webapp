@@ -256,46 +256,74 @@ def thuvienmedia_video():
 # =================================================
 # POSTS (ẨN / KHÔI PHỤC)
 # =================================================
-@auth.route("/posts", methods=["POST"])
+@auth.route("/api/posts", methods=["POST"])
 @login_required
 def create_post():
     data = request.json
+
     post = Post(
         title=data["title"],
-        content=data["content"]
+        content=data.get("content"),
+        status=data.get("status", "draft"),
+        publish_at=data.get("publish_at")
     )
+
     db.session.add(post)
     db.session.commit()
-    return jsonify({"message": "Đã thêm bài viết"}), 201
+
+    return jsonify({
+        "message": "Tạo bài viết thành công",
+        "id": post.id
+    }), 201
 
 
-@auth.route("/posts/<int:id>", methods=["PUT"])
+
+@auth.route("/api/posts/<int:id>", methods=["PUT"])
 @login_required
 def update_post(id):
     post = Post.query.get_or_404(id)
     data = request.json
+
     post.title = data.get("title", post.title)
     post.content = data.get("content", post.content)
+    post.status = data.get("status", post.status)
+    post.publish_at = data.get("publish_at", post.publish_at)
+
     db.session.commit()
-    return jsonify({"message": "Đã cập nhật bài viết"})
+
+    return jsonify({"message": "Cập nhật thành công"})
 
 
-@auth.route("/posts/<int:id>/hide", methods=["PUT"])
+
+@auth.route("/api/posts/<int:id>", methods=["DELETE"])
 @login_required
-def hide_post(id):
+def delete_post(id):
     post = Post.query.get_or_404(id)
-    post.is_hidden = True
+    post.is_deleted = True
     db.session.commit()
-    return jsonify({"message": "Đã ẩn bài viết"})
+    return jsonify({"message": "Đã xóa"})
 
-
-@auth.route("/posts/<int:id>/restore", methods=["PUT"])
+@auth.route("/api/posts")
 @login_required
-def restore_post(id):
-    post = Post.query.get_or_404(id)
-    post.is_hidden = False
-    db.session.commit()
-    return jsonify({"message": "Đã khôi phục bài viết"})
+def list_posts():
+    status = request.args.get("status")  # draft / published / scheduled
+
+    query = Post.query.filter_by(is_deleted=False)
+
+    if status:
+        query = query.filter_by(status=status)
+
+    posts = query.order_by(Post.created_at.desc()).all()
+
+    return jsonify([
+        {
+            "id": p.id,
+            "title": p.title,
+            "status": p.status,
+            "publish_at": p.publish_at
+        }
+        for p in posts
+    ])
 
 # =================================================
 # COMMENTS (APPROVED / REJECTED / DELETED)
