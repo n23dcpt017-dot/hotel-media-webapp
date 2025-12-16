@@ -640,8 +640,8 @@
                     <p class="page-subtitle">Thêm nội dung mới cho khách sạn</p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn btn-secondary">Lưu nháp</button>
-                    <button class="btn btn-primary">Cập nhật</button>
+                    <button class="btn btn-secondary" type="button" onclick="saveDraft()">Lưu nháp</button>
+                    <button class="btn btn-primary" type="button" onclick="publishPost()">Cập nhật</button>
                 </div>
             </div>
     
@@ -745,6 +745,63 @@
   document.addEventListener("click", () => {
     popup.style.display = "none";
   });
+</script>
+<script>
+function mapStatus(uiStatus) {
+  if (uiStatus === "nhap") return "draft";
+  if (uiStatus === "da-xuat-ban") return "published";
+  if (uiStatus === "len-lich") return "scheduled";
+  return "draft";
+}
+
+function collectPostData(forceStatus = null) {
+  return {
+    title: document.getElementById("post-title").value,
+    content: document.getElementById("post-content").value,
+    category: document.getElementById("post-category").value,
+    status: forceStatus 
+      ? forceStatus 
+      : mapStatus(document.getElementById("post-status").value),
+    publish_at: document.getElementById("post-schedule").value || null,
+    seo: {
+      title: document.getElementById("meta-title").value,
+      description: document.getElementById("meta-desc").value,
+      keywords: document.getElementById("meta-keywords").value
+    }
+  };
+}
+
+function saveDraft() {
+  fetch("/auth/api/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(collectPostData("draft"))
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Lưu nháp thất bại");
+    return res.json();
+  })
+  .then(() => {
+    window.location.href = "/auth/quanlybaiviet.html";
+  })
+  .catch(err => alert(err.message));
+}
+
+function publishPost() {
+  fetch("/auth/api/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(collectPostData())
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Cập nhật thất bại");
+    return res.json();
+  })
+  .then(() => {
+    window.location.href = "/auth/quanlybaiviet.html";
+  })
+  .catch(err => alert(err.message));
+}
 </script>
 
   </body>
