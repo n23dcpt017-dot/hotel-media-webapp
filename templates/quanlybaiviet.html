@@ -710,6 +710,21 @@
           <div class="article-grid">
     </div>
  <script>
+   function mapCategory(category) {
+  switch (category) {
+    case "phong":
+      return { name: "Phòng", color: "tag-blue" };
+    case "am-thuc":
+      return { name: "Ẩm thực", color: "tag-green" };
+    case "khuyen-mai":
+      return { name: "Khuyến mãi", color: "tag-orange" };
+    case "su-kien":
+      return { name: "Sự kiện", color: "tag-purple" };
+    default:
+      return { name: "Tin tức", color: "tag-red" };
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadPosts();
 });
@@ -731,33 +746,28 @@ function loadPosts(status = "") {
       grid.innerHTML = "";
 
       posts.forEach(p => {
-        const st = statusMap(p.status);
+        const cat = mapCategory(p.category);
 
-        grid.innerHTML += `
-          <article class="article-card">
-            <div class="card-image-wrapper">
-              <img src="${p.image}" alt="${p.title}" onerror="this.src='/static/images/logo.svg'">
-            </div>
-            <div class="card-content">
-              <div class="card-tags">
-                <span class="category-tag tag-blue">Tin tức</span>
-                <span class="status-tag ${st.cls}">${st.label}</span>
-              </div>
-              <h3 class="article-title">${p.title}</h3>
-              <span class="article-author">Admin</span>
-            </div>
-            <div class="card-footer">
-              <span class="article-date">${p.publish_at || "-"}</span>
-              <div class="article-actions">
-                <button class="action-btn btn-edit" onclick="editPost(${p.id})">
-                  <i class="fa-solid fa-pencil"></i>
-                </button>
-                <button class="action-btn btn-delete" onclick="deletePost(${p.id})">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          </article>
+grid.innerHTML += `
+  <article class="article-card">
+    <div class="card-image-wrapper">
+      <img src="${p.image}"
+           alt="${p.title}"
+           onerror="this.onerror=null;this.src='/static/images/logo.svg'">
+    </div>
+
+    <div class="card-content">
+      <div class="card-tags">
+        <span class="category-tag ${cat.color}">${cat.name}</span>
+        <span class="status-tag">${p.status}</span>
+      </div>
+
+      <h3 class="article-title">${p.title}</h3>
+      <span class="article-author">${p.author || "Admin"}</span>
+    </div>
+  </article>
+`;
+
         `;
       });
     });
