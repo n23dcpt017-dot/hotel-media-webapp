@@ -656,15 +656,33 @@
                         <label for="post-content" class="sr-only">Nội dung</label>
                         <textarea id="post-content" rows="10" placeholder="Viết nội dung bài viết..."></textarea>
                     </div>
-    
-                    <input type="file" id="thumbnailInput" accept="image/*" hidden>
+           
+<div class="form-card">
+  <label>Ảnh đại diện</label>
 
-<div class="thumbnail-upload" onclick="document.getElementById('thumbnailInput').click()">
-  <img id="thumbnailPreview"
-       src="/static/images/placeholder.png"
-       alt="Thumbnail">
-  <p>Click để chọn ảnh</p>
+  <input
+    type="file"
+    id="post-image"
+    accept="image/*"
+    hidden
+  />
+
+  <div class="image-uploader-box" id="imageUploader">
+    <div class="image-placeholder" id="imagePlaceholder">
+      <i class="fa-regular fa-image"></i>
+      <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
+      <small>PNG, JPG, GIF (tối đa 2MB)</small>
+    </div>
+
+    <img
+      id="imagePreview"
+      class="image-preview"
+      style="display:none"
+      alt="Ảnh đại diện"
+    />
+  </div>
 </div>
+
 
     
                     <div class="form-card">
@@ -807,18 +825,50 @@ function publishPost() {
 <script>
 let thumbnailUrl = null;
 
-document.getElementById("thumbnailInput").addEventListener("change", async function () {
-  const file = this.files[0];
-  if (!file) return;
+const uploader = document.getElementById("imageUploader");
+const input = document.getElementById("post-image");
+const preview = document.getElementById("imagePreview");
+const placeholder = document.getElementById("imagePlaceholder");
 
-  // Preview ảnh
+// Click để chọn ảnh
+uploader.addEventListener("click", () => input.click());
+
+// Chọn file
+input.addEventListener("change", handleFile);
+
+// Drag & drop
+uploader.addEventListener("dragover", e => {
+  e.preventDefault();
+  uploader.classList.add("dragover");
+});
+
+uploader.addEventListener("dragleave", () => {
+  uploader.classList.remove("dragover");
+});
+
+uploader.addEventListener("drop", e => {
+  e.preventDefault();
+  uploader.classList.remove("dragover");
+  const file = e.dataTransfer.files[0];
+  if (file) uploadImage(file);
+});
+
+function handleFile() {
+  const file = input.files[0];
+  if (file) uploadImage(file);
+}
+
+async function uploadImage(file) {
+  // Preview
   const reader = new FileReader();
   reader.onload = e => {
-    document.getElementById("thumbnailPreview").src = e.target.result;
+    preview.src = e.target.result;
+    preview.style.display = "block";
+    placeholder.style.display = "none";
   };
   reader.readAsDataURL(file);
 
-  // Upload ảnh
+  // Upload
   const formData = new FormData();
   formData.append("file", file);
 
@@ -833,7 +883,7 @@ document.getElementById("thumbnailInput").addEventListener("change", async funct
   } else {
     alert("Upload ảnh thất bại");
   }
-});
+}
 const payload = {
   title,
   content,
