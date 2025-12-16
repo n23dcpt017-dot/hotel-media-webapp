@@ -333,8 +333,8 @@ def list_posts():
             "id": p.id,
             "title": p.title,
             "status": p.status,
-            "publish_at": p.publish_at
-            "image": p.image
+            "publish_at": p.publish_at,
+            "image": p.image,
         }
         for p in posts
     ])
