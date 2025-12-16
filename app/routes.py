@@ -171,6 +171,87 @@ def page_chiendich():
 def page_xuatban():
     return render_template("xuatban.html")
 
+@auth.route("/binhluanchoduyet.html")
+@login_required
+def binhluan_choduyet():
+    return render_template("binhluanchoduyet.html")
+
+@auth.route("/binhluandaduyet.html")
+@login_required
+def binhluan_daduyet():
+    return render_template("binhluandaduyet.html")
+
+@auth.route("/binhluantuchoi.html")
+@login_required
+def binhluan_tuchoi():
+    return render_template("binhluantuchoi.html")
+
+@auth.route("/chiendichdalenlich.html")
+@login_required
+def chiendich_dalenlich():
+    return render_template("chiendichdalenlich.html")
+
+@auth.route("/chiendichdangchay.html")
+@login_required
+def chiendich_dangchay():
+    return render_template("chiendichdangchay.html")
+
+@auth.route("/chiendichtamdung.html")
+@login_required
+def chiendich_tamdung():
+    return render_template("chiendichtamdung.html")
+
+@auth.route("/nguoidungadmin.html")
+@login_required
+def nguoidung_admin():
+    return render_template("nguoidungadmin.html")
+
+@auth.route("/nguoidungeditor.html")
+@login_required
+def nguoidung_editor():
+    return render_template("nguoidungeditor.html")
+
+@auth.route("/nguoidungviewer.html")
+@login_required
+def nguoidung_viewer():
+    return render_template("nguoidungviewer.html")
+
+@auth.route("/quanlybaivietdalenlich.html")
+@login_required
+def quanlybaiviet_dalenlich():
+    return render_template("quanlybaivietdalenlich.html")
+
+@auth.route("/quanlybaivietdaxuatban.html")
+@login_required
+def quanlybaiviet_daxuatban():
+    return render_template("quanlybaivietdaxuatban.html")
+
+@auth.route("/quanlybaivietnhap.html")
+@login_required
+def quanlybaiviet_nhap():
+    return render_template("quanlybaivietnhap.html")
+
+@auth.route("/suabaiviet.html")
+@login_required
+def sua_baiviet():
+    return render_template("suabaiviet.html")
+
+@auth.route("/taobaiviet.html")
+@login_required
+def tao_baiviet():
+    return render_template("taobaiviet.html")
+
+@auth.route("/thuvienmediaanh.html")
+@login_required
+def thuvienmedia_anh():
+    return render_template("thuvienmediaanh.html")
+
+@auth.route("/thuvienmediavideo.html")
+@login_required
+def thuvienmedia_video():
+    return render_template("thuvienmediavideo.html")
+
+
 
 # =================================================
 # POSTS (ẨN / KHÔI PHỤC)
