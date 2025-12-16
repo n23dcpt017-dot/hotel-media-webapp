@@ -40,10 +40,7 @@ def login():
     if not username or not password:
         return render_template("login.html", error="Vui lòng nhập đủ thông tin")
 
-    user = User.query.filter(
-    (User.username == username) | (User.email == username)
-).first()
-
+    user = User.query.filter_by(username=username).first()
 
     if not user or not user.check_password(password):
         return render_template("login.html", error="Sai thông tin đăng nhập")
