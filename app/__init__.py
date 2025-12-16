@@ -10,17 +10,20 @@ login_manager = LoginManager()
 # ========================
 def seed_selenium_user():
     from app.models.user import User
-    with db.session.no_autoflush:
-        if not User.query.filter_by(username="admin").first():
-            admin = User(
-                username="admin@hotel.com",
-                email="admin@hotel.com",   
-                is_active=True,
-                role="admin"
-            )
-            admin.set_password("admin123")
-            db.session.add(admin)
-            db.session.commit()
+
+    if User.query.first():
+        return
+
+    admin = User(
+        username="admin@hotel.com",
+        email="admin@hotel.com",
+        is_active=True,
+        role="admin"
+    )
+    admin.set_password("admin123")
+    db.session.add(admin)
+    db.session.commit()
+
 
 
 
