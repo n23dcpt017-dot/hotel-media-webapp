@@ -14,9 +14,32 @@ from app.models.comment import Comment
 from app.models.campaign import Campaign
 from app.models.media import Media
 import os, uuid
+from datetime import datetime
 
 auth = Blueprint("auth", __name__)
 UPLOAD_FOLDER = "uploads"
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# =================================================
+# HELPER FUNCTIONS
+# =================================================
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def parse_date(date_str):
+    """Parse date from dd/mm/yyyy format"""
+    if not date_str:
+        return None
+    try:
+        # Try dd/mm/yyyy format first (from frontend)
+        return datetime.strptime(date_str, "%d/%m/%Y")
+    except ValueError:
+        try:
+            # Fallback to YYYY-MM-DD format
+            return datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            return None
+
 # =================================================
 # AUTH HANDLER
 # =================================================
@@ -44,7 +67,6 @@ def login():
             error="Vui lòng nhập đủ thông tin"
         )
 
-    # Login bằng username HOẶC email
     user = User.query.filter(
         (User.username == username) |
         (User.email == username)
@@ -256,7 +278,6 @@ def thuvienmedia_video():
 # =================================================
 # POSTS (ẨN / KHÔI PHỤC)
 # =================================================
-from datetime import datetime
 
 @auth.route("/api/posts", methods=["POST"])
 @login_required
@@ -266,16 +287,8 @@ def create_post():
     if not data.get("title"):
         return jsonify({"error": "Thiếu tiêu đề"}), 400
 
-    publish_at = None
-    if data.get("publish_at"):
-        try:
-            # nhận YYYY-MM-DD từ input[type=date]
-            publish_at = datetime.strptime(
-                data["publish_at"],
-                "%Y-%m-%d"
-            )
-        except ValueError:
-            return jsonify({"error": "Sai định dạng ngày"}), 400
+    # Parse date from dd/mm/yyyy format
+    publish_at = parse_date(data.get("publish_at"))
 
     post = Post(
         title=data["title"],
@@ -296,7 +309,22 @@ def create_post():
     }), 201
 
 
-
+@auth.route("/api/posts/<int:id>", methods=["GET"])
+@login_required
+def get_post(id):
+    """Get single post by ID for editing"""
+    post = Post.query.get_or_404(id)
+    
+    return jsonify({
+        "id": post.id,
+        "title": post.title,
+        "content": post.content,
+        "category": post.category,
+        "status": post.status,
+        "publish_at": post.publish_at.strftime("%d/%m/%Y") if post.publish_at else None,
+        "image": post.image,
+        "author": post.author
+    })
 
 
 @auth.route("/api/posts/<int:id>", methods=["PUT"])
@@ -307,13 +335,20 @@ def update_post(id):
 
     post.title = data.get("title", post.title)
     post.content = data.get("content", post.content)
+    post.category = data.get("category", post.category)
     post.status = data.get("status", post.status)
-    post.publish_at = data.get("publish_at", post.publish_at)
+    
+    # Parse date if provided
+    if data.get("publish_at"):
+        post.publish_at = parse_date(data.get("publish_at"))
+    
+    # Update image if provided
+    if data.get("image"):
+        post.image = data.get("image")
 
     db.session.commit()
 
     return jsonify({"message": "Cập nhật thành công"})
-
 
 
 @auth.route("/api/posts/<int:id>", methods=["DELETE"])
@@ -324,10 +359,11 @@ def delete_post(id):
     db.session.commit()
     return jsonify({"message": "Đã xóa"})
 
+
 @auth.route("/api/posts")
 @login_required
 def list_posts():
-    status = request.args.get("status")  # draft / published / scheduled
+    status = request.args.get("status")
 
     query = Post.query.filter_by(is_deleted=False)
 
@@ -337,19 +373,19 @@ def list_posts():
     posts = query.order_by(Post.created_at.desc()).all()
 
     return jsonify([
-    {
-        "id": p.id,
-        "title": p.title,
-        "status": p.status,
-        "publish_at": p.publish_at.strftime("%d/%m/%Y") if p.publish_at else None,
-        "image": p.image,
-        "category": p.category,
-        "author": p.author
-    }
-    for p in posts
-])
+        {
+            "id": p.id,
+            "title": p.title,
+            "status": p.status,
+            "publish_at": p.publish_at.strftime("%d/%m/%Y") if p.publish_at else None,
+            "image": p.image,
+            "category": p.category,
+            "author": p.author
+        }
+        for p in posts
+    ])
 
-import uuid
+
 from werkzeug.utils import secure_filename
 
 @auth.route("/api/upload-thumbnail", methods=["POST"])
@@ -362,9 +398,15 @@ def upload_thumbnail():
     if file.filename == "":
         return jsonify({"error": "Empty filename"}), 400
 
+    # Validate file type
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Invalid file type. Allowed: png, jpg, jpeg, gif"}), 400
+
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    filename = f"{uuid.uuid4().hex}.jpg"
+    # Get file extension
+    ext = file.filename.rsplit('.', 1)[1].lower()
+    filename = f"{uuid.uuid4().hex}.{ext}"
     path = os.path.join(UPLOAD_FOLDER, filename)
     file.save(path)
 
@@ -465,3 +507,9 @@ def hide_media(id):
     m.is_hidden = True
     db.session.commit()
     return jsonify({"message": "Đã ẩn media"})
+
+
+@auth.route("/uploads/<filename>")
+def uploaded_file(filename):
+    """Serve uploaded files"""
+    return send_from_directory(UPLOAD_FOLDER, filename)
