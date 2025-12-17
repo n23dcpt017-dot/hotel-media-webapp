@@ -270,8 +270,8 @@ def create_post():
     if data.get("publish_at"):
         try:
         publish_at = datetime.strptime(data["publish_at"], "%d/%m/%Y")
-    except ValueError:
-        return jsonify({"error": "Ngày phải theo định dạng dd/mm/yyyy"}), 400
+        except ValueError:
+            return jsonify({"error": "Ngày phải theo định dạng dd/mm/yyyy"}), 400
 
     post = Post(
     title=data["title"],
