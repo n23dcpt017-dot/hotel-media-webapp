@@ -269,19 +269,23 @@ def create_post():
     publish_at = None
     if data.get("publish_at"):
         try:
-            publish_at = datetime.strptime(data["publish_at"],"%d/%m/%Y")
+            # nhận YYYY-MM-DD từ input[type=date]
+            publish_at = datetime.strptime(
+                data["publish_at"],
+                "%Y-%m-%d"
+            )
         except ValueError:
-            return jsonify({
-                "error": "Ngày phải theo định dạng dd/mm/yyyy"}), 400
+            return jsonify({"error": "Sai định dạng ngày"}), 400
 
     post = Post(
-    title=data["title"],
-    content=data.get("content"),
-    status=data.get("status", "draft"),
-    publish_at=publish_at,
-    image=data.get("image") or "/static/images/phong1.png"
-)
-
+        title=data["title"],
+        content=data.get("content"),
+        category=data.get("category"),
+        status=data.get("status", "draft"),
+        publish_at=publish_at,
+        image=data.get("image") or "/static/images/phong1.png",
+        author=current_user.username
+    )
 
     db.session.add(post)
     db.session.commit()
@@ -290,6 +294,7 @@ def create_post():
         "message": "Tạo bài viết thành công",
         "id": post.id
     }), 201
+
 
 
 
