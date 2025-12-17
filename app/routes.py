@@ -13,10 +13,10 @@ from app.models.post import Post
 from app.models.comment import Comment
 from app.models.campaign import Campaign
 from app.models.media import Media
-import os
+import os, uuid
 
 auth = Blueprint("auth", __name__)
-
+UPLOAD_FOLDER = "uploads"
 # =================================================
 # AUTH HANDLER
 # =================================================
@@ -345,22 +345,23 @@ import uuid
 from werkzeug.utils import secure_filename
 
 @auth.route("/api/upload-thumbnail", methods=["POST"])
-@login_required
 def upload_thumbnail():
     if "file" not in request.files:
-        return jsonify({"error": "Không có file"}), 400
+        return jsonify({"error": "No file"}), 400
 
     file = request.files["file"]
     if file.filename == "":
-        return jsonify({"error": "File rỗng"}), 400
+        return jsonify({"error": "Empty filename"}), 400
 
-    ext = file.filename.rsplit(".", 1)[-1].lower()
-    if ext not in ["jpg", "jpeg", "png", "webp"]:
-        return jsonify({"error": "Định dạng không hỗ trợ"}), 400
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    upload_path = os.path.join("static/uploads/thumbnails", filename)
-    file.save(upload_path)
+    filename = f"{uuid.uuid4().hex}.jpg"
+    path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(path)
+
+    return jsonify({
+        "url": f"/uploads/{filename}"
+    })
 
     return jsonify({
         "url": f"/static/uploads/thumbnail/{filename}"
