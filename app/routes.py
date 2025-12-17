@@ -599,4 +599,19 @@ def delete_comment_api(id):
     db.session.commit()
     return jsonify({"message": "Đã xóa vĩnh viễn"})
 
+@auth.route("/api/comments/stats", methods=["GET"])
+@login_required
+def get_comment_stats():
+    
+    total = Comment.query.count()
+    pending = Comment.query.filter_by(status='pending').count()
+    approved = Comment.query.filter_by(status='approved').count()
+    rejected = Comment.query.filter_by(status='rejected').count()
+    
+    return jsonify({
+        "total": total,
+        "pending": pending,
+        "approved": approved,
+        "rejected": rejected
+    })
 
