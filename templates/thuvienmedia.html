@@ -1068,30 +1068,49 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const container = document.getElementById("media-grid");
-  if (!container) return;
+  const grid = document.querySelector(".media-grid");
 
   const res = await fetch("/auth/api/media");
   const data = await res.json();
 
-  container.innerHTML = "";
+  grid.innerHTML = "";
 
-  data.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "media-item";
+  data.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "media-card";
 
-    if (item.type === "image") {
-      div.innerHTML = `<img src="${item.url}" alt="">`;
+    if (m.file_type === "video") {
+      card.innerHTML = `
+        <div class="media-preview video-preview">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <div class="media-info">
+          <strong>${m.filename}</strong>
+          <div class="media-details">
+            <span>${m.created_at}</span>
+          </div>
+          <span class="media-tag tag-video">Video</span>
+        </div>
+      `;
+      card.dataset.video = m.url;
     } else {
-      div.innerHTML = `
-        <video src="${item.url}" controls></video>
+      card.innerHTML = `
+        <img src="${m.url}" class="media-preview"/>
+        <div class="media-info">
+          <strong>${m.filename}</strong>
+          <div class="media-details">
+            <span>${m.created_at}</span>
+          </div>
+          <span class="media-tag tag-image">Ảnh</span>
+        </div>
       `;
     }
 
-    container.appendChild(div);
+    grid.appendChild(card);
   });
 });
 </script>
+
 
 </body>
 </html>
