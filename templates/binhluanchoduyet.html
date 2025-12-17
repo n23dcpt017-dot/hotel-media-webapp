@@ -1084,6 +1084,65 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.addEventListener("click", () => popup.style.display = "none");
     });
+  async function loadStats() {
+        try {
+            const res = await fetch('/auth/api/comments/stats');
+            const data = await res.json();
+            
+            
+            if(document.getElementById('stat-total')) 
+                document.getElementById('stat-total').innerText = data.total;
+            
+            if(document.getElementById('stat-pending')) 
+                document.getElementById('stat-pending').innerText = data.pending;
+            
+            if(document.getElementById('stat-approved')) 
+                document.getElementById('stat-approved').innerText = data.approved;
+            
+            if(document.getElementById('stat-rejected')) 
+                document.getElementById('stat-rejected').innerText = data.rejected;
+
+        } catch (err) {
+            console.error("Lỗi tải thống kê:", err);
+        }
+    }
+
+    
+    async function updateStatus(id, action) {
+        try {
+            const res = await fetch(`/auth/api/comments/${id}/${action}`, { method: 'PUT' });
+            if(res.ok) {
+                alert(action === 'approve' ? "Đã duyệt!" : "Đã từ chối!");
+                loadComments(getCurrentTab()); 
+                loadStats(); 
+            } else {
+                alert("Lỗi khi cập nhật trạng thái");
+            }
+        } catch(err) {
+            alert("Lỗi kết nối server");
+        }
+    }
+    
+    
+    async function deleteComment(id) {
+        if(!confirm("Bạn chắc chắn muốn xóa vĩnh viễn bình luận này?")) return;
+        try {
+            const res = await fetch(`/auth/api/comments/${id}/delete`, { method: 'DELETE' });
+            if(res.ok) {
+                document.getElementById(`comment-${id}`).remove();
+                loadStats(); 
+            } else { alert("Lỗi khi xóa"); }
+        } catch(err) { alert("Lỗi hệ thống"); }
+    }
+
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        loadComments(getCurrentTab());
+        loadStats(); 
+        
+        
+    });
 </script>
+
   </body>
 </html>
