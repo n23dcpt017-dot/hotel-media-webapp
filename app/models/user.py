@@ -10,6 +10,13 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    fullname = db.Column(db.String(100))      
+    role = db.Column(db.String(20), default='viewer') 
+    is_active = db.Column(db.Boolean, default=True)   
+    last_login = db.Column(db.DateTime) 
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    posts = db.relationship('Post', backref='author_user', lazy='dynamic')
 
     # ==== EXTRA FIELDS CHO UNIT TEST ====
     full_name = db.Column(db.String(128))
