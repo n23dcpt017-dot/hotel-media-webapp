@@ -535,6 +535,37 @@
   max-width: 100%;
   overflow: hidden;      
 }
+.preview-wrapper {
+  position: relative;
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.cropper-container {
+  max-width: 100% !important;
+  max-height: 200px !important;
+}
 
   </style>
   <body>
@@ -825,10 +856,16 @@ function collectPostData(forceStatus = null) {
     title: document.getElementById("post-title").value,
     content: document.getElementById("post-content").value,
     category: document.getElementById("post-category").value,
-    status: forceStatus 
-      ? forceStatus 
-      : mapStatus(document.getElementById("post-status").value),
+
+    status: forceStatus
+      ? forceStatus
+      : document.getElementById("post-status").value, 
+    
+
     publish_at: document.getElementById("post-schedule").value || null,
+
+    image: thumbnailUrl,   
+
     seo: {
       title: document.getElementById("meta-title").value,
       description: document.getElementById("meta-desc").value,
@@ -836,6 +873,7 @@ function collectPostData(forceStatus = null) {
     }
   };
 }
+
 
 function saveDraft() {
   fetch("/auth/api/posts", {
@@ -952,20 +990,7 @@ async function uploadCroppedImage() {
   }, "image/jpeg");
 }
 
-const payload = {
-  title,
-  content,
-  status,
-  category,
-  publish_at,
-  image: thumbnailUrl 
-};
 
-fetch("/auth/api/posts", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload)
-});
 
 </script>
 
