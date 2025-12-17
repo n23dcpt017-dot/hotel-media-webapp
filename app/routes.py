@@ -411,28 +411,28 @@ def upload_thumbnail():
     if file.filename == "":
         return jsonify({"error": "Empty filename"}), 400
 
-    os.makedirs("uploads", exist_ok=True)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    ext = file.filename.rsplit(".", 1)[-1].lower()
+    ext = file.filename.rsplit(".", 1)[1].lower()
     filename = f"{uuid.uuid4().hex}.{ext}"
-    path = os.path.join("uploads", filename)
+    path = os.path.join(UPLOAD_FOLDER, filename)
+
     file.save(path)
 
-    # 🔥 XÁC ĐỊNH LOẠI MEDIA
+    # ====== TẠO MEDIA RECORD (QUAN TRỌNG) ======
     media_type = "video" if ext in ["mp4", "mov", "avi"] else "image"
 
-    # 🔥 LƯU VÀO BẢNG MEDIA
     media = Media(
         filename=filename,
-        url=f"/uploads/{filename}",
         type=media_type
     )
+
     db.session.add(media)
     db.session.commit()
 
     return jsonify({
-        "url": media.url,
-        "type": media.type
+        "url": f"/uploads/{filename}",
+        "media_id": media.id
     })
 
 
