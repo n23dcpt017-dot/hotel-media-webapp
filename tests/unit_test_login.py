@@ -62,7 +62,7 @@ class LoginUnitTest(unittest.TestCase):
         self.test_user = User(
             username='TestAdmin',  # KHÁC với 'admin' trong init_db.py
             email='test_admin@example.com',  # KHÁC với 'admin@hotel.com'
-            full_name='Test Administrator',
+            fullname='Test Administrator',
             role='admin',
             is_active=True
         )
