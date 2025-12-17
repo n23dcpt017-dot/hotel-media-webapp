@@ -846,25 +846,35 @@ uploadBox.addEventListener("click", () => {
   });
 
   // Khi người dùng chọn file
-  fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Dùng FileReader để đọc file dưới dạng URL (base64)
-      const reader = new FileReader();
-      
-      reader.onload = function(event) {
-        // 1. Hiển thị ảnh xem trước
-        uploadContent.style.display = "none";
-        imagePreview.src = event.target.result;
-        imagePreview.style.display = "block";
+  fileInput.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-        // 2. Cập nhật dữ liệu vào biến post (để tí nữa bấm Lưu sẽ lưu cái này)
-        post.image = event.target.result;
-      };
+  const formData = new FormData();
+  formData.append("file", file);
 
-      reader.readAsDataURL(file); // Bắt đầu đọc file
-    }
+  const res = await fetch("/auth/api/upload-thumbnail", {
+    method: "POST",
+    body: formData
   });
+
+  const data = await res.json();
+  if (!data.url) {
+    alert("Upload ảnh thất bại");
+    return;
+  }
+
+  // 👉 GHI ĐÈ ẢNH CŨ
+  thumbnailUrl = data.url;
+
+  // 👉 UPDATE PREVIEW
+  const img = document.getElementById("image-preview");
+  img.src = data.url;
+  img.style.display = "block";
+
+  document.getElementById("upload-content").style.display = "none";
+});
+
 
 </script>
 <script>
