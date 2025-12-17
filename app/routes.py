@@ -267,11 +267,11 @@ def create_post():
         return jsonify({"error": "Thiếu tiêu đề"}), 400
 
     publish_at = None
-    if data.get("publish_at"):
-        try:
-            publish_at = datetime.fromisoformat(data["publish_at"])
-        except ValueError:
-            return jsonify({"error": "Sai định dạng ngày"}), 400
+if data.get("publish_at"):
+    try:
+        publish_at = datetime.strptime(data["publish_at"], "%d/%m/%Y")
+    except ValueError:
+        return jsonify({"error": "Ngày phải theo định dạng dd/mm/yyyy"}), 400
 
     post = Post(
     title=data["title"],
@@ -335,7 +335,7 @@ def list_posts():
         "id": p.id,
         "title": p.title,
         "status": p.status,
-        "publish_at": p.publish_at.isoformat() if p.publish_at else None,
+        "publish_at": p.publish_at.strftime("%d/%m/%Y") if p.publish_at else None,
         "image": p.image,
         "category": p.category,
         "author": p.author
