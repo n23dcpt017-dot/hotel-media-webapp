@@ -19,28 +19,12 @@ from werkzeug.utils import secure_filename
 
 auth = Blueprint("auth", __name__)
 UPLOAD_FOLDER = "uploads"
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # =================================================
 # HELPER FUNCTIONS
 # =================================================
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def parse_date(date_str):
-    """Parse date from dd/mm/yyyy format"""
-    if not date_str:
-        return None
-    try:
-        # Try dd/mm/yyyy format first (from frontend)
-        return datetime.strptime(date_str, "%d/%m/%Y")
-    except ValueError:
-        try:
-            # Fallback to YYYY-MM-DD format
-            return datetime.strptime(date_str, "%Y-%m-%d")
-        except ValueError:
-            return None
 def get_file_size(path):
+    """Tính dung lượng file để hiển thị"""
     try:
         size = os.path.getsize(path)
         if size < 1024:
@@ -51,10 +35,24 @@ def get_file_size(path):
             return f"{size / (1024 * 1024):.1f} MB"
     except:
         return "0 KB"
+
+def parse_date(date_str):
+    """Chuyển đổi ngày từ chuỗi sang object datetime"""
+    if not date_str:
+        return None
+    try:
+        # Ưu tiên format Việt Nam: dd/mm/yyyy
+        return datetime.strptime(date_str, "%d/%m/%Y")
+    except ValueError:
+        try:
+            # Fallback format ISO: yyyy-mm-dd
+            return datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            return None
+
 # =================================================
 # AUTH HANDLER
 # =================================================
-
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect(url_for("auth.login"))
@@ -73,31 +71,20 @@ def login():
     password = request.form.get("password")
 
     if not username or not password:
-        return render_template(
-            "login.html",
-            error="Vui lòng nhập đủ thông tin"
-        )
+        return render_template("login.html", error="Vui lòng nhập đủ thông tin")
 
     user = User.query.filter(
-        (User.username == username) |
-        (User.email == username)
+        (User.username == username) | (User.email == username)
     ).first()
 
     if not user or not user.check_password(password):
-        return render_template(
-            "login.html",
-            error="Sai thông tin đăng nhập"
-        )
+        return render_template("login.html", error="Sai thông tin đăng nhập")
 
     if not user.is_active:
-        return render_template(
-            "login.html",
-            error="Tài khoản đã bị khóa"
-        )
+        return render_template("login.html", error="Tài khoản đã bị khóa")
 
     login_user(user)
     return redirect(url_for("auth.tongquan_html"))
-
 
 @auth.route("/logout")
 @login_required
@@ -107,198 +94,154 @@ def logout():
     return redirect(url_for("auth.login"))
 
 # =================================================
-# OAUTH (GOOGLE / FACEBOOK / ZALO / TIKTOK)
+# OAUTH (Login MXH)
 # =================================================
 def oauth_login(provider, email):
     user = User.query.filter_by(email=email).first()
     if not user:
-        user = User(
-            username=email.split("@")[0],
-            email=email,
-            role="user"
-        )
+        user = User(username=email.split("@")[0], email=email, role="user")
         db.session.add(user)
         db.session.commit()
-
     login_user(user)
     return redirect(url_for("auth.tongquan_html"))
 
-
 @auth.route("/login/google")
-def login_google():
-    return oauth_login("google", "google_user@gmail.com")
-
+def login_google(): return oauth_login("google", "google_user@gmail.com")
 
 @auth.route("/login/facebook")
-def login_facebook():
-    return oauth_login("facebook", "fb_user@gmail.com")
-
+def login_facebook(): return oauth_login("facebook", "fb_user@gmail.com")
 
 @auth.route("/login/zalo")
-def login_zalo():
-    return oauth_login("zalo", "zalo_user@gmail.com")
-
+def login_zalo(): return oauth_login("zalo", "zalo_user@gmail.com")
 
 @auth.route("/login/tiktok")
-def login_tiktok():
-    return oauth_login("tiktok", "tiktok_user@gmail.com")
+def login_tiktok(): return oauth_login("tiktok", "tiktok_user@gmail.com")
 
 # =================================================
-# FRONTEND PAGES
+# FRONTEND PAGES (Render HTML)
 # =================================================
 @auth.route("/")
 @auth.route("/dashboard")
 @login_required
-def dashboard():
-    return render_template("tongquan.html")
-
+def dashboard(): return render_template("tongquan.html")
 
 @auth.route("/index")
 @login_required
-def index():
-    return render_template("index.html")
-
+def index(): return render_template("index.html")
 
 @auth.route("/tongquan.html")
 @login_required
-def tongquan_html():
-    return render_template("tongquan.html")
+def tongquan_html(): return render_template("tongquan.html")
 
 @auth.route("/quanlybaiviet.html")
 @login_required
-def page_quanly_baiviet():
-    return render_template("quanlybaiviet.html")
-
-@auth.route("/quanlylivestream.html")
-@login_required
-def page_quanly_livestream():
-    return render_template("quanlylivestream.html")
-
-@auth.route("/thuvienmedia.html")
-@login_required
-def page_thuvien_media():
-    return render_template("thuvienmedia.html")
-
-@auth.route("/nguoidung.html")
-@login_required
-def page_nguoidung():
-    return render_template("nguoidung.html")
-
-@auth.route("/analyticsvaseo.html")
-@login_required
-def page_analytics():
-    return render_template("analyticsvaseo.html")
-
-@auth.route("/binhluan.html")
-@login_required
-def page_binhluan():
-    return render_template("binhluan.html")
-
-@auth.route("/chiendich.html")
-@login_required
-def page_chiendich():
-    return render_template("chiendich.html")
-
-@auth.route("/xuatban.html")
-@login_required
-def page_xuatban():
-    return render_template("xuatban.html")
-
-@auth.route("/binhluanchoduyet.html")
-@login_required
-def binhluan_choduyet():
-    return render_template("binhluanchoduyet.html")
-
-@auth.route("/binhluandaduyet.html")
-@login_required
-def binhluan_daduyet():
-    return render_template("binhluandaduyet.html")
-
-@auth.route("/binhluantuchoi.html")
-@login_required
-def binhluan_tuchoi():
-    return render_template("binhluantuchoi.html")
-
-@auth.route("/chiendichdalenlich.html")
-@login_required
-def chiendich_dalenlich():
-    return render_template("chiendichdalenlich.html")
-
-@auth.route("/chiendichdangchay.html")
-@login_required
-def chiendich_dangchay():
-    return render_template("chiendichdangchay.html")
-
-@auth.route("/chiendichtamdung.html")
-@login_required
-def chiendich_tamdung():
-    return render_template("chiendichtamdung.html")
-
-@auth.route("/nguoidungadmin.html")
-@login_required
-def nguoidung_admin():
-    return render_template("nguoidungadmin.html")
-
-@auth.route("/nguoidungeditor.html")
-@login_required
-def nguoidung_editor():
-    return render_template("nguoidungeditor.html")
-
-@auth.route("/nguoidungviewer.html")
-@login_required
-def nguoidung_viewer():
-    return render_template("nguoidungviewer.html")
-
-@auth.route("/quanlybaivietdalenlich.html")
-@login_required
-def quanlybaiviet_dalenlich():
-    return render_template("quanlybaivietdalenlich.html")
-
-@auth.route("/quanlybaivietdaxuatban.html")
-@login_required
-def quanlybaiviet_daxuatban():
-    return render_template("quanlybaivietdaxuatban.html")
-
-@auth.route("/quanlybaivietnhap.html")
-@login_required
-def quanlybaiviet_nhap():
-    return render_template("quanlybaivietnhap.html")
-
-@auth.route("/suabaiviet.html")
-@login_required
-def sua_baiviet():
-    return render_template("suabaiviet.html")
+def page_quanly_baiviet(): return render_template("quanlybaiviet.html")
 
 @auth.route("/taobaiviet.html")
 @login_required
-def tao_baiviet():
-    return render_template("taobaiviet.html")
+def tao_baiviet(): return render_template("taobaiviet.html")
+
+@auth.route("/suabaiviet.html")
+@login_required
+def sua_baiviet(): return render_template("suabaiviet.html")
+
+@auth.route("/thuvienmedia.html")
+@login_required
+def page_thuvien_media(): return render_template("thuvienmedia.html")
+
+# Các trang phụ khác...
+@auth.route("/quanlylivestream.html")
+@login_required
+def page_quanly_livestream(): return render_template("quanlylivestream.html")
 
 @auth.route("/thuvienmediaanh.html")
 @login_required
-def thuvienmedia_anh():
-    return render_template("thuvienmediaanh.html")
+def thuvienmedia_anh(): return render_template("thuvienmediaanh.html")
 
 @auth.route("/thuvienmediavideo.html")
 @login_required
-def thuvienmedia_video():
-    return render_template("thuvienmediavideo.html")
+def thuvienmedia_video(): return render_template("thuvienmediavideo.html")
 
+@auth.route("/nguoidung.html")
+@login_required
+def page_nguoidung(): return render_template("nguoidung.html")
+
+@auth.route("/analyticsvaseo.html")
+@login_required
+def page_analytics(): return render_template("analyticsvaseo.html")
+
+@auth.route("/binhluan.html")
+@login_required
+def page_binhluan(): return render_template("binhluan.html")
+
+@auth.route("/chiendich.html")
+@login_required
+def page_chiendich(): return render_template("chiendich.html")
+
+@auth.route("/xuatban.html")
+@login_required
+def page_xuatban(): return render_template("xuatban.html")
+
+@auth.route("/binhluanchoduyet.html")
+@login_required
+def binhluan_choduyet(): return render_template("binhluanchoduyet.html")
+
+@auth.route("/binhluandaduyet.html")
+@login_required
+def binhluan_daduyet(): return render_template("binhluandaduyet.html")
+
+@auth.route("/binhluantuchoi.html")
+@login_required
+def binhluan_tuchoi(): return render_template("binhluantuchoi.html")
+
+@auth.route("/chiendichdalenlich.html")
+@login_required
+def chiendich_dalenlich(): return render_template("chiendichdalenlich.html")
+
+@auth.route("/chiendichdangchay.html")
+@login_required
+def chiendich_dangchay(): return render_template("chiendichdangchay.html")
+
+@auth.route("/chiendichtamdung.html")
+@login_required
+def chiendich_tamdung(): return render_template("chiendichtamdung.html")
+
+@auth.route("/nguoidungadmin.html")
+@login_required
+def nguoidung_admin(): return render_template("nguoidungadmin.html")
+
+@auth.route("/nguoidungeditor.html")
+@login_required
+def nguoidung_editor(): return render_template("nguoidungeditor.html")
+
+@auth.route("/nguoidungviewer.html")
+@login_required
+def nguoidung_viewer(): return render_template("nguoidungviewer.html")
+
+@auth.route("/quanlybaivietdalenlich.html")
+@login_required
+def quanlybaiviet_dalenlich(): return render_template("quanlybaivietdalenlich.html")
+
+@auth.route("/quanlybaivietdaxuatban.html")
+@login_required
+def quanlybaiviet_daxuatban(): return render_template("quanlybaivietdaxuatban.html")
+
+@auth.route("/quanlybaivietnhap.html")
+@login_required
+def quanlybaiviet_nhap(): return render_template("quanlybaivietnhap.html")
 
 
 # =================================================
-# POSTS (ẨN / KHÔI PHỤC)
+# API BÀI VIẾT (POSTS)
 # =================================================
 
 @auth.route("/api/posts", methods=["POST"])
 @login_required
 def create_post():
     data = request.json
-
     if not data.get("title"):
         return jsonify({"error": "Thiếu tiêu đề"}), 400
 
-    # Parse date from dd/mm/yyyy format
     publish_at = parse_date(data.get("publish_at"))
 
     post = Post(
@@ -310,22 +253,15 @@ def create_post():
         image=data.get("image") or "/static/images/phong1.png",
         author=current_user.username
     )
-
     db.session.add(post)
     db.session.commit()
 
-    return jsonify({
-        "message": "Tạo bài viết thành công",
-        "id": post.id
-    }), 201
-
+    return jsonify({"message": "Tạo bài viết thành công", "id": post.id}), 201
 
 @auth.route("/api/posts/<int:id>", methods=["GET"])
 @login_required
 def get_post(id):
-    """Get single post by ID for editing"""
     post = Post.query.get_or_404(id)
-    
     return jsonify({
         "id": post.id,
         "title": post.title,
@@ -336,7 +272,6 @@ def get_post(id):
         "image": post.image,
         "author": post.author
     })
-
 
 @auth.route("/api/posts/<int:id>", methods=["PUT"])
 @login_required
@@ -349,47 +284,33 @@ def update_post(id):
     post.category = data.get("category", post.category)
     post.status = data.get("status", post.status)
     
-    # Parse date if provided
     if data.get("publish_at"):
-        try:
-            # chuẩn ISO từ input type="date"
-            post.publish_at = datetime.strptime(
-            data["publish_at"], "%Y-%m-%d"
-            )
-        except ValueError:
-            try:
-                # fallback nếu frontend gửi dd/mm/yyyy
-                post.publish_at = datetime.strptime(data["publish_at"], "%d/%m/%Y")
-            except ValueError:
-                return jsonify({
-                    "error": "Sai định dạng ngày"}), 400
+        new_date = parse_date(data["publish_at"])
+        if new_date:
+            post.publish_at = new_date
+        else:
+            return jsonify({"error": "Sai định dạng ngày"}), 400
 
-
-    
-    # Update image if provided
     if data.get("image"):
         post.image = data.get("image")
 
     db.session.commit()
-
     return jsonify({"message": "Cập nhật thành công"})
-
 
 @auth.route("/api/posts/<int:id>", methods=["DELETE"])
 @login_required
 def delete_post(id):
     post = Post.query.get_or_404(id)
-    post.is_deleted = True
+    # Xóa trực tiếp khỏi DB (hoặc dùng soft delete nếu muốn)
+    db.session.delete(post)
     db.session.commit()
     return jsonify({"message": "Đã xóa"})
 
-
-@auth.route("/api/posts")
+@auth.route("/api/posts", methods=["GET"])
 @login_required
 def list_posts():
     status = request.args.get("status")
-
-    query = Post.query.filter_by(is_deleted=False)
+    query = Post.query # Nếu có cột is_deleted thì thêm .filter_by(is_deleted=False)
 
     if status:
         query = query.filter_by(status=status)
@@ -409,9 +330,12 @@ def list_posts():
         for p in posts
     ])
 
+# =================================================
+# API MEDIA & UPLOAD (THƯ VIỆN ẢNH)
+# =================================================
 
-from werkzeug.utils import secure_filename
-
+# 1. API Upload Thumbnail (Dùng khi tạo/sửa bài viết)
+# -> Tự động thêm vào thư viện Media
 @auth.route("/api/upload-thumbnail", methods=["POST"])
 @login_required
 def upload_thumbnail():
@@ -424,167 +348,43 @@ def upload_thumbnail():
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    ext = file.filename.rsplit(".", 1)[1].lower()
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    path = os.path.join(UPLOAD_FOLDER, filename)
-
-    file.save(path)
-
-    # ====== TẠO MEDIA RECORD (QUAN TRỌNG) ======
-    media_type = "video" if ext in ["mp4", "mov", "avi"] else "image"
-
-    media = Media(
-        filename=filename,
-        type=media_type
-    )
-
-    db.session.add(media)
-    db.session.commit()
-
-    return jsonify({
-        "url": f"/uploads/{filename}",
-        "media_id": media.id
-    })
-
-
-
-# =================================================
-# COMMENTS (APPROVED / REJECTED / DELETED)
-# =================================================
-@auth.route("/comments/<int:id>/approve", methods=["PUT"])
-@login_required
-def approve_comment(id):
-    c = Comment.query.get_or_404(id)
-    c.status = "approved"
-    db.session.commit()
-    return jsonify({"message": "Đã duyệt comment"})
-
-
-@auth.route("/comments/<int:id>/reject", methods=["PUT"])
-@login_required
-def reject_comment(id):
-    c = Comment.query.get_or_404(id)
-    c.status = "rejected"
-    db.session.commit()
-    return jsonify({"message": "Đã từ chối comment"})
-
-
-@auth.route("/comments/<int:id>/delete", methods=["PUT"])
-@login_required
-def delete_comment(id):
-    c = Comment.query.get_or_404(id)
-    c.status = "deleted"
-    db.session.commit()
-    return jsonify({"message": "Đã xóa comment"})
-
-# =================================================
-# CAMPAIGNS
-# =================================================
-@auth.route("/campaigns", methods=["POST"])
-@login_required
-def create_campaign():
-    data = request.json
-    camp = Campaign(name=data["name"])
-    db.session.add(camp)
-    db.session.commit()
-    return jsonify({"message": "Đã tạo campaign"})
-
-
-@auth.route("/campaigns/<int:id>/pause", methods=["PUT"])
-@login_required
-def pause_campaign(id):
-    camp = Campaign.query.get_or_404(id)
-    camp.status = "paused"
-    db.session.commit()
-    return jsonify({"message": "Đã tạm dừng campaign"})
-
-
-@auth.route("/campaigns/<int:id>/delete", methods=["PUT"])
-@login_required
-def delete_campaign(id):
-    camp = Campaign.query.get_or_404(id)
-    camp.status = "deleted"
-    db.session.commit()
-    return jsonify({"message": "Đã xóa campaign"})
-
-# =================================================
-# MEDIA (UPLOAD / ẨN / TẢI)
-# =================================================
-@auth.route("/api/upload-thumbnail", methods=["POST"])
-@login_required
-def upload_thumbnail():
-    if "file" not in request.files:
-        return jsonify({"error": "No file"}), 400
-
-    file = request.files["file"]
-    if file.filename == "":
-        return jsonify({"error": "Empty filename"}), 400
-
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-    # Lấy đuôi file
+    # Xử lý tên file và lưu
     ext = file.filename.rsplit(".", 1)[1].lower() if "." in file.filename else "jpg"
     filename = f"{uuid.uuid4().hex}.{ext}"
     path = os.path.join(UPLOAD_FOLDER, filename)
-
     file.save(path)
 
-    # === [QUAN TRỌNG] TỰ ĐỘNG THÊM VÀO THƯ VIỆN MEDIA ===
-    # Logic này giúp ảnh bài viết tự chui vào thư viện
+    # === [QUAN TRỌNG] Lưu vào Database Media ===
     media_type = "video" if ext in ["mp4", "mov", "avi", "webm"] else "image"
-    
-    media = Media(
-        filename=filename,
-        type=media_type
-    )
+    media = Media(filename=filename, type=media_type)
     db.session.add(media)
     db.session.commit()
-    # ====================================================
+    # ===========================================
 
     return jsonify({
         "url": f"/uploads/{filename}",
         "media_id": media.id
     })
 
-@auth.route("/media/<filename>")
-@login_required
-def get_media(filename):
-    return send_from_directory("uploads", filename)
-
-
-@auth.route("/media/<int:id>/hide", methods=["PUT"])
-@login_required
-def hide_media(id):
-    m = Media.query.get_or_404(id)
-    m.is_hidden = True
-    db.session.commit()
-    return jsonify({"message": "Đã ẩn media"})
-
-
-@auth.route("/uploads/<filename>")
-def uploaded_file(filename):
-    """Serve uploaded files"""
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
+# 2. API Lấy danh sách Media (Cho trang Thư viện)
 @auth.route("/api/media", methods=["GET"])
 @login_required
 def list_media():
-    media_type = request.args.get("type")  # image | video
+    media_type = request.args.get("type") # image | video
     
     query = Media.query
     if media_type:
         query = query.filter_by(type=media_type)
         
-    # Sắp xếp mới nhất lên đầu
     media_list = query.order_by(Media.id.desc()).all()
     
     results = []
     for m in media_list:
-        # Tính toán đường dẫn và size thực tế
+        # Tính toán đường dẫn và size
         file_path = os.path.join(UPLOAD_FOLDER, m.filename)
-        size_str = get_file_size(file_path)
+        size_str = get_file_size(file_path) if os.path.exists(file_path) else "0 KB"
         
-        # URL hiển thị (check nếu là link ngoài hay link nội bộ)
+        # Check link nội bộ hay external
         url = m.filename if m.filename.startswith("http") else f"/uploads/{m.filename}"
         
         results.append({
@@ -592,48 +392,75 @@ def list_media():
             "filename": m.filename,
             "type": m.type,
             "url": url,
-            "created_at": m.created_at.strftime("%d/%m/%Y"), # Format ngày đẹp
+            "created_at": m.created_at.strftime("%d/%m/%Y"),
             "size": size_str
         })
         
     return jsonify(results)
-    
+
+# 3. API Upload riêng cho trang Thư viện
 @auth.route("/api/media/upload", methods=["POST"])
 @login_required
 def upload_media_library():
-    """API dùng riêng cho nút Upload ở trang Thư viện"""
-    file = request.files.get("file")
-    if not file:
-        return jsonify({"error": "Không có file"}), 400
+    return upload_thumbnail() # Tái sử dụng hàm trên cho gọn
 
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    
-    ext = file.filename.rsplit(".", 1)[1].lower() if "." in file.filename else "jpg"
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    path = os.path.join(UPLOAD_FOLDER, filename)
-        
-    file.save(path)
-
-    media_type = "video" if ext in ["mp4", "mov", "avi", "webm"] else "image"
-    media = Media(filename=filename, type=media_type)
-    
-    db.session.add(media)
-    db.session.commit()
-
-    return jsonify({"message": "Upload thành công"})
-
+# 4. API Xóa Media
 @auth.route("/api/media/<int:id>", methods=["DELETE"])
 @login_required
 def delete_media(id):
     media = Media.query.get_or_404(id)
     
-    # Xóa file vật lý (nếu không phải link online)
+    # Xóa file vật lý nếu không phải link online
     if not media.filename.startswith("http"):
         try:
             os.remove(os.path.join(UPLOAD_FOLDER, media.filename))
         except:
-            pass # Bỏ qua nếu file không tồn tại
+            pass # File không tồn tại thì bỏ qua
             
     db.session.delete(media)
     db.session.commit()
     return jsonify({"message": "Đã xóa media"})
+
+# 5. Route phục vụ file ảnh (Quan trọng để hiển thị)
+@auth.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+
+# =================================================
+# API KHÁC (COMMENTS, CAMPAIGNS)
+# =================================================
+@auth.route("/comments/<int:id>/approve", methods=["PUT"])
+@login_required
+def approve_comment(id):
+    c = Comment.query.get_or_404(id); c.status = "approved"; db.session.commit()
+    return jsonify({"message": "Đã duyệt"})
+
+@auth.route("/comments/<int:id>/reject", methods=["PUT"])
+@login_required
+def reject_comment(id):
+    c = Comment.query.get_or_404(id); c.status = "rejected"; db.session.commit()
+    return jsonify({"message": "Đã từ chối"})
+
+@auth.route("/comments/<int:id>/delete", methods=["PUT"])
+@login_required
+def delete_comment(id):
+    c = Comment.query.get_or_404(id); c.status = "deleted"; db.session.commit()
+    return jsonify({"message": "Đã xóa"})
+
+@auth.route("/campaigns", methods=["POST"])
+@login_required
+def create_campaign():
+    data = request.json; camp = Campaign(name=data["name"]); db.session.add(camp); db.session.commit()
+    return jsonify({"message": "Đã tạo"})
+
+@auth.route("/campaigns/<int:id>/pause", methods=["PUT"])
+@login_required
+def pause_campaign(id):
+    camp = Campaign.query.get_or_404(id); camp.status = "paused"; db.session.commit()
+    return jsonify({"message": "Đã tạm dừng"})
+
+@auth.route("/campaigns/<int:id>/delete", methods=["PUT"])
+@login_required
+def delete_campaign(id):
+    camp = Campaign.query.get_or_404(id); camp.status = "deleted"; db.session.commit()
+    return jsonify({"message": "Đã xóa"})
