@@ -793,7 +793,12 @@
 <div class="form-card">
   <label>Ảnh đại diện</label>
 
-  <input type="file" id="post-image" accept="image/*" hidden />
+  <input
+    type="file"
+    id="thumbnailInput"
+    accept="image/*"
+    hidden
+  />
 
   <div class="image-uploader-box" id="imageUploader">
     <div class="image-placeholder" id="imagePlaceholder">
@@ -956,7 +961,7 @@ function publishPost() {
 }
 </script>
 <script>
-const input = document.getElementById("post-image");
+const input = document.getElementById("thumbnailInput");
 const preview = document.getElementById("imagePreview");
 const placeholder = document.getElementById("imagePlaceholder");
 const previewWrapper = document.getElementById("previewWrapper");
