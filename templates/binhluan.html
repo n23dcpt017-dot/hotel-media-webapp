@@ -865,43 +865,43 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="comment-stats-grid">
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-blue">
-                <i class="fa-solid fa-comments"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>6</strong>
-                <span>Tổng bình luận</span>
-              </div>
-            </div>
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-purple">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>3</strong>
-                <span>Chờ duyệt</span>
-              </div>
-            </div>
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-green">
-                <i class="fa-solid fa-check"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>2</strong>
-                <span>Đã duyệt</span>
-              </div>
-            </div>
-            <div class="comment-stat-card light">
-              <div class="comment-stat-icon icon-red">
-                <i class="fa-solid fa-ban"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>1</strong>
-                <span>Từ chối</span>
-              </div>
-            </div>
-          </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-blue">
+        <i class="fa-solid fa-comments"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-total">0</strong> 
+        <span>Tổng bình luận</span>
+      </div>
+    </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-purple">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-pending">0</strong>
+        <span>Chờ duyệt</span>
+      </div>
+    </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-green">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-approved">0</strong>
+        <span>Đã duyệt</span>
+      </div>
+    </div>
+    <div class="comment-stat-card light">
+      <div class="comment-stat-icon icon-red">
+        <i class="fa-solid fa-ban"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-rejected">0</strong>
+        <span>Từ chối</span>
+      </div>
+    </div>
+  </div>
 
           <div class="filter-bar-container">
             <div class="page-search-bar">
@@ -944,7 +944,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return 'tag-website';
     };
 
-    // Hàm ánh xạ class trạng thái
+   
     const getStatusClass = (status) => {
         if(status === 'approved') return 'status-approved';
         if(status === 'rejected') return 'status-rejected';
@@ -957,23 +957,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return 'Chờ duyệt';
     };
 
-    // TẢI BÌNH LUẬN
+  
     async function loadComments(statusFilter = 'all') {
         const container = document.getElementById("commentList");
         
         try {
-            // Gọi API
+            
             const res = await fetch(`/auth/api/comments?status=${statusFilter}`);
             const comments = await res.json();
 
-            container.innerHTML = ""; // Xóa loading
+            container.innerHTML = ""; 
 
             if(comments.length === 0) {
                 container.innerHTML = `<p style="text-align:center; margin-top:20px;">Không có bình luận nào.</p>`;
                 return;
             }
 
-            // Render từng comment
+            
             comments.forEach(c => {
                 const html = `
                 <div class="comment-card" id="comment-${c.id}">
@@ -1018,7 +1018,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.insertAdjacentHTML('beforeend', html);
             });
 
-            // Cập nhật số liệu thống kê (nếu cần thiết, có thể gọi thêm API stats)
+           
             
         } catch (err) {
             console.error(err);
@@ -1026,14 +1026,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // XỬ LÝ DUYỆT / TỪ CHỐI
+    
     async function updateStatus(id, action) {
-        // action = 'approve' hoặc 'reject'
+        
         try {
             const res = await fetch(`/auth/api/comments/${id}/${action}`, { method: 'PUT' });
             if(res.ok) {
-                // Load lại danh sách để cập nhật giao diện
-                // Hoặc update DOM trực tiếp để đỡ lag
+                
                 alert(action === 'approve' ? "Đã duyệt!" : "Đã từ chối!");
                 loadComments(getCurrentTab()); 
             } else {
@@ -1044,14 +1043,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // XỬ LÝ XÓA
+    
     async function deleteComment(id) {
         if(!confirm("Bạn chắc chắn muốn xóa vĩnh viễn bình luận này?")) return;
         
         try {
             const res = await fetch(`/auth/api/comments/${id}/delete`, { method: 'DELETE' });
             if(res.ok) {
-                // Xóa DOM
+                
                 document.getElementById(`comment-${id}`).remove();
             } else {
                 alert("Lỗi khi xóa");
@@ -1066,14 +1065,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if(window.location.href.includes('binhluanchoduyet')) return 'pending';
         if(window.location.href.includes('binhluandaduyet')) return 'approved';
         if(window.location.href.includes('binhluantuchoi')) return 'rejected';
-        return 'all'; // Mặc định trang binhluan.html là tất cả
+        return 'all'; 
     }
 
-    // Chạy khi tải trang
+    
     document.addEventListener("DOMContentLoaded", () => {
         loadComments(getCurrentTab());
         
-        // Popup thông báo
+        
         const bell = document.querySelector(".notification-btn");
         const popup = document.getElementById("notificationPopup");
         bell.addEventListener("click", (e) => {
@@ -1082,6 +1081,66 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.addEventListener("click", () => popup.style.display = "none");
     });
+
+  async function loadStats() {
+        try {
+            const res = await fetch('/auth/api/comments/stats');
+            const data = await res.json();
+            
+            
+            if(document.getElementById('stat-total')) 
+                document.getElementById('stat-total').innerText = data.total;
+            
+            if(document.getElementById('stat-pending')) 
+                document.getElementById('stat-pending').innerText = data.pending;
+            
+            if(document.getElementById('stat-approved')) 
+                document.getElementById('stat-approved').innerText = data.approved;
+            
+            if(document.getElementById('stat-rejected')) 
+                document.getElementById('stat-rejected').innerText = data.rejected;
+
+        } catch (err) {
+            console.error("Lỗi tải thống kê:", err);
+        }
+    }
+
+    
+    async function updateStatus(id, action) {
+        try {
+            const res = await fetch(`/auth/api/comments/${id}/${action}`, { method: 'PUT' });
+            if(res.ok) {
+                alert(action === 'approve' ? "Đã duyệt!" : "Đã từ chối!");
+                loadComments(getCurrentTab()); 
+                loadStats(); 
+            } else {
+                alert("Lỗi khi cập nhật trạng thái");
+            }
+        } catch(err) {
+            alert("Lỗi kết nối server");
+        }
+    }
+    
+    
+    async function deleteComment(id) {
+        if(!confirm("Bạn chắc chắn muốn xóa vĩnh viễn bình luận này?")) return;
+        try {
+            const res = await fetch(`/auth/api/comments/${id}/delete`, { method: 'DELETE' });
+            if(res.ok) {
+                document.getElementById(`comment-${id}`).remove();
+                loadStats(); 
+            } else { alert("Lỗi khi xóa"); }
+        } catch(err) { alert("Lỗi hệ thống"); }
+    }
+
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        loadComments(getCurrentTab());
+        loadStats(); 
+        
+        
+    });
 </script>
   </body>
+  
 </html>
