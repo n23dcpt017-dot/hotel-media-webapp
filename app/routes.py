@@ -474,7 +474,7 @@ def hide_media(id):
     return jsonify({"message": "Đã ẩn media"})
         return jsonify({
             "error": "Sai định dạng ngày"
-        }), 400
+            }), 400
 from flask import (
     Blueprint, render_template, request,
     redirect, session, url_for, jsonify,
