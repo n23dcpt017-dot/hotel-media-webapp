@@ -534,3 +534,43 @@ def delete_user(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "Lỗi hệ thống: " + str(e)}), 500
+
+
+@auth.route("/suanguoidung.html")
+@login_required
+def page_sua_nguoidung():
+    return render_template("suanguoidung.html")
+
+
+@auth.route("/api/users/<int:id>", methods=["GET"])
+@login_required
+def get_user_detail(id):
+    user = User.query.get_or_404(id)
+    return jsonify({
+        "id": user.id,
+        "fullname": user.fullname,
+        "email": user.email,
+        "role": user.role,
+        # Trả về thông tin để vẽ avatar
+        "avatar_text": user.avatar_initials,
+        "avatar_bg": user.avatar_color
+    })
+
+
+@auth.route("/api/users/<int:id>", methods=["PUT"])
+@login_required
+def update_user(id):
+    user = User.query.get_or_404(id)
+    data = request.json
+
+   
+    if 'role' in data:
+        user.role = data['role']
+    
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "Cập nhật thành công"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
