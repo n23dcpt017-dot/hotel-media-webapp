@@ -932,6 +932,16 @@ function mapCategory(category) {
 
 </script>
 <script>
+function deletePost(id) {
+  if (!confirm("Xóa bài viết này?")) return;
+
+  fetch("/auth/api/posts/" + id, { method: "DELETE" })
+    .then(() => loadPosts());
+}
+
+function editPost(id) {
+  window.location.href = "/auth/suabaiviet.html?id=" + id;
+}
 loadPosts("published");
 </script>
 
