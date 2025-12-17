@@ -515,3 +515,22 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"message": "Thêm thành công"}), 201
+
+@auth.route("/api/users/<int:id>", methods=["DELETE"])
+@login_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+    
+    if user.role == 'admin':
+        return jsonify({"error": "Không được phép xóa tài khoản Quản trị viên (Admin)!"}), 403
+    
+    if user.id == current_user.id:
+        return jsonify({"error": "Bạn không thể tự xóa tài khoản của chính mình!"}), 400
+
+    try:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": "Đã xóa người dùng thành công"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Lỗi hệ thống: " + str(e)}), 500
