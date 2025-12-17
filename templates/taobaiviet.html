@@ -992,6 +992,10 @@ function closeCrop() {
 }
 
 async function confirmCrop() {
+  if (!cropper) {
+    alert("Chưa chọn ảnh để crop");
+    return;
+  }
   const canvas = cropper.getCroppedCanvas({
     width: 1200,
     height: 675
@@ -1015,6 +1019,7 @@ async function confirmCrop() {
       placeholder.style.display = "none";
 
       closeCrop();
+      input.value = ""; 
     } else {
       alert("Upload thất bại");
     }
