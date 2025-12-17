@@ -4,24 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CMS - Tạo bài viết mới</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   </head>
   <style>
-    /* --- CSS CƠ BẢN --- */
+    /* ... CSS GIỮ NGUYÊN NHƯ CŨ ... */
     body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #333; }
-    
-    /* --- LAYOUT --- */
     .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
-    
-    /* Sidebar */
     .sidebar { background-color: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; }
     .sidebar-header { padding: 25px; border-bottom: 1px solid #f0f0f0; }
     .sidebar-header h3 { margin: 0 0 5px 0; font-size: 20px; }
@@ -40,8 +30,6 @@
     .user-profile i { font-size: 36px; color: #555; }
     .user-info strong { display: block; font-size: 15px; }
     .user-info span { font-size: 13px; color: #777; }
-
-    /* Main Content */
     .main-content { display: flex; flex-direction: column; height: 100vh; overflow-y: hidden; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #e0e0e0; flex-shrink: 0; }
     .top-bar .search-bar { position: relative; width: 300px; }
@@ -50,8 +38,6 @@
     .notification-btn { background: none; border: none; font-size: 20px; color: #555; cursor: pointer; position: relative; }
     .notification-dot { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; background-color: #dc3545; border-radius: 50%; border: 2px solid #fff; }
     .page-content { flex-grow: 1; padding: 30px; overflow-y: auto; }
-
-    /* Form Styles */
     .create-post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
     .page-title-group .back-link { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #555; text-decoration: none; margin-bottom: 10px; }
     .page-title-group .back-link:hover { color: #000; }
@@ -63,7 +49,6 @@
     .btn.btn-primary:hover { background-color: #3730a3; }
     .btn.btn-secondary { background-color: #e9ecef; color: #333; }
     .btn.btn-secondary:hover { background-color: #ddd; }
-
     .create-post-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; align-items: flex-start; }
     .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 25px; }
     .form-card { background-color: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid #e9ecef; }
@@ -76,37 +61,14 @@
     .input-group-with-icon i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 16px; }
     .input-group-with-icon input { padding-left: 45px; }
     .input-group-with-icon i.fa-calendar-days { left: auto; right: 15px; cursor: pointer; }
-
-    /* --- UPLOAD ẢNH (ĐÃ SỬA CSS NÚT X) --- */
-    .image-uploader-box {
-      border: 2px dashed #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; background: #fafafa;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;
-    }
+    .image-uploader-box { border: 2px dashed #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px; }
     .image-uploader-box:hover { border-color: #3b82f6; background: #f0f7ff; }
     .image-placeholder i { font-size: 32px; color: #9ca3af; margin-bottom: 8px; }
-    
     .preview-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
     .preview-image-container { position: relative; display: inline-block; max-width: 100%; }
     .image-preview { max-width: 100%; height: auto; max-height: 250px; object-fit: contain; border-radius: 8px; border: 1px solid #eee; }
-
-    /* Nút Xóa Ảnh (Màu đỏ, bỏ nền tròn) */
-    .remove-image-btn {
-      position: absolute;
-      top: -12px; right: -12px; /* Đẩy ra ngoài góc */
-      background: #fff; /* Nền trắng nhẹ để che viền dưới */
-      border-radius: 50%;
-      width: 24px; height: 24px;
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid #eee;
-      color: #dc3545; /* Màu đỏ */
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: 0.2s;
-    }
+    .remove-image-btn { position: absolute; top: -12px; right: -12px; background: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; color: #dc3545; font-size: 16px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; }
     .remove-image-btn:hover { transform: scale(1.1); background: #fee; }
-
-    /* Modal Crop */
     .crop-modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; justify-content: center; align-items: center; z-index: 99999; }
     .crop-modal-content { background: #ffffff; padding: 20px; border-radius: 14px; width: 720px; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; overflow: auto; }
     .crop-modal img { max-width: 100%; max-height: 60vh; object-fit: contain; }
@@ -114,16 +76,12 @@
     .crop-actions button { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
     .crop-actions button:first-child { background: #e5e7eb; }
     .crop-actions button:last-child { background: #4338ca; color: white; }
-
-    /* Popup thông báo */
     .notification-popup { position: absolute; top: 60px; right: 25px; width: 300px; background: #ffffff; border-radius: 12px; padding: 15px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); display: none; z-index: 9999; border: 1px solid #e4e4e4; }
-    /* ... css thông báo giữ nguyên ... */
     .notif-header h4 { margin: 0; font-size: 16px; font-weight: 700; }
     .notif-list { list-style: none; padding: 0; margin: 12px 0 0; }
     .notif-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eee; }
     .notif-item i { font-size: 18px; margin-top: 2px; }
     .notif-view-all { width: 100%; margin-top: 10px; padding: 8px 0; background: #4338ca; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
-
     @media (max-width: 992px) { .create-post-layout { grid-template-columns: 1fr; } }
     @media (max-width: 768px) { .sidebar { display: none; } .dashboard-layout { grid-template-columns: 1fr; } }
   </style>
@@ -243,7 +201,7 @@
                     <div class="form-card">
                         <label for="post-schedule">Ngày/giờ xuất bản</label>
                         <div class="input-group-with-icon">
-                            <input type="text" id="post-schedule" placeholder="mm/dd/yyyy">
+                            <input type="text" id="post-schedule" placeholder="dd/mm/yyyy">
                             <i class="fa-regular fa-calendar-days"></i>
                         </div>
                     </div>
@@ -289,7 +247,6 @@
     reader.readAsDataURL(file);
   });
 
-  // Xóa ảnh (Reset về ban đầu)
   document.getElementById("removeImageBtn").addEventListener("click", (e) => {
       e.stopPropagation();
       if(confirm("Xóa ảnh này?")) {
@@ -340,7 +297,7 @@
   document.getElementById("btnConfirmCrop").addEventListener("click", confirmCrop);
   document.getElementById("btnCloseCrop").addEventListener("click", closeCrop);
 
-  // --- 3. LOGIC GỬI BÀI VIẾT (TỰ ĐỘNG THÊM NGÀY) ---
+  // --- 3. LOGIC GỬI BÀI VIẾT (TỰ ĐỘNG THÊM NGÀY CHUẨN VN) ---
   function mapStatus(uiStatus) {
     if (uiStatus === "da-xuat-ban") return "published";
     if (uiStatus === "len-lich") return "scheduled";
@@ -351,11 +308,14 @@
     let uiStatus = document.getElementById("post-status").value;
     let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
     
-    // --- TỰ ĐỘNG ĐIỀN NGÀY NẾU QUÊN ---
+    // --- TỰ ĐỘNG ĐIỀN NGÀY CHUẨN DD/MM/YYYY ---
     let publishDate = document.getElementById("post-schedule").value;
     if (finalStatus === 'published' && !publishDate) {
         const now = new Date();
-        publishDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        publishDate = `${day}/${month}/${year}`; // Kết quả: 17/12/2025
     }
 
     return {
@@ -363,7 +323,7 @@
       content: document.getElementById("post-content").value,
       category: document.getElementById("post-category").value,
       status: finalStatus,
-      publish_at: publishDate || null, // Gửi ngày đã tự động điền
+      publish_at: publishDate || null, 
       image: thumbnailUrl || undefined,
       seo: {
         title: document.getElementById("meta-title").value,
@@ -377,8 +337,11 @@
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-    .then(res => { if (!res.ok) throw new Error("Lỗi server"); return res.json(); })
-    .then(() => { window.location.href = "/auth/quanlybaiviet.html"; }) // Quay về danh sách
+    .then(res => { 
+        if (!res.ok) return res.json().then(err => { throw new Error(err.error || "Lỗi server") });
+        return res.json(); 
+    })
+    .then(() => { window.location.href = "/auth/quanlybaiviet.html"; }) 
     .catch(err => alert(actionName + " thất bại: " + err.message));
   }
 
