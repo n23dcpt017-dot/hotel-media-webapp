@@ -982,6 +982,50 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const grid = document.querySelector(".media-grid");
+
+  const res = await fetch("/auth/api/media?type=image");
+  const data = await res.json();
+
+  grid.innerHTML = "";
+
+  data.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "media-card";
+
+    if (m.file_type === "video") {
+      card.innerHTML = `
+        <div class="media-preview video-preview">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <div class="media-info">
+          <strong>${m.filename}</strong>
+          <div class="media-details">
+            <span>${m.created_at}</span>
+          </div>
+          <span class="media-tag tag-video">Video</span>
+        </div>
+      `;
+      card.dataset.video = m.url;
+    } else {
+      card.innerHTML = `
+        <img src="${m.url}" class="media-preview"/>
+        <div class="media-info">
+          <strong>${m.filename}</strong>
+          <div class="media-details">
+            <span>${m.created_at}</span>
+          </div>
+          <span class="media-tag tag-image">Ảnh</span>
+        </div>
+      `;
+    }
+
+    grid.appendChild(card);
+  });
+});
+</script>
 
   </body>
 </html>
