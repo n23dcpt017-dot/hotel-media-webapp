@@ -37,9 +37,9 @@ class Campaign(db.Model):
             "clicks": "{:,}".format(self.clicks),
             "conversions": "{:,}".format(self.conversions),
             # Format ngày: 20/11/2025
-            "start_date": self.start_date.strftime("%d/%m/%Y") if self.start_date else "",
-            "end_date": self.end_date.strftime("%d/%m/%Y") if self.end_date else "",
+            "start_date_display": self.start_date.strftime("%d/%m/%Y") if self.start_date else "",
+            "end_date_display": self.end_date.strftime("%d/%m/%Y") if self.end_date else "",
             # Raw data cho form sửa
-            "raw_start_date": self.start_date.strftime("%Y-%m-%d") if self.start_date else "",
-            "raw_end_date": self.end_date.strftime("%Y-%m-%d") if self.end_date else ""
+            "start_date": self.start_date.strftime("%Y-%m-%d") if self.start_date else "",
+            "end_date": self.end_date.strftime("%Y-%m-%d") if self.end_date else ""
         }
