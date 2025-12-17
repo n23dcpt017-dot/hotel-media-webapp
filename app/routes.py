@@ -274,9 +274,9 @@ if data.get("publish_at"):
             "%d/%m/%Y"
         )
     except ValueError:
-        return jsonify({
-            "error": "Ngày phải theo định dạng dd/mm/yyyy"
-        }), 400
+            return jsonify({
+                "error": "Ngày phải theo định dạng dd/mm/yyyy"
+            }), 400
 
 
     post = Post(
