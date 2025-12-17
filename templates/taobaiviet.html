@@ -1032,10 +1032,17 @@ document.getElementById("post-image").click();
     <img id="cropImage" />
 
     <div class="crop-actions">
-      <button type="button" onclick="closeCrop()">Hủy</button>
-      <button type="button" onclick="confirmCrop()">Xác nhận</button>
+      <button type="button" id="btnCloseCrop">Hủy</button>
+      <button type="button" id="btnConfirmCrop">Xác nhận</button>
     </div>
   </div>
 </div>
+<script>
+  document.getElementById("btnConfirmCrop")
+  .addEventListener("click", confirmCrop);
+
+document.getElementById("btnCloseCrop")
+  .addEventListener("click", closeCrop);
+</script>
   </body>
 </html>
