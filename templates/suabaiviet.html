@@ -918,6 +918,39 @@ async function loadPost() {
 
 loadPost();
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get("id");
+
+  if (!postId) {
+    alert("Không tìm thấy ID bài viết");
+    return;
+  }
+
+  try {
+    const res = await fetch(`/auth/api/posts/${postId}`);
+    if (!res.ok) throw new Error("Not found");
+
+    const post = await res.json();
+
+    // GÁN DỮ LIỆU VÀO FORM (KHÔNG ĐỔI UI)
+    document.getElementById("post-title").value = post.title || "";
+    document.getElementById("post-content").value = post.content || "";
+    document.getElementById("post-category").value = post.category || "phong";
+    document.getElementById("post-status").value = post.status || "draft";
+    document.getElementById("post-schedule").value = post.publish_at || "";
+
+    if (post.image) {
+      document.getElementById("thumbnailPreview").src = post.image;
+      document.getElementById("thumbnailPreview").style.display = "block";
+    }
+
+  } catch (e) {
+    alert("Bài viết không tồn tại hoặc đã bị xóa");
+  }
+});
+</script>
 
   </body>
 </html>
