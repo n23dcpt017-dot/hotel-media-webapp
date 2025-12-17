@@ -987,7 +987,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.querySelector(".media-grid");
 
   const res = await fetch("/auth/api/media?type=image");
-  const data = await res.json();
+  const data = (await res.json()).filter(m => m.type === "image");
 
   grid.innerHTML = "";
 
