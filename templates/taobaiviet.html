@@ -541,9 +541,7 @@
   max-height: 150px;
   overflow: hidden;
 }
-previewWrapper.style.display = "block";
 
-}
 
 .remove-image-btn {
   position: absolute;
@@ -560,12 +558,15 @@ previewWrapper.style.display = "block";
 
 .cropper-container {
   max-width: 100% !important;
-  max-height: 200px !important;
+  max-height: 60vh !important;
 }
 .crop-modal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.6);
+  max-width: 90vw;        
+  max-height: 85vh;       
+  width: 720px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -573,24 +574,28 @@ previewWrapper.style.display = "block";
 }
 
 .crop-modal-content {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  max-width: 700px;
-  width: 90%;
-}
-
-.crop-modal img {
-  max-width: 100%;
-}
-.crop-modal-content {
   background: #ffffff;
   padding: 20px;
   border-radius: 14px;
-  max-width: 720px;
-  width: 90%;
+
+  width: 720px;
+  max-width: 90vw;      
+  max-height: 85vh;     
+
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
+
+
+.crop-modal img {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
 
 .crop-actions {
   display: flex;
