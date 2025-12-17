@@ -769,16 +769,6 @@
     </div>
   </div>
 </div>
-
-
-<input type="file" id="post-image" accept="image/*" hidden />
-
-    <img
-      id="imagePreview"
-      class="image-preview"
-      style="display:none"
-      alt="Ảnh đại diện"
-    />
   </div>
 </div>
 
@@ -880,12 +870,12 @@ function collectPostData(forceStatus = null) {
 
     status: forceStatus
       ? forceStatus
-      : document.getElementById("post-status").value, 
+      : mapStatus(document.getElementById("post-status").value), 
     
 
     publish_at: document.getElementById("post-schedule").value || null,
 
-    image: thumbnailUrl,   
+    image: thumbnailUrl || undefined,   
 
     seo: {
       title: document.getElementById("meta-title").value,
@@ -996,9 +986,11 @@ async function confirmCrop() {
     }
   }, "image/jpeg");
 }
-
-  
-<div id="cropModal" class="crop-modal" style="display:none">
+document.getElementById("imageUploader").addEventListener("click", () => {
+  document.getElementById("post-image").click();
+});
+</script>
+  <div id="cropModal" class="crop-modal" style="display:none">
   <div class="crop-modal-content">
     <img id="cropImage" />
 
@@ -1008,6 +1000,5 @@ async function confirmCrop() {
     </div>
   </div>
 </div>
-</script>
   </body>
 </html>
