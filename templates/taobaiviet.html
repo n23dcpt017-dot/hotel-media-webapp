@@ -566,6 +566,27 @@
   max-width: 100% !important;
   max-height: 200px !important;
 }
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.crop-modal-content {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+}
+
+.crop-modal img {
+  max-width: 100%;
+}
 
   </style>
   <body>
@@ -908,65 +929,45 @@ function publishPost() {
 }
 </script>
 <script>
-let thumbnailUrl = null;
 let cropper = null;
+let thumbnailUrl = null;
 
-const uploader = document.getElementById("imageUploader");
 const input = document.getElementById("post-image");
 const preview = document.getElementById("imagePreview");
 const placeholder = document.getElementById("imagePlaceholder");
 const previewWrapper = document.getElementById("previewWrapper");
-const removeBtn = document.getElementById("removeImageBtn");
 
-// Click chọn ảnh
-uploader.addEventListener("click", () => input.click());
-
-// Chọn file
 input.addEventListener("change", () => {
   const file = input.files[0];
-  if (file) loadImageForCrop(file);
-});
+  if (!file) return;
 
-// Xoá ảnh
-removeBtn.addEventListener("click", () => {
-  preview.src = "";
-  previewWrapper.style.display = "none";
-  placeholder.style.display = "block";
-  thumbnailUrl = null;
-
-  if (cropper) {
-    cropper.destroy();
-    cropper = null;
-  }
-});
-
-// Load ảnh để crop
-function loadImageForCrop(file) {
   const reader = new FileReader();
   reader.onload = e => {
-    preview.src = e.target.result;
-    previewWrapper.style.display = "block";
-    placeholder.style.display = "none";
-
-    if (cropper) cropper.destroy();
-
-    cropper = new Cropper(preview, {
-      aspectRatio: 16 / 9,
-      viewMode: 1,
-      autoCropArea: 1,
-      movable: true,
-      zoomable: true,
-      scalable: false,
-      cropend: uploadCroppedImage
-    });
+    openCrop(e.target.result);
   };
   reader.readAsDataURL(file);
+});
+
+function openCrop(src) {
+  const modal = document.getElementById("cropModal");
+  const img = document.getElementById("cropImage");
+
+  modal.style.display = "flex";
+  img.src = src;
+
+  if (cropper) cropper.destroy();
+  cropper = new Cropper(img, {
+    aspectRatio: 16 / 9,
+    viewMode: 1
+  });
 }
 
-// Upload ảnh sau khi crop
-async function uploadCroppedImage() {
-  if (!cropper) return;
+function closeCrop() {
+  document.getElementById("cropModal").style.display = "none";
+  if (cropper) cropper.destroy();
+}
 
+async function confirmCrop() {
   const canvas = cropper.getCroppedCanvas({
     width: 1200,
     height: 675
@@ -984,15 +985,29 @@ async function uploadCroppedImage() {
     const data = await res.json();
     if (data.url) {
       thumbnailUrl = data.url;
+
+      preview.src = data.url;
+      previewWrapper.style.display = "block";
+      placeholder.style.display = "none";
+
+      closeCrop();
     } else {
-      alert("Upload ảnh thất bại");
+      alert("Upload thất bại");
     }
   }, "image/jpeg");
 }
 
+  
+<div id="cropModal" class="crop-modal" style="display:none">
+  <div class="crop-modal-content">
+    <img id="cropImage" />
 
-
+    <div class="crop-actions">
+      <button type="button" onclick="closeCrop()">Hủy</button>
+      <button type="button" onclick="confirmCrop()">Xác nhận</button>
+    </div>
+  </div>
+</div>
 </script>
-
   </body>
 </html>
