@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>CMS - Cập nhật người dùng</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+    /* Kế thừa CSS cũ */
+    body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, system-ui, sans-serif; background: #f0f2f5; color: #333; }
+    .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+    
+    /* Sidebar & Main */
+    .sidebar { background: #fff; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; }
+    .sidebar-header { padding: 25px; border-bottom: 1px solid #f0f0f0; }
+    .sidebar-nav { flex: 1; padding: 20px; }
+    .sidebar-nav ul { list-style: none; padding: 0; }
+    .sidebar-nav a { display: flex; align-items: center; padding: 12px; color: #555; text-decoration: none; border-radius: 8px; margin-bottom: 5px; }
+    .sidebar-nav a:hover { background: #f4f4f4; }
+    .sidebar-nav a.active { background: #e8f0fe; color: #0d6efd; }
+    .main-content { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .page-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; justify-content: center; }
+
+    /* FORM CARD STYLE */
+    .edit-card {
+        background: white;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        padding: 40px;
+        height: fit-content;
+    }
+
+    /* Avatar Section */
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    .big-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 15px;
+        background-color: #e0e7ff;
+    }
+    .profile-name { font-size: 20px; font-weight: 700; margin: 0; }
+    .profile-email { color: #666; font-size: 14px; margin: 5px 0 0; }
+
+    /* Form Fields */
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+    .form-input, .form-select {
+        width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+        font-size: 14px; box-sizing: border-box;
+    }
+    
+    /* Readonly style */
+    .form-input:disabled {
+        background-color: #f9fafb;
+        color: #888;
+        cursor: not-allowed;
+        border-color: #eee;
+    }
+
+    .btn-save {
+        width: 100%; padding: 12px; background: #4338ca; color: white;
+        border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px;
+    }
+    .btn-save:hover { background: #3730a3; }
+    .btn-back {
+        display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 14px;
+    }
+</style>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header"><h3>3CC Hotel CMS</h3></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/auth/nguoidung.html" class="active"><i class="fa-solid fa-users"></i>&nbsp; Người dùng</a></li>
+                    <li><a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Đăng xuất</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <main class="page-content">
+                <div class="edit-card">
+                    <div id="loading" style="text-align: center;">Đang tải thông tin...</div>
+                    
+                    <div id="editForm" style="display: none;">
+                        <div class="profile-header">
+                            <div class="big-avatar" id="avatarBox">US</div>
+                            <h2 class="profile-name" id="displayFullname">...</h2>
+                            <p class="profile-email" id="displayEmail">...</p>
+                        </div>
+
+                        <form id="updateForm">
+                            <div class="form-group">
+                                <label class="form-label">Họ và tên (Không thể sửa)</label>
+                                <input type="text" class="form-input" id="fullname" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email (Không thể sửa)</label>
+                                <input type="email" class="form-input" id="email" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Vai trò hệ thống</label>
+                                <select class="form-select" id="role">
+                                    <option value="viewer">Viewer (Người xem)</option>
+                                    <option value="editor">Editor (Biên tập viên)</option>
+                                    <option value="admin">Admin (Quản trị viên)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-save">Lưu thay đổi</button>
+                            <a href="/auth/nguoidung.html" class="btn-back">Quay lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL (ví dụ: suanguoidung.html?id=12)
+        const params = new URLSearchParams(window.location.search);
+        const userId = params.get('id');
+
+        if (!userId) {
+            alert("Không tìm thấy ID người dùng!");
+            window.location.href = "/auth/nguoidung.html";
+        }
+
+        // 1. Tải thông tin User
+        async function fetchUser() {
+            try {
+                const res = await fetch(`/auth/api/users/${userId}`);
+                if (!res.ok) throw new Error("Lỗi tải dữ liệu");
+                
+                const user = await res.json();
+                
+                // Điền dữ liệu vào giao diện
+                document.getElementById('displayFullname').innerText = user.fullname;
+                document.getElementById('displayEmail').innerText = user.email;
+                document.getElementById('avatarBox').innerText = user.avatar_text;
+                document.getElementById('avatarBox').style.backgroundColor = user.avatar_bg;
+
+                // Điền vào input
+                document.getElementById('fullname').value = user.fullname;
+                document.getElementById('email').value = user.email;
+                document.getElementById('role').value = user.role;
+
+                // Hiển thị form
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('editForm').style.display = 'block';
+
+            } catch (err) {
+                alert("Không thể tải thông tin user này.");
+                window.location.href = "/auth/nguoidung.html";
+            }
+        }
+
+        // 2. Xử lý lưu (Update)
+        document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-save');
+            btn.innerText = "Đang lưu...";
+            btn.disabled = true;
+
+            const newRole = document.getElementById('role').value;
+
+            try {
+                const res = await fetch(`/auth/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: newRole }) // Chỉ gửi role
+                });
+
+                if (res.ok) {
+                    alert("Cập nhật vai trò thành công!");
+                    window.location.href = "/auth/nguoidung.html";
+                } else {
+                    alert("Có lỗi xảy ra khi lưu.");
+                }
+            } catch (err) {
+                alert("Lỗi kết nối.");
+            } finally {
+                btn.innerText = "Lưu thay đổi";
+                btn.disabled = false;
+            }
+        });
+
+        // Chạy ngay khi load
+        fetchUser();
+    </script>
+</body>
+</html>
