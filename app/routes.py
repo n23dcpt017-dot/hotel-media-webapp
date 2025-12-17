@@ -466,3 +466,48 @@ def pause_campaign(id):
 def delete_campaign(id):
     camp = Campaign.query.get_or_404(id); camp.status = "deleted"; db.session.commit()
     return jsonify({"message": "Đã xóa"})
+
+@auth.route("/api/users", methods=["GET"])
+@login_required
+def list_users():
+    # Lấy toàn bộ user, sắp xếp mới nhất
+    users = User.query.order_by(User.id.desc()).all()
+    
+    results = []
+    for u in users:
+        # Đếm số bài viết thật
+        post_count = 0 
+        # Nếu model Post có liên kết user thì dùng: u.posts.count()
+        
+        results.append({
+            "id": u.id,
+            "fullname": u.fullname or u.username,
+            "email": u.email,
+            "role": u.role,
+            "is_active": u.is_active,
+            "post_count": post_count,
+            "last_login": u.last_login.strftime("%d/%m/%Y %H:%M") if u.last_login else "Chưa đăng nhập",
+            # Gửi kèm thông tin avatar tự động để Frontend vẽ
+            "avatar_text": u.avatar_initials,
+            "avatar_bg": u.avatar_color
+        })
+        
+    return jsonify(results)
+
+@auth.route("/api/users", methods=["POST"])
+@login_required
+def create_user():
+    data = request.json
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({"error": "Email đã tồn tại"}), 400
+        
+    new_user = User(
+        fullname=data['fullname'],
+        email=data['email'],
+        username=data['email'].split('@')[0],
+        role=data['role']
+    )
+    new_user.set_password(data['password'])
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "Thêm thành công"}), 201
