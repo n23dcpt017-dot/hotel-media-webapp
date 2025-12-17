@@ -1,14 +1,18 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import datetime
+import os
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-
+# ========================
+# 1. Hàm tạo User mẫu
+# ========================
 def seed_selenium_user():
     from app.models.user import User
+    # Kiểm tra xem user có tồn tại chưa để tránh tạo trùng
     if User.query.first():
         return
     
@@ -22,10 +26,11 @@ def seed_selenium_user():
     db.session.add(admin)
     db.session.commit()
 
-
+# ========================
+# 2. Hàm tạo Bài viết mẫu
+# ========================
 def seed_sample_posts():
     from app.models.post import Post
-    
     
     if Post.query.first():
         return
@@ -76,11 +81,21 @@ def seed_sample_posts():
     db.session.add_all(samples)
     db.session.commit()
 
+# ========================
+# 3. Application Factory (Hàm chính)
+# ========================
 def create_app(config_name=None):
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
+    # --- Cấu hình App ---
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Cấu hình đường dẫn upload (tự động lấy đường dẫn hiện tại + uploads)
+    app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
+    
+    # Tự động tạo thư mục uploads nếu chưa có
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     if config_name == 'testing':
         app.config['TESTING'] = True
@@ -88,38 +103,33 @@ def create_app(config_name=None):
     else:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
 
+    # --- Khởi tạo Extensions ---
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
 
-    
+    # --- User Loader cho Flask-Login ---
     @login_manager.user_loader
     def load_user(user_id):
         from app.models.user import User
         return User.query.get(int(user_id))
         
-   
-from flask import send_from_directory
-import os
+    # --- Route xử lý file Upload (QUAN TRỌNG: Phải nằm trong create_app) ---
+    @app.route("/uploads/<path:filename>")
+    def uploaded_file(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
-
-@app.route("/uploads/<path:filename>")
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-    
+    # --- Đăng ký Blueprint ---
     from app.routes import auth
     app.register_blueprint(auth, url_prefix='/auth')
 
-    
+    # --- Khởi tạo Database và Dữ liệu mẫu ---
     with app.app_context():
-        
         from app.models.user import User
         from app.models.post import Post
-        
         
         db.create_all()         
         seed_sample_posts()     
         seed_selenium_user()    
         
-    return app  
+    return app
