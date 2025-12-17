@@ -737,7 +737,8 @@
       </div>
     </div>
     <script>
-
+let postId = null;
+let thumbnailUrl = null;
 </script>
 <script>
   const bell = document.querySelector(".notification-btn");
@@ -808,12 +809,20 @@ async function updatePost() {
   statusInput.value = post.status || "nhap";
 
   // --- XỬ LÝ HIỂN THỊ ẢNH CŨ ---
-  if (post.image) {
-    uploadContent.style.display = "none";   // Ẩn phần chữ
-    imagePreview.src = post.image;          // Gán đường dẫn ảnh
-    imagePreview.style.display = "block";   // Hiện ảnh
-  }
+ if (post.image) {
+      thumbnailUrl = post.image;
 
+      const preview = document.getElementById("thumbnailPreview");
+      preview.src = post.image;
+      preview.style.display = "block";
+
+      document.getElementById("uploadPlaceholder").style.display = "none";
+    }
+
+  } catch {
+    alert("Bài viết không tồn tại hoặc đã bị xóa");
+  }
+});
   // ===== 5. Xử lý khi bấm chọn ảnh mới =====
   
   // Khi bấm vào box -> kích hoạt input file
@@ -981,6 +990,35 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Cập nhật thất bại");
     }
   });
+});
+</script>
+<script>
+document.querySelector(".btn.btn-primary").addEventListener("click", async () => {
+  if (!postId) {
+    alert("Thiếu ID bài viết");
+    return;
+  }
+
+  const data = {
+    title: document.getElementById("post-title").value,
+    content: document.getElementById("post-content").value,
+    category: document.getElementById("post-category").value,
+    status: document.getElementById("post-status").value,
+    publish_at: document.getElementById("post-schedule").value || null,
+    image: thumbnailUrl
+  };
+
+  const res = await fetch(`/auth/api/posts/${postId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    window.location.href = "/auth/quanlybaiviet.html";
+  } else {
+    alert("Cập nhật thất bại");
+  }
 });
 </script>
 
