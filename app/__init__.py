@@ -6,14 +6,6 @@ from datetime import datetime
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-from flask import send_from_directory
-import os
-
-UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
-
-@app.route("/uploads/<path:filename>")
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
 
 def seed_selenium_user():
     from app.models.user import User
@@ -106,11 +98,15 @@ def create_app(config_name=None):
         from app.models.user import User
         return User.query.get(int(user_id))
         
-    from flask import send_from_directory
-    @app.route("/uploads/<path:filename>")
-    def uploads(filename):
-        return send_from_directory("uploads", filename)
+   
+from flask import send_from_directory
+import os
 
+UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+
+@app.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
     
     from app.routes import auth
     app.register_blueprint(auth, url_prefix='/auth')
