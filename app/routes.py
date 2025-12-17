@@ -230,7 +230,10 @@ def quanlybaiviet_daxuatban(): return render_template("quanlybaivietdaxuatban.ht
 @login_required
 def quanlybaiviet_nhap(): return render_template("quanlybaivietnhap.html")
 
-
+@auth.route("/themnguoidung.html")
+@login_required
+def page_them_nguoidung():
+    return render_template("themnguoidung.html")
 # =================================================
 # API BÀI VIẾT (POSTS)
 # =================================================
