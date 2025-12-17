@@ -252,6 +252,8 @@ def create_post():
         publish_at=publish_at,
         image=data.get("image") or "/static/images/phong1.png",
         author=current_user.username
+        author=current_user.fullname or current_user.username, 
+        author_user=current_user
     )
     db.session.add(post)
     db.session.commit()
