@@ -434,23 +434,71 @@ def delete_media(id):
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-@auth.route("/campaigns", methods=["POST"])
-@login_required
-def create_campaign():
-    data = request.json; camp = Campaign(name=data["name"]); db.session.add(camp); db.session.commit()
-    return jsonify({"message": "Đã tạo"})
+# --- Thêm vào routes.py ---
+from app.models.campaign import Campaign
 
-@auth.route("/campaigns/<int:id>/pause", methods=["PUT"])
+# 1. Lấy danh sách + Lọc status
+@auth.route("/api/campaigns", methods=["GET"])
 @login_required
-def pause_campaign(id):
-    camp = Campaign.query.get_or_404(id); camp.status = "paused"; db.session.commit()
-    return jsonify({"message": "Đã tạm dừng"})
+def list_campaigns():
+    status = request.args.get("status")
+    query = Campaign.query
+    
+    if status and status != 'all':
+        query = query.filter_by(status=status)
+        
+    # Sắp xếp active lên đầu, sau đó mới nhất
+    campaigns = query.order_by(Campaign.status.asc(), Campaign.created_at.desc()).all()
+    return jsonify([c.to_dict() for c in campaigns])
 
-@auth.route("/campaigns/<int:id>/delete", methods=["PUT"])
+# 2. Thống kê số lượng
+@auth.route("/api/campaigns/stats", methods=["GET"])
+@login_required
+def get_campaign_stats():
+    return jsonify({
+        "total": Campaign.query.count(),
+        "active": Campaign.query.filter_by(status='active').count(),
+        "paused": Campaign.query.filter_by(status='paused').count(),
+        "scheduled": Campaign.query.filter_by(status='scheduled').count()
+    })
+
+# 3. Lấy chi tiết 1 chiến dịch (để hiện lên form sửa)
+@auth.route("/api/campaigns/<int:id>", methods=["GET"])
+@login_required
+def get_campaign_detail(id):
+    c = Campaign.query.get_or_404(id)
+    return jsonify(c.to_dict())
+
+# 4. Cập nhật (Sửa info hoặc Đổi trạng thái Pause/Resume)
+@auth.route("/api/campaigns/<int:id>", methods=["PUT"])
+@login_required
+def update_campaign(id):
+    c = Campaign.query.get_or_404(id)
+    data = request.json
+    
+    # Cập nhật trạng thái (nếu có gửi lên)
+    if 'status' in data:
+        c.status = data['status']
+        
+    # Cập nhật thông tin (nếu có gửi lên)
+    if 'budget' in data: c.budget = float(data['budget'])
+    if 'spent' in data: c.spent = float(data['spent'])
+    if 'start_date' in data: 
+        c.start_date = datetime.strptime(data['start_date'], "%Y-%m-%d")
+    if 'end_date' in data: 
+        c.end_date = datetime.strptime(data['end_date'], "%Y-%m-%d")
+
+    db.session.commit()
+    return jsonify({"message": "Cập nhật thành công"})
+
+# 5. Xóa chiến dịch
+@auth.route("/api/campaigns/<int:id>", methods=["DELETE"])
 @login_required
 def delete_campaign(id):
-    camp = Campaign.query.get_or_404(id); camp.status = "deleted"; db.session.commit()
-    return jsonify({"message": "Đã xóa"})
+    c = Campaign.query.get_or_404(id)
+    db.session.delete(c)
+    db.session.commit()
+    return jsonify({"message": "Đã xóa chiến dịch"})
 
 @auth.route("/api/users", methods=["GET"])
 @login_required
