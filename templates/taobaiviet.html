@@ -525,6 +525,7 @@
 }
 
 .image-preview {
+  max-width: 420px;
   width: 100%;
   max-height: 140px;
   object-fit: cover;
@@ -536,6 +537,9 @@
   overflow: hidden;      
 }
 .preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 100%;
   max-height: 150px;
@@ -1020,6 +1024,9 @@ async function confirmCrop() {
 }
 document.getElementById("imageUploader").addEventListener("click", () => {
   document.getElementById("post-image").click();
+  window.confirmCrop = confirmCrop;
+window.closeCrop = closeCrop;
+
 });
 </script>
   <div id="cropModal" class="crop-modal" style="display:none">
