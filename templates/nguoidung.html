@@ -245,47 +245,57 @@
 <script>
 let allUsers = [];
 
-// --- 1. CẤU HÌNH DỮ LIỆU GIẢ LẬP (FAKE DATA) ---
+// --- CẤU HÌNH DỮ LIỆU FAKE ---
 const FAKE_DATA = {
-  // Các mốc thời gian hiển thị ngẫu nhiên
-  dates: [
-    "Vừa xong", "5 phút trước", "15 phút trước", "30 phút trước", 
-    "1 giờ trước", "2 giờ trước", "Hôm qua", "2 ngày trước", "05/11/2025"
-  ],
-  // Giới hạn số bài viết (min - max)
+  dates: ["Vừa xong", "5 phút trước", "15 phút trước", "1 giờ trước", "Hôm qua", "2 ngày trước"],
   minPost: 0,
-  maxPost: 50
+  maxPost: 150
 };
-
-// Hàm tiện ích: Lấy ngẫu nhiên 1 phần tử trong mảng
 const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-// Hàm tiện ích: Lấy số nguyên ngẫu nhiên
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-// 1. Tải danh sách User từ API Thật
+// --- 1. TẢI USER ---
 async function loadUsers() {
     try {
         const res = await fetch("/auth/api/users");
         allUsers = await res.json();
-        
         updateStats();
         renderUsers(allUsers);
     } catch (err) {
         console.error(err);
-        document.getElementById("userTableBody").innerHTML = `<tr><td colspan="7" style="text-align:center;color:red">Lỗi tải dữ liệu. Hãy chắc chắn bạn đã chạy seed_users.py</td></tr>`;
+        document.getElementById("userTableBody").innerHTML = `<tr><td colspan="7" style="text-align:center;color:red">Lỗi kết nối API</td></tr>`;
     }
 }
 
-// 2. Cập nhật thống kê
-function updateStats() {
-    document.getElementById("total-users").innerText = allUsers.length;
-    document.getElementById("total-admin").innerText = allUsers.filter(u => u.role === 'admin').length;
-    document.getElementById("total-editor").innerText = allUsers.filter(u => u.role === 'editor').length;
-    document.getElementById("total-viewer").innerText = allUsers.filter(u => u.role === 'viewer').length;
+// --- 2. XÓA USER (MỚI) ---
+async function deleteUser(id) {
+    // Tìm user để lấy tên hiển thị confirm cho chắc
+    const user = allUsers.find(u => u.id === id);
+    if (!user) return;
+
+    // Confirm xác nhận
+    const confirmMsg = `Bạn có chắc chắn muốn xóa người dùng "${user.fullname}"?\nHành động này không thể hoàn tác.`;
+    if (!confirm(confirmMsg)) return;
+
+    try {
+        const res = await fetch(`/auth/api/users/${id}`, {
+            method: 'DELETE'
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("Đã xóa thành công!");
+            loadUsers(); // Tải lại bảng
+        } else {
+            // Hiển thị lỗi từ backend (Ví dụ: Không được xóa Admin)
+            alert("Lỗi: " + data.error);
+        }
+    } catch (err) {
+        alert("Lỗi hệ thống khi xóa user");
+    }
 }
 
-// 3. Render Bảng (Kết hợp Dữ liệu thật + Dữ liệu Fake)
+// --- 3. RENDER BẢNG ---
 function renderUsers(users) {
     const tbody = document.getElementById("userTableBody");
     tbody.innerHTML = "";
@@ -296,55 +306,37 @@ function renderUsers(users) {
     }
 
     users.forEach(u => {
-        // --- LOGIC DỮ LIỆU THẬT ---
-        // Xử lý Role thật
+        // Logic Role
         let roleClass = "role-viewer", roleName = "Người xem";
         if(u.role === 'admin') { roleClass = "role-admin"; roleName = "Quản trị viên"; }
         else if(u.role === 'editor') { roleClass = "role-editor"; roleName = "Biên tập viên"; }
 
-        // --- LOGIC DỮ LIỆU FAKE ---
-        
-        // 1. Fake số bài viết (Admin/Editor thì nhiều bài, Viewer thì ít hoặc 0)
-        let fakePostCount = 0;
-        if (u.role === 'admin' || u.role === 'editor') {
-            fakePostCount = getRandomInt(10, 200);
-        } else {
-            fakePostCount = getRandomInt(0, 5);
-        }
-
-        // 2. Fake Lần đăng nhập cuối
+        // Logic Fake Data
+        let fakePostCount = (u.role === 'admin' || u.role === 'editor') ? getRandomInt(10, 200) : getRandomInt(0, 5);
         const fakeLastLogin = getRandomItem(FAKE_DATA.dates);
-
-        // 3. Fake Trạng thái (Online/Offline) - Tỉ lệ 70% Online
         const isOnline = Math.random() < 0.7;
         const statusClass = isOnline ? "status-active" : "status-inactive";
         const statusText = isOnline ? "Đang hoạt động" : "Ngoại tuyến";
 
-
-        // --- KẾT HỢP VÀO HTML ---
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>
                 <div class="user-info">
-                    <div class="user-avatar" style="background-color: ${u.avatar_bg}">
-                        ${u.avatar_text}
-                    </div>
-                    <div>
-                        <span class="user-name">${u.fullname}</span>
-                    </div>
+                    <div class="user-avatar" style="background-color: ${u.avatar_bg}">${u.avatar_text}</div>
+                    <div><span class="user-name">${u.fullname}</span></div>
                 </div>
             </td>
             <td>${u.email}</td>
             <td><span class="role-tag ${roleClass}">${roleName}</span></td>
-            
             <td><span class="status-tag ${statusClass}">${statusText}</span></td>
             <td>${fakePostCount}</td>
             <td>${fakeLastLogin}</td>
-            
             <td>
                 <div class="action-buttons">
                     <button class="action-btn"><i class="fa-solid fa-pencil"></i></button>
-                    <button class="action-btn btn-delete"><i class="fa-solid fa-trash"></i></button>
+                    <button class="action-btn btn-delete" onclick="deleteUser(${u.id})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 </div>
             </td>
         `;
@@ -352,39 +344,37 @@ function renderUsers(users) {
     });
 }
 
-// 4. Lọc User
+// --- 4. UPDATE STATS & FILTER ---
+function updateStats() {
+    document.getElementById("total-users").innerText = allUsers.length;
+    document.getElementById("total-admin").innerText = allUsers.filter(u => u.role === 'admin').length;
+    document.getElementById("total-editor").innerText = allUsers.filter(u => u.role === 'editor').length;
+    document.getElementById("total-viewer").innerText = allUsers.filter(u => u.role === 'viewer').length;
+}
+
 function filterUsers(role) {
     document.querySelectorAll('.filter-tab').forEach(btn => {
         btn.classList.remove('active');
         if(btn.innerText.toLowerCase().includes(role) || (role==='all' && btn.innerText==='Tất cả')) 
             btn.classList.add('active');
     });
-
     if(role === 'all') renderUsers(allUsers);
     else renderUsers(allUsers.filter(u => u.role === role));
 }
 
-// 5. Tìm kiếm
 document.getElementById('searchUser').addEventListener('keyup', (e) => {
     const term = e.target.value.toLowerCase();
-    const filtered = allUsers.filter(u => 
-        u.fullname.toLowerCase().includes(term) || 
-        u.email.toLowerCase().includes(term)
-    );
+    const filtered = allUsers.filter(u => u.fullname.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
     renderUsers(filtered);
 });
 
-// Chạy khi tải trang
+// Chạy khi load trang
 document.addEventListener("DOMContentLoaded", () => {
     loadUsers();
-    
-    // Popup logic
+    // Popup thông báo
     const bell = document.querySelector(".notification-btn");
     const popup = document.getElementById("notificationPopup");
-    bell.addEventListener("click", (e) => {
-        e.stopPropagation();
-        popup.style.display = popup.style.display === "block" ? "none" : "block";
-    });
+    bell.addEventListener("click", (e) => { e.stopPropagation(); popup.style.display = popup.style.display === "block" ? "none" : "block"; });
     document.addEventListener("click", () => popup.style.display = "none");
 });
 </script>
