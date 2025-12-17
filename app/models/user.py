@@ -16,7 +16,8 @@ class User(UserMixin, db.Model):
     is_active = db.Column(db.Boolean, default=True)   
     last_login = db.Column(db.DateTime) 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    author = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     posts = db.relationship('Post', backref='author_user', lazy='dynamic')
 
     # ==== EXTRA FIELDS CHO UNIT TEST ====
