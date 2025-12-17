@@ -350,6 +350,14 @@
     .tag-green {
       background-color: #198754;
     }
+    .tag-orange {
+      background-color: #fd7e14; 
+    }
+    .tag-cyan {
+      background-color: #0dcaf0; 
+    .tag-gray {
+      background-color: #6c757d; 
+    }
 
     .status-tag {
       font-size: 12px;
@@ -720,6 +728,8 @@
       return { name: "Khuyến mãi", color: "tag-orange" };
     case "su-kien":
       return { name: "Sự kiện", color: "tag-purple" };
+    case "dich-vu":
+      return { name: "Dịch vụ", color: "tag-cyan" };
     default:
       return { name: "Tin tức", color: "tag-gray" };
   }
