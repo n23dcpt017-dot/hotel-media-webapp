@@ -865,58 +865,43 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="comment-stats-grid">
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-blue">
-                <i class="fa-solid fa-comments"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>6</strong>
-                <span>Tổng bình luận</span>
-              </div>
-            </div>
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-purple">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>3</strong>
-                <span>Chờ duyệt</span>
-              </div>
-            </div>
-            <div class="comment-stat-card">
-              <div class="comment-stat-icon icon-green">
-                <i class="fa-solid fa-check"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>2</strong>
-                <span>Đã duyệt</span>
-              </div>
-            </div>
-            <div class="comment-stat-card light">
-              <div class="comment-stat-icon icon-red">
-                <i class="fa-solid fa-ban"></i>
-              </div>
-              <div class="comment-stat-info">
-                <strong>1</strong>
-                <span>Từ chối</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="filter-bar-container">
-            <div class="page-search-bar">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="Tìm kiếm bình luận..." />
-            </div>
-            <div class="filter-tabs">
-              <a href="/auth/binhluan.html" class="filter-tab">Tất cả</a>
-              <a href="/auth/binhluanchoduyet.html" class="filter-tab active"
-                >Chờ duyệt</a
-              >
-              <a href="/auth/binhluandaduyet.html" class="filter-tab">Đã duyệt</a>
-              <a href="/auth/binhluantuchoi.html" class="filter-tab">Từ chối</a>
-            </div>
-          </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-blue">
+        <i class="fa-solid fa-comments"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-total">0</strong> 
+        <span>Tổng bình luận</span>
+      </div>
+    </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-purple">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-pending">0</strong>
+        <span>Chờ duyệt</span>
+      </div>
+    </div>
+    <div class="comment-stat-card">
+      <div class="comment-stat-icon icon-green">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-approved">0</strong>
+        <span>Đã duyệt</span>
+      </div>
+    </div>
+    <div class="comment-stat-card light">
+      <div class="comment-stat-icon icon-red">
+        <i class="fa-solid fa-ban"></i>
+      </div>
+      <div class="comment-stat-info">
+        <strong id="stat-rejected">0</strong>
+        <span>Từ chối</span>
+      </div>
+    </div>
+  </div>
 
           <div class="comment-list-container" id="commentList">
             
