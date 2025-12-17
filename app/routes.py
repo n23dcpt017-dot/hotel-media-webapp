@@ -597,7 +597,8 @@ def list_media():
         })
         
     return jsonify(results)
-    @auth.route("/api/media/upload", methods=["POST"])
+    
+@auth.route("/api/media/upload", methods=["POST"])
 @login_required
 def upload_media_library():
     """API dùng riêng cho nút Upload ở trang Thư viện"""
