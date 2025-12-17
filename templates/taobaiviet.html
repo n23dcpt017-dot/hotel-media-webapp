@@ -71,16 +71,46 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
     }
-    .top-bar .search-bar { position: relative; width: 300px; }
-    .top-bar .search-bar i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
-    .top-bar .search-bar input {
-      width: 100%; padding: 10px 15px 10px 40px; border: 1px solid #ddd;
-      border-radius: 8px; background-color: #f9f9f9; font-size: 15px;
+    .top-bar .search-bar {
+      position: relative;
+      width: 300px;
     }
-    .notification-btn { background: none; border: none; font-size: 20px; color: #555; cursor: pointer; position: relative; }
+
+    .top-bar .search-bar i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
+
+    .top-bar .search-bar input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      font-size: 15px;
+    }
+
+    .notification-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #555;
+      cursor: pointer;
+      position: relative;
+    }
+
     .notification-dot {
-      position: absolute; top: -3px; right: -3px; width: 8px; height: 8px;
-      background-color: #dc3545; border-radius: 50%; border: 2px solid #fff;
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 8px;
+      height: 8px;
+      background-color: #dc3545;
+      border-radius: 50%;
+      border: 2px solid #fff;
     }
     .page-content { flex-grow: 1; padding: 30px; overflow-y: auto; }
 
