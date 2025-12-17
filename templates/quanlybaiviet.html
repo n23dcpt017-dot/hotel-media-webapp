@@ -775,9 +775,7 @@ function loadPosts(status = "") {
         </span>
 
         <span class="article-date">
-          ${p.publish_at
-            ? new Date(p.publish_at).toLocaleDateString("vi-VN")
-            : "-"}
+          ${p.publish_at || "-"}
         </span>
 
         <div class="article-actions">
