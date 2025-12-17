@@ -526,7 +526,7 @@
 
 .image-preview {
   width: 100%;
-  max-height: 260px;
+  max-height: 140px;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -538,7 +538,7 @@
 .preview-wrapper {
   position: relative;
   width: 100%;
-  max-height: 200px;
+  max-height: 150px;
   overflow: hidden;
 }
 
@@ -587,9 +587,45 @@
 .crop-modal img {
   max-width: 100%;
 }
+.crop-modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  max-width: 720px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.crop-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.crop-actions button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.crop-actions button:first-child {
+  background: #e5e7eb;
+}
+
+.crop-actions button:last-child {
+  background: #4338ca;
+  color: white;
+}
 
   </style>
   <body>
+    <script>
+    let cropper = null;
+    let thumbnailUrl = null;
+    </script>
     <div class="dashboard-layout">
       <aside class="sidebar">
         <div class="sidebar-header">
@@ -919,9 +955,6 @@ function publishPost() {
 }
 </script>
 <script>
-let cropper = null;
-let thumbnailUrl = null;
-
 const input = document.getElementById("post-image");
 const preview = document.getElementById("imagePreview");
 const placeholder = document.getElementById("imagePlaceholder");
