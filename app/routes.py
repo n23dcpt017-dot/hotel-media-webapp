@@ -550,9 +550,10 @@ def list_media():
     return jsonify([
         {
             "id": m.id,
+            "filename": m.filename,
             "url": m.url,
-            "type": m.type,
-            "filename": m.filename
+            "file_type": m.file_type,
+            "created_at": m.created_at.strftime("%d/%m/%Y")
         }
-        for m in items
+        for m in media
     ])
