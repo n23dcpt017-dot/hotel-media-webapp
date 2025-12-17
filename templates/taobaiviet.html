@@ -15,49 +15,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   </head>
   <style>
-    /* style.css - Giữ nguyên các style cơ bản */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f0f2f5;
-      color: #333;
-    }
-
-    /* --- Dashboard Layout --- */
-    .dashboard-layout {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      height: 100vh;
-    }
-
-    /* Sidebar Styles */
-    .sidebar {
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid #e0e0e0;
-    }
+    /* --- CSS CƠ BẢN --- */
+    body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #333; }
+    
+    /* --- LAYOUT --- */
+    .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+    
+    /* Sidebar */
+    .sidebar { background-color: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; }
     .sidebar-header { padding: 25px; border-bottom: 1px solid #f0f0f0; }
     .sidebar-header h3 { margin: 0 0 5px 0; font-size: 20px; }
     .sidebar-header p { margin: 0; font-size: 14px; color: #888; }
     .sidebar-nav { flex-grow: 1; padding: 20px 15px; }
     .sidebar-nav ul { list-style: none; margin: 0; padding: 0; }
-    .sidebar-nav li a {
-      display: flex; align-items: center; padding: 14px 18px;
-      text-decoration: none; color: #555; border-radius: 8px;
-      font-weight: 500; margin-bottom: 5px; transition: 0.3s;
-    }
+    .sidebar-nav li a { display: flex; align-items: center; padding: 14px 18px; text-decoration: none; color: #555; border-radius: 8px; font-weight: 500; margin-bottom: 5px; transition: 0.3s; }
     .sidebar-nav a i { font-size: 18px; width: 20px; margin-right: 15px; }
     .sidebar-nav a:hover { background-color: #f4f4f4; }
     .sidebar-nav a.active { background-color: #e8f0fe; color: #0d6efd; }
     .sidebar-footer { margin-top: auto; padding: 20px; border-top: 1px solid #f0f0f0; }
-    .logout-btn {
-      display: flex; align-items: center; padding: 12px 15px;
-      text-decoration: none; color: #d9534f; border-radius: 8px;
-      font-weight: 500; transition: 0.3s; margin-bottom: 15px;
-    }
+    .logout-btn { display: flex; align-items: center; padding: 12px 15px; text-decoration: none; color: #d9534f; border-radius: 8px; font-weight: 500; transition: 0.3s; margin-bottom: 15px; }
     .logout-btn:hover { background-color: #fdf0f0; }
     .logout-btn i { margin-right: 10px; }
     .user-profile { display: flex; align-items: center; gap: 12px; }
@@ -67,24 +43,15 @@
 
     /* Main Content */
     .main-content { display: flex; flex-direction: column; height: 100vh; overflow-y: hidden; }
-    .top-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
-    }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #e0e0e0; flex-shrink: 0; }
     .top-bar .search-bar { position: relative; width: 300px; }
     .top-bar .search-bar i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
-    .top-bar .search-bar input {
-      width: 100%; padding: 10px 15px 10px 40px; border: 1px solid #ddd;
-      border-radius: 8px; background-color: #f9f9f9; font-size: 15px;
-    }
+    .top-bar .search-bar input { width: 100%; padding: 10px 15px 10px 40px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; font-size: 15px; }
     .notification-btn { background: none; border: none; font-size: 20px; color: #555; cursor: pointer; position: relative; }
-    .notification-dot {
-      position: absolute; top: -3px; right: -3px; width: 8px; height: 8px;
-      background-color: #dc3545; border-radius: 50%; border: 2px solid #fff;
-    }
+    .notification-dot { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; background-color: #dc3545; border-radius: 50%; border: 2px solid #fff; }
     .page-content { flex-grow: 1; padding: 30px; overflow-y: auto; }
 
-    /* Create Post Styles */
+    /* Form Styles */
     .create-post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
     .page-title-group .back-link { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #555; text-decoration: none; margin-bottom: 10px; }
     .page-title-group .back-link:hover { color: #000; }
@@ -102,121 +69,63 @@
     .form-card { background-color: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid #e9ecef; }
     .form-card > label { font-size: 18px; font-weight: 600; margin-bottom: 20px; display: block; }
     .form-group { margin-bottom: 15px; }
-    .form-group:last-child { margin-bottom: 0; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; color: #555; }
-    input[type="text"], textarea, select {
-      width: 100%; padding: 12px 15px; border: 1px solid #ddd;
-      border-radius: 8px; background-color: #f9f9f9; font-size: 15px; color: #333; box-sizing: border-box;
-    }
+    input[type="text"], textarea, select { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; font-size: 15px; color: #333; box-sizing: border-box; }
     textarea { resize: vertical; min-height: 120px; }
     .input-group-with-icon { position: relative; margin-bottom: 15px; }
-    .input-group-with-icon:last-child { margin-bottom: 0; }
     .input-group-with-icon i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 16px; }
     .input-group-with-icon input { padding-left: 45px; }
     .input-group-with-icon i.fa-calendar-days { left: auto; right: 15px; cursor: pointer; }
 
-    /* --- Box Tải ảnh (ĐÃ SỬA CSS) --- */
+    /* --- UPLOAD ẢNH (ĐÃ SỬA CSS NÚT X) --- */
     .image-uploader-box {
-      border: 2px dashed #e5e7eb;
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      background: #fafafa;
-      position: relative;
-      /* Cho phép nội dung bên trong flex để căn chỉnh */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 200px;
+      border: 2px dashed #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; background: #fafafa;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;
     }
     .image-uploader-box:hover { border-color: #3b82f6; background: #f0f7ff; }
-
     .image-placeholder i { font-size: 32px; color: #9ca3af; margin-bottom: 8px; }
+    
+    .preview-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .preview-image-container { position: relative; display: inline-block; max-width: 100%; }
+    .image-preview { max-width: 100%; height: auto; max-height: 250px; object-fit: contain; border-radius: 8px; border: 1px solid #eee; }
 
-    /* Wrapper chứa ảnh đã upload */
-    .preview-wrapper {
-      display: flex;
-      flex-direction: column; /* Xếp dọc: Ảnh trên, chữ dưới */
-      align-items: center;
-      width: 100%;
-    }
-
-    /* Container bao quanh ảnh để đặt nút X */
-    .preview-image-container {
-        position: relative;
-        display: inline-block;
-        max-width: 100%;
-    }
-
-    .image-preview {
-      max-width: 100%;
-      height: auto;
-      max-height: 250px; /* Giới hạn chiều cao cho đẹp */
-      object-fit: contain;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    /* --- NÚT XÓA ẢNH (ĐÃ SỬA THEO YÊU CẦU) --- */
+    /* Nút Xóa Ảnh (Màu đỏ, bỏ nền tròn) */
     .remove-image-btn {
       position: absolute;
-      top: -10px;  /* Nhô lên trên một chút */
-      right: -10px; /* Nhô ra phải một chút */
-      
-      background: none !important; /* Bỏ nền tròn */
-      border: none !important;
-      
+      top: -12px; right: -12px; /* Đẩy ra ngoài góc */
+      background: #fff; /* Nền trắng nhẹ để che viền dưới */
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid #eee;
       color: #dc3545; /* Màu đỏ */
-      font-size: 22px; /* To rõ */
-      
+      font-size: 16px;
       cursor: pointer;
-      z-index: 10;
-      transition: transform 0.2s;
-      
-      /* Thêm bóng trắng nhẹ để nổi bật nếu nền ảnh tối */
-      text-shadow: 0 0 5px rgba(255,255,255,1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s;
     }
-    .remove-image-btn:hover {
-        transform: scale(1.2);
-    }
-
-    /* --- TEXT NGÀY UPLOAD (MỚI) --- */
-    .upload-info-text {
-        margin-top: 10px;
-        font-size: 13px;
-        color: #666;
-        font-weight: 500;
-    }
+    .remove-image-btn:hover { transform: scale(1.1); background: #fee; }
 
     /* Modal Crop */
     .crop-modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; justify-content: center; align-items: center; z-index: 99999; }
-    .crop-modal-content { background: #ffffff; padding: 20px; border-radius: 14px; width: 720px; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; overflow: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+    .crop-modal-content { background: #ffffff; padding: 20px; border-radius: 14px; width: 720px; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; overflow: auto; }
     .crop-modal img { max-width: 100%; max-height: 60vh; object-fit: contain; }
     .crop-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
     .crop-actions button { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
     .crop-actions button:first-child { background: #e5e7eb; }
     .crop-actions button:last-child { background: #4338ca; color: white; }
 
-    /* Responsive */
-    @media (max-width: 992px) { .create-post-layout { grid-template-columns: 1fr; } }
-    @media (max-width: 768px) {
-      .dashboard-layout { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .create-post-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-    }
-    
-    /* Notification Popup */
+    /* Popup thông báo */
     .notification-popup { position: absolute; top: 60px; right: 25px; width: 300px; background: #ffffff; border-radius: 12px; padding: 15px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); display: none; z-index: 9999; border: 1px solid #e4e4e4; }
-    /* ... (Giữ nguyên css notif cũ) ... */
+    /* ... css thông báo giữ nguyên ... */
     .notif-header h4 { margin: 0; font-size: 16px; font-weight: 700; }
     .notif-list { list-style: none; padding: 0; margin: 12px 0 0; }
     .notif-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eee; }
     .notif-item i { font-size: 18px; margin-top: 2px; }
     .notif-view-all { width: 100%; margin-top: 10px; padding: 8px 0; background: #4338ca; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
+
+    @media (max-width: 992px) { .create-post-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .sidebar { display: none; } .dashboard-layout { grid-template-columns: 1fr; } }
   </style>
 
   <body>
@@ -240,18 +149,20 @@
         </nav>
         <div class="sidebar-footer">
             <a href="/auth/logout" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Đăng xuất</span></a>
-            <div class="user-profile">
-              <i class="fa-solid fa-user-circle"></i>
-              <div class="user-info"><strong>ADMIN</strong><span>Quản Trị Viên</span></div>
-            </div>
+            <div class="user-profile"><i class="fa-solid fa-user-circle"></i><div class="user-info"><strong>ADMIN</strong><span>Quản Trị Viên</span></div></div>
         </div>
       </aside>
 
       <div class="main-content">
         <header class="top-bar">
           <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." /></div>
-          <div class="header-icons">
-            <button class="notification-btn"><i class="fa-solid fa-bell"></i><span class="notification-dot"></span></button>
+          <div class="header-icons"><button class="notification-btn"><i class="fa-solid fa-bell"></i><span class="notification-dot"></span></button></div>
+          <div class="notification-popup" id="notificationPopup">
+            <div class="notif-header"><h4>Thông báo hệ thống</h4></div>
+            <ul class="notif-list">
+                <li class="notif-item normal"><i class="fa-solid fa-circle-info" style="color:#0d6efd"></i><div><p class="notif-title">Yêu cầu hỗ trợ</p></div></li>
+            </ul>
+            <button class="notif-view-all">Xem tất cả</button>
           </div>
         </header>
 
@@ -271,7 +182,7 @@
             <div class="create-post-layout">
                 <div class="main-column">
                     <div class="form-card">
-                        <label for="post-title" class="sr-only">Tiêu đề bài viết</label> 
+                        <label for="post-title" class="sr-only">Tiêu đề</label> 
                         <input type="text" id="post-title" placeholder="Tiêu đề bài viết...">
                     </div>
                     <div class="form-card">
@@ -289,29 +200,21 @@
                           <span>Kéo/thả ảnh hoặc <strong>nhấn để tải lên</strong></span>
                           <small>PNG, JPG, GIF (tối đa 2MB)</small>
                         </div>
-
                         <div class="preview-wrapper" id="previewWrapper" style="display:none">
                           <div class="preview-image-container">
                               <img id="imagePreview" class="image-preview" alt="Ảnh đại diện"/>
                               <button type="button" class="remove-image-btn" id="removeImageBtn">
-                                <i class="fa-solid fa-circle-xmark"></i>
+                                <i class="fa-solid fa-xmark"></i>
                               </button>
                           </div>
-                          <div id="uploadInfo" class="upload-info-text"></div>
                         </div>
                       </div>
                     </div>
 
                     <div class="form-card">
                         <label>Nhúng video</label>
-                        <div class="input-group-with-icon">
-                            <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
-                            <input type="text" placeholder="https://www.youtube.com/watch?v=...">
-                        </div>
-                        <div class="input-group-with-icon">
-                            <i class="fa-brands fa-tiktok" style="color: #010101;"></i>
-                            <input type="text" placeholder="https://www.tiktok.com/@username/video/...">
-                        </div>
+                        <div class="input-group-with-icon"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i><input type="text" placeholder="Youtube URL..."></div>
+                        <div class="input-group-with-icon"><i class="fa-brands fa-tiktok" style="color: #010101;"></i><input type="text" placeholder="TikTok URL..."></div>
                     </div>
                 </div>
     
@@ -325,7 +228,6 @@
                                 <option value="phong">Phòng</option>
                                 <option value="am-thuc">Ẩm thực</option>
                                 <option value="su-kien">Sự kiện</option>
-                                <option value="dich-vu">Dịch vụ</option>
                                 <option value="khuyen-mai">Khuyến mãi</option>
                             </select>
                         </div>
@@ -341,15 +243,14 @@
                     <div class="form-card">
                         <label for="post-schedule">Ngày/giờ xuất bản</label>
                         <div class="input-group-with-icon">
-                            <input type="date" id="post-schedule">
+                            <input type="text" id="post-schedule" placeholder="mm/dd/yyyy">
                             <i class="fa-regular fa-calendar-days"></i>
                         </div>
                     </div>
                     <div class="form-card">
                         <label>SEO</label>
-                        <div class="form-group"><label for="meta-title">Meta Title</label><input type="text" id="meta-title" placeholder="Tiêu đề SEO..."></div>
-                        <div class="form-group"><label for="meta-desc">Meta Description</label><textarea id="meta-desc" rows="3" placeholder="Mô tả SEO..."></textarea></div>
-                        <div class="form-group"><label for="meta-keywords">Keywords</label><input type="text" id="meta-keywords" placeholder="khách sạn, phòng deluxe..."></div>
+                        <div class="form-group"><label>Meta Title</label><input type="text" id="meta-title"></div>
+                        <div class="form-group"><label>Meta Description</label><textarea id="meta-desc" rows="3"></textarea></div>
                     </div>
                 </div>
             </div>
@@ -357,171 +258,142 @@
       </div>
     </div>
 
-<div id="cropModal" class="crop-modal" style="display:none">
-  <div class="crop-modal-content">
-    <img id="cropImage" />
-    <div class="crop-actions">
-      <button type="button" id="btnCloseCrop">Hủy</button>
-      <button type="button" id="btnConfirmCrop">Xác nhận</button>
+    <div id="cropModal" class="crop-modal" style="display:none">
+      <div class="crop-modal-content">
+        <img id="cropImage" />
+        <div class="crop-actions">
+          <button type="button" id="btnCloseCrop">Hủy</button>
+          <button type="button" id="btnConfirmCrop">Xác nhận</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 <script>
-// --- Hàm lấy ngày giờ hiện tại ---
-function getFormattedDate() {
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    return `${day}/${month}/${year} - ${hours}:${minutes}`;
-}
+  // --- 1. LOGIC XỬ LÝ ẢNH & NÚT XÓA ---
+  const input = document.getElementById("thumbnailInput");
+  const preview = document.getElementById("imagePreview");
+  const placeholder = document.getElementById("imagePlaceholder");
+  const previewWrapper = document.getElementById("previewWrapper");
+  const uploaderBox = document.getElementById("imageUploader");
 
-const input = document.getElementById("thumbnailInput");
-const preview = document.getElementById("imagePreview");
-const placeholder = document.getElementById("imagePlaceholder");
-const previewWrapper = document.getElementById("previewWrapper");
-const uploadInfo = document.getElementById("uploadInfo"); // Chỗ hiển thị ngày
-const uploaderBox = document.getElementById("imageUploader");
-
-// Sự kiện click vào box để chọn ảnh
-uploaderBox.addEventListener("click", (e) => {
-    // Nếu đang hiển thị ảnh preview và click vào nút Xóa thì không mở chọn file
+  uploaderBox.addEventListener("click", (e) => {
     if(e.target.closest("#removeImageBtn")) return; 
     input.click();
-});
+  });
 
-input.addEventListener("change", () => {
-  const file = input.files[0];
-  if (!file) return;
+  input.addEventListener("change", () => {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => openCrop(e.target.result);
+    reader.readAsDataURL(file);
+  });
 
-  const reader = new FileReader();
-  reader.onload = e => {
-    openCrop(e.target.result);
-  };
-  reader.readAsDataURL(file);
-});
-
-function openCrop(src) {
-  const modal = document.getElementById("cropModal");
-  const img = document.getElementById("cropImage");
-  modal.style.display = "flex";
-  img.src = src;
-
-  img.onload = function() {
-      if (cropper) { cropper.destroy(); cropper = null; }
-      if (typeof Cropper !== 'undefined') {
-          cropper = new Cropper(img, { aspectRatio: 16 / 9, viewMode: 1, autoCropArea: 1 });
-      } else {
-          alert("Lỗi: Không tải được thư viện cắt ảnh!");
+  // Xóa ảnh (Reset về ban đầu)
+  document.getElementById("removeImageBtn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if(confirm("Xóa ảnh này?")) {
+          thumbnailUrl = null;
+          preview.src = "";
+          previewWrapper.style.display = "none";
+          placeholder.style.display = "flex";
+          input.value = "";
       }
-  };
-}
+  });
 
-function closeCrop() {
-  document.getElementById("cropModal").style.display = "none";
-  if (cropper) cropper.destroy();
-  input.value = ""; // Reset input để chọn lại ảnh cùng tên vẫn ăn
-}
+  // --- 2. LOGIC CROP ẢNH ---
+  function openCrop(src) {
+    const modal = document.getElementById("cropModal");
+    const img = document.getElementById("cropImage");
+    modal.style.display = "flex";
+    img.src = src;
+    img.onload = function() {
+        if (cropper) { cropper.destroy(); cropper = null; }
+        if (typeof Cropper !== 'undefined') {
+            cropper = new Cropper(img, { aspectRatio: 16 / 9, viewMode: 1, autoCropArea: 1 });
+        } else { alert("Lỗi tải thư viện ảnh!"); }
+    };
+  }
+  function closeCrop() {
+    document.getElementById("cropModal").style.display = "none";
+    if (cropper) cropper.destroy();
+    input.value = "";
+  }
+  async function confirmCrop() {
+    if (!cropper) return;
+    const canvas = cropper.getCroppedCanvas({ width: 1200, height: 675 });
+    canvas.toBlob(async blob => {
+      const formData = new FormData();
+      formData.append("file", blob, "thumbnail.jpg");
+      const res = await fetch("/auth/api/upload-thumbnail", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        thumbnailUrl = data.url;
+        preview.src = data.url;
+        previewWrapper.style.display = "flex";
+        placeholder.style.display = "none";
+        closeCrop();
+      } else { alert("Upload thất bại"); }
+    }, "image/jpeg");
+  }
 
-async function confirmCrop() {
-  if (!cropper) { alert("Chưa chọn ảnh để crop"); return; }
-  
-  const canvas = cropper.getCroppedCanvas({ width: 1200, height: 675 });
+  document.getElementById("btnConfirmCrop").addEventListener("click", confirmCrop);
+  document.getElementById("btnCloseCrop").addEventListener("click", closeCrop);
 
-  canvas.toBlob(async blob => {
-    const formData = new FormData();
-    formData.append("file", blob, "thumbnail.jpg");
+  // --- 3. LOGIC GỬI BÀI VIẾT (TỰ ĐỘNG THÊM NGÀY) ---
+  function mapStatus(uiStatus) {
+    if (uiStatus === "da-xuat-ban") return "published";
+    if (uiStatus === "len-lich") return "scheduled";
+    return "draft";
+  }
 
-    const res = await fetch("/auth/api/upload-thumbnail", { method: "POST", body: formData });
-    const data = await res.json();
+  function collectPostData(forceStatus = null) {
+    let uiStatus = document.getElementById("post-status").value;
+    let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
     
-    if (data.url) {
-      thumbnailUrl = data.url;
-
-      // 1. Hiển thị ảnh
-      preview.src = data.url;
-      
-      // 2. Hiển thị ngày upload (MỚI)
-      uploadInfo.innerHTML = `<i class="fa-regular fa-clock"></i> Đã tải lên: ${getFormattedDate()}`;
-
-      // 3. Đổi giao diện từ Placeholder sang Preview
-      previewWrapper.style.display = "flex";
-      placeholder.style.display = "none";
-
-      closeCrop();
-    } else {
-      alert("Upload thất bại");
+    // --- TỰ ĐỘNG ĐIỀN NGÀY NẾU QUÊN ---
+    let publishDate = document.getElementById("post-schedule").value;
+    if (finalStatus === 'published' && !publishDate) {
+        const now = new Date();
+        publishDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
     }
-  }, "image/jpeg");
-}
 
-// SỰ KIỆN XÓA ẢNH (MỚI)
-document.getElementById("removeImageBtn").addEventListener("click", (e) => {
-    e.stopPropagation(); // Chặn sự kiện click lan ra ngoài box
-    if(confirm("Bạn muốn xóa ảnh này?")) {
-        thumbnailUrl = null;
-        preview.src = "";
-        previewWrapper.style.display = "none";
-        placeholder.style.display = "flex"; // Hiện lại box kéo thả
-        input.value = "";
-    }
-});
+    return {
+      title: document.getElementById("post-title").value,
+      content: document.getElementById("post-content").value,
+      category: document.getElementById("post-category").value,
+      status: finalStatus,
+      publish_at: publishDate || null, // Gửi ngày đã tự động điền
+      image: thumbnailUrl || undefined,
+      seo: {
+        title: document.getElementById("meta-title").value,
+        description: document.getElementById("meta-desc").value
+      }
+    };
+  }
 
-// Gán sự kiện cho modal crop
-document.getElementById("btnConfirmCrop").addEventListener("click", confirmCrop);
-document.getElementById("btnCloseCrop").addEventListener("click", closeCrop);
+  function sendDataToServer(data, actionName) {
+    fetch("/auth/api/posts", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+    .then(res => { if (!res.ok) throw new Error("Lỗi server"); return res.json(); })
+    .then(() => { window.location.href = "/auth/quanlybaiviet.html"; }) // Quay về danh sách
+    .catch(err => alert(actionName + " thất bại: " + err.message));
+  }
 
-// --- Các hàm saveDraft, publishPost giữ nguyên ---
-function mapStatus(uiStatus) {
-  if (uiStatus === "nhap") return "draft";
-  if (uiStatus === "da-xuat-ban") return "published";
-  if (uiStatus === "len-lich") return "scheduled";
-  return "draft";
-}
+  function saveDraft() { sendDataToServer(collectPostData("draft"), "Lưu nháp"); }
+  function publishPost() { 
+      const data = collectPostData();
+      if(!data.title) { alert("Thiếu tiêu đề!"); return; }
+      sendDataToServer(data, "Cập nhật"); 
+  }
 
-// === ĐÂY LÀ HÀM ĐÃ SỬA LOGIC ===
-function collectPostData(forceStatus = null) {
-  let uiStatus = document.getElementById("post-status").value;
-  let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
-
-  const publishDate = document.getElementById("post-schedule").value || null;
-
-  return {
-    title: document.getElementById("post-title").value,
-    content: document.getElementById("post-content").value,
-    category: document.getElementById("post-category").value,
-    status: finalStatus,
-    publish_at: publishDate,   // YYYY-MM-DD
-    image: thumbnailUrl || undefined,
-    seo: {
-      title: document.getElementById("meta-title").value,
-      description: document.getElementById("meta-desc").value,
-      keywords: document.getElementById("meta-keywords").value
-    }
-  };
-}
-
-function saveDraft() {
-  fetch("/auth/api/posts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(collectPostData("draft")) })
-  .then(res => { if (!res.ok) throw new Error("Lưu nháp thất bại"); return res.json(); })
-  .then(() => { window.location.href = "/auth/quanlybaiviet.html"; })
-  .catch(err => alert(err.message));
-}
-function publishPost() {
-  fetch("/auth/api/posts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(collectPostData()) })
-  .then(res => { if (!res.ok) throw new Error("Cập nhật thất bại"); return res.json(); })
-  .then(() => { window.location.href = "/auth/quanlybaiviet.html"; })
-  .catch(err => alert(err.message));
-}
-
-// Popup thông báo
-const bell = document.querySelector(".notification-btn");
-const popup = document.getElementById("notificationPopup");
-bell.addEventListener("click", (e) => { e.stopPropagation(); popup.style.display = popup.style.display === "block" ? "none" : "block"; });
-document.addEventListener("click", () => popup.style.display = "none");
+  // Popup thông báo
+  const bell = document.querySelector(".notification-btn");
+  const popup = document.getElementById("notificationPopup");
+  bell.addEventListener("click", (e) => { e.stopPropagation(); popup.style.display = popup.style.display === "block" ? "none" : "block"; });
+  document.addEventListener("click", () => popup.style.display = "none");
 </script>
 </body>
 </html>
