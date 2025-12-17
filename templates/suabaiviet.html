@@ -791,92 +791,7 @@ document
 </script>
 
 
-<script>
-  // ===== 1. Lấy ID từ URL =====
-  const params = new URLSearchParams(window.location.search);
-  const postId = Number(params.get("id"));
-  let thumbnailUrl = null;
-  if (!postId) {
-    alert("Thiếu ID bài viết");
-    window.location.href = "/auth/quanlybaiviet.html";
-  }
 
-
-  // ===== 3. Khai báo các biến giao diện =====
-  const titleInput = document.getElementById("post-title");
-  const contentInput = document.getElementById("post-content");
-  const categoryInput = document.getElementById("post-category");
-  const statusInput = document.getElementById("post-status");
-  
-  // Các biến xử lý ảnh
-  const uploadBox = document.getElementById("upload-box");
-  const fileInput = document.getElementById("thumbnailInput");
-
-uploadBox.addEventListener("click", () => {
-  fileInput.value = "";   
-  fileInput.click();
-});
-  const uploadContent = document.getElementById("upload-content"); // Phần chữ kéo thả
-  const imagePreview = document.getElementById("image-preview"); // Thẻ img
-
-  // ===== 4. Đổ dữ liệu lên form =====
-  titleInput.value = post.title || "";
-  contentInput.value = post.content || "";
-  categoryInput.value = post.category || "";
-  statusInput.value = post.status || "nhap";
-
-  // --- XỬ LÝ HIỂN THỊ ẢNH CŨ ---
- if (post.image) {
-      thumbnailUrl = post.image;
-
-      const preview = document.getElementById("thumbnailPreview");
-      preview.src = post.image;
-      preview.style.display = "block";
-
-      document.getElementById("uploadPlaceholder").style.display = "none";
-    }
-
-  } 
-});
-  // ===== 5. Xử lý khi bấm chọn ảnh mới =====
-  
-  // Khi bấm vào box -> kích hoạt input file
-  uploadBox.addEventListener("click", () => {
-    fileInput.click();
-  });
-
-  // Khi người dùng chọn file
-  fileInput.addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const res = await fetch("/auth/api/upload-thumbnail", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await res.json();
-  if (!data.url) {
-    alert("Upload ảnh thất bại");
-    return;
-  }
-
-  // 👉 GHI ĐÈ ẢNH CŨ
-  thumbnailUrl = data.url;
-
-  // 👉 UPDATE PREVIEW
-  const img = document.getElementById("image-preview");
-  img.src = data.url;
-  img.style.display = "block";
-
-  document.getElementById("upload-content").style.display = "none";
-});
-
-
-</script>
 <script>
 async function loadPost() {
   const params = new URLSearchParams(window.location.search);
@@ -919,5 +834,42 @@ async function loadPost() {
 document.addEventListener("DOMContentLoaded", loadPost);
 </script>
 loadPost();
+    <script>
+const uploadBox = document.getElementById("upload-box");
+const fileInput = document.getElementById("file-input");
+const imagePreview = document.getElementById("image-preview");
+const uploadContent = document.getElementById("upload-content");
+
+uploadBox.addEventListener("click", () => {
+  fileInput.value = ""; // ⭐ reset để chọn lại ảnh
+  fileInput.click();
+});
+
+fileInput.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/auth/api/upload-thumbnail", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  if (!data.url) {
+    alert("Upload ảnh thất bại");
+    return;
+  }
+
+  thumbnailUrl = data.url;
+
+  imagePreview.src = data.url;
+  imagePreview.style.display = "block";
+  uploadContent.style.display = "none";
+});
+</script>
+
   </body>
 </html>
