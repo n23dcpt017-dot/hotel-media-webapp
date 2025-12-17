@@ -908,7 +908,15 @@ async function loadPost() {
   document.getElementById("post-content").value = post.content || "";
   document.getElementById("post-category").value = post.category || "phong";
   document.getElementById("post-status").value = post.status || "draft";
-  document.getElementById("post-schedule").value = post.publish_at || "";
+  if (post.publish_at) {
+  // post.publish_at đang là dd/mm/yyyy
+  const parts = post.publish_at.split("/");
+  if (parts.length === 3) {
+    document.getElementById("post-schedule").value =
+      `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+  }
+}
+
 
   if (post.image) {
     thumbnailUrl = post.image;
