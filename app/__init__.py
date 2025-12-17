@@ -97,6 +97,11 @@ def create_app(config_name=None):
     def load_user(user_id):
         from app.models.user import User
         return User.query.get(int(user_id))
+        
+    from flask import send_from_directory
+    @app.route("/uploads/<path:filename>")
+    def uploads(filename):
+        return send_from_directory("uploads", filename)
 
     
     from app.routes import auth
