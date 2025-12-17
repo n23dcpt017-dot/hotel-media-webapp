@@ -739,6 +739,7 @@
     <script>
 let postId = null;
 let thumbnailUrl = null;
+
 </script>
 <script>
   const bell = document.querySelector(".notification-btn");
@@ -783,9 +784,9 @@ async function updatePost() {
   // ===== 1. Lấy ID từ URL =====
   const params = new URLSearchParams(window.location.search);
   const postId = Number(params.get("id"));
-
+  let thumbnailUrl = null;
   if (!postId) {
-    alert("Không tìm thấy bài viết");
+    alert("Thiếu ID bài viết");
     window.location.href = "/auth/quanlybaiviet.html";
   }
 
@@ -889,18 +890,11 @@ async function updatePost() {
     alert("Đã lưu nháp!");
   });
 </script>
-  <script>
-const params = new URLSearchParams(window.location.search);
-const postId = params.get("id");
+<script>
 
-if (!postId) {
-  alert("Thiếu ID bài viết");
-  window.location.href = "/auth/quanlybaiviet.html";
-}
-
-async function loadPost() {
+async function loadPost() { try{
   const res = await fetch(`/auth/api/posts/${postId}`);
-  if (!res.ok) return alert("Không tải được bài viết");
+  if (!res.ok) throw new Error();
 
   const post = await res.json();
 
@@ -919,97 +913,24 @@ async function loadPost() {
 
 
   if (post.image) {
-    thumbnailUrl = post.image;
-    document.getElementById("thumbnail-preview").src = post.image;
-    document.getElementById("thumbnail-preview").style.display = "block";
+      thumbnailUrl = post.image;
+      const img = document.getElementById("image-preview");
+      img.src = post.image;
+      img.style.display = "block";
+      document.getElementById("upload-content").style.display = "none";
+    }
+
+  } catch {
+    alert("Bài viết không tồn tại hoặc đã bị xóa");
+    window.location.href = "/auth/quanlybaiviet.html";
   }
 }
-
-loadPost();
+document.addEventListener("DOMContentLoaded", loadPost);
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(window.location.search);
-  const postId = params.get("id");
-
-  if (!postId) {
-    alert("Không tìm thấy ID bài viết");
-    return;
-  }
-
-  try {
-    const res = await fetch(`/auth/api/posts/${postId}`);
-    if (!res.ok) throw new Error("Not found");
-
-    const post = await res.json();
-
-    // GÁN DỮ LIỆU VÀO FORM (KHÔNG ĐỔI UI)
-    document.getElementById("post-title").value = post.title || "";
-    document.getElementById("post-content").value = post.content || "";
-    document.getElementById("post-category").value = post.category || "phong";
-    document.getElementById("post-status").value = post.status || "draft";
-    document.getElementById("post-schedule").value = post.publish_at || "";
-
-    if (post.image) {
-      document.getElementById("thumbnailPreview").src = post.image;
-      document.getElementById("thumbnailPreview").style.display = "block";
-    }
-
-  } catch (e) {
-    alert("Bài viết không tồn tại hoặc đã bị xóa");
-  }
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const btnUpdate = document.querySelector(".btn.btn-primary");
-
-  if (!btnUpdate) {
-    console.error("Không tìm thấy nút Cập nhật");
-    return;
-  }
-
-  btnUpdate.addEventListener("click", async () => {
-    const postId = new URLSearchParams(window.location.search).get("id");
-    if (!postId) {
-      alert("Thiếu ID bài viết");
-      return;
-    }
-
-    const data = {
-      title: document.getElementById("post-title").value,
-      content: document.getElementById("post-content").value,
-      category: document.getElementById("post-category").value,
-      status: document.getElementById("post-status").value,
-      publish_at: document.getElementById("post-schedule").value || null,
-      image: window.thumbnailUrl || null
-    };
-
-    const res = await fetch(`/auth/api/posts/${postId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    if (res.ok) {
-      alert("Cập nhật thành công");
-      window.location.href = "/auth/quanlybaiviet.html";
-    } else {
-      alert("Cập nhật thất bại");
-    }
-  });
-});
-</script>
-<script>
-document.querySelector(".btn.btn-primary").addEventListener("click", async () => {
-  if (!postId) {
-    alert("Thiếu ID bài viết");
-    return;
-  }
-
-  const data = {
-    title: document.getElementById("post-title").value,
-    content: document.getElementById("post-content").value,
+= {
+    title: document.getElementById("post-title").value.trim(),
+    content: document.getElementById("post-content").value.trim(),
     category: document.getElementById("post-category").value,
     status: document.getElementById("post-status").value,
     publish_at: document.getElementById("post-schedule").value || null,
@@ -1019,16 +940,18 @@ document.querySelector(".btn.btn-primary").addEventListener("click", async () =>
   const res = await fetch(`/auth/api/posts/${postId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify(payload)
   });
 
-  if (res.ok) {
-    window.location.href = "/auth/quanlybaiviet.html";
-  } else {
+  if (!res.ok) {
     alert("Cập nhật thất bại");
+    return;
   }
+
+  alert("Cập nhật bài viết thành công");
+  window.location.href = "/auth/quanlybaiviet.html";
 });
 </script>
-
+loadPost();
   </body>
 </html>
