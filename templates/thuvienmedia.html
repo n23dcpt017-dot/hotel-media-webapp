@@ -764,44 +764,7 @@
           </div>
 
           <div class="media-stats-grid">
-            <div class="media-stat-card">
-              <div class="media-stat-icon icon-blue">
-                <i class="fa-solid fa-image"></i>
-              </div>
-              <div class="media-stat-info">
-                <strong>248</strong>
-                <span>Tổng ảnh</span>
-              </div>
-            </div>
-            <div class="media-stat-card">
-              <div class="media-stat-icon icon-purple">
-                <i class="fa-solid fa-video"></i>
-              </div>
-              <div class="media-stat-info">
-                <strong>45</strong>
-                <span>Tổng video</span>
-              </div>
-            </div>
-            <div class="media-stat-card">
-              <div class="media-stat-icon icon-green">
-                <i class="fa-solid fa-arrow-up"></i>
-              </div>
-              <div class="media-stat-info">
-                <strong>23</strong>
-                <span>Upload tháng này</span>
-              </div>
-            </div>
-            <div class="media-stat-card">
-              <div class="media-stat-icon icon-red">
-                <i class="fa-solid fa-database"></i>
-              </div>
-              <div class="media-stat-info">
-                <strong>2.4 GB</strong>
-                <span>Dung lượng</span>
-              </div>
-            </div>
-          </div>
-
+            
           <div class="filter-bar-container">
             <div class="page-search-bar">
               <i class="fa-solid fa-magnifying-glass"></i>
@@ -819,114 +782,7 @@
             </div>
           </div>
 
-          <div class="media-grid">
-              <div class="media-info">
-                <strong>phong-Deluxe-01.jpg</strong>
-                <div class="media-details">
-                  <span>2.4 MB</span>
-                  <span>05/11/2025</span>
-                </div>
-                <span class="media-tag tag-image mt-2">Ảnh</span>
-              </div>
-              <div class="media-actions">
-                <button class="action-btn">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                <button class="action-btn">
-                  <i class="fa-solid fa-download"></i>
-                </button>
-                <button class="action-btn btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-
-              <div class="media-info">
-                <strong>nha-hang-buffet.jpg</strong>
-                <div class="media-details">
-                  <span>3.1 MB</span>
-                  <span>05/11/2025</span>
-                </div>
-                <span class="media-tag tag-image mt-2">Ảnh</span>
-              </div>
-              <div class="media-actions">
-                <button class="action-btn">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                <button class="action-btn">
-                  <i class="fa-solid fa-download"></i>
-                </button>
-                <button class="action-btn btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-
-              <div class="media-info">
-                <strong>khach-san-exterior.jpg</strong>
-                <div class="media-details">
-                  <span>4.2 MB</span>
-                  <span>04/11/2025</span>
-                </div>
-                <span class="media-tag tag-image mt-2">Ảnh</span>
-              </div>
-              <div class="media-actions">
-                <button class="action-btn">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                <button class="action-btn">
-                  <i class="fa-solid fa-download"></i>
-                </button>
-                <button class="action-btn btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-
-              <div class="media-info">
-                <strong>tour-phong-suite.mp4</strong>
-                <div class="media-details">
-                  <span>45.6 MB</span>
-                  <span>02/11/2025</span>
-                </div>
-                <span class="media-tag tag-video mt-2">Video</span>
-              </div>
-              <div class="media-actions">
-                <button class="action-btn">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                <button class="action-btn">
-                  <i class="fa-solid fa-download"></i>
-                </button>
-                <button class="action-btn btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-
-              <div class="media-info">
-                <strong>gioi-thieu-nha-hang.mp4</strong>
-                <div class="media-details">
-                  <span>38.2 MB</span>
-                  <span>01/11/2025</span>
-                </div>
-                <span class="media-tag tag-video mt-2">Video</span>
-              </div>
-              <div class="media-actions">
-                <button class="action-btn">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                <button class="action-btn">
-                  <i class="fa-solid fa-download"></i>
-                </button>
-                <button class="action-btn btn-delete">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+          
     </div>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -983,7 +839,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const res = await fetch("/auth/api/media");
   const data = await res.json();
-
+  data.forEach(m => {
+  if (m.type === "video") {
+    // tag-video
+  } else {
+    // tag-image
+  }
+});
   grid.innerHTML = "";
 
   data.forEach(m => {
