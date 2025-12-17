@@ -341,7 +341,7 @@
                     <div class="form-card">
                         <label for="post-schedule">Ngày/giờ xuất bản</label>
                         <div class="input-group-with-icon">
-                            <input type="text" id="post-schedule" placeholder="dd/mm/yyyy">
+                            <input type="date" id="post-schedule">
                             <i class="fa-regular fa-calendar-days"></i>
                         </div>
                     </div>
@@ -487,24 +487,15 @@ function collectPostData(forceStatus = null) {
   let uiStatus = document.getElementById("post-status").value;
   let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
 
-  // LOGIC MỚI: TỰ ĐỘNG LẤY NGÀY NẾU Ô NGÀY TRỐNG (KỂ CẢ NHÁP)
-  let publishDate = document.getElementById("post-schedule").value;
-  
-  if (!publishDate) {
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const year = now.getFullYear();
-      publishDate = `${day}/${month}/${year}`; 
-  }
+  const publishDate = document.getElementById("post-schedule").value || null;
 
   return {
     title: document.getElementById("post-title").value,
     content: document.getElementById("post-content").value,
     category: document.getElementById("post-category").value,
     status: finalStatus,
-    publish_at: publishDate, // Luôn gửi ngày lên
-    image: thumbnailUrl || undefined,   
+    publish_at: publishDate,   // YYYY-MM-DD
+    image: thumbnailUrl || undefined,
     seo: {
       title: document.getElementById("meta-title").value,
       description: document.getElementById("meta-desc").value,
