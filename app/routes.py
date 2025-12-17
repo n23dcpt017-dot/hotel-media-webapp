@@ -340,11 +340,11 @@ def update_post(id):
     
     # Parse date if provided
     if data.get("publish_at"):
-    try:
-        # chuẩn ISO từ input type="date"
-        post.publish_at = datetime.strptime(
+        try:
+            # chuẩn ISO từ input type="date"
+            post.publish_at = datetime.strptime(
             data["publish_at"], "%Y-%m-%d"
-        )
+            )
     except ValueError:
         try:
             # fallback nếu frontend gửi dd/mm/yyyy
