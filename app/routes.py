@@ -574,3 +574,20 @@ def update_user(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
+@auth.route("/api/comments", methods=["GET"])
+@login_required
+def list_comments():
+    status = request.args.get("status") 
+    
+    query = Comment.query
+    
+
+    if status and status != 'all':
+        query = query.filter_by(status=status)
+    
+    
+    comments = query.order_by(Comment.created_at.desc()).all()
+    
+    
+    return jsonify([c.to_dict() for c in comments])
