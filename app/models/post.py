@@ -28,3 +28,7 @@ class Post(db.Model):
         default=db.func.now(),
         onupdate=db.func.now()
     )
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+
+def __repr__(self):
+    return f'<Post {self.title}>'
