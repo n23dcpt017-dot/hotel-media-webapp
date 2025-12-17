@@ -266,8 +266,7 @@ def create_post():
     if not data.get("title"):
         return jsonify({"error": "Thiếu tiêu đề"}), 400
 
-   publish_at = None
-
+publish_at = None
 if data.get("publish_at"):
     try:
         publish_at = datetime.strptime(
