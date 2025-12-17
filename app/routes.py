@@ -370,39 +370,43 @@ def upload_thumbnail():
 @auth.route("/api/media", methods=["GET"])
 @login_required
 def list_media():
-    media_type = request.args.get("type") # image | video
-    
+    media_type = request.args.get("type")
     query = Media.query
-    if media_type:
-        query = query.filter_by(type=media_type)
-        
+    if media_type: query = query.filter_by(type=media_type)
     media_list = query.order_by(Media.id.desc()).all()
     
     results = []
     for m in media_list:
-        # Tính toán đường dẫn và size
-        file_path = os.path.join(UPLOAD_FOLDER, m.filename)
-        size_str = get_file_size(file_path) if os.path.exists(file_path) else "0 KB"
         
-        # Check link nội bộ hay external
-        url = m.filename if m.filename.startswith("http") else f"/uploads/{m.filename}"
+        if m.filename.startswith("http"):
+            
+            url = m.filename
+            size_str = "Online"
+        elif m.filename.startswith("static/"):
+           
+            url = f"/{m.filename}"
         
+            real_path = os.path.join(os.getcwd(), "app", m.filename)
+            size_str = get_file_size(real_path)
+        else:
+            url = f"/uploads/{m.filename}"
+            real_path = os.path.join(UPLOAD_FOLDER, m.filename)
+            size_str = get_file_size(real_path)
+
         results.append({
             "id": m.id,
             "filename": m.filename,
             "type": m.type,
-            "url": url,
+            "url": url, 
             "created_at": m.created_at.strftime("%d/%m/%Y"),
             "size": size_str
         })
-        
     return jsonify(results)
 
-# 3. API Upload riêng cho trang Thư viện
 @auth.route("/api/media/upload", methods=["POST"])
 @login_required
 def upload_media_library():
-    return upload_thumbnail() # Tái sử dụng hàm trên cho gọn
+    return upload_thumbnail() 
 
 # 4. API Xóa Media
 @auth.route("/api/media/<int:id>", methods=["DELETE"])
@@ -410,7 +414,7 @@ def upload_media_library():
 def delete_media(id):
     media = Media.query.get_or_404(id)
     
-    # Xóa file vật lý nếu không phải link online
+    
     if not media.filename.startswith("http"):
         try:
             os.remove(os.path.join(UPLOAD_FOLDER, media.filename))
@@ -421,14 +425,12 @@ def delete_media(id):
     db.session.commit()
     return jsonify({"message": "Đã xóa media"})
 
-# 5. Route phục vụ file ảnh (Quan trọng để hiển thị)
+# 5. Route phục vụ file ảnh 
 @auth.route("/uploads/<filename>")
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-# =================================================
-# API KHÁC (COMMENTS, CAMPAIGNS)
-# =================================================
+
 @auth.route("/comments/<int:id>/approve", methods=["PUT"])
 @login_required
 def approve_comment(id):
