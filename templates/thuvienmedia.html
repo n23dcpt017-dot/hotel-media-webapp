@@ -1019,7 +1019,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const card = document.createElement("div");
     card.className = "media-card";
 
-    if (m.file_type === "video") {
+    if (m.type === "video") {
+      card.dataset.video = m.url;
       card.innerHTML = `
         <div class="media-preview video-preview">
           <i class="fa-solid fa-play"></i>
@@ -1027,27 +1028,51 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="media-info">
           <strong>${m.filename}</strong>
           <div class="media-details">
-            <span>${m.created_at}</span>
+            <span>${new Date(m.created_at).toLocaleDateString("vi-VN")}</span>
           </div>
           <span class="media-tag tag-video">Video</span>
         </div>
+        <div class="media-actions">
+          <a href="${m.url}" download class="action-btn"><i class="fa-solid fa-download"></i></a>
+          <button class="action-btn btn-delete" data-id="${m.id}">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
       `;
-      card.dataset.video = m.url;
     } else {
       card.innerHTML = `
         <img src="${m.url}" class="media-preview"/>
         <div class="media-info">
           <strong>${m.filename}</strong>
           <div class="media-details">
-            <span>${m.created_at}</span>
+            <span>${new Date(m.created_at).toLocaleDateString("vi-VN")}</span>
           </div>
           <span class="media-tag tag-image">Ảnh</span>
+        </div>
+        <div class="media-actions">
+          <a href="${m.url}" download class="action-btn"><i class="fa-solid fa-download"></i></a>
+          <button class="action-btn btn-delete" data-id="${m.id}">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       `;
     }
 
     grid.appendChild(card);
   });
+});
+</script>
+
+<script>
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".btn-delete");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+  if (!confirm("Xóa media này?")) return;
+
+  await fetch(`/auth/api/media/${id}`, { method: "DELETE" });
+  btn.closest(".media-card").remove();
 });
 </script>
 
