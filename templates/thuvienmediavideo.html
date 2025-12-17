@@ -997,7 +997,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const res = await fetch("/auth/api/media?type=video");
   const data = (await res.json()).filter(m => m.type === "video");
+  data.forEach(m => {
+  if (m.type !== "video") return;
 
+  card.innerHTML = `
+    <div class="media-preview video-preview">
+      <i class="fa-solid fa-play"></i>
+    </div>
+    ...
+    <span class="media-tag tag-video">Video</span>
+  `;
+});
   grid.innerHTML = "";
 
   data.forEach(m => {
