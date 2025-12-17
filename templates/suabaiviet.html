@@ -788,14 +788,6 @@ async function updatePost() {
     window.location.href = "/auth/quanlybaiviet.html";
   }
 
-  // ===== 2. Lấy danh sách bài viết =====
-  const posts = JSON.parse(localStorage.getItem("posts")) || [];
-  const post = posts.find(p => p.id === postId);
-
-  if (!post) {
-    alert("Bài viết không tồn tại");
-    window.location.href = "/auth/quanlybaiviet.html";
-  }
 
   // ===== 3. Khai báo các biến giao diện =====
   const titleInput = document.getElementById("post-title");
@@ -949,6 +941,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (e) {
     alert("Bài viết không tồn tại hoặc đã bị xóa");
   }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btnUpdate = document.querySelector(".btn.btn-primary");
+
+  if (!btnUpdate) {
+    console.error("Không tìm thấy nút Cập nhật");
+    return;
+  }
+
+  btnUpdate.addEventListener("click", async () => {
+    const postId = new URLSearchParams(window.location.search).get("id");
+    if (!postId) {
+      alert("Thiếu ID bài viết");
+      return;
+    }
+
+    const data = {
+      title: document.getElementById("post-title").value,
+      content: document.getElementById("post-content").value,
+      category: document.getElementById("post-category").value,
+      status: document.getElementById("post-status").value,
+      publish_at: document.getElementById("post-schedule").value || null,
+      image: window.thumbnailUrl || null
+    };
+
+    const res = await fetch(`/auth/api/posts/${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      alert("Cập nhật thành công");
+      window.location.href = "/auth/quanlybaiviet.html";
+    } else {
+      alert("Cập nhật thất bại");
+    }
+  });
 });
 </script>
 
