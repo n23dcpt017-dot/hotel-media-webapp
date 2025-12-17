@@ -411,21 +411,30 @@ def upload_thumbnail():
     if file.filename == "":
         return jsonify({"error": "Empty filename"}), 400
 
-    # Validate file type
-    if not allowed_file(file.filename):
-        return jsonify({"error": "Invalid file type. Allowed: png, jpg, jpeg, gif"}), 400
+    os.makedirs("uploads", exist_ok=True)
 
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-    # Get file extension
-    ext = file.filename.rsplit('.', 1)[1].lower()
+    ext = file.filename.rsplit(".", 1)[-1].lower()
     filename = f"{uuid.uuid4().hex}.{ext}"
-    path = os.path.join(UPLOAD_FOLDER, filename)
+    path = os.path.join("uploads", filename)
     file.save(path)
 
+    # 🔥 XÁC ĐỊNH LOẠI MEDIA
+    media_type = "video" if ext in ["mp4", "mov", "avi"] else "image"
+
+    # 🔥 LƯU VÀO BẢNG MEDIA
+    media = Media(
+        filename=filename,
+        url=f"/uploads/{filename}",
+        type=media_type
+    )
+    db.session.add(media)
+    db.session.commit()
+
     return jsonify({
-        "url": f"/uploads/{filename}"
+        "url": media.url,
+        "type": media.type
     })
+
 
 
 # =================================================
@@ -526,3 +535,24 @@ def hide_media(id):
 def uploaded_file(filename):
     """Serve uploaded files"""
     return send_from_directory(UPLOAD_FOLDER, filename)
+
+@auth.route("/api/media")
+@login_required
+def list_media():
+    media_type = request.args.get("type")  # image | video
+
+    query = Media.query
+    if media_type:
+        query = query.filter_by(type=media_type)
+
+    items = query.order_by(Media.created_at.desc()).all()
+
+    return jsonify([
+        {
+            "id": m.id,
+            "url": m.url,
+            "type": m.type,
+            "filename": m.filename
+        }
+        for m in items
+    ])
