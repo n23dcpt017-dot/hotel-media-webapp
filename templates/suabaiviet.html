@@ -757,28 +757,39 @@ let thumbnailUrl = null;
 </script>
   <script>
 async function updatePost() {
-  const data = {
-    title: document.getElementById("post-title").value,
-    content: document.getElementById("post-content").value,
+  if (!postId) {
+    alert("Thiếu ID bài viết");
+    return;
+  }
+
+  const payload = {
+    title: document.getElementById("post-title").value.trim(),
+    content: document.getElementById("post-content").value.trim(),
     category: document.getElementById("post-category").value,
     status: document.getElementById("post-status").value,
     publish_at: document.getElementById("post-schedule").value || null,
-    image: thumbnailUrl || null
+    image: thumbnailUrl
   };
 
   const res = await fetch(`/auth/api/posts/${postId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify(payload)
   });
 
-  if (res.ok) {
-    window.location.href = "/auth/quanlybaiviet.html";
-  } else {
+  if (!res.ok) {
     alert("Cập nhật thất bại");
+    return;
   }
+
+  window.location.href = "/auth/quanlybaiviet.html";
 }
+
+document
+  .querySelector(".btn.btn-primary")
+  .addEventListener("click", updatePost);
 </script>
+
 
 <script>
   // ===== 1. Lấy ID từ URL =====
@@ -820,9 +831,7 @@ async function updatePost() {
       document.getElementById("uploadPlaceholder").style.display = "none";
     }
 
-  } catch {
-    alert("Bài viết không tồn tại hoặc đã bị xóa");
-  }
+  } 
 });
   // ===== 5. Xử lý khi bấm chọn ảnh mới =====
   
@@ -852,105 +861,47 @@ async function updatePost() {
     }
   });
 
-  // ===== 6. Nút CẬP NHẬT (Trong suabaiviet.html) =====
-  document.querySelector(".btn.btn-primary").addEventListener("click", () => {
-    post.title = titleInput.value.trim();
-    post.content = contentInput.value.trim();
-    post.category = categoryInput.value;
-    
-    // Tự động gán tên danh mục và màu sắc để hiển thị đẹp
-    if(post.category === 'phong') { post.categoryName = "Phòng"; post.tagColor = "tag-blue"; }
-    else if(post.category === 'am-thuc') { post.categoryName = "Ẩm thực"; post.tagColor = "tag-green"; }
-    else if(post.category === 'khuyen-mai') { post.categoryName = "Khuyến mãi"; post.tagColor = "tag-blue"; }
-    else if(post.category === 'su-kien') { post.categoryName = "Sự kiện"; post.tagColor = "tag-purple"; }
-    else { post.categoryName = "Dịch vụ"; post.tagColor = "tag-blue"; }
-
-    post.status = statusInput.value;
-    
-    // Lưu lại vào LocalStorage
-    // Tìm vị trí bài viết cũ và ghi đè bài mới vào
-    const index = posts.findIndex(p => p.id === postId);
-    if (index !== -1) {
-        posts[index] = post;
-        localStorage.setItem("posts", JSON.stringify(posts));
-        alert("Cập nhật bài viết thành công!");
-        window.location.href = "/auth/quanlybaiviet.html";
-    }
-  });
-
-  // ===== 7. Nút LƯU NHÁP =====
-  document.querySelector(".btn.btn-secondary").addEventListener("click", () => {
-    post.title = titleInput.value.trim();
-    post.content = contentInput.value.trim();
-    post.category = categoryInput.value;
-    post.status = "nhap";
-
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    alert("Đã lưu nháp!");
-  });
 </script>
 <script>
+async function loadPost() {
+  const params = new URLSearchParams(window.location.search);
+  postId = params.get("id");
 
-async function loadPost() { try{
-  const res = await fetch(`/auth/api/posts/${postId}`);
-  if (!res.ok) throw new Error();
-
-  const post = await res.json();
-
-  document.getElementById("post-title").value = post.title || "";
-  document.getElementById("post-content").value = post.content || "";
-  document.getElementById("post-category").value = post.category || "phong";
-  document.getElementById("post-status").value = post.status || "draft";
-  if (post.publish_at) {
-  // post.publish_at đang là dd/mm/yyyy
-  const parts = post.publish_at.split("/");
-  if (parts.length === 3) {
-    document.getElementById("post-schedule").value =
-      `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+  if (!postId) {
+    window.location.href = "/auth/quanlybaiviet.html";
+    return;
   }
-}
 
+  try {
+    const res = await fetch(`/auth/api/posts/${postId}`);
+    if (!res.ok) throw new Error();
 
-  if (post.image) {
+    const post = await res.json();
+
+    document.getElementById("post-title").value = post.title || "";
+    document.getElementById("post-content").value = post.content || "";
+    document.getElementById("post-category").value = post.category || "";
+    document.getElementById("post-status").value = post.status || "";
+
+    if (post.publish_at) {
+      const [d, m, y] = post.publish_at.split("/");
+      document.getElementById("post-schedule").value = `${y}-${m}-${d}`;
+    }
+
+    if (post.image) {
       thumbnailUrl = post.image;
       const img = document.getElementById("image-preview");
       img.src = post.image;
       img.style.display = "block";
       document.getElementById("upload-content").style.display = "none";
     }
-
   } catch {
     alert("Bài viết không tồn tại hoặc đã bị xóa");
     window.location.href = "/auth/quanlybaiviet.html";
   }
 }
+
 document.addEventListener("DOMContentLoaded", loadPost);
-</script>
-<script>
-= {
-    title: document.getElementById("post-title").value.trim(),
-    content: document.getElementById("post-content").value.trim(),
-    category: document.getElementById("post-category").value,
-    status: document.getElementById("post-status").value,
-    publish_at: document.getElementById("post-schedule").value || null,
-    image: thumbnailUrl
-  };
-
-  const res = await fetch(`/auth/api/posts/${postId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  if (!res.ok) {
-    alert("Cập nhật thất bại");
-    return;
-  }
-
-  alert("Cập nhật bài viết thành công");
-  window.location.href = "/auth/quanlybaiviet.html";
-});
 </script>
 loadPost();
   </body>
