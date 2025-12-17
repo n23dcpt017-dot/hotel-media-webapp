@@ -333,7 +333,9 @@ function renderUsers(users) {
             <td>${fakeLastLogin}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="action-btn"><i class="fa-solid fa-pencil"></i></button>
+                    <a href="/auth/suanguoidung.html?id=${u.id}" class="action-btn">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
                     <button class="action-btn btn-delete" onclick="deleteUser(${u.id})">
                         <i class="fa-solid fa-trash"></i>
                     </button>
