@@ -14,7 +14,40 @@ class User(UserMixin, db.Model):
     # ==== EXTRA FIELDS CHO UNIT TEST ====
     full_name = db.Column(db.String(128))
     role = db.Column(db.String(32), default='user')
+    
+    @property
+    def avatar_initials(self):
+        """
+        Tự động tạo 2 chữ cái đầu cho Avatar.
+        Logic: Lấy chữ cái đầu của (Tên lót) và (Tên).
+        Ví dụ: "Nguyễn Văn An" -> "VA"
+        """
+        if not self.fullname:
+            # Nếu chưa có tên, lấy 2 chữ đầu của username hoặc email
+            name = self.username or self.email
+            return name[:2].upper() if name else "US"
 
+        parts = self.fullname.strip().split()
+        
+        if len(parts) >= 2:
+            # Lấy chữ cái đầu của từ kế cuối (Tên lót) và từ cuối (Tên)
+            # parts[-2] là tên lót, parts[-1] là tên chính
+            initials = parts[-2][0] + parts[-1][0]
+        else:
+            # Nếu tên chỉ có 1 chữ (ví dụ: "Admin") -> Lấy 2 chữ đầu của nó
+            initials = parts[0][:2]
+            
+        return initials.upper()
+
+    @property
+    def avatar_color(self):
+        """
+        (Tùy chọn) Tự động chọn màu nền dựa trên tên để mỗi người 1 màu khác nhau
+        """
+        colors = ['#e0e7ff', '#d1fae5', '#e0f2fe', '#feebea', '#f3e8ff', '#ffedd5']
+        # Dùng hàm hash để chọn màu cố định cho mỗi user
+        index = hash(self.username or "user") % len(colors)
+        return colors[index]
     password_hash = db.Column(db.String(256))
     is_active = db.Column(db.Boolean, default=True)
 
