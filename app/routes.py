@@ -345,6 +345,7 @@ import uuid
 from werkzeug.utils import secure_filename
 
 @auth.route("/api/upload-thumbnail", methods=["POST"])
+@login_required
 def upload_thumbnail():
     if "file" not in request.files:
         return jsonify({"error": "No file"}), 400
@@ -363,9 +364,6 @@ def upload_thumbnail():
         "url": f"/uploads/{filename}"
     })
 
-    return jsonify({
-        "url": f"/static/uploads/thumbnail/{filename}"
-    })
 
 # =================================================
 # COMMENTS (APPROVED / REJECTED / DELETED)
