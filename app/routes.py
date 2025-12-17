@@ -542,18 +542,18 @@ def list_media():
     media_type = request.args.get("type")  # image | video
 
     query = Media.query
+
     if media_type:
         query = query.filter_by(type=media_type)
 
-    items = query.order_by(Media.created_at.desc()).all()
+    media_list = query.order_by(Media.created_at.desc()).all()
 
     return jsonify([
         {
             "id": m.id,
             "filename": m.filename,
-            "url": m.url,
-            "file_type": m.file_type,
-            "created_at": m.created_at.strftime("%d/%m/%Y")
+            "type": m.type,
+            "url": f"/uploads/{m.filename}"
         }
-        for m in media
+        for m in media_list
     ])
