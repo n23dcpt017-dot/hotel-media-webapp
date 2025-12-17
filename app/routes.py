@@ -1,11 +1,4 @@
-publish_at = None
-if data.get("publish_at"):
-    try:
-        publish_at = datetime.strptime(
-            data["publish_at"],
-            "%Y-%m-%d"
-        )
-    except ValueError:from flask import (
+from flask import (
     Blueprint, render_template, request,
     redirect, session, url_for, jsonify,
     send_from_directory
@@ -14,20 +7,26 @@ from flask_login import (
     login_user, logout_user,
     login_required, current_user
 )
+from datetime import datetime
+from werkzeug.utils import secure_filename
+import os, uuid
+
 from app import db, login_manager
 from app.models.user import User
 from app.models.post import Post
 from app.models.comment import Comment
 from app.models.campaign import Campaign
 from app.models.media import Media
-import os, uuid
 
+# =================================================
+# CONFIG
+# =================================================
 auth = Blueprint("auth", __name__)
 UPLOAD_FOLDER = "uploads"
+
 # =================================================
 # AUTH HANDLER
 # =================================================
-
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect(url_for("auth.login"))
@@ -46,28 +45,17 @@ def login():
     password = request.form.get("password")
 
     if not username or not password:
-        return render_template(
-            "login.html",
-            error="Vui lòng nhập đủ thông tin"
-        )
+        return render_template("login.html", error="Vui lòng nhập đủ thông tin")
 
-    # Login bằng username HOẶC email
     user = User.query.filter(
-        (User.username == username) |
-        (User.email == username)
+        (User.username == username) | (User.email == username)
     ).first()
 
     if not user or not user.check_password(password):
-        return render_template(
-            "login.html",
-            error="Sai thông tin đăng nhập"
-        )
+        return render_template("login.html", error="Sai thông tin đăng nhập")
 
     if not user.is_active:
-        return render_template(
-            "login.html",
-            error="Tài khoản đã bị khóa"
-        )
+        return render_template("login.html", error="Tài khoản đã bị khóa")
 
     login_user(user)
     return redirect(url_for("auth.tongquan_html"))
@@ -81,43 +69,6 @@ def logout():
     return redirect(url_for("auth.login"))
 
 # =================================================
-# OAUTH (GOOGLE / FACEBOOK / ZALO / TIKTOK)
-# =================================================
-def oauth_login(provider, email):
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        user = User(
-            username=email.split("@")[0],
-            email=email,
-            role="user"
-        )
-        db.session.add(user)
-        db.session.commit()
-
-    login_user(user)
-    return redirect(url_for("auth.tongquan_html"))
-
-
-@auth.route("/login/google")
-def login_google():
-    return oauth_login("google", "google_user@gmail.com")
-
-
-@auth.route("/login/facebook")
-def login_facebook():
-    return oauth_login("facebook", "fb_user@gmail.com")
-
-
-@auth.route("/login/zalo")
-def login_zalo():
-    return oauth_login("zalo", "zalo_user@gmail.com")
-
-
-@auth.route("/login/tiktok")
-def login_tiktok():
-    return oauth_login("tiktok", "tiktok_user@gmail.com")
-
-# =================================================
 # FRONTEND PAGES
 # =================================================
 @auth.route("/")
@@ -126,13 +77,6 @@ def login_tiktok():
 def dashboard():
     return render_template("tongquan.html")
 
-
-@auth.route("/index")
-@login_required
-def index():
-    return render_template("index.html")
-
-
 @auth.route("/tongquan.html")
 @login_required
 def tongquan_html():
@@ -140,131 +84,17 @@ def tongquan_html():
 
 @auth.route("/quanlybaiviet.html")
 @login_required
-def page_quanly_baiviet():
+def quanly_baiviet():
     return render_template("quanlybaiviet.html")
-
-@auth.route("/quanlylivestream.html")
-@login_required
-def page_quanly_livestream():
-    return render_template("quanlylivestream.html")
-
-@auth.route("/thuvienmedia.html")
-@login_required
-def page_thuvien_media():
-    return render_template("thuvienmedia.html")
-
-@auth.route("/nguoidung.html")
-@login_required
-def page_nguoidung():
-    return render_template("nguoidung.html")
-
-@auth.route("/analyticsvaseo.html")
-@login_required
-def page_analytics():
-    return render_template("analyticsvaseo.html")
-
-@auth.route("/binhluan.html")
-@login_required
-def page_binhluan():
-    return render_template("binhluan.html")
-
-@auth.route("/chiendich.html")
-@login_required
-def page_chiendich():
-    return render_template("chiendich.html")
-
-@auth.route("/xuatban.html")
-@login_required
-def page_xuatban():
-    return render_template("xuatban.html")
-
-@auth.route("/binhluanchoduyet.html")
-@login_required
-def binhluan_choduyet():
-    return render_template("binhluanchoduyet.html")
-
-@auth.route("/binhluandaduyet.html")
-@login_required
-def binhluan_daduyet():
-    return render_template("binhluandaduyet.html")
-
-@auth.route("/binhluantuchoi.html")
-@login_required
-def binhluan_tuchoi():
-    return render_template("binhluantuchoi.html")
-
-@auth.route("/chiendichdalenlich.html")
-@login_required
-def chiendich_dalenlich():
-    return render_template("chiendichdalenlich.html")
-
-@auth.route("/chiendichdangchay.html")
-@login_required
-def chiendich_dangchay():
-    return render_template("chiendichdangchay.html")
-
-@auth.route("/chiendichtamdung.html")
-@login_required
-def chiendich_tamdung():
-    return render_template("chiendichtamdung.html")
-
-@auth.route("/nguoidungadmin.html")
-@login_required
-def nguoidung_admin():
-    return render_template("nguoidungadmin.html")
-
-@auth.route("/nguoidungeditor.html")
-@login_required
-def nguoidung_editor():
-    return render_template("nguoidungeditor.html")
-
-@auth.route("/nguoidungviewer.html")
-@login_required
-def nguoidung_viewer():
-    return render_template("nguoidungviewer.html")
-
-@auth.route("/quanlybaivietdalenlich.html")
-@login_required
-def quanlybaiviet_dalenlich():
-    return render_template("quanlybaivietdalenlich.html")
-
-@auth.route("/quanlybaivietdaxuatban.html")
-@login_required
-def quanlybaiviet_daxuatban():
-    return render_template("quanlybaivietdaxuatban.html")
-
-@auth.route("/quanlybaivietnhap.html")
-@login_required
-def quanlybaiviet_nhap():
-    return render_template("quanlybaivietnhap.html")
-
-@auth.route("/suabaiviet.html")
-@login_required
-def sua_baiviet():
-    return render_template("suabaiviet.html")
 
 @auth.route("/taobaiviet.html")
 @login_required
 def tao_baiviet():
     return render_template("taobaiviet.html")
 
-@auth.route("/thuvienmediaanh.html")
-@login_required
-def thuvienmedia_anh():
-    return render_template("thuvienmediaanh.html")
-
-@auth.route("/thuvienmediavideo.html")
-@login_required
-def thuvienmedia_video():
-    return render_template("thuvienmediavideo.html")
-
-
-
 # =================================================
-# POSTS (ẨN / KHÔI PHỤC)
+# POSTS API
 # =================================================
-from datetime import datetime
-
 @auth.route("/api/posts", methods=["POST"])
 @login_required
 def create_post():
@@ -277,33 +107,25 @@ def create_post():
     if data.get("publish_at"):
         try:
             publish_at = datetime.strptime(
-                data["publish_at"],
-                "%d/%m/%Y"
+                data["publish_at"], "%Y-%m-%d"
             )
         except ValueError:
-            return jsonify({
-                "error": "Ngày phải theo định dạng dd/mm/yyyy"
-            }), 400
-
+            return jsonify({"error": "Sai định dạng ngày"}), 400
 
     post = Post(
-    title=data["title"],
-    content=data.get("content"),
-    status=data.get("status", "draft"),
-    publish_at=publish_at,
-    image=data.get("image") or "/static/images/phong1.png"
-)
-
+        title=data["title"],
+        content=data.get("content"),
+        category=data.get("category", "phong"),
+        status=data.get("status", "draft"),
+        publish_at=publish_at,
+        image=data.get("image") or "/static/images/phong1.png",
+        author=current_user.username
+    )
 
     db.session.add(post)
     db.session.commit()
 
-    return jsonify({
-        "message": "Tạo bài viết thành công",
-        "id": post.id
-    }), 201
-
-
+    return jsonify({"id": post.id}), 201
 
 
 @auth.route("/api/posts/<int:id>", methods=["PUT"])
@@ -314,13 +136,22 @@ def update_post(id):
 
     post.title = data.get("title", post.title)
     post.content = data.get("content", post.content)
+    post.category = data.get("category", post.category)
     post.status = data.get("status", post.status)
-    post.publish_at = data.get("publish_at", post.publish_at)
+
+    if data.get("publish_at"):
+        try:
+            post.publish_at = datetime.strptime(
+                data["publish_at"], "%Y-%m-%d"
+            )
+        except ValueError:
+            return jsonify({"error": "Sai định dạng ngày"}), 400
+
+    if data.get("image"):
+        post.image = data["image"]
 
     db.session.commit()
-
     return jsonify({"message": "Cập nhật thành công"})
-
 
 
 @auth.route("/api/posts/<int:id>", methods=["DELETE"])
@@ -331,34 +162,34 @@ def delete_post(id):
     db.session.commit()
     return jsonify({"message": "Đã xóa"})
 
+
 @auth.route("/api/posts")
 @login_required
 def list_posts():
-    status = request.args.get("status")  # draft / published / scheduled
+    status = request.args.get("status")
 
     query = Post.query.filter_by(is_deleted=False)
-
     if status:
         query = query.filter_by(status=status)
 
     posts = query.order_by(Post.created_at.desc()).all()
 
     return jsonify([
-    {
-        "id": p.id,
-        "title": p.title,
-        "status": p.status,
-        "publish_at": p.publish_at.strftime("%d/%m/%Y") if p.publish_at else None,
-        "image": p.image,
-        "category": p.category,
-        "author": p.author
-    }
-    for p in posts
-])
+        {
+            "id": p.id,
+            "title": p.title,
+            "status": p.status,
+            "publish_at": p.publish_at.strftime("%d/%m/%Y") if p.publish_at else None,
+            "image": p.image,
+            "category": p.category,
+            "author": p.author
+        }
+        for p in posts
+    ])
 
-import uuid
-from werkzeug.utils import secure_filename
-
+# =================================================
+# UPLOAD THUMBNAIL
+# =================================================
 @auth.route("/api/upload-thumbnail", methods=["POST"])
 @login_required
 def upload_thumbnail():
@@ -372,9 +203,18 @@ def upload_thumbnail():
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
     filename = f"{uuid.uuid4().hex}.jpg"
-    path = os.path.join(UPLOAD_FOLDER, filename)
+    path = os.path.join(UPLOAD_FOLDER, secure_filename(filename))
     file.save(path)
 
+    return jsonify({
+        "url": f"/uploads/{filename}"
+    })
+
+@auth.route("/uploads/<filename>")
+@login_required
+def get_upload(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+    file.save(path)
     return jsonify({
         "url": f"/uploads/{filename}"
     })
