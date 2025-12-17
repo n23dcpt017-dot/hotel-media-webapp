@@ -17,13 +17,13 @@ with app.app_context():
         print("➕ Tạo user 'admin' mới...")
 
         admin = User(
-            username="Admin",
+            username="admin",
             email="admin@hotel.com",
-            full_name="Administrator",
+            fullname="Admin",
             role="admin",
             is_active=True
         )
-        admin.set_password("Admin@123")
+        admin.set_password("admin123")
         
         db.session.add(admin)
         db.session.commit()
