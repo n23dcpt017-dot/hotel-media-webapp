@@ -91,7 +91,7 @@ class LoginUnitTest(unittest.TestCase):
         user = User(
             username='new_staff',
             email='new_staff@example.com',  # Email mới, không trùng
-            full_name='New Staff Member',
+            fullname='New Staff Member',
             role='staff'
         )
         user.set_password('Staff@123')
@@ -233,7 +233,7 @@ class LoginUnitTest(unittest.TestCase):
         inactive_user = User(
             username='inactive_user',
             email='inactive@example.com',
-            full_name='Inactive User',
+            fullname='Inactive User',
             role='viewer',
             is_active=False  # INACTIVE
         )
@@ -319,7 +319,7 @@ class LoginUnitTest(unittest.TestCase):
         duplicate_user = User(
             username='TestAdmin',  # Trùng với test_user
             email='another@example.com',  # Email khác
-            full_name='Another User'
+            fullname='Another User'
         )
         duplicate_user.set_password('AnotherPass123')
         
@@ -341,7 +341,7 @@ class LoginUnitTest(unittest.TestCase):
         duplicate_user = User(
             username='AnotherUser',  # Username khác
             email='test_admin@example.com',  # Trùng email với test_user
-            full_name='Another User'
+            fullname='Another User'
         )
         duplicate_user.set_password('AnotherPass123')
         
@@ -404,7 +404,7 @@ class LoginUnitTest(unittest.TestCase):
         user_to_delete = User(
             username='todelete',
             email='delete@example.com',
-            full_name='User To Delete',
+            fullname='User To Delete',
             role='staff'
         )
         user_to_delete.set_password('Delete@123')
@@ -442,7 +442,7 @@ class LoginUnitTest(unittest.TestCase):
             user = User(
                 username=data['username'],
                 email=data['email'],
-                full_name=f"User {data['username']}",
+                fullname=f"User {data['username']}",
                 role=data['role']
             )
             user.set_password(f"{data['username']}@123")
