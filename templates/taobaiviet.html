@@ -487,20 +487,14 @@ function collectPostData(forceStatus = null) {
   let uiStatus = document.getElementById("post-status").value;
   let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
 
-  let publishDate = document.getElementById("post-schedule").value;
-
-  // 🔥 AUTO SET NGÀY HÔM NAY NẾU KHÔNG CHỌN
-  if (!publishDate) {
-    const today = new Date();
-    publishDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
-  }
+  const publishDate = document.getElementById("post-schedule").value || null;
 
   return {
     title: document.getElementById("post-title").value,
     content: document.getElementById("post-content").value,
     category: document.getElementById("post-category").value,
     status: finalStatus,
-    publish_at: publishDate,
+    publish_at: publishDate,   // YYYY-MM-DD
     image: thumbnailUrl || undefined,
     seo: {
       title: document.getElementById("meta-title").value,
