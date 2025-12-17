@@ -1,3 +1,14 @@
+publish_at = None
+if data.get("publish_at"):
+    try:
+        publish_at = datetime.strptime(
+            data["publish_at"],
+            "%Y-%m-%d"
+        )
+    except ValueError:
+        return jsonify({
+            "error": "Sai định dạng ngày"
+        }), 400
 from flask import (
     Blueprint, render_template, request,
     redirect, session, url_for, jsonify,
@@ -271,12 +282,13 @@ def create_post():
         try:
             publish_at = datetime.strptime(
                 data["publish_at"],
-                "%d/%m/%Y"
+                "%Y-%m-%d"
             )
         except ValueError:
             return jsonify({
-                "error": "Ngày phải theo định dạng dd/mm/yyyy"
+                "error": "Sai định dạng ngày"
             }), 400
+
 
 
     post = Post(
