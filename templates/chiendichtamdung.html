@@ -222,13 +222,26 @@
     </div>
 
     <script>
+      // 1. CÁC HÀM TIỆN ÍCH
       const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+      
       const getPlatformIcon = (p) => {
-          if(p === 'facebook') return 'Facebook'; if(p === 'google') return 'Google'; if(p === 'tiktok') return 'Tiktok'; if(p === 'youtube') return 'Youtube'; return 'Website';
+          if(p === 'facebook') return '<i class="fa-brands fa-facebook" style="color:#1877F2"></i>';
+          if(p === 'google') return '<i class="fa-brands fa-google" style="color:#DB4437"></i>';
+          if(p === 'tiktok') return '<i class="fa-brands fa-tiktok" style="color:#000"></i>';
+          if(p === 'youtube') return '<i class="fa-brands fa-youtube" style="color:#FF0000"></i>';
+          return '<i class="fa-solid fa-bullhorn"></i>';
       }
+      
       const getPlatformClass = (p) => {
-          if(p === 'facebook') return 'tag-facebook'; if(p === 'google') return 'tag-google'; if(p === 'tiktok') return 'tag-tiktok'; if(p === 'youtube') return 'tag-youtube'; return 'tag-website';
+          if(p === 'facebook') return 'tag-facebook';
+          if(p === 'google') return 'tag-google';
+          if(p === 'tiktok') return 'tag-tiktok';
+          if(p === 'youtube') return 'tag-youtube';
+          if(p === 'zalo') return 'tag-zalo';
+          return 'tag-website';
       }
+
       function getImageForCampaign(name) {
           const n = name.toLowerCase();
           if(n.includes('phòng') || n.includes('suite')) return '../static/images/phong1.png';
@@ -236,67 +249,181 @@
           if(n.includes('ăn') || n.includes('thực')) return '../static/images/amthuc.png';
           return '../static/images/khachhang.png';
       }
+
+      // Xác định đang ở trang nào
       function getCurrentTab() {
           if(window.location.href.includes('chiendichdangchay')) return 'active';
           if(window.location.href.includes('chiendichdalenlich')) return 'scheduled';
           if(window.location.href.includes('chiendichtamdung')) return 'paused';
           return 'all'; 
       }
+
+      // 2. TẢI DỮ LIỆU CHÍNH
       async function loadData() {
           const container = document.getElementById('campaignList');
           if(!container) return;
+          
           container.innerHTML = '<p style="text-align:center; padding:20px;">Đang tải dữ liệu...</p>';
+          
           try {
+              // --- A. Cập nhật các ô số đếm (Total, Active...) từ API Stats ---
+              const statsRes = await fetch('/auth/api/campaigns/stats');
+              const stats = await statsRes.json();
+              if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = stats.total;
+              if(document.getElementById('stat-active')) document.getElementById('stat-active').innerText = stats.active;
+              if(document.getElementById('stat-scheduled')) document.getElementById('stat-scheduled').innerText = stats.scheduled;
+              if(document.getElementById('stat-paused')) document.getElementById('stat-paused').innerText = stats.paused;
+
+              // --- B. Tải danh sách chiến dịch ---
               const res = await fetch(`/auth/api/campaigns?status=${getCurrentTab()}`);
               const campaigns = await res.json();
-              calculateStats(campaigns);
+              
+              // --- C. Tính tổng tiền (Ngân sách & Chi tiêu) cho trang hiện tại ---
+              let totalBudget = 0;
+              let totalSpent = 0;
+              
+              campaigns.forEach(c => {
+                  totalBudget += c.budget;
+                  totalSpent += c.spent;
+              });
+
+              // Cập nhật vào ô Ngân sách & Chi tiêu (nếu có trong HTML)
+              if(document.getElementById('stat-budget')) document.getElementById('stat-budget').innerText = formatCurrency(totalBudget);
+              if(document.getElementById('stat-spent')) document.getElementById('stat-spent').innerText = formatCurrency(totalSpent);
+
+              // --- D. Render danh sách ---
               container.innerHTML = '';
-              if(campaigns.length === 0) { container.innerHTML = '<p style="text-align:center; padding:20px; color:#888;">Chưa có chiến dịch nào.</p>'; return; }
+              if(campaigns.length === 0) {
+                  container.innerHTML = '<p style="text-align:center; padding:20px; color:#888;">Chưa có chiến dịch nào.</p>';
+                  return;
+              }
+
               campaigns.forEach(c => {
                   let statusBtn = '';
-                  if(c.status === 'active') statusBtn = `<button class="action-btn" onclick="updateStatus(${c.id}, 'paused')"><i class="fa-solid fa-pause"></i> Tạm dừng</button>`;
-                  else if(c.status === 'paused') statusBtn = `<button class="action-btn" onclick="updateStatus(${c.id}, 'active')"><i class="fa-solid fa-play"></i> Tiếp tục</button>`;
-                  
+                  if(c.status === 'active') {
+                      statusBtn = `<button class="action-btn" onclick="updateStatus(${c.id}, 'paused')"><i class="fa-solid fa-pause"></i> Tạm dừng</button>`;
+                  } else if(c.status === 'paused') {
+                      statusBtn = `<button class="action-btn" onclick="updateStatus(${c.id}, 'active')"><i class="fa-solid fa-play"></i> Tiếp tục</button>`;
+                  }
+
                   const html = `
                   <article class="campaign-card">
-                    <div class="campaign-image"><img src="${getImageForCampaign(c.name)}" alt="${c.name}" onerror="this.src='../static/images/khachhang.png'" /></div>
-                    <div class="campaign-content">
-                      <div class="campaign-header"><h3 class="campaign-title">${c.name}</h3><span class="status-tag status-${c.status}">${c.status==='active'?'Đang chạy':(c.status==='paused'?'Tạm dừng':(c.status==='scheduled'?'Đã lên lịch':'Hoàn thành'))}</span></div>
-                      <p class="campaign-desc">Chiến dịch trên ${c.platform} với ngân sách ${formatCurrency(c.budget)}</p>
-                      <div class="campaign-social-tags"><span class="social-tag ${getPlatformClass(c.platform)}">${getPlatformIcon(c.platform)}</span></div>
-                      <div class="campaign-budget"><div class="budget-item"><span>Ngân sách:</span><strong>${formatCurrency(c.budget)}</strong></div><div class="budget-item"><span>Chi tiêu:</span><strong>${formatCurrency(c.spent)}</strong></div></div>
+                    <div class="campaign-image">
+                      <img src="${getImageForCampaign(c.name)}" alt="${c.name}" onerror="this.src='../static/images/khachhang.png'" />
                     </div>
-                    <div class="campaign-stats"><div class="stat-item"><strong>${c.reach}</strong><span>Tiếp cận</span></div><div class="stat-item"><strong>${c.clicks}</strong><span>Clicks</span></div><div class="stat-item"><strong>${c.conversions}</strong><span>Chuyển đổi</span></div></div>
-                    <div class="campaign-footer"><span class="date-range">${c.start_date_display} &rarr; ${c.end_date_display}</span>
-                      <div class="campaign-actions">${statusBtn}<button class="action-btn" onclick="openEditModal(${c.id})"><i class="fa-solid fa-pencil"></i> Sửa</button><button class="action-btn btn-delete" onclick="deleteCampaign(${c.id})"><i class="fa-solid fa-trash"></i></button></div>
+                    <div class="campaign-content">
+                      <div class="campaign-header">
+                        <h3 class="campaign-title">${c.name}</h3>
+                        <span class="status-tag status-${c.status}">
+                            ${c.status==='active'?'Đang chạy':(c.status==='paused'?'Tạm dừng':(c.status==='scheduled'?'Đã lên lịch':'Hoàn thành'))}
+                        </span>
+                      </div>
+                      <p class="campaign-desc">Chiến dịch trên ${c.platform} với ngân sách ${formatCurrency(c.budget)}</p>
+                      <div class="campaign-social-tags">
+                        <span class="social-tag ${getPlatformClass(c.platform)}">${getPlatformIcon(c.platform)}</span>
+                      </div>
+                      <div class="campaign-budget">
+                        <div class="budget-item">
+                          <span>Ngân sách:</span>
+                          <strong>${formatCurrency(c.budget)}</strong>
+                        </div>
+                        <div class="budget-item">
+                          <span>Chi tiêu:</span>
+                          <strong>${formatCurrency(c.spent)}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="campaign-stats">
+                      <div class="stat-item">
+                        <strong>${c.reach}</strong>
+                        <span>Tiếp cận</span>
+                      </div>
+                      <div class="stat-item">
+                        <strong>${c.clicks}</strong>
+                        <span>Clicks</span>
+                      </div>
+                      <div class="stat-item">
+                        <strong>${c.conversions}</strong>
+                        <span>Chuyển đổi</span>
+                      </div>
+                    </div>
+                    <div class="campaign-footer">
+                      <span class="date-range">${c.start_date_display || 'Unset'} &rarr; ${c.end_date_display || 'Unset'}</span>
+                      <div class="campaign-actions">
+                        ${statusBtn}
+                        <button class="action-btn" onclick="openEditModal(${c.id})">
+                          <i class="fa-solid fa-pencil"></i> Sửa
+                        </button>
+                        <button class="action-btn btn-delete" onclick="deleteCampaign(${c.id})">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
                     </div>
                   </article>`;
                   container.insertAdjacentHTML('beforeend', html);
               });
-          } catch(e) { console.error(e); container.innerHTML = '<p style="text-align:center; color:red">Lỗi kết nối API</p>'; }
+
+          } catch(e) {
+              console.error(e);
+              container.innerHTML = '<p style="text-align:center; color:red">Lỗi kết nối API</p>';
+          }
       }
-      async function calculateStats(currentList) {
-        try {
-            const res = await fetch('/auth/api/campaigns/stats');
-            const data = await res.json();
-            if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = data.total;
-            if(document.getElementById('stat-active')) document.getElementById('stat-active').innerText = data.active;
-            if (getCurrentTab() === 'all') {
-                let totalBudget = 0; let totalSpent = 0;
-                currentList.forEach(c => { totalBudget += c.budget; totalSpent += c.spent; });
-                if(document.getElementById('stat-budget')) document.getElementById('stat-budget').innerText = formatCurrency(totalBudget);
-                if(document.getElementById('stat-spent')) document.getElementById('stat-spent').innerText = formatCurrency(totalSpent);
-            }
-        } catch(e) {}
+
+      async function updateStatus(id, newStatus) {
+        await fetch(`/auth/api/campaigns/${id}`, {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ status: newStatus })
+        });
+        loadData();
       }
-      async function updateStatus(id, newStatus) { await fetch(`/auth/api/campaigns/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: newStatus }) }); loadData(); }
-      async function deleteCampaign(id) { if(confirm("Bạn có chắc muốn xóa không?")) { await fetch(`/auth/api/campaigns/${id}`, { method: 'DELETE' }); loadData(); } }
-      async function openEditModal(id) { const res = await fetch(`/auth/api/campaigns/${id}`); const c = await res.json(); document.getElementById('edit-id').value = c.id; document.getElementById('edit-budget').value = c.budget; document.getElementById('edit-spent').value = c.spent; document.getElementById('edit-start').value = c.start_date; document.getElementById('edit-end').value = c.end_date; document.getElementById('editModal').style.display = 'flex'; }
-      async function submitEdit() { const id = document.getElementById('edit-id').value; const data = { budget: document.getElementById('edit-budget').value, spent: document.getElementById('edit-spent').value, start_date: document.getElementById('edit-start').value, end_date: document.getElementById('edit-end').value }; await fetch(`/auth/api/campaigns/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) }); document.getElementById('editModal').style.display = 'none'; loadData(); }
-      
-      const bell = document.querySelector(".notification-btn"); const popup = document.getElementById("notificationPopup");
-      bell.addEventListener("click", (e) => { e.stopPropagation(); popup.style.display = popup.style.display === "block" ? "none" : "block"; });
-      document.addEventListener("click", () => { popup.style.display = "none"; });
+
+      async function deleteCampaign(id) {
+        if(confirm("Bạn có chắc muốn xóa không?")) {
+            await fetch(`/auth/api/campaigns/${id}`, { method: 'DELETE' });
+            loadData();
+        }
+      }
+
+      async function openEditModal(id) {
+        const res = await fetch(`/auth/api/campaigns/${id}`);
+        const c = await res.json();
+        
+        document.getElementById('edit-id').value = c.id;
+        document.getElementById('edit-budget').value = c.budget;
+        document.getElementById('edit-spent').value = c.spent;
+        document.getElementById('edit-start').value = c.start_date;
+        document.getElementById('edit-end').value = c.end_date;
+        
+        document.getElementById('editModal').style.display = 'flex';
+      }
+
+      async function submitEdit() {
+        const id = document.getElementById('edit-id').value;
+        const data = {
+            budget: document.getElementById('edit-budget').value,
+            spent: document.getElementById('edit-spent').value,
+            start_date: document.getElementById('edit-start').value,
+            end_date: document.getElementById('edit-end').value
+        };
+        await fetch(`/auth/api/campaigns/${id}`, {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+        document.getElementById('editModal').style.display = 'none';
+        loadData();
+      }
+
+      const bell = document.querySelector(".notification-btn");
+      const popup = document.getElementById("notificationPopup");
+
+      if(bell) {
+          bell.addEventListener("click", (e) => {
+            e.stopPropagation();
+            popup.style.display = popup.style.display === "block" ? "none" : "block";
+          });
+          document.addEventListener("click", () => { popup.style.display = "none"; });
+      }
+
       document.addEventListener("DOMContentLoaded", loadData);
     </script>
   </body>
