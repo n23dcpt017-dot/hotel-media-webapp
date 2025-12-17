@@ -233,26 +233,125 @@
         </div>
         <nav class="sidebar-nav">
             <ul>
-              <li><a href="/auth/tongquan.html"><i class="fa-solid fa-chart-pie"></i><span>Tổng quan</span></a></li>
-              <li><a href="/auth/quanlybaiviet.html" class="active"><i class="fa-solid fa-file-lines"></i><span>Quản lý bài viết</span></a></li>
-              <li><a href="/auth/xuatban.html"><i class="fa-solid fa-share-nodes"></i><span>Xuất bản đa kênh</span></a></li>
+              <li>
+                <a href="/auth/tongquan.html" >
+                  <i class="fa-solid fa-chart-pie"></i>
+                  <span>Tổng quan</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/quanlybaiviet.html" class="active">
+                  <i class="fa-solid fa-file-lines"></i>
+                  <span>Quản lý bài viết</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/quanlylivestream.html">
+                  <i class="fa-solid fa-video"></i>
+                  <span>Livestream</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/thuvienmedia.html">
+                  <i class="fa-solid fa-photo-film"></i>
+                  <span>Thư viện media</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/nguoidung.html">
+                  <i class="fa-solid fa-users"></i>
+                  <span>Người dùng</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/analyticsvaseo.html">
+                  <i class="fa-solid fa-arrow-trend-up"></i>
+                  <span>Analytics & SEO</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/binhluan.html">
+                  <i class="fa-solid fa-comments"></i>
+                  <span>Bình luận</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/chiendich.html">
+                  <i class="fa-solid fa-bullhorn"></i>
+                  <span>Chiến dịch</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/xuatban.html">
+                  <i class="fa-solid fa-share-nodes"></i>
+                  <span>Xuất bản đa kênh</span>
+                </a>
+              </li>
             </ul>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="/auth/logout" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Đăng xuất</span></a>
+          </nav>
+  
+          <div class="sidebar-footer">
+            <a href="/auth/logout" class="logout-btn">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Đăng xuất</span>
+            </a>
             <div class="user-profile">
               <i class="fa-solid fa-user-circle"></i>
-              <div class="user-info"><strong>ADMIN</strong><span>Quản Trị Viên</span></div>
+              <div class="user-info">
+                <strong>ADMIN</strong>
+                <span>Quản Trị Viên</span>
+              </div>
             </div>
-        </div>
+          </div>
       </aside>
 
       <div class="main-content">
         <header class="top-bar">
-          <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." /></div>
-          <div class="header-icons">
-            <button class="notification-btn"><i class="fa-solid fa-bell"></i><span class="notification-dot"></span></button>
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search..." />
           </div>
+          <div class="header-icons">
+            <button class="notification-btn">
+              <i class="fa-solid fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+<div class="notification-popup" id="notificationPopup">
+  <div class="notif-header">
+    <h4>Thông báo hệ thống</h4>
+    <span class="notif-sub">Dành cho quản trị khách sạn</span>
+  </div>
+
+  <ul class="notif-list">
+
+    <li class="notif-item urgent">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div>
+        <p class="notif-title">Khách đặt phòng mới</p>
+        <span class="notif-time">2 phút trước</span>
+      </div>
+    </li>
+
+    <li class="notif-item normal">
+      <i class="fa-solid fa-circle-info"></i>
+      <div>
+        <p class="notif-title">Yêu cầu hỗ trợ từ lễ tân</p>
+        <span class="notif-time">10 phút trước</span>
+      </div>
+    </li>
+
+    <li class="notif-item low">
+      <i class="fa-solid fa-check-circle"></i>
+      <div>
+        <p class="notif-title">Cập nhật hệ thống hoàn tất</p>
+        <span class="notif-time">1 giờ trước</span>
+      </div>
+    </li>
+
+  </ul>
+
+  <button class="notif-view-all">Xem tất cả</button>
+</div>
         </header>
 
         <main class="page-content">
