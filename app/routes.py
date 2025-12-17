@@ -578,11 +578,10 @@ def update_user(id):
 @auth.route("/api/comments", methods=["GET"])
 @login_required
 def list_comments():
-    status = request.args.get("status") 
-    
+    status = request.args.get("status")
     query = Comment.query
     
-
+    
     if status and status != 'all':
         query = query.filter_by(status=status)
     
@@ -591,3 +590,32 @@ def list_comments():
     
     
     return jsonify([c.to_dict() for c in comments])
+
+
+@auth.route("/api/comments/<int:id>/approve", methods=["PUT"])
+@login_required
+def approve_comment(id):
+    c = Comment.query.get_or_404(id)
+    c.status = "approved"
+    db.session.commit()
+    return jsonify({"message": "Đã duyệt"})
+
+
+@auth.route("/api/comments/<int:id>/reject", methods=["PUT"])
+@login_required
+def reject_comment(id):
+    c = Comment.query.get_or_404(id)
+    c.status = "rejected"
+    db.session.commit()
+    return jsonify({"message": "Đã từ chối"})
+
+
+@auth.route("/api/comments/<int:id>/delete", methods=["DELETE"])
+@login_required
+def delete_comment_api(id):
+    c = Comment.query.get_or_404(id)
+    db.session.delete(c) 
+    db.session.commit()
+    return jsonify({"message": "Đã xóa vĩnh viễn"})
+
+
