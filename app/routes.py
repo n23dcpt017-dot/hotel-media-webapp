@@ -340,9 +340,7 @@ def update_post(id):
     
     # Parse date if provided
     if data.get("publish_at"):
-    post.publish_at = datetime.strptime(
-        data["publish_at"], "%Y-%m-%d"
-    )
+        post.publish_at = datetime.strptime(data["publish_at"], "%Y-%m-%d")
 
     
     # Update image if provided
