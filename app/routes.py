@@ -345,16 +345,13 @@ def update_post(id):
             post.publish_at = datetime.strptime(
             data["publish_at"], "%Y-%m-%d"
             )
-    except ValueError:
-        try:
-            # fallback nếu frontend gửi dd/mm/yyyy
-            post.publish_at = datetime.strptime(
-                data["publish_at"], "%d/%m/%Y"
-            )
         except ValueError:
-            return jsonify({
-                "error": "Sai định dạng ngày"
-            }), 400
+            try:
+                # fallback nếu frontend gửi dd/mm/yyyy
+                post.publish_at = datetime.strptime(data["publish_at"], "%d/%m/%Y")
+            except ValueError:
+                return jsonify({
+                    "error": "Sai định dạng ngày"}), 400
 
 
     
