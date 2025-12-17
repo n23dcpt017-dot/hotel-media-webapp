@@ -434,25 +434,6 @@ def delete_media(id):
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-
-@auth.route("/comments/<int:id>/approve", methods=["PUT"])
-@login_required
-def approve_comment(id):
-    c = Comment.query.get_or_404(id); c.status = "approved"; db.session.commit()
-    return jsonify({"message": "Đã duyệt"})
-
-@auth.route("/comments/<int:id>/reject", methods=["PUT"])
-@login_required
-def reject_comment(id):
-    c = Comment.query.get_or_404(id); c.status = "rejected"; db.session.commit()
-    return jsonify({"message": "Đã từ chối"})
-
-@auth.route("/comments/<int:id>/delete", methods=["PUT"])
-@login_required
-def delete_comment(id):
-    c = Comment.query.get_or_404(id); c.status = "deleted"; db.session.commit()
-    return jsonify({"message": "Đã xóa"})
-
 @auth.route("/campaigns", methods=["POST"])
 @login_required
 def create_campaign():
