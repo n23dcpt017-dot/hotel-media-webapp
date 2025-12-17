@@ -15,6 +15,7 @@ from app.models.campaign import Campaign
 from app.models.media import Media
 import os, uuid
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
 auth = Blueprint("auth", __name__)
 UPLOAD_FOLDER = "uploads"
@@ -39,7 +40,17 @@ def parse_date(date_str):
             return datetime.strptime(date_str, "%Y-%m-%d")
         except ValueError:
             return None
-
+def get_file_size(path):
+    try:
+        size = os.path.getsize(path)
+        if size < 1024:
+            return f"{size} B"
+        elif size < 1024 * 1024:
+            return f"{size / 1024:.1f} KB"
+        else:
+            return f"{size / (1024 * 1024):.1f} MB"
+    except:
+        return "0 KB"
 # =================================================
 # AUTH HANDLER
 # =================================================
@@ -499,22 +510,41 @@ def delete_campaign(id):
 # =================================================
 # MEDIA (UPLOAD / ẨN / TẢI)
 # =================================================
-@auth.route("/media/upload", methods=["POST"])
+@auth.route("/api/upload-thumbnail", methods=["POST"])
 @login_required
-def upload_media():
-    file = request.files.get("file")
-    if not file:
-        return jsonify({"error": "Không có file"}), 400
+def upload_thumbnail():
+    if "file" not in request.files:
+        return jsonify({"error": "No file"}), 400
 
-    os.makedirs("uploads", exist_ok=True)
-    file.save(f"uploads/{file.filename}")
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"error": "Empty filename"}), 400
 
-    media = Media(filename=file.filename)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+    # Lấy đuôi file
+    ext = file.filename.rsplit(".", 1)[1].lower() if "." in file.filename else "jpg"
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    path = os.path.join(UPLOAD_FOLDER, filename)
+
+    file.save(path)
+
+    # === [QUAN TRỌNG] TỰ ĐỘNG THÊM VÀO THƯ VIỆN MEDIA ===
+    # Logic này giúp ảnh bài viết tự chui vào thư viện
+    media_type = "video" if ext in ["mp4", "mov", "avi", "webm"] else "image"
+    
+    media = Media(
+        filename=filename,
+        type=media_type
+    )
     db.session.add(media)
     db.session.commit()
+    # ====================================================
 
-    return jsonify({"message": "Upload thành công"})
-
+    return jsonify({
+        "url": f"/uploads/{filename}",
+        "media_id": media.id
+    })
 
 @auth.route("/media/<filename>")
 @login_required
@@ -536,25 +566,73 @@ def uploaded_file(filename):
     """Serve uploaded files"""
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-@auth.route("/api/media")
+@auth.route("/api/media", methods=["GET"])
 @login_required
 def list_media():
     media_type = request.args.get("type")  # image | video
-
+    
     query = Media.query
-
     if media_type:
         query = query.filter_by(type=media_type)
-
-    media_list = query.order_by(Media.created_at.desc()).all()
-
-    return jsonify([
-        {
+        
+    # Sắp xếp mới nhất lên đầu
+    media_list = query.order_by(Media.id.desc()).all()
+    
+    results = []
+    for m in media_list:
+        # Tính toán đường dẫn và size thực tế
+        file_path = os.path.join(UPLOAD_FOLDER, m.filename)
+        size_str = get_file_size(file_path)
+        
+        # URL hiển thị (check nếu là link ngoài hay link nội bộ)
+        url = m.filename if m.filename.startswith("http") else f"/uploads/{m.filename}"
+        
+        results.append({
             "id": m.id,
             "filename": m.filename,
             "type": m.type,
-            "url": m.filename if m.filename.startswith("http") else f"/{m.filename}",
-            "created_at": m.created_at,
-        }
-        for m in media
-    ])
+            "url": url,
+            "created_at": m.created_at.strftime("%d/%m/%Y"), # Format ngày đẹp
+            "size": size_str
+        })
+        
+    return jsonify(results)
+    @auth.route("/api/media/upload", methods=["POST"])
+@login_required
+def upload_media_library():
+    """API dùng riêng cho nút Upload ở trang Thư viện"""
+    file = request.files.get("file")
+    if not file:
+        return jsonify({"error": "Không có file"}), 400
+
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    
+    ext = file.filename.rsplit(".", 1)[1].lower() if "." in file.filename else "jpg"
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    path = os.path.join(UPLOAD_FOLDER, filename)
+        
+    file.save(path)
+
+    media_type = "video" if ext in ["mp4", "mov", "avi", "webm"] else "image"
+    media = Media(filename=filename, type=media_type)
+    
+    db.session.add(media)
+    db.session.commit()
+
+    return jsonify({"message": "Upload thành công"})
+
+@auth.route("/api/media/<int:id>", methods=["DELETE"])
+@login_required
+def delete_media(id):
+    media = Media.query.get_or_404(id)
+    
+    # Xóa file vật lý (nếu không phải link online)
+    if not media.filename.startswith("http"):
+        try:
+            os.remove(os.path.join(UPLOAD_FOLDER, media.filename))
+        except:
+            pass # Bỏ qua nếu file không tồn tại
+            
+    db.session.delete(media)
+    db.session.commit()
+    return jsonify({"message": "Đã xóa media"})
