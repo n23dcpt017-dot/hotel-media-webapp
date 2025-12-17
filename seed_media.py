@@ -4,10 +4,12 @@ from app.models.media import Media
 app = create_app()
 
 MEDIA = [
-    ("phong1.png", "image"),
-    ("amthuc.png", "image"),
-    ("lehoi.png", "image"),
-    ("khachhang.png", "image"),
+    ("/static/images/phong1.png", "image"),
+    ("/static/images/amthuc.png", "image"),
+    ("/static/images/lehoi.png", "image"),
+    ("/static/images/khachhang.png", "image"),
+    ("https://res.cloudinary.com/dadlq8qha/video/upload/v1765170630/tour-phong-suite_abpion.mp4", "video"),
+    ("https://res.cloudinary.com/dadlq8qha/video/upload/v1765170430/gioi-thieu-nha-hang_lupzcn.mp4", "video"),
 ]
 
 with app.app_context():
