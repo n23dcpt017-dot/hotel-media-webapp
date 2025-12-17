@@ -245,7 +245,25 @@
 <script>
 let allUsers = [];
 
-// 1. Tải danh sách User từ API
+// --- 1. CẤU HÌNH DỮ LIỆU GIẢ LẬP (FAKE DATA) ---
+const FAKE_DATA = {
+  // Các mốc thời gian hiển thị ngẫu nhiên
+  dates: [
+    "Vừa xong", "5 phút trước", "15 phút trước", "30 phút trước", 
+    "1 giờ trước", "2 giờ trước", "Hôm qua", "2 ngày trước", "05/11/2025"
+  ],
+  // Giới hạn số bài viết (min - max)
+  minPost: 0,
+  maxPost: 50
+};
+
+// Hàm tiện ích: Lấy ngẫu nhiên 1 phần tử trong mảng
+const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+// Hàm tiện ích: Lấy số nguyên ngẫu nhiên
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// 1. Tải danh sách User từ API Thật
 async function loadUsers() {
     try {
         const res = await fetch("/auth/api/users");
@@ -267,7 +285,7 @@ function updateStats() {
     document.getElementById("total-viewer").innerText = allUsers.filter(u => u.role === 'viewer').length;
 }
 
-// 3. Render Bảng
+// 3. Render Bảng (Kết hợp Dữ liệu thật + Dữ liệu Fake)
 function renderUsers(users) {
     const tbody = document.getElementById("userTableBody");
     tbody.innerHTML = "";
@@ -278,15 +296,32 @@ function renderUsers(users) {
     }
 
     users.forEach(u => {
-        // Xử lý hiển thị Role
+        // --- LOGIC DỮ LIỆU THẬT ---
+        // Xử lý Role thật
         let roleClass = "role-viewer", roleName = "Người xem";
         if(u.role === 'admin') { roleClass = "role-admin"; roleName = "Quản trị viên"; }
         else if(u.role === 'editor') { roleClass = "role-editor"; roleName = "Biên tập viên"; }
 
-        // Xử lý hiển thị Status
-        let statusClass = u.is_active ? "status-active" : "status-inactive";
-        let statusText = u.is_active ? "Đang hoạt động" : "Không hoạt động";
+        // --- LOGIC DỮ LIỆU FAKE ---
+        
+        // 1. Fake số bài viết (Admin/Editor thì nhiều bài, Viewer thì ít hoặc 0)
+        let fakePostCount = 0;
+        if (u.role === 'admin' || u.role === 'editor') {
+            fakePostCount = getRandomInt(10, 200);
+        } else {
+            fakePostCount = getRandomInt(0, 5);
+        }
 
+        // 2. Fake Lần đăng nhập cuối
+        const fakeLastLogin = getRandomItem(FAKE_DATA.dates);
+
+        // 3. Fake Trạng thái (Online/Offline) - Tỉ lệ 70% Online
+        const isOnline = Math.random() < 0.7;
+        const statusClass = isOnline ? "status-active" : "status-inactive";
+        const statusText = isOnline ? "Đang hoạt động" : "Ngoại tuyến";
+
+
+        // --- KẾT HỢP VÀO HTML ---
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>
@@ -301,9 +336,11 @@ function renderUsers(users) {
             </td>
             <td>${u.email}</td>
             <td><span class="role-tag ${roleClass}">${roleName}</span></td>
+            
             <td><span class="status-tag ${statusClass}">${statusText}</span></td>
-            <td>${u.post_count}</td>
-            <td>${u.last_login}</td>
+            <td>${fakePostCount}</td>
+            <td>${fakeLastLogin}</td>
+            
             <td>
                 <div class="action-buttons">
                     <button class="action-btn"><i class="fa-solid fa-pencil"></i></button>
