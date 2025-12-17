@@ -981,14 +981,32 @@ function openCrop(src) {
   const modal = document.getElementById("cropModal");
   const img = document.getElementById("cropImage");
 
+  // 1. Hiển thị modal trước
   modal.style.display = "flex";
+
+  // 2. Gán nguồn ảnh
   img.src = src;
 
-  if (cropper) cropper.destroy();
-  cropper = new Cropper(img, {
-    aspectRatio: 16 / 9,
-    viewMode: 1
-  });
+  // 3. Đợi ảnh load xong mới gắn Cropper (Quan trọng!)
+  img.onload = function() {
+      // Hủy cái cũ nếu có
+      if (cropper) {
+          cropper.destroy();
+          cropper = null;
+      }
+
+      // Kiểm tra xem thư viện đã tải được chưa
+      if (typeof Cropper !== 'undefined') {
+          cropper = new Cropper(img, {
+            aspectRatio: 16 / 9,
+            viewMode: 1,
+            autoCropArea: 1, // Tự động chọn vùng crop tối đa
+          });
+      } else {
+          alert("Lỗi: Không tải được thư viện cắt ảnh! Hãy kiểm tra kết nối mạng.");
+          console.error("Cropper is not defined. Kiểm tra lại thẻ <script> trên đầu trang.");
+      }
+  };
 }
 
 function closeCrop() {
