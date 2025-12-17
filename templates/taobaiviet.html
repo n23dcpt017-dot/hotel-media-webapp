@@ -212,6 +212,11 @@
     /* Notification Popup */
     .notification-popup { position: absolute; top: 60px; right: 25px; width: 300px; background: #ffffff; border-radius: 12px; padding: 15px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); display: none; z-index: 9999; border: 1px solid #e4e4e4; }
     /* ... (Giữ nguyên css notif cũ) ... */
+    .notif-header h4 { margin: 0; font-size: 16px; font-weight: 700; }
+    .notif-list { list-style: none; padding: 0; margin: 12px 0 0; }
+    .notif-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eee; }
+    .notif-item i { font-size: 18px; margin-top: 2px; }
+    .notif-view-all { width: 100%; margin-top: 10px; padding: 8px 0; background: #4338ca; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
   </style>
 
   <body>
@@ -336,7 +341,7 @@
                     <div class="form-card">
                         <label for="post-schedule">Ngày/giờ xuất bản</label>
                         <div class="input-group-with-icon">
-                            <input type="text" id="post-schedule" placeholder="mm/dd/yyyy">
+                            <input type="text" id="post-schedule" placeholder="dd/mm/yyyy">
                             <i class="fa-regular fa-calendar-days"></i>
                         </div>
                     </div>
@@ -476,13 +481,29 @@ function mapStatus(uiStatus) {
   if (uiStatus === "len-lich") return "scheduled";
   return "draft";
 }
+
+// === ĐÂY LÀ HÀM ĐÃ SỬA LOGIC ===
 function collectPostData(forceStatus = null) {
+  let uiStatus = document.getElementById("post-status").value;
+  let finalStatus = forceStatus ? forceStatus : mapStatus(uiStatus);
+
+  // LOGIC MỚI: TỰ ĐỘNG LẤY NGÀY NẾU Ô NGÀY TRỐNG (KỂ CẢ NHÁP)
+  let publishDate = document.getElementById("post-schedule").value;
+  
+  if (!publishDate) {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      publishDate = `${day}/${month}/${year}`; 
+  }
+
   return {
     title: document.getElementById("post-title").value,
     content: document.getElementById("post-content").value,
     category: document.getElementById("post-category").value,
-    status: forceStatus ? forceStatus : mapStatus(document.getElementById("post-status").value), 
-    publish_at: document.getElementById("post-schedule").value || null,
+    status: finalStatus,
+    publish_at: publishDate, // Luôn gửi ngày lên
     image: thumbnailUrl || undefined,   
     seo: {
       title: document.getElementById("meta-title").value,
@@ -491,6 +512,7 @@ function collectPostData(forceStatus = null) {
     }
   };
 }
+
 function saveDraft() {
   fetch("/auth/api/posts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(collectPostData("draft")) })
   .then(res => { if (!res.ok) throw new Error("Lưu nháp thất bại"); return res.json(); })
@@ -503,6 +525,12 @@ function publishPost() {
   .then(() => { window.location.href = "/auth/quanlybaiviet.html"; })
   .catch(err => alert(err.message));
 }
+
+// Popup thông báo
+const bell = document.querySelector(".notification-btn");
+const popup = document.getElementById("notificationPopup");
+bell.addEventListener("click", (e) => { e.stopPropagation(); popup.style.display = popup.style.display === "block" ? "none" : "block"; });
+document.addEventListener("click", () => popup.style.display = "none");
 </script>
 </body>
 </html>
