@@ -553,7 +553,8 @@ def list_media():
             "id": m.id,
             "filename": m.filename,
             "type": m.type,
-            "url": f"/uploads/{m.filename}"
+            "url": m.filename if m.filename.startswith("http") else f"/{m.filename}",
+            "created_at": m.created_at,
         }
-        for m in media_list
+        for m in media
     ])
