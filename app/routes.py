@@ -274,11 +274,13 @@ def create_post():
             return jsonify({"error": "Sai định dạng ngày"}), 400
 
     post = Post(
-        title=data["title"],
-        content=data.get("content"),
-        status=data.get("status", "draft"),
-        publish_at=publish_at
-    )
+    title=data["title"],
+    content=data.get("content"),
+    status=data.get("status", "draft"),
+    publish_at=publish_at,
+    image=data.get("image") or "/static/images/phong1.png"
+)
+
 
     db.session.add(post)
     db.session.commit()
