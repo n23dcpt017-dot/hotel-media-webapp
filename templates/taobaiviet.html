@@ -568,14 +568,12 @@
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.6);
-  max-width: 90vw;        
-  max-height: 85vh;       
-  width: 720px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 99999;
 }
+
 
 .crop-modal-content {
   background: #ffffff;
@@ -1022,10 +1020,10 @@ async function confirmCrop() {
     }
   }, "image/jpeg");
 }
-document.getElementById("imageUploader").addEventListener("click", () => {
-  document.getElementById("post-image").click();
-  window.confirmCrop = confirmCrop;
+window.confirmCrop = confirmCrop;
 window.closeCrop = closeCrop;
+document.getElementById("imageUploader").addEventListener("click", () => {
+document.getElementById("post-image").click();
 
 });
 </script>
