@@ -541,12 +541,8 @@
   max-height: 150px;
   overflow: hidden;
 }
+previewWrapper.style.display = "block";
 
-.image-preview {
-  width: 100%;
-  max-height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
 }
 
 .remove-image-btn {
@@ -618,6 +614,9 @@
 .crop-actions button:last-child {
   background: #4338ca;
   color: white;
+}
+.crop-modal {
+  z-index: 99999;
 }
 
   </style>
@@ -805,11 +804,6 @@
     </div>
   </div>
 </div>
-  </div>
-</div>
-
-
-    
                     <div class="form-card">
                         <label>Nhúng video</label>
                         <div class="input-group-with-icon">
