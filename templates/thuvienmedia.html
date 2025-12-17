@@ -1066,6 +1066,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("media-grid");
+  if (!container) return;
+
+  const res = await fetch("/auth/api/media");
+  const data = await res.json();
+
+  container.innerHTML = "";
+
+  data.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "media-item";
+
+    if (item.type === "image") {
+      div.innerHTML = `<img src="${item.url}" alt="">`;
+    } else {
+      div.innerHTML = `
+        <video src="${item.url}" controls></video>
+      `;
+    }
+
+    container.appendChild(div);
+  });
+});
+</script>
 
 </body>
 </html>
