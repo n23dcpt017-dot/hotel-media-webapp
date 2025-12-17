@@ -1038,7 +1038,8 @@ async function confirmCrop() {
       thumbnailUrl = data.url;
 
       preview.src = data.url;
-      previewWrapper.style.display = "block";
+      preview.style.display = "block";
+      previewWrapper.style.display = "flex";
       placeholder.style.display = "none";
 
       closeCrop();
