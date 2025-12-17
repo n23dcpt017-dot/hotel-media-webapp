@@ -810,7 +810,12 @@ document
   
   // Các biến xử lý ảnh
   const uploadBox = document.getElementById("upload-box");
-  const fileInput = document.getElementById("file-input");
+  const fileInput = document.getElementById("thumbnailInput");
+
+uploadBox.addEventListener("click", () => {
+  fileInput.value = "";   
+  fileInput.click();
+});
   const uploadContent = document.getElementById("upload-content"); // Phần chữ kéo thả
   const imagePreview = document.getElementById("image-preview"); // Thẻ img
 
